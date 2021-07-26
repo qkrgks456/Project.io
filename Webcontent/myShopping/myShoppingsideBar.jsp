@@ -6,7 +6,7 @@
 		<div class="list-group list-group-flush mt-3">
 			<h4 class="fst-italic ms-3 fw-bold text-decoration-none">구매</h4>
 			<a class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myShopping/buy/buy.jsp" style="cursor: pointer;">구매내역</a><a
+				href="/Project/myShopping/buy/buyList.jsp" style="cursor: pointer;">구매내역</a><a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
 				href="/Project/myShopping/buy/cart.jsp" style="cursor: pointer;">장바구니<span
 				id="alertnumsidebar"
@@ -16,11 +16,11 @@
 		<div class="list-group list-group-flush mt-3">
 			<h4 class="fst-italic ms-3 fw-bold text-decoration-none">판매</h4>
 			<a class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myShopping/sell/sell.jsp" style="cursor: pointer;">판매내역</a> <a
+				href="/Project/myShopping/sell/sellList.jsp" style="cursor: pointer;">판매내역</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myShopping/sell/productInput.jsp" style="cursor: pointer;">상품등록</a> <a
+				href="/Project/myShopping/sell/productInput/productInput.jsp" style="cursor: pointer;">상품등록</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myShopping/sell/products.jsp" style="cursor: pointer;">상품정보</a>
+				href="/Project/myShopping/sell/productList/productList.jsp" style="cursor: pointer;">상품정보</a>
 		</div>
 		<hr />
 	</nav>

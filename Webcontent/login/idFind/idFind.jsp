@@ -8,11 +8,11 @@
 <!-- 부트스트랩 메타태그 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 부트스트랩 파일 -->
-<link href="/Project/assets/css/bootstrap.css?ver=6" rel="stylesheet">
+<link href="/Project/assets/css/bootstrap.css?ver=4" rel="stylesheet">
 <!-- css cdn -->
 <jsp:include page="/assets/css/csscdn.jsp"></jsp:include>
 <!-- main css 추가 -->
-<link href="/Project/assets/css/main.css?ver=2" rel="stylesheet">
+<link href="/Project/assets/css/main.css?ver=5" rel="stylesheet">
 <style type="text/css">
 .list-group-item {
 	border: 1px solid rgba(0, 0, 0, 0.125);
@@ -36,8 +36,8 @@
 			<div class="container px-5 mt-5 ">
 				<!-- 사이드 바 메뉴-->
 
-				<jsp:include page="idPasswordMenu.jsp"></jsp:include>
-				<h2 class="fw-bold my-3">비밀번호찾기</h2>
+				<jsp:include page="/login/idPasswordMenu.jsp"></jsp:include>
+				<h2 class="fw-bold my-3">아이디찾기</h2>
 				<hr />
 				<div class="container px-3 w-50 border my-4">
 					<form class="my-4">
@@ -48,12 +48,6 @@
 						</p>
 						<hr />
 						<div class="form col-md-9 mb-3 mt-3">
-							<label for="validationTooltipUsername" class="fw-bold my-1">아이디</label>
-							<input type="text" class="form-control" id="UserEmail"
-								placeholder="정확하게 입력해주세요" required>
-							<div class="invalid-feedback">필수 정보입니다</div>
-						</div>
-						<div class="form col-md-9 mb-3">
 							<label for="validationTooltip04" class="fw-bold my-1">이름</label>
 							<input type="text" class="form-control" id="UserName"
 								placeholder="정확하게 입력해주세요" required>

@@ -28,7 +28,7 @@
 		</c:if>
 		<!-- 들어갈 내용 -->
 		<div class="d-flex" style="height: auto; min-height: 100vh;">
-			<jsp:include page="../myPagesideBar.jsp"></jsp:include>
+			<jsp:include page="/myPage/myPagesideBar.jsp"></jsp:include>
 			<!-- 오른쪽 시작 -->
 			<div class="cont container-fluid mx-5 py-5">
 				<div class="d-flex align-items-center">

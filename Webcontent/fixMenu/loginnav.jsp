@@ -17,12 +17,12 @@
 				<li class="nav-item"><a class="nav-link"
 					href="/Project/search.jsp">통합검색</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="/Project/cafe.jsp">카페정보</a></li>
+					href="/Project/MainCafe/cafeList.jsp">카페정보</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="/Project/product.jsp">상품구매</a></li>
+					href="/Project/MainProduct/productList.jsp">상품구매</a></li>
 				<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
 					<li class="nav-item"><a class="nav-link"
-						href="/Project/admin/admin.jsp">관리자</a></li>
+						href="/Project/admin/adminSelect/adminSearch.jsp">관리자</a></li>
 				</c:if>
 			</ul>
 			<!-- 쇼핑카트 알림 -->
@@ -46,7 +46,7 @@
 				</div>
 			</div>
 			<div class="d-flex" id="loginmenu">
-				<a href="/Project/myShopping/buy/buy.jsp" role="button" id="mypage"
+				<a href="/Project/myShopping/buy/buyList.jsp" role="button" id="mypage"
 					class="btn btn-outline-light btn-sm mx-1">쇼핑</a> <a
 					href="/Project/myPage/myPageMenu/myInfo.jsp" role="button"
 					id="mypage" class="btn btn-outline-light btn-sm mx-1">마이페이지</a> <a

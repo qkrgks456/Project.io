@@ -43,13 +43,13 @@
 		<div class="list-group list-group-flush mt-3">
 			<h4 class="fst-italic ms-3 fw-bold text-decoration-none">카페</h4>
 			<a class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myPage/cafeMenu/cafeInput.jsp"
+				href="/Project/myPage/cafeMenu/cafeInput/cafeInput.jsp"
 				style="cursor: pointer;">카페등록</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myPage/cafeMenu/cafeInfo.jsp"
+				href="/Project/myPage/cafeMenu/cafeUpdate/cafeInfo.jsp"
 				style="cursor: pointer;">카페정보</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myPage/cafeMenu/businessChange.jsp"
+				href="/Project/myPage/cafeMenu/businessChange/businessChange.jsp"
 				style="cursor: pointer;">사업자번호수정</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
 				href="/Project/myPage/cafeMenu/cafeDrop.jsp"

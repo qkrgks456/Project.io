@@ -21,11 +21,11 @@
 		<!-- 상단 메뉴바 -->
 		<!-- 섹션에 아이디가 있다면 -->
 		<c:if test="${sessionScope.loginId ne null}">
-			<jsp:include page="fixMenu/loginnav.jsp"></jsp:include>
+			<jsp:include page="/fixMenu/loginnav.jsp"></jsp:include>
 		</c:if>
 		<!-- 섹션에 아이디가 없다면 -->
 		<c:if test="${sessionScope.loginId eq null}">
-			<jsp:include page="fixMenu/navbar.jsp"></jsp:include>
+			<jsp:include page="/fixMenu/navbar.jsp"></jsp:include>
 		</c:if>
 		<!-- 들어갈 내용 -->
 		<div class="container px-3 mt-5 border">
@@ -119,10 +119,10 @@
 	</div>
 	<!-- 하단 고정 퀵메뉴 -->
 	<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
-	<jsp:include page="fixMenu/quickMenu.html"></jsp:include>
+	<jsp:include page="/fixMenu/quickMenu.html"></jsp:include>
 	</c:if>
 	<!-- 하단 정보 -->
-	<jsp:include page="fixMenu/footer.html"></jsp:include>
+	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->

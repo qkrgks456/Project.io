@@ -27,7 +27,7 @@
 			<jsp:include page="/fixMenu/navbar.jsp"></jsp:include>
 		</c:if>
 		<div class="d-flex" style="height: auto; min-height: 100vh;">
-			<jsp:include page="../myShoppingsideBar.jsp"></jsp:include>
+			<jsp:include page="/myShopping/myShoppingsideBar.jsp"></jsp:include>
 			<div class="cont container-fluid mx-5 py-5">
 				<div class="d-flex align-items-center">
 					<button type="button" id="sidebarCollapse"
