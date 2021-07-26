@@ -1,0 +1,119 @@
+@charset "UTF-8";
+
+/* 퀵메뉴 */
+#quick{
+	margin-bottom: 90px;
+	margin-right: 90px;
+}
+
+/* 초기화 및 폰트 */
+html, body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	width: 100%;
+	font-family: 'Nanum Gothic', sans-serif;
+	scroll-behavior: smooth;
+}
+/* 푸터 위의 내용 감싸서 내용 없어도 푸터 하단으로 가도록 */
+.wrap {
+	height: auto;
+	min-height: 100%;
+	padding-bottom: 80px;
+}
+/* 푸터 하단 고정 */
+footer {
+	margin-top : 80px;
+	height: 80px;
+	position: relative;
+	transform: translateY(-100%);
+	background-color: black;
+}
+/* 회원가입 너비 조절 */
+#cont {
+	width: 600px;
+}
+/* 회원가입 가운데 정렬 */
+div.col-md-9 {
+	float: none;
+	margin: 0 auto;
+}
+/* 카드 이미지 고정 */
+img.card-img-top {
+	height: 15rem;
+	object-fit: cover;
+}
+
+img.img-fluid {
+	height: 30rem;
+	object-fit: cover;
+}
+
+.target {
+	/* 한 줄 자르기 */
+	/* display: inline-block;
+	width: 200px; 
+	white-space: nowrap; 
+	overflow: hidden; 
+	text-overflow: ellipsis;  */
+	/* 여러 줄 자르기 추가 스타일 */
+	white-space: normal;
+	line-height: 1.4;
+	height: 4.2em;
+	text-align: left;
+	word-wrap: break-word;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.tooltip{
+        position:fixed;
+}
+.tooltip-inner{
+	color : green;
+}
+/* 사이드바 css 건들기 ㄴㄴ .. */
+#sidebar-wrapper {
+ /* 	min-height: 100%; */
+  margin-left: -15rem;
+  transition: margin 0.25s ease-out;
+   /* height:100%; */
+}
+
+#sidebar-wrapper .sidebar-heading {
+  /* padding: 0.875rem 1.25rem; */
+  font-size: 1.2rem;
+}
+
+#sidebar-wrapper .list-group {
+  width: 12rem;
+}
+
+#page-content-wrapper {
+  min-width: 100vw;
+}
+
+body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
+  margin-left: 0;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+@media (min-width: 768px) {
+  #sidebar-wrapper {
+    margin-left: 0;
+  }
+
+  #page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+
+  body.sb-sidenav-toggled #wrapper #sidebar-wrapper {
+    margin-left: -15rem;
+  }
+  
+}

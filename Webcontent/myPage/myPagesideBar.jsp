@@ -1,0 +1,62 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<div class="border" id="sidebar-wrapper">
+	<nav id="sidebar" style="transition: all 0.3s;">
+		<div class="list-group list-group-flush mt-3">
+			<h4 class="fst-italic ms-3 fw-bold text-decoration-none">마이페이지</h4>
+			<a class="ps-4 fw-bold list-group-item list-group-item-action"
+				href="/Project/myPage/myPageMenu/myInfo.jsp"
+				style="cursor: pointer;">내정보</a> <a
+				class="ps-4 fw-bold list-group-item list-group-item-action"
+				href="/Project/myPage/myPageMenu/memberDrop.jsp"
+				style="cursor: pointer;">회원탈퇴</a><a
+				class="ps-4 fw-bold list-group-item list-group-item-action"
+				href="/Project/myPage/myPageMenu/passChange.jsp"
+				style="cursor: pointer;">비밀번호변경</a> <a
+				class="ps-4 fw-bold list-group-item list-group-item-action"
+				href="/Project/myPage/myPageMenu/alerm.jsp" style="cursor: pointer;">알림리스트<span
+				id="alertnumsidebar"
+				class="ms-1 badge bg-secondary text-white rounded-pill">1</span></a> <a
+				class="ps-4 fw-bold list-group-item list-group-item-action"
+				href="/Project/myPage/myPageMenu/goodCafe.jsp"
+				style="cursor: pointer;">좋아요카페</a> <a
+				class="ps-4 fw-bold list-group-item list-group-item-action"
+				href="/Project/myPage/myPageMenu/goodProduct.jsp"
+				style="cursor: pointer;">좋아요상품</a>
+		</div>
+		<hr />
+		<div class="list-group list-group-flush mt-3">
+			<h4 class="fst-italic ms-3 fw-bold text-decoration-none">댓글</h4>
+			<a class="ps-4 fw-bold list-group-item list-group-item-action"
+				href="/Project/myPage/commentMenu/cafeComment.jsp"
+				style="cursor: pointer;">카페댓글</a> <a
+				class="ps-4 fw-bold list-group-item list-group-item-action"
+				href="/Project/myPage/commentMenu/productComment.jsp"
+				style="cursor: pointer;">상품댓글</a> <a
+				class="ps-4 fw-bold list-group-item list-group-item-action"
+				href="/Project/myPage/commentMenu/reportComment.jsp"
+				style="cursor: pointer;">신고한댓글</a>
+		</div>
+
+		<hr />
+		<div class="list-group list-group-flush mt-3">
+			<h4 class="fst-italic ms-3 fw-bold text-decoration-none">카페</h4>
+			<a class="ps-4 fw-bold list-group-item list-group-item-action"
+				href="/Project/myPage/cafeMenu/cafeInput.jsp"
+				style="cursor: pointer;">카페등록</a> <a
+				class="ps-4 fw-bold list-group-item list-group-item-action"
+				href="/Project/myPage/cafeMenu/cafeInfo.jsp"
+				style="cursor: pointer;">카페정보</a> <a
+				class="ps-4 fw-bold list-group-item list-group-item-action"
+				href="/Project/myPage/cafeMenu/businessChange.jsp"
+				style="cursor: pointer;">사업자번호수정</a> <a
+				class="ps-4 fw-bold list-group-item list-group-item-action"
+				href="/Project/myPage/cafeMenu/cafeDrop.jsp"
+				style="cursor: pointer;">카페삭제</a> <a
+				class="ps-4 fw-bold list-group-item list-group-item-action"
+				href="/Project/myPage/cafeMenu/confusion.jsp"
+				style="cursor: pointer;">혼잡도설정</a>
+		</div>
+	</nav>
+</div>
