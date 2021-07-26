@@ -1,4 +1,4 @@
-package com.go.main.cage;
+package com.go.main.cafe;
 
 import java.io.IOException;
 
