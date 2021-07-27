@@ -28,7 +28,109 @@
 		</c:if>
 		<!-- 들어갈 내용 -->
 		<section>
-			<div class="container px-3 mt-5">카페검색 들어갈 예정입니다</div>
+		<!-- 상단 슬라이드 배너 시작 -->
+		<div id="carouselExampleCaptions" class="carousel slide"
+			data-bs-ride="carousel">
+			<div class="carousel-indicators">
+				<button type="button" data-bs-target="#carouselExampleCaptions"
+					data-bs-slide-to="0" class="active" aria-current="true"
+					aria-label="Slide 1"></button>
+				<button type="button" data-bs-target="#carouselExampleCaptions"
+					data-bs-slide-to="1" aria-label="Slide 2"></button>
+				<button type="button" data-bs-target="#carouselExampleCaptions"
+					data-bs-slide-to="2" aria-label="Slide 3"></button>
+			</div>
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<img src="assets/img/cafe1.jpg" class="d-block w-100"
+						style="height: 350px" alt="...">
+				</div>
+				<div class="carousel-item">
+					<img src="assets/img/cafe2.jpg" class="d-block w-100"
+						style="height: 350px" alt="...">
+				</div>
+				<div class="carousel-item">
+					<img src="assets/img/cafe3.jpg" class="d-block w-100"
+						style="height: 350px" alt="...">
+				</div>
+			</div>
+			<button class="carousel-control-prev" type="button"
+				data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button"
+				data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</button>
+		</div>
+		<!-- 상단 슬라이드바 끝 -->
+		
+		<!-- 게시판 틀 시작 -->
+			<div class="container mt-4">
+					<!-- 검색창 -->
+			<div class="row">
+				<div class="d-flex">
+					<p class="fw-bold mt-4 h1">통합 검색 시스템</p>
+					<div class="col d-flex justify-content-end mt-4">					
+	<select name="searchtype" class="d-inline-flex justify-content-end me-2" style="height: 42px;"> 
+	    <option value="searchcafename">카페이름</option>
+	    <option value="searchcafeproduct">카페상품</option>
+	</select>
+						<form class="d-inline-flex justify-content-end"
+							style="height: 42px;">
+							<input class="form-control me-1" type="search"
+								placeholder="상품명을 입력해주세요" aria-label="Search">
+							<button class="btn btn-outline-secondary" type="submit">search</button>
+						</form>
+					</div>
+				</div>
+				<hr />
+			</div>
+			<!-- 검색창 끝 -->
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th scope="col">이미지</th>
+					<th scope="col">카페 이름</th>
+					<th scope="col">상세보기</th>
+					<th scope="col">혼잡도</th>
+					<th scope="col">조회수</th>
+					<th scope="col">좋아요</th>
+				</tr>
+				<c:if test="${list eq null || list eq ''}">
+					<tr>
+						<td colspan="6">해당 데이터가 존재하지 않습니다.</td>
+					</tr>
+				</c:if>		
+			</thead>
+			<tbody>
+				<c:forEach items="${list}" var="bbs">
+					<tr>
+						<td class="align-middle">${bbs.idx}</td>
+						<td class="align-middle">${bbs.subject}</td>
+						<td class="align-middle">${bbs.user_name}</td>
+						<td class="align-middle">${bbs.reg_date}</td>
+						<td class="align-middle">${bbs.bHit}</td>
+						<td class="align-middle"><a href="detail?idx=${bbs.idx}" class="btn btn-primary">상세보기</a></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.6.0.js"
+		integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+		crossorigin="anonymous">		
+	</script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous">		
+	</script>
+		<!-- 게시판 끝  -->
+			
+		
 		</section>
 	</div>
 	<!-- 하단 고정 퀵메뉴 -->
