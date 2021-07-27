@@ -6,6 +6,7 @@ public class aaaaaaaaa {
 		// TODO Auto-generated constructor stub
 		System.out.println("안녕");
 		System.out.println("test");
+		System.out.println("1234");
 	}
 
 }
