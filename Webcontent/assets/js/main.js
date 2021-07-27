@@ -214,7 +214,6 @@ $(document).ready(function() {
 	});
 
 	/* 회원가입시 유효성 검사 */
-
 	$("#signupbtn").click(function() {
 		$('.nullcheck').each(function() {
 			if ($(this).val() == "") {
@@ -254,7 +253,9 @@ $(document).ready(function() {
 	$('#commenticon').mouseleave(function() {
 		$('#commenticons').css("color", "black");
 	});
-
+	
+	/* 카페등록 유효성 검사 */
+	
 })
 
 

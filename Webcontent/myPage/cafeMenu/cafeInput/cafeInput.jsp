@@ -41,147 +41,148 @@
 				<hr />
 				<!-- 내용시작 -->
 				<div class="cont container w-50">
-					<form action="/Project/data/signupProc.jsp" method="post"
+					<form action="/Project/cafeInput" method="post" enctype="multipart/form-data"
 						class="needs-validation py-3" novalidate>
 						<div class="form-floating col-md-9 mb-3">
-							<input type="text" class="form-control" id="cafeName" name="cafeName"
-								placeholder="카페이름"> <label
-								for="validationTooltipUsername" class="fw-bold">카페이름</label>
-							<div class="invalid-tooltip">Please choose a unique and
-								valid username.</div>
+							<input type="text" class="form-control nullchecks" id="cafeName"
+								name="cafeName" placeholder="카페이름"> <label
+								for="cafeName" class="fw-bold">카페이름</label>
+							<div class="invalid-feedback">필수 정보 입니다</div>
 						</div>
 						<div class="form-floating col-md-9 mb-3">
-							<input type="text" class="form-control" id="cafeAddress" name="cafeAddress"
-								placeholder="주소" required> <label
-								for="validationTooltip03" class="fw-bold">카페주소</label>
-							<div class="invalid-tooltip">Please provide a valid city.</div>
+							<input type="text" class="form-control nullchecks" id="cafeAddress"
+								name="cafeAddress" placeholder="주소" required> <label
+								for="cafeAddress" class="fw-bold">카페주소</label>
+							<div class="invalid-feedback">필수 정보 입니다</div>
 						</div>
 						<div class="form-floating col-md-9 mb-3">
-							<input type="text" class="form-control" name="cafeAddress"
-								placeholder="몰라" required> <label
-								for="validationTooltip05" class="fw-bold">카페연락처</label>
-							<div class="invalid-tooltip">Please provide a valid zip.</div>
+							<input type="text" class="form-control nullchecks" name="cafePhone"
+								id="cafePhone" placeholder="몰라" required> <label
+								for="cafeAddress" class="fw-bold">카페연락처</label>
+							<div class="invalid-feedback">필수 정보 입니다</div>
 						</div>
 						<div class="form-floating col-md-9 mb-3">
-							<input type="text" class="form-control" id="validationTooltip03"
-								placeholder="주소" required> <label
+							<input type="text" class="form-control nullchecks" id="cafeTime"
+								name="cafeTime" placeholder="주소" required> <label
 								for="validationTooltip03" class="fw-bold">영업시간</label>
-							<div class="invalid-tooltip">Please provide a valid city.</div>
+							<div class="invalid-feedback">필수 정보 입니다</div>
 						</div>
 						<div class="form-floating col-md-9 mb-3">
-							<input type="text" class="form-control" id="validationTooltip03"
-								placeholder="주소" required> <label
-								for="validationTooltip03" class="fw-bold">사업자등록번호</label>
-							<div class="invalid-tooltip">Please provide a valid city.</div>
+							<input type="text" class="form-control nullchecks" id="ownerNo"
+								name="ownerNo" placeholder="주소" required> <label
+								for="ownerNo" class="fw-bold">사업자등록번호</label>
+							<div class="invalid-feedback">사용 불가</div>
+							<div class="valid-feedback">사용 가능</div>
+							<input type="button" class="btn btn-dark btn-sm" value="중복확인">
 						</div>
+						
 						<div class="col-md-9 mb-3">
 							<h6 class="fw-bold ">지역구선택 (해당지역에 맞는 손님에게 카페를 추천해드립니다)</h6>
-							<select class="form-select">
-								<option value="스타벅스" selected>도봉구</option>
-								<option value="이디아">강북구</option>
-								<option value="할리스">노원구</option>
-								<option value="투썸플레이스">중랑구</option>
-								<option value="메가커피">성북구</option>
-								<option value="스타벅스">종로구</option>
-								<option value="이디아">중구</option>
-								<option value="할리스">용산구</option>
-								<option value="투썸플레이스">서대문구</option>
-								<option value="메가커피">마포구</option>
-								<option value="스타벅스">영등포구</option>
-								<option value="이디아">강남구</option>
-								<option value="할리스">강동구</option>
+							<select class="form-select" name="cafeLocation">
+								<option value="도봉구" selected>도봉구</option>
+								<option value="강북구">강북구</option>
+								<option value="노원구">노원구</option>
+								<option value="중랑구">중랑구</option>
+								<option value="성북구">성북구</option>
+								<option value="종로구">종로구</option>
+								<option value="중구">중구</option>
+								<option value="용산구">용산구</option>
+								<option value="서대문구">서대문구</option>
+								<option value="마포구">마포구</option>
+								<option value="영등포구">영등포구</option>
+								<option value="강남구">강남구</option>
+								<option value="강동구">강동구</option>
 							</select>
 						</div>
 						<div class="col-md-9 mb-3">
-							<label for="formFileMultiple" class="form-label fw-bold">카페이미지
-								첨부</label> <input class="form-control" type="file"
-								id="formFileMultiple" multiple>
+							<label for="cafeImg" class="form-label fw-bold">카페이미지 첨부</label>
+							<input class="form-control" type="file" id="cafeImg"
+								name="cafeImg" multiple>
 						</div>
 						<div class="col-md-9 mb-3">
-							<label for="FileMultiple" class="form-label fw-bold">사업자등록증 첨부</label> <input class="form-control" type="file"
-								id="FileMultiple" multiple>
+							<label for="ownerNoImg" class="form-label fw-bold">사업자등록증
+								첨부</label> <input class="form-control" type="file" id="ownerNoImg"
+								name="ownerNoImg" multiple>
 						</div>
 						<div class="form-floating col-md-9 mb-3">
 							<div class="mb-3">
-								<label for="exampleFormControlTextarea1"
-									class="form-label fw-bold">카페설명</label>
-								<textarea class="form-control" id="exampleFormControlTextarea1"
+								<label for="cafeDetail" class="form-label fw-bold">카페설명</label>
+								<textarea class="form-control" id="cafeDetail" name="cafeDetail"
 									rows="7"></textarea>
 							</div>
 						</div>
 						<div class="col-md-9 mb-3">
 							<label for="car" class="fw-bold">주차가능여부</label>
 							<div class="form-check form-check-inline mx-3">
-								<label class="form-check-label" for="flexRadioDefault1">
-									가능 </label> <input class="form-check-input" type="radio"
-									name="flexRadioDefault" id="flexRadioDefault3" checked>
-
+								<input class="form-check-input" type="radio" name="parkingCheck"
+									id="parkingCheck1" value="Y" checked> <label
+									class="form-check-label" for="parkingCheck1"> 가능 </label>
 							</div>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio"
-									name="flexRadioDefault" id="flexRadioDefault4"> <label
-									class="form-check-label" for="flexRadioDefault2"> 불가 </label>
+								<input class="form-check-input" type="radio" value="N"
+									name="parkingCheck" id="parkingCheck2"> <label
+									class="form-check-label" for="parkingCheck2"> 불가 </label>
 							</div>
 						</div>
 						<div class="col-md-9 mb-3">
 							<label for="dogcat" class="fw-bold">애완동반가능여부</label>
 							<div class="form-check form-check-inline mx-3">
-								<label class="form-check-label" for="flexRadioDefault1">
-									가능 </label> <input class="form-check-input" type="radio"
-									name="alertradio" id="flexRadioDefault3" checked>
+								<input class="form-check-input" type="radio" name="petCheck"
+									id="petCheck1" value="Y" checked> <label
+									class="form-check-label" for="petCheck1"> 가능 </label>
 
 							</div>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="alertradio"
-									id="flexRadioDefault4"> <label class="form-check-label"
-									for="flexRadioDefault2"> 불가 </label>
+								<input class="form-check-input" type="radio" name="petCheck"
+									value="N" id="petCheck2"> <label
+									class="form-check-label" for="petCheck2"> 불가 </label>
 							</div>
 						</div>
 						<div class="col-md-9 mb-3">
 							<label for="child" class="fw-bold">유아동반가능여부</label>
 							<div class="form-check form-check-inline mx-3">
-								<label class="form-check-label" for="flexRadioDefault1">
-									가능 </label> <input class="form-check-input" type="radio" name="c"
-									id="flexRadioDefault3" checked>
+								<input class="form-check-input" type="radio" name="childCheck"
+									id="childCheck1" value="Y" checked> <label
+									class="form-check-label" for="childCheck1"> 가능 </label>
 
 							</div>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="c"
-									id="flexRadioDefault4"> <label class="form-check-label"
-									for="flexRadioDefault2"> 불가 </label>
+								<input class="form-check-input" type="radio" name="childCheck"
+									id="childCheck2" value="N"> <label
+									class="form-check-label" for="childCheck2"> 불가 </label>
 							</div>
 						</div>
 						<div class="col-md-9 mb-3">
 							<label for="roof" class="fw-bold">루프탑유무</label>
 							<div class="form-check form-check-inline mx-3">
-								<label class="form-check-label" for="flexRadioDefault1">
-									있음 </label> <input class="form-check-input" type="radio" name="s"
-									id="flexRadioDefault3" checked>
+								<input class="form-check-input" type="radio" name="rooftopCheck"
+									id="rooftopCheck1" value="Y" checked> <label
+									class="form-check-label" for="rooftopCheck1"> 있음 </label>
 
 							</div>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="s"
-									id="flexRadioDefault4"> <label class="form-check-label"
-									for="flexRadioDefault2"> 없음 </label>
+								<input class="form-check-input" type="radio" name="rooftopCheck"
+									id="rooftopCheck2" value="N"> <label
+									class="form-check-label" for="rooftopCheck2"> 없음 </label>
 							</div>
 						</div>
 						<div class="col-md-9 mb-3">
 							<label for="ds" class="fw-bold">단체석유무</label>
 							<div class="form-check form-check-inline mx-3">
-								<label class="form-check-label" for="flexRadioDefault1">
-									있음 </label> <input class="form-check-input" type="radio" name="b"
-									id="flexRadioDefault3" checked>
+								<input class="form-check-input" type="radio" name="groupCheck"
+									id="groupCheck1" value="Y" checked> <label
+									class="form-check-label" for="groupCheck1"> 있음 </label>
 
 							</div>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="b"
-									id="flexRadioDefault4"> <label class="form-check-label"
-									for="flexRadioDefault2"> 없음 </label>
+								<input class="form-check-input" type="radio" name="groupCheck"
+									id="groupCheck2" value="N"> <label
+									class="form-check-label" for="groupCheck2"> 없음 </label>
 							</div>
 						</div>
 						<hr />
 						<div class="col text-center">
-							<button class="btn btn-dark" type="button">카페등록</button>
+							<button id="cafeInputbtn" class="btn btn-dark" type="button">카페등록</button>
 						</div>
 					</form>
 				</div>
@@ -192,7 +193,25 @@
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
+	<script type="text/javascript">
+	$("#cafeInputbtn").click(function() {
+		
+		$('.nullchecks').each(function() {
+			if ($(this).val() == "") {
+				$(this).addClass("is-invalid");
+			}
+		})
+		if ($("#cafeName").attr("class") == "form-control is-valid"
+			&& $("#cafeAddress").attr("class") == "form-control is-valid"
+			&& $("#cafePhone").attr("class") == "form-control is-valid"
+			&& $("#cafeTime").attr("class") == "form-control is-valid"
+			&& $("#ownerNo").attr("class") == "form-control is-valid") 
+		{
+			$(this).attr("type", "submit");
+		}
+	})
+	</script>
 	<!-- main js 추가 -->
-	<script src="/Project/assets/js/main.js?var=85"></script>
+	<script src="/Project/assets/js/main.js?var=45"></script>
 </body>
 </html>
