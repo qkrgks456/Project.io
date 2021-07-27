@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html lang="ko">
+
 <head>
 <meta charset="utf-8">
 <!-- 부트스트랩 메타태그 -->
@@ -12,7 +13,7 @@
 <!-- css cdn -->
 <jsp:include page="/assets/css/csscdn.jsp"></jsp:include>
 <!-- main css 추가 -->
-<link href="/Project/assets/css/main.css?ver=45" rel="stylesheet">
+<link href="/Project/assets/css/main.css?ver=10" rel="stylesheet">
 <title>카페</title>
 </head>
 <body>
@@ -28,30 +29,34 @@
 		</c:if>
 		<!-- 들어갈 내용 -->
 		<section>
-		<nav>
-			<div>네비게이션</div>
-		</nav>
-			<h3>폐기 기능</h3>
-			<p>폐기기능은 commit 하기전 상태의 파일을 완전히 삭제쓰</p>
-			<h3>commit 한 내용을 취소하고 싶다면</h3>
-			<p>1. 브런치 초기화 - 특정 지점으로 초기화 하는 기능</p>
-			<p>2. reverse commit - 이전 버전으로 되돌린 내용으로 새로 커밋</p>
-			<p>불필요한 내용 추가</p>
-			<p>git hub 푸시</p>
+	
 			<div class="container">
-				<div class="container mx-4 mt-5 border border">상품구매 들어갈 예정입니다</div>
-			</div>
-		</section>
+			
+		<br>
+		<h2 class="fw-bold">상품구매 > 구매하기 > 구매완료</h2>
+		<hr/>
+	
+		<img src="/Project/assets/img/p4.png" style="margin-left:auto; margin-right:auto; display:block;"/>
+		<h2 style="text-align:center">결제가 완료 되었습니다.<br><br>
+		<a class="btn btn-secondary btn-lg" href="/Project/index.jsp" role="button">메인으로</a></h2>
+		</div>
+		<br><br><br><br>
+		
+	</section>
+		</div>
 	</div>
+		
+	
 	<!-- 하단 고정 퀵메뉴 -->
 	<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
-		<jsp:include page="/fixMenu/quickMenu.html"></jsp:include>
+	<jsp:include page="/fixMenu/quickMenu.html"></jsp:include>
 	</c:if>
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
-	<script src="/Project/assets/js/main.js?var=6"></script>
+	<script src="/Project/assets/js/main.js?var=6">
+	</script>
 </body>
 </html>
