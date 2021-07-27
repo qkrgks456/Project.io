@@ -44,20 +44,20 @@
 					<form action="/Project/data/signupProc.jsp" method="post"
 						class="needs-validation py-3" novalidate>
 						<div class="form-floating col-md-9 mb-3">
-							<input type="text" class="form-control" id="UserEmail"
+							<input type="text" class="form-control" id="cafeName" name="cafeName"
 								placeholder="카페이름"> <label
 								for="validationTooltipUsername" class="fw-bold">카페이름</label>
 							<div class="invalid-tooltip">Please choose a unique and
 								valid username.</div>
 						</div>
 						<div class="form-floating col-md-9 mb-3">
-							<input type="text" class="form-control" id="UserAddress"
+							<input type="text" class="form-control" id="cafeAddress" name="cafeAddress"
 								placeholder="주소" required> <label
 								for="validationTooltip03" class="fw-bold">카페주소</label>
 							<div class="invalid-tooltip">Please provide a valid city.</div>
 						</div>
 						<div class="form-floating col-md-9 mb-3">
-							<input type="text" class="form-control" id="validationTooltip05"
+							<input type="text" class="form-control" name="cafeAddress"
 								placeholder="몰라" required> <label
 								for="validationTooltip05" class="fw-bold">카페연락처</label>
 							<div class="invalid-tooltip">Please provide a valid zip.</div>
