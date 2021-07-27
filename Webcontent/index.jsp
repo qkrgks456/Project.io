@@ -123,7 +123,7 @@
 								</span>
 							</div>
 							<div class="text-center">
-								<a href="/Project/cafe/cafe.jsp"
+								<a href="/Project/MainCafe/cafe.jsp"
 									class="btn btn-outline-dark my-2">자세히 보기</a>
 							</div>
 						</div>
@@ -146,7 +146,7 @@
 								</span>
 							</div>
 							<div class="text-center">
-								<a href="/Project/cafe/cafe.jsp"
+								<a href="/Project/MainCafe/cafe.jsp"
 									class="btn btn-outline-dark my-2">자세히 보기</a>
 							</div>
 						</div>

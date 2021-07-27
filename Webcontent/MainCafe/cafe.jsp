@@ -187,35 +187,37 @@
 						</div>
 					</div>
 				</div>
+
 			</div>
 			<!--카페 상세정보 테이블-->
 			<div class="container px-5 mt-4">
 				<h3 class="fw-bold">정보</h3>
 				<hr />
+
 				<div class="container px-5 mt-4">
 					<div class="row">
-						<div class="col-md-2">
+						<div class="col-md-3 d-flex justify-content-center">
 							<div id="good" class="d-inline-flex align-items-center">
 								<i id="goodicon" class="bi bi-hand-thumbs-up-fill"
 									style="font-size: 2.0rem;"></i>
 								<p class="ms-2 mt-3 fw-bold">좋아요(1)</p>
 							</div>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-3 d-flex justify-content-center">
 							<div id="commenticon" class="d-inline-flex align-items-center">
 								<i id="commenticons" class="bi bi-chat-square-text-fill mt-1"
 									style="font-size: 2.0rem;"></i>
 								<p class="ms-2 mt-3 fw-bold">댓글(1)</p>
 							</div>
 						</div>
-						<div class="col-md-2 p-0">
+						<div class="col-md-3 p-0 d-flex justify-content-center">
 							<div id="commenticon" class="d-inline-flex align-items-center">
 								<i id="commenticons" class="bi bi-sunglasses mt-1"
 									style="font-size: 2.2rem;"></i>
 								<p class="ms-2 mt-3 fw-bold">조회수(1)</p>
 							</div>
 						</div>
-						<div class="col-md-2">
+						<div class="col-md-3 d-flex justify-content-center">
 							<div id="commenticon" class="d-inline-flex align-items-center"
 								data-bs-toggle="tooltip" data-bs-html="true"
 								data-bs-placement="right" title="쾌적">
@@ -287,23 +289,32 @@
 				<h3 class="fw-bold">메뉴</h3>
 				<hr />
 				<!-- 이미지 슬라이드 -->
-				<div class="container px-5 mt-4">
-					<div class="slider">
-						<div class="slides">
-							<div id="slide-1">
-								<img class="w-100 h-100" src="/Project/assets/img/macaron.jpg"
-									alt="macaron" style="object-fit: cover;">
-							</div>
-							<div id="slide-2">
-								<img class="w-100 h-100" src="/Project/assets/img/macaron2.jpg"
-									alt="macaron" style="object-fit: cover;">
-							</div>
-							<div id="slide-3">
-								<img class="w-100 h-100" src="/Project/assets/img/tart.jpg"
-									alt="tart" style="object-fit: cover;">
-							</div>
-						</div>
-					</div>
+				<div class="container px-5 my-2">
+					<table class="table table-hover mt-2">
+						<thead class="">
+							<tr>
+								<th scope="col">상품이미지</th>
+								<th scope="col">상품명</th>
+								<th scope="col">상품설명</th>
+								<th scope="col">가격</th>
+								<th class="text-center" scope="col">상세보기</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="">
+								<td><img src="/Project/assets/img/12.jpg" class="rounded"
+									style="width: 80px; height: 80px; object-fit: cover;" /></td>
+								<td class="align-middle">카페명</td>
+								<td class="align-middle">카페설명</td>
+								<td class="align-middle">가격</td>
+								<td class="align-middle">
+									<div class="d-grid gap-2 col-6 mx-auto mt-1">
+										<a class="btn btn-secondary btn-sm">상세보기</a>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 				<h3 id="comments" class="fw-bold mt-3">댓글</h3>
 				<hr />
@@ -318,10 +329,9 @@
 				<div class="container px-5 py-4 my-4">
 					<p class="fw-bold">qkrgks789</p>
 					<p class="lh-sm">
-						이쪽에 댓글 내용이 들어갈겁니다
-						<a class="float-end btn btn-secondary btn-sm">신고</a>
-						<a class="mx-2 float-end btn btn-secondary btn-sm">삭제</a>
-						<a class="float-end btn btn-secondary btn-sm">수정</a>
+						이쪽에 댓글 내용이 들어갈겁니다 <a class="float-end btn btn-secondary btn-sm">신고</a>
+						<a class="mx-2 float-end btn btn-secondary btn-sm">삭제</a> <a
+							class="float-end btn btn-secondary btn-sm">수정</a>
 					</p>
 					<hr />
 					<p class="fw-bold">qkrgks456</p>
@@ -340,7 +350,7 @@
 	</div>
 	<!-- 하단 고정 퀵메뉴 -->
 	<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
-	<jsp:include page="/fixMenu/quickMenu.html"></jsp:include>
+		<jsp:include page="/fixMenu/quickMenu.html"></jsp:include>
 	</c:if>
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>

@@ -27,7 +27,6 @@
 			<jsp:include page="/fixMenu/navbar.jsp"></jsp:include>
 		</c:if>
 		<!-- 들어갈 내용 -->
-		<!-- 원두 상품 코너 -->
 
 		<div class="container">
 			<!-- 검색창 -->
