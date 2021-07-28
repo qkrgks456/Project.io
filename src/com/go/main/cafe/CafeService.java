@@ -7,7 +7,9 @@ import javax.servlet.http.HttpSession;
 public class CafeService {
 	HttpServletRequest req = null;
 	CafeDAO dao = null; 
-	
+	CafeDTO dto = null;
+	CafeUploadService upload = null;
+	int suc = 0;
 	public CafeService(HttpServletRequest req) {
 		try {
 			req.setCharacterEncoding("UTF-8");
@@ -18,10 +20,10 @@ public class CafeService {
 	}
 
 	public int cafeInput() {
-		int suc = 0;
+		suc = 0;
 		// 파일
-		CafeUploadService upload = new CafeUploadService(req);
-		CafeDTO dto = upload.PhotoUpload(); // 사진 업로드
+		upload = new CafeUploadService(req);
+		dto = upload.PhotoUpload(); // 사진 업로드
 		System.out.println("파일과 파라미터값 dto 잘 받았냐 : " + dto);
 		HttpSession session = req.getSession();
 		String sessionId = (String)session.getAttribute("loginId");
@@ -29,6 +31,14 @@ public class CafeService {
 		dao = new CafeDAO();
 		suc = dao.cafeInput(dto,sessionId);
 		return suc;
+	}
+
+	public boolean ownerCheck() {
+
+		String ownerNo = req.getParameter("ownerNo");
+		dao = new CafeDAO();
+		
+		return dao.ownerCheck(ownerNo);
 	}
 
 }

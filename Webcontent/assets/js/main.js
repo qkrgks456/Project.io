@@ -76,7 +76,12 @@ $(document).ready(function() {
 			== $('.nav-item a').eq(i).attr('href').split('/').pop()) {
 			$('.nav-item a').eq(i).addClass("active")
 		}
+		
 	})
+	/* 현재페이지가 cafe.jsp라면*/
+	if($(location).attr('href').split('/').pop()== 'cafe.jsp'){
+			$('.nav-item a').eq(1).addClass("active");
+		}
 
 	/* 로그인버튼 누르면 로그인창 초기화*/
 	$('#loginbtn').click(function() {

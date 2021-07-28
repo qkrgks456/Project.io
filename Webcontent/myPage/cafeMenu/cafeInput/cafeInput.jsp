@@ -68,12 +68,12 @@
 							<div class="invalid-feedback">필수 정보 입니다</div>
 						</div>
 						<div class="form-floating col-md-9 mb-3">
-							<input type="text" class="form-control nullchecks" id="ownerNo"
+							<input type="text" class="form-control" id="ownerNo"
 								name="ownerNo" placeholder="주소" required> <label
 								for="ownerNo" class="fw-bold">사업자등록번호</label>
-							<div class="invalid-feedback">사용 불가</div>
+							<div class="invalid-feedback">사용 불가,중복확인을 다시 해주세요</div>
 							<div class="valid-feedback">사용 가능</div>
-							<input type="button" class="btn btn-dark btn-sm" value="중복확인">
+							<input id="ownerNobtn" type="button" class="btn btn-dark btn-sm mt-2" value="중복확인">
 						</div>
 						
 						<div class="col-md-9 mb-3">
@@ -98,11 +98,14 @@
 							<label for="cafeImg" class="form-label fw-bold">카페이미지 첨부</label>
 							<input class="form-control" type="file" id="cafeImg"
 								name="cafeImg" multiple>
+							<div id="oneMust" class="invalid-feedback visually-hidden">1장 이상은 꼭 등록해주세요</div>
+							<div id="nineMust" class="invalid-feedback visually-hidden">9장 이하만 등록 가능합니다</div>
 						</div>
 						<div class="col-md-9 mb-3">
 							<label for="ownerNoImg" class="form-label fw-bold">사업자등록증
 								첨부</label> <input class="form-control" type="file" id="ownerNoImg"
-								name="ownerNoImg" multiple>
+								name="ownerNoImg">
+							<div class="invalid-feedback">꼭 첨부해주세요</div>
 						</div>
 						<div class="form-floating col-md-9 mb-3">
 							<div class="mb-3">
@@ -194,8 +197,28 @@
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<script type="text/javascript">
+	$('#cafeImg').change(function() {
+		if ($(this)[0].files.length > 9) {
+			$("#nineMust").removeClass("visually-hidden");
+			$("#oneMust").addClass("visually-hidden");
+			$(this).attr("class","form-control is-invalid");
+		}else if($(this)[0].files.length == 0 ){
+			$("#oneMust").removeClass("visually-hidden");
+			$("#nineMust").addClass("visually-hidden");
+			$(this).attr("class","form-control is-invalid");	
+		}else{
+			$(this).attr("class","form-control is-valid");
+		}
+	})
+	$('#ownerNoImg').change(function() {
+		if ($(this)[0].files.length == 0) {
+			$(this).attr("class","form-control is-invalid");
+		}else{
+			$(this).attr("class","form-control is-valid");
+		}
+	})	
 	$("#cafeInputbtn").click(function() {
-		
+	
 		$('.nullchecks').each(function() {
 			if ($(this).val() == "") {
 				$(this).addClass("is-invalid");
@@ -205,9 +228,53 @@
 			&& $("#cafeAddress").attr("class") == "form-control is-valid"
 			&& $("#cafePhone").attr("class") == "form-control is-valid"
 			&& $("#cafeTime").attr("class") == "form-control is-valid"
-			&& $("#ownerNo").attr("class") == "form-control is-valid") 
+			&& $("#ownerNo").attr("class") == "form-control is-valid"
+			&& $("#ownerNoImg").attr("class") == "form-control is-valid"
+			&& $("#cafeImg").attr("class") == "form-control is-valid"
+			) 
 		{
 			$(this).attr("type", "submit");
+		}
+		if($("#ownerNo").attr("class")=="form-control"){
+			$("#ownerNo").addClass("is-invalid");
+		}
+		if ($('#cafeImg')[0].files.length > 9) {
+			$('#cafeImg').addClass("is-invalid");
+		} else if($('#cafeImg')[0].files.length == 0){
+			$("#oneMust").removeClass("visually-hidden");
+			$("#nineMust").addClass("visually-hidden");
+			$('#cafeImg').addClass("is-invalid");
+		}
+		if ($('#ownerNoImg')[0].files.length == 0) {
+			$('#ownerNoImg').addClass("is-invalid");
+		}
+		
+	})
+	
+	$("#ownerNobtn").click(function() {
+		if($('#ownerNo').val()==""){
+			$('#ownerNo').addClass("is-invalid");
+		}else{
+			var ownerNum = $('#ownerNo').val()
+			$.ajax({
+				type : "POST",//방식
+				url : "/Project/ownerCheck",//주소
+				data : {
+					ownerNo : ownerNum
+				},
+				dataType : 'JSON',
+				success : function(data) { //성공시
+					console.log(data);
+					if(data.ownerCheck=='true'){
+						$('#ownerNo').addClass('is-valid');
+					}else{
+						$('#ownerNo').addClass('is-invalid');
+					}
+				},
+				error : function(e) { //실패시
+					console.log(e);
+				}
+			});
 		}
 	})
 	</script>

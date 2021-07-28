@@ -14,7 +14,7 @@ public class CafeDAO {
 	public Connection conn = null;
 	public ResultSet rs = null;
 	public PreparedStatement ps = null;
-
+	String sql = null;
 	public CafeDAO() {
 		try {
 			// DB접속
@@ -48,7 +48,7 @@ public class CafeDAO {
 		int suc = 0;
 		// 몰라
 		
-		String sql = "INSERT INTO ownerUser(ownerNo,memberKey) VALUES(?,?)";
+		sql = "INSERT INTO ownerUser(ownerNo,memberKey) VALUES(?,?)";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, dto.getOnnerNo());
@@ -82,6 +82,22 @@ public class CafeDAO {
 			resClose();
 		}
 		return suc;
+	}
+
+	public boolean ownerCheck(String ownerNo) {
+		sql = "SELECT ownerNo FROM cafeInfo WHERE ownerNo = ?";
+		boolean ownerCheck = false;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, ownerNo);
+			rs = ps.executeQuery();
+			ownerCheck = rs.next();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		return ownerCheck;
 	}
 
 }

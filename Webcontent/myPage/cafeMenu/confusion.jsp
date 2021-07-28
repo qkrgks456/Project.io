@@ -48,13 +48,13 @@
 						</div>
 						<div class="col-md-9 mb-3 mt-4">
 							<label for="validationTooltip02" class="fw-bold">총좌석</label> <input
-								type="text" class="form-control" id="UserPw"
+								type="text" class="form-control" id="Used"
 								placeholder="숫자를 입력해주세요" value="" required>
 							<div class="invalid-feedback">숫자를 입력해주세요</div>
 						</div>
 						<div class="col-md-9 mb-3">
 							<label for="validationTooltip02" class="fw-bold">현재좌석</label> <input
-								type="password" class="form-control" id="UserPw"
+								type="text" class="form-control" id="Userd"
 								placeholder="숫자를 입력해주세요" value="" required>
 							<div class="invalid-feedback">숫자를 입력해주세요</div>
 						</div>
@@ -77,13 +77,13 @@
 						</div>
 						<div class="col-md-9 mb-3">
 							<label for="validationTooltip02" class="fw-bold">보통</label> <input
-								type="password" class="form-control" id="UserPw"
+								type="text" class="form-control" id="UserPw"
 								placeholder="숫자를 입력해주세요" value="" required>
 							<div class="invalid-feedback">숫자를 입력해주세요</div>
 						</div>
 						<div class="col-md-9 mb-3">
 							<label for="validationTooltip02" class="fw-bold">혼잡</label> <input
-								type="password" class="form-control" id="UserPw"
+								type="text" class="form-control" id="UserPw"
 								placeholder="숫자를 입력해주세요" value="" required>
 							<div class="invalid-feedback">숫자를 입력해주세요</div>
 						</div>
