@@ -55,12 +55,16 @@
 								for="cafeAddress" class="fw-bold">카페주소</label>
 							<div class="invalid-feedback">필수 정보 입니다</div>
 						</div>
+						
 						<div class="form-floating col-md-9 mb-3">
 							<input type="text" class="form-control nullchecks" name="cafePhone"
 								id="cafePhone" placeholder="몰라" required> <label
 								for="cafeAddress" class="fw-bold">카페연락처</label>
 							<div class="invalid-feedback">필수 정보 입니다</div>
 						</div>
+						
+						
+						
 						<div class="form-floating col-md-9 mb-3">
 							<input type="text" class="form-control nullchecks" id="cafeTime"
 								name="cafeTime" placeholder="주소" required> <label
@@ -95,18 +99,18 @@
 							</select>
 						</div>
 						<div class="col-md-9 mb-3">
-							<label for="cafeImg" class="form-label fw-bold">카페이미지 첨부</label>
-							<input class="form-control" type="file" id="cafeImg"
-								name="cafeImg" multiple>
-							<div id="oneMust" class="invalid-feedback visually-hidden">1장 이상은 꼭 등록해주세요</div>
-							<div id="nineMust" class="invalid-feedback visually-hidden">9장 이하만 등록 가능합니다</div>
-						</div>
-						<div class="col-md-9 mb-3">
 							<label for="ownerNoImg" class="form-label fw-bold">사업자등록증
 								첨부</label> <input class="form-control" type="file" id="ownerNoImg"
 								name="ownerNoImg">
 							<div class="invalid-feedback">꼭 첨부해주세요</div>
 						</div>
+						<div class="col-md-9 mb-3">
+							<label for="cafeImg" class="form-label fw-bold">카페이미지 첨부</label>
+							<input class="form-control" type="file" id="cafeImg"
+								name="cafeImg" multiple>
+							<div id="oneMust" class="invalid-feedback visually-hidden">1장 이상 꼭 등록해주세요</div>
+							<div id="nineMust" class="invalid-feedback visually-hidden">9장 이하만 등록 가능합니다</div>
+						</div>			
 						<div class="form-floating col-md-9 mb-3">
 							<div class="mb-3">
 								<label for="cafeDetail" class="form-label fw-bold">카페설명</label>
@@ -264,11 +268,11 @@
 				},
 				dataType : 'JSON',
 				success : function(data) { //성공시
-					console.log(data);
-					if(data.ownerCheck=='true'){
-						$('#ownerNo').addClass('is-valid');
+					console.log(data.ownerCheck);
+					if(data.ownerCheck==false){
+						$('#ownerNo').attr('class','form-control is-valid');
 					}else{
-						$('#ownerNo').addClass('is-invalid');
+						$('#ownerNo').attr('class','form-control is-invalid');
 					}
 				},
 				error : function(e) { //실패시

@@ -68,58 +68,60 @@ public class CafeUploadService {
 					} else if (item.getFieldName().equals("cafeTime")) {
 						System.out.println("cafeTime 파라미터 : " + text);
 						dto.setCafeTime(text);
-					}else if (item.getFieldName().equals("ownerNo")) {
+					} else if (item.getFieldName().equals("ownerNo")) {
 						System.out.println("onnerNo 파라미터 : " + text);
 						dto.setOnnerNo(text);
 					} else if (item.getFieldName().equals("parkingCheck")) {
 						System.out.println("parkingCheck 파라미터 : " + text);
 						dto.setParkingCheck(text);
-					}else if (item.getFieldName().equals("petCheck")) {
+					} else if (item.getFieldName().equals("petCheck")) {
 						System.out.println("petCheck 파라미터 : " + text);
 						dto.setPetCheck(text);
-					}else if (item.getFieldName().equals("childCheck")) {
+					} else if (item.getFieldName().equals("childCheck")) {
 						System.out.println("childCheck 파라미터 : " + text);
 						dto.setChildCheck(text);
-					}else if (item.getFieldName().equals("rooftopCheck")) {
+					} else if (item.getFieldName().equals("rooftopCheck")) {
 						System.out.println("rooftopCheck 파라미터 : " + text);
 						dto.setRooftopCheck(text);
-					}else if (item.getFieldName().equals("groupCheck")) {
+					} else if (item.getFieldName().equals("groupCheck")) {
 						System.out.println("groupCheck 파라미터 : " + text);
 						dto.setGroupCheck(text);
 					}
-					
-				} 
-			else { // 파일받기
-				// 파일등록을 했다면
+				} else { // 파일받기
+							// 파일등록을 했다면
 					if (!item.getName().equals("")) {
-					File uploadFile = new File(uploadPath + "/" + item.getName());
-					item.write(uploadFile);// 요게 업로드 되는거 (파일객체로 담자)
-					// 이름바꾸기 배운거
-					String oriFileName = item.getName();
-					String[] fileSplit = item.getName().split("\\.");
-					String newFileName = System.nanoTime() + "." + fileSplit[1];
-					File oriName = new File(uploadPath + "/" + oriFileName);
-					File newName = new File(uploadPath + "/" + newFileName);
-					oriName.renameTo(newName);
-					System.out.println("기존파일명 : " + oriFileName + " / " + "바뀐파일명 : " + newFileName);
-					// 바뀐이름 map에 담기
-					map = new HashMap<String, Object>();
-					map.put("newFileName", newFileName);
-					map.put("oriFileName", oriFileName);
-					// 파일 이름이 잘 들어갔다면
-					if (map.get("newFileName") != null) {
-						maparr.add(map);
+						if (item.getFieldName().equals("ownerNoImg")) {
+							System.out.println("파일업로드");
+							File uploadFile = new File(uploadPath + "/" + item.getName());
+							item.write(uploadFile);// 요게 업로드 되는거 (파일객체로 담자)
+							// 이름바꾸기 배운거
+							String oriFileName = item.getName();
+							String[] fileSplit = item.getName().split("\\.");
+							String newFileName = System.nanoTime() + "." + fileSplit[1];
+							File oriName = new File(uploadPath + "/" + oriFileName);
+							File newName = new File(uploadPath + "/" + newFileName);
+							oriName.renameTo(newName);
+							System.out.println("기존파일명 : " + oriFileName + " / " + "바뀐파일명 : " + newFileName);
+							// 바뀐이름 map에 담기
+							map = new HashMap<String, Object>();
+							map.put("newFileName", newFileName);
+							map.put("oriFileName", oriFileName);
+							// 파일 이름이 잘 들어갔다면
+							if (map.get("newFileName") != null) {
+								dto.setBusinessfilenames(map);
+							}
+							System.out.println("업로드 성공 !");
+						} else if (item.getFieldName() == "cafeImg") {
+							// map안에 데이터가 잘 있다면
+							if (map != null) {
+								dto.setMaparr(maparr);
+							}
 						}
-					System.out.println("업로드 성공 !");
+
+					}
 				}
 			}
-			}
 
-//			// map안에 데이터가 잘 있다면
-//			if (map != null) {
-//				dto.setMaparr(maparr);
-//			}
-//			dto.setFileIdxs(fileIdxs);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

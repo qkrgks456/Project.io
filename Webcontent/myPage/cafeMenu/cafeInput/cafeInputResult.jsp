@@ -31,14 +31,16 @@
 			<jsp:include page="/myPage/myPagesideBar.jsp"></jsp:include>
 			<!-- 오른쪽 시작 -->
 			<div class="cont container-fluid mx-5 py-5">
-				<div class="d-flex align-items-center">
-					<button type="button" id="sidebarCollapse"
-						class="me-2 btn btn-secondary">
-						<i class="bi bi-text-left"></i>
-					</button>
-					<h2 class="fw-bold my-3">카페 등록 완료</h2>
+
+				<div class="d-flex justify-content-center">
+					<i class="mx-2 bi bi-check-lg" style="font-size: 4.0rem;"></i>
+					<h2 class="mt-4 align-middle ms-2 fw-bold">카페등록 완료</h2>
 				</div>
-				<hr />
+				<div class="text-center">
+					<p class="fs-5">* 저희사이트에 등록해주셔서 감사합니다 카페등록이 완료되었습니다.<br/>
+					검수가 진행된후, 사이트에 노출되게 됩니다 검수기간은 2~3일정도 소요됩니다</p>
+					<a href="/Project/index.jsp" class="btn btn-dark">메인으로</a>
+				</div>
 			</div>
 		</div>
 	</div>

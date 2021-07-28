@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -15,6 +17,7 @@ public class CafeDAO {
 	public ResultSet rs = null;
 	public PreparedStatement ps = null;
 	String sql = null;
+
 	public CafeDAO() {
 		try {
 			// DB접속
@@ -46,20 +49,24 @@ public class CafeDAO {
 
 	public int cafeInput(CafeDTO dto, String sessionId) {
 		int suc = 0;
-		// 몰라
-		
+		HashMap<String, Object> businessfilenames = dto.getBusinessfilenames();
 		sql = "INSERT INTO ownerUser(ownerNo,memberKey) VALUES(?,?)";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, dto.getOnnerNo());
 			ps.setString(2, sessionId);
 			suc = ps.executeUpdate();
+			sql = "INSERT INTO image(fileIdx,division,oriFileName,newFileName) VALUES(image_seq.NEXTVAL,?,?,?)";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, dto.getOnnerNo());
+			ps.setString(2, (String) businessfilenames.get("oriFileName"));
+			ps.setString(3, (String) businessfilenames.get("newFileName"));
+			suc = ps.executeUpdate();
 			if (suc > 0) {
 				sql = "INSERT INTO cafeInfo"
 						+ "(cafeKey,ownerNo,cafeName,cafeLocation,cafeAddress,cafePhone,cafeDetail,cafeTime"
-						+ ",parkingCheck,petCheck,childCheck,rooftopCheck,groupCheck,cafeDel,openCheck)"
-						+ "VALUES"
-						+ "(cafeInfo_seq.NEXTVAL,?,?,?,?,?,?,?,?,?,?,?,?,'N','Y')";
+						+ ",parkingCheck,petCheck,childCheck,rooftopCheck,groupCheck,cafeDel,openCheck,conFusion)"
+						+ "VALUES" + "(cafeInfo_seq.NEXTVAL,?,?,?,?,?,?,?,?,?,?,?,?,'N','Y','보통')";
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, dto.getOnnerNo());
 				ps.setString(2, dto.getCafeName());

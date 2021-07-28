@@ -1,5 +1,8 @@
 package com.go.main.cafe;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class CafeDTO {
 	private String cafeName;
 	private String cafeLocation;
@@ -13,6 +16,9 @@ public class CafeDTO {
 	private String rooftopCheck;
 	private String groupCheck;
 	private String onnerNo;
+	private ArrayList<HashMap<String, Object>> maparr;
+	private HashMap<String, Object> businessfilenames;
+	
 	public String getCafeName() {
 		return cafeName;
 	}
@@ -84,6 +90,18 @@ public class CafeDTO {
 	}
 	public void setOnnerNo(String onnerNo) {
 		this.onnerNo = onnerNo;
+	}
+	public ArrayList<HashMap<String, Object>> getMaparr() {
+		return maparr;
+	}
+	public void setMaparr(ArrayList<HashMap<String, Object>> maparr) {
+		this.maparr = maparr;
+	}
+	public HashMap<String, Object> getBusinessfilenames() {
+		return businessfilenames;
+	}
+	public void setBusinessfilenames(HashMap<String, Object> businessfilenames) {
+		this.businessfilenames = businessfilenames;
 	}
 	
 }
