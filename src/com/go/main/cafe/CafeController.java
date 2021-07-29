@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-@WebServlet({ "/cafeInput", "/cafeUpdate", "/ownerCheck" })
+@WebServlet({ "/cafewrite", "/cafeInfoMyPage", "/ownerCheck","/cafeUpdate" })
 public class CafeController extends HttpServlet {
 	// 안녕
 	private static final long serialVersionUID = 1L;
@@ -27,22 +27,41 @@ public class CafeController extends HttpServlet {
 		RequestDispatcher dis = null;
 		CafeService service = new CafeService(req);
 		switch (addr) {
-		case "/cafeInput":
+		case "/cafewrite":
 			System.out.println("카페 등록");
 			suc = service.cafeInput();
+			System.out.println(suc);
 			if (suc > 0) {
-				resp.sendRedirect("/Project/myPage/cafeMenu/cafeInput/cafeInputResult.jsp");
+				resp.sendRedirect("cafeInputResult.jsp");
+			} 
+			if (suc == 0) {
+				System.out.println("이거 실행되나?");
+				req.setAttribute("suc", suc);
+				dis = req.getRequestDispatcher("myPage/cafeMenu/cafeInput/cafeInput.jsp");
+				dis.forward(req, resp);
 			}
 			break;
 		case "/ownerCheck":
 			System.out.println("사업자 번호 체크");
 			boolean ownerCheck = service.ownerCheck();
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("ownerCheck", ownerCheck );
+			map.put("ownerCheck", ownerCheck);
 			resp.setContentType("text/html; charset=UTF-8");
 			resp.getWriter().print(new Gson().toJson(map));
 			break;
-
+			
+		case "/cafeInfoMyPage":
+			System.out.println("카페정보 마이페이지");		
+			CafeDTO dto = service.cafeInfoMyPage();
+			System.out.println("dto체크 : "+ dto);
+			req.setAttribute("dto", dto);
+			dis = req.getRequestDispatcher("myPage/cafeMenu/cafeUpdate/cafeInfo.jsp");
+			dis.forward(req, resp);
+			break;
+		case "/cafeUpdate":
+			System.out.println("카페정보 업데이트");
+			suc = service.cafeUpdate();
+			break;
 		}
 	}
 

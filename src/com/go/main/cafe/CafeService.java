@@ -41,4 +41,18 @@ public class CafeService {
 		return dao.ownerCheck(ownerNo);
 	}
 
+	public CafeDTO cafeInfoMyPage() {
+		HttpSession session = req.getSession();
+		String sessionId = (String)session.getAttribute("loginId");
+		dao = new CafeDAO();	
+		return dao.cafeInfoMyPage(sessionId);
+	}
+
+	public int cafeUpdate() {
+		upload = new CafeUploadService(req);
+		dto = upload.PhotoUpload();
+		System.out.println(dto);
+		return 0;
+	}
+
 }

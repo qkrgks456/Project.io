@@ -41,8 +41,9 @@
 				<hr />
 				<!-- 내용시작 -->
 				<div class="cont container w-50">
-					<form action="/Project/cafeInput" method="post" enctype="multipart/form-data"
-						class="needs-validation py-3" novalidate>
+					<form action="/Project/cafewrite" method="post" id="cafeInputForm"
+						enctype="multipart/form-data" class="needs-validation py-3"
+						novalidate>
 						<div class="form-floating col-md-9 mb-3">
 							<input type="text" class="form-control nullchecks" id="cafeName"
 								name="cafeName" placeholder="카페이름"> <label
@@ -50,21 +51,21 @@
 							<div class="invalid-feedback">필수 정보 입니다</div>
 						</div>
 						<div class="form-floating col-md-9 mb-3">
-							<input type="text" class="form-control nullchecks" id="cafeAddress"
-								name="cafeAddress" placeholder="주소" required> <label
-								for="cafeAddress" class="fw-bold">카페주소</label>
+							<input type="text" class="form-control nullchecks"
+								id="cafeAddress" name="cafeAddress" placeholder="주소" required>
+							<label for="cafeAddress" class="fw-bold">카페주소</label>
 							<div class="invalid-feedback">필수 정보 입니다</div>
 						</div>
-						
+
 						<div class="form-floating col-md-9 mb-3">
-							<input type="text" class="form-control nullchecks" name="cafePhone"
-								id="cafePhone" placeholder="몰라" required> <label
-								for="cafeAddress" class="fw-bold">카페연락처</label>
+							<input type="text" class="form-control nullchecks"
+								name="cafePhone" id="cafePhone" placeholder="몰라" required>
+							<label for="cafeAddress" class="fw-bold">카페연락처</label>
 							<div class="invalid-feedback">필수 정보 입니다</div>
 						</div>
-						
-						
-						
+
+
+
 						<div class="form-floating col-md-9 mb-3">
 							<input type="text" class="form-control nullchecks" id="cafeTime"
 								name="cafeTime" placeholder="주소" required> <label
@@ -77,9 +78,10 @@
 								for="ownerNo" class="fw-bold">사업자등록번호</label>
 							<div class="invalid-feedback">사용 불가,중복확인을 다시 해주세요</div>
 							<div class="valid-feedback">사용 가능</div>
-							<input id="ownerNobtn" type="button" class="btn btn-dark btn-sm mt-2" value="중복확인">
+							<input id="ownerNobtn" type="button"
+								class="btn btn-dark btn-sm mt-2" value="중복확인">
 						</div>
-						
+
 						<div class="col-md-9 mb-3">
 							<h6 class="fw-bold ">지역구선택 (해당지역에 맞는 손님에게 카페를 추천해드립니다)</h6>
 							<select class="form-select" name="cafeLocation">
@@ -108,9 +110,11 @@
 							<label for="cafeImg" class="form-label fw-bold">카페이미지 첨부</label>
 							<input class="form-control" type="file" id="cafeImg"
 								name="cafeImg" multiple>
-							<div id="oneMust" class="invalid-feedback visually-hidden">1장 이상 꼭 등록해주세요</div>
-							<div id="nineMust" class="invalid-feedback visually-hidden">9장 이하만 등록 가능합니다</div>
-						</div>			
+							<div id="oneMust" class="invalid-feedback visually-hidden">1장
+								이상 꼭 등록해주세요</div>
+							<div id="nineMust" class="invalid-feedback visually-hidden">9장
+								이하만 등록 가능합니다</div>
+						</div>
 						<div class="form-floating col-md-9 mb-3">
 							<div class="mb-3">
 								<label for="cafeDetail" class="form-label fw-bold">카페설명</label>
@@ -187,6 +191,26 @@
 									class="form-check-label" for="groupCheck2"> 없음 </label>
 							</div>
 						</div>
+						<c:if test="${suc eq 0}">
+							<div class="modal fade" tabindex="-1" id="failmodal">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title">등록실패</h5>
+											<button type="button" class="btn-close"
+												data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											<p>이미 등록한 카페가 있습니다</p>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-bs-dismiss="modal">Close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</c:if>
 						<hr />
 						<div class="col text-center">
 							<button id="cafeInputbtn" class="btn btn-dark" type="button">카페등록</button>
@@ -201,86 +225,104 @@
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<script type="text/javascript">
-	$('#cafeImg').change(function() {
-		if ($(this)[0].files.length > 9) {
-			$("#nineMust").removeClass("visually-hidden");
-			$("#oneMust").addClass("visually-hidden");
-			$(this).attr("class","form-control is-invalid");
-		}else if($(this)[0].files.length == 0 ){
-			$("#oneMust").removeClass("visually-hidden");
-			$("#nineMust").addClass("visually-hidden");
-			$(this).attr("class","form-control is-invalid");	
-		}else{
-			$(this).attr("class","form-control is-valid");
-		}
-	})
-	$('#ownerNoImg').change(function() {
-		if ($(this)[0].files.length == 0) {
-			$(this).attr("class","form-control is-invalid");
-		}else{
-			$(this).attr("class","form-control is-valid");
-		}
-	})	
-	$("#cafeInputbtn").click(function() {
-	
-		$('.nullchecks').each(function() {
-			if ($(this).val() == "") {
-				$(this).addClass("is-invalid");
+		$('#cafeImg').change(function() {
+			if ($(this)[0].files.length > 9) {
+				$("#nineMust").removeClass("visually-hidden");
+				$("#oneMust").addClass("visually-hidden");
+				$(this).attr("class", "form-control is-invalid");
+			} else if ($(this)[0].files.length == 0) {
+				$("#oneMust").removeClass("visually-hidden");
+				$("#nineMust").addClass("visually-hidden");
+				$(this).attr("class", "form-control is-invalid");
+			} else {
+				$(this).attr("class", "form-control is-valid");
 			}
 		})
-		if ($("#cafeName").attr("class") == "form-control is-valid"
-			&& $("#cafeAddress").attr("class") == "form-control is-valid"
-			&& $("#cafePhone").attr("class") == "form-control is-valid"
-			&& $("#cafeTime").attr("class") == "form-control is-valid"
-			&& $("#ownerNo").attr("class") == "form-control is-valid"
-			&& $("#ownerNoImg").attr("class") == "form-control is-valid"
-			&& $("#cafeImg").attr("class") == "form-control is-valid"
-			) 
-		{
-			$(this).attr("type", "submit");
-		}
-		if($("#ownerNo").attr("class")=="form-control"){
-			$("#ownerNo").addClass("is-invalid");
-		}
-		if ($('#cafeImg')[0].files.length > 9) {
-			$('#cafeImg').addClass("is-invalid");
-		} else if($('#cafeImg')[0].files.length == 0){
-			$("#oneMust").removeClass("visually-hidden");
-			$("#nineMust").addClass("visually-hidden");
-			$('#cafeImg').addClass("is-invalid");
-		}
-		if ($('#ownerNoImg')[0].files.length == 0) {
-			$('#ownerNoImg').addClass("is-invalid");
-		}
-		
-	})
-	
-	$("#ownerNobtn").click(function() {
-		if($('#ownerNo').val()==""){
-			$('#ownerNo').addClass("is-invalid");
-		}else{
-			var ownerNum = $('#ownerNo').val()
-			$.ajax({
-				type : "POST",//방식
-				url : "/Project/ownerCheck",//주소
-				data : {
-					ownerNo : ownerNum
-				},
-				dataType : 'JSON',
-				success : function(data) { //성공시
-					console.log(data.ownerCheck);
-					if(data.ownerCheck==false){
-						$('#ownerNo').attr('class','form-control is-valid');
-					}else{
-						$('#ownerNo').attr('class','form-control is-invalid');
+		$('#ownerNoImg').change(function() {
+			if ($(this)[0].files.length == 0) {
+				$(this).attr("class", "form-control is-invalid");
+			} else {
+				$(this).attr("class", "form-control is-valid");
+			}
+		})
+		$("#cafeInputbtn").click(function(){
+							$('.nullchecks').each(function() {
+								if ($(this).val() == "") {
+									$(this).addClass("is-invalid");
+								}
+							})
+							if ($("#cafeName").attr("class") == "form-control is-valid"
+									&& $("#cafeAddress").attr("class") == "form-control is-valid"
+									&& $("#cafePhone").attr("class") == "form-control is-valid"
+									&& $("#cafeTime").attr("class") == "form-control is-valid"
+									&& $("#ownerNo").attr("class") == "form-control is-valid"
+									&& $("#ownerNoImg").attr("class") == "form-control is-valid"
+									&& $("#cafeImg").attr("class") == "form-control is-valid") {
+								Swal.fire({
+									  title: '정말 이대로 등록하시겠습니까?',
+									  text: "검수기간동안 다시 등록할 수 없습니다",
+									  icon: 'question',
+									  showDenyButton: true,
+									  confirmButtonColor: '#000',
+									  confirmButtonText: '등록하기',
+									  denyButtonText: '취소'
+									}).then((result) => {	
+										if (result.isConfirmed) {
+											$('#cafeInputForm').submit();
+										}
+									})
+							}
+							if ($("#ownerNo").attr("class") == "form-control") {
+								$("#ownerNo").addClass("is-invalid");
+							}
+							if ($('#cafeImg')[0].files.length > 9) {
+								$('#cafeImg').addClass("is-invalid");
+							} else if ($('#cafeImg')[0].files.length == 0) {
+								$("#oneMust").removeClass("visually-hidden");
+								$("#nineMust").addClass("visually-hidden");
+								$('#cafeImg').addClass("is-invalid");
+							}
+							if ($('#ownerNoImg')[0].files.length == 0) {
+								$('#ownerNoImg').addClass("is-invalid");
+							}
+
+						})
+
+		$("#ownerNobtn").click(function() {
+					if ($('#ownerNo').val() == "") {
+						$('#ownerNo').addClass("is-invalid");
+					} else {
+						var ownerNum = $('#ownerNo').val()
+						$.ajax({
+							type : "POST",//방식
+							url : "/Project/ownerCheck",//주소
+							data : {
+								ownerNo : ownerNum
+							},
+							dataType : 'JSON',
+							success : function(data) { //성공시
+								console.log(data.ownerCheck);
+								if (data.ownerCheck == false) {
+									$('#ownerNo').attr('class',
+											'form-control is-valid');
+								} else {
+									$('#ownerNo').attr('class',
+											'form-control is-invalid');
+								}
+							},
+							error : function(e) { //실패시
+								console.log(e);
+							}
+						});
 					}
-				},
-				error : function(e) { //실패시
-					console.log(e);
-				}
-			});
+				})
+		if ($('#failmodal').length) {
+			var myModal = new bootstrap.Modal(document
+					.getElementById('failmodal'), {
+				keyboard : true
+			})
+			myModal.show();
 		}
-	})
 	</script>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=45"></script>

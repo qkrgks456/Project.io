@@ -112,6 +112,21 @@ public class CafeUploadService {
 							}
 							System.out.println("업로드 성공 !");
 						} else if (item.getFieldName() == "cafeImg") {
+							System.out.println("파일업로드");
+							File uploadFile = new File(uploadPath + "/" + item.getName());
+							item.write(uploadFile);// 요게 업로드 되는거 (파일객체로 담자)
+							// 이름바꾸기 배운거
+							String oriFileName = item.getName();
+							String[] fileSplit = item.getName().split("\\.");
+							String newFileName = System.nanoTime() + "." + fileSplit[1];
+							File oriName = new File(uploadPath + "/" + oriFileName);
+							File newName = new File(uploadPath + "/" + newFileName);
+							oriName.renameTo(newName);
+							System.out.println("기존파일명 : " + oriFileName + " / " + "바뀐파일명 : " + newFileName);
+							// 바뀐이름 map에 담기
+							map = new HashMap<String, Object>();
+							map.put("newFileName", newFileName);
+							map.put("oriFileName", oriFileName);
 							// map안에 데이터가 잘 있다면
 							if (map != null) {
 								dto.setMaparr(maparr);
@@ -121,7 +136,6 @@ public class CafeUploadService {
 					}
 				}
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

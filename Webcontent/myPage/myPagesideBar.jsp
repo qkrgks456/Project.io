@@ -46,7 +46,7 @@
 				href="/Project/myPage/cafeMenu/cafeInput/cafeInput.jsp"
 				style="cursor: pointer;">카페등록</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myPage/cafeMenu/cafeUpdate/cafeInfo.jsp"
+				href="/Project/cafeInfoMyPage"
 				style="cursor: pointer;">카페정보</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
 				href="/Project/myPage/cafeMenu/businessChange/businessChange.jsp"
