@@ -42,8 +42,8 @@ public class SearchController extends HttpServlet {
 			System.out.println("카페 네임 검색 요청");					
 			String Sname = req.getParameter("searchtype");//// 옵션 키워드
 			String Sresult = req.getParameter("searchresult");//// 검색 키워드
-				System.out.println("name 값 : " + Sname);
-				System.out.println("result 값 출력 : " + Sresult);				
+				System.out.println("name(옵션) 값 : " + Sname);
+				System.out.println("result(유저검색) 값 출력 : " + Sresult);				
 
 				if(Sname.equals("searchcafename")) {
 					service.namelist(Sresult);
@@ -52,7 +52,10 @@ public class SearchController extends HttpServlet {
 					dis.forward(req, resp);
 				}
 				if(Sname.equals("searchcafeproduct")) {
-					
+					service.productlist(Sresult);
+					req.setAttribute("list2", service.productlist(Sresult));
+					dis = req.getRequestDispatcher("search.jsp");
+					dis.forward(req, resp);				
 				}			
 			
 			break;

@@ -9,6 +9,9 @@ public class SearchDTO {
 	private int likeNo;
 	private String productid;
 	private String productName;
+	private String cafeLocation;
+	private int price;
+	
 	
 	public String getCafeKey() {
 		return cafeKey;
@@ -51,6 +54,18 @@ public class SearchDTO {
 	}
 	public void setProductName(String productName) {
 		this.productName = productName;
+	}
+	public String getCafeLocation() {
+		return cafeLocation;
+	}
+	public void setCafeLocation(String cafeLocation) {
+		this.cafeLocation = cafeLocation;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
 	}
 	
 	

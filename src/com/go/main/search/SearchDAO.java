@@ -36,18 +36,19 @@ public class SearchDAO {
 		}		
 	}
 	public ArrayList<SearchDTO> namelist(String sresult) {
-		String sql= "SELECT c.cafeName FROM cafeinfo c LEFT OUTER JOIN product p ON c.cafekey=p.cafekey WHERE c.cafename=?";
+		String sql= "SELECT c.cafeName, c.cafeLocation, c.Confusion FROM cafeinfo c LEFT OUTER JOIN product p ON c.cafekey=p.cafekey WHERE c.cafename LIKE ?";
 		ArrayList<SearchDTO> namelist = null;
 		SearchDTO dto = null;
-		System.out.println("DAO에서 검색값 확인 : " + sresult);
 		try {			
 			ps = conn.prepareStatement(sql);
-			ps.setString(1,sresult);
+			ps.setString(1,"%"+sresult+'%');
 			rs = ps.executeQuery();			
 			namelist = new ArrayList<SearchDTO>();
 			while(rs.next()) {
 			dto = new SearchDTO();
-			dto.setCafeName(rs.getString("cafeName"));				
+			dto.setCafeName(rs.getString("cafeName"));		
+			dto.setCafeLocation(rs.getString("cafeLocation"));
+			dto.setConfusion(rs.getString("confusion"));
 			namelist.add(dto);
 			}			
 		} catch (SQLException e) {
@@ -57,6 +58,33 @@ public class SearchDAO {
 		}
 		return namelist;
 		
+	}
+
+	public ArrayList<SearchDTO> productlist(String sresult) {
+		String sql = "SELECT p.productname, p.price, c.cafeName, c.cafeLocation FROM cafeinfo c LEFT OUTER JOIN product p ON c.cafekey=p.cafekey WHERE p.productname LIKE ?";
+		ArrayList<SearchDTO> productlist = null;
+		SearchDTO dto = null;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1,"%"+sresult+'%');
+			rs = ps.executeQuery();	
+			productlist = new ArrayList<SearchDTO>();
+			while(rs.next()) {
+			dto = new SearchDTO();
+			dto.setProductName(rs.getString("productName"));
+			dto.setPrice(rs.getInt("price"));
+			dto.setCafeName(rs.getString("cafeName"));		
+			dto.setCafeLocation(rs.getString("cafeLocation"));
+			productlist.add(dto);
+			}			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();	
+		}
+		
+		return productlist;
 	}
 	
 }

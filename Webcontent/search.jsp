@@ -69,55 +69,94 @@
 
 			<!-- 게시판 틀 시작 -->
 			<div class="container mt-4">
-									<!-- 검색창 -->
-			<div class="row">
-				<div class="d-flex">
-					<p class="fw-bold mt-4 h1">통합 검색 시스템</p>
-					<div class="col d-flex justify-content-end mt-4">					
-						<form class="d-inline-flex justify-content-end"
-							style="height: 42px;" action="serachCafeName" method="post">
-	
-	<select name="searchtype" class="d-inline-flex justify-content-end me-2" style="height: 42px;"> 
-	    <option value="searchcafename" name="searchcafename">카페이름</option>
-	    <option value="searchcafeproduct" name="searchcafeproduct">카페상품</option>
-	</select>
-					<input class="form-control me-1" type="search"
-						placeholder="상품명을 입력해주세요" aria-label="Search" name="searchresult">
-					<button class="btn btn-outline-secondary" type="submit" >search</button>
-						
-						</form>
+				<!-- 검색창 -->
+				<div class="row">
+					<div class="d-flex">
+						<p class="fw-bold mt-4 h1">통합 검색 시스템</p>
+						<div class="col d-flex justify-content-end mt-4">
+							<form class="d-inline-flex justify-content-end"
+								style="height: 42px;" action="serachCafeName" method="post">
+
+								<select name="searchtype"
+									class="d-inline-flex justify-content-end me-2"
+									style="height: 42px;">
+									<option value="searchcafename" name="searchcafename">카페이름</option>
+									<option value="searchcafeproduct" name="searchcafeproduct">카페상품</option>
+								</select> <input class="form-control me-1" type="search"
+									placeholder="상품명을 입력해주세요" aria-label="Search"
+									name="searchresult">
+								<button class="btn btn-outline-secondary" type="submit">search</button>
+
+							</form>
 						</div>
 					</div>
 					<hr />
 				</div>
 				<!-- 검색창 끝 -->
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th scope="col">이미지</th>
-							<th scope="col">카페 이름</th>
-							<th scope="col">상세보기</th>
-							<th scope="col">혼잡도</th>
-							<th scope="col">조회수</th>
-						</tr>
-						<c:if test="${list eq null || list eq ''}">
+
+				<c:forEach items="${list}" var="bbs">
+					<table class="table table-hover">
+						<thead>
 							<tr>
-								<td colspan="6">해당 데이터가 존재하지 않습니다.</td>
+								<th scope="col">이미지</th>
+								<th scope="col">카페 이름</th>
+								<th scope="col">지역구</th>
+								<th scope="col">상세보기</th>
+								<th scope="col">혼잡도</th>								
 							</tr>
-						</c:if>
-					</thead>
-					<tbody>
-						<c:forEach items="${list}" var="bbs">
+						</thead>
+						<tbody>
 							<tr>
 								<td class="align-middle"></td>
 								<td class="align-middle">${bbs.cafeName}</td>
-								<td class="align-middle"></td>
-								<td class="align-middle"></td>
-								<td class="align-middle"></td>							
+								<td class="align-middle">${bbs.cafeLocation}</td>
+								
+								<td class="align-middle"><a href=MainCafe/cafe.jsp>상세보기</a></td>
+								
+								<!-- 혼잡도 출력에 따른 색상처리 -->
+								<c:if test="${bbs.confusion eq '혼잡' }">
+									<td class="align-middle" style="color: red; font-weight: bold">${bbs.confusion}</td>
+								</c:if>
+								<c:if test="${bbs.confusion eq '보통' }">
+									<td class="align-middle"
+										style="color: #ffcc00; font-weight: bold;">${bbs.confusion}</td>
+								</c:if>
+								<c:if test="${bbs.confusion eq '여유' }">
+									<td class="align-middle"
+										style="color: green; font-weight: bold">${bbs.confusion}</td>
+								</c:if>
+								
 							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
+						</tbody>
+					</table>
+				</c:forEach>
+		
+				<c:forEach items="${list2}" var="bbs2">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">이미지</th>
+								<th scope="col">상품 이름</th>
+								<th scope="col">가격</th>
+								<th scope="col">카페 이름</th>
+								<th scope="col">카페 지역</th>							
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="align-middle"></td>
+								<td class="align-middle">${bbs2.productName}</td>
+								<td class="align-middle">${bbs2.price}</td>
+								
+								<td class="align-middle"><a href="MainCafe/cafe.jsp">${bbs2.cafeName}</a></td>
+								<td class="align-middle">${bbs2.cafeLocation}</td>
+							</tr>
+						</tbody>
+					</table>
+				</c:forEach>
+				
+				
+				
 			</div>
 			<script src="https://code.jquery.com/jquery-3.6.0.js"
 				integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
