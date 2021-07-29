@@ -69,23 +69,23 @@
 
 			<!-- 게시판 틀 시작 -->
 			<div class="container mt-4">
-				<!-- 검색창 -->
-				<div class="row">
-					<div class="d-flex">
-						<p class="fw-bold mt-4 h1">통합 검색 시스템</p>
-						<div class="col d-flex justify-content-end mt-4">
-							<select name="searchtype"
-								class="d-inline-flex justify-content-end me-2"
-								style="height: 42px;">
-								<option value="searchcafename">카페이름</option>
-								<option value="searchcafeproduct">카페상품</option>
-							</select>
-							<form class="d-inline-flex justify-content-end"
-								style="height: 42px;">
-								<input class="form-control me-1" type="search"
-									placeholder="상품명을 입력해주세요" aria-label="Search">
-								<button class="btn btn-outline-secondary" type="submit">search</button>
-							</form>
+									<!-- 검색창 -->
+			<div class="row">
+				<div class="d-flex">
+					<p class="fw-bold mt-4 h1">통합 검색 시스템</p>
+					<div class="col d-flex justify-content-end mt-4">					
+						<form class="d-inline-flex justify-content-end"
+							style="height: 42px;" action="serachCafeName" method="post">
+	
+	<select name="searchtype" class="d-inline-flex justify-content-end me-2" style="height: 42px;"> 
+	    <option value="searchcafename" name="searchcafename">카페이름</option>
+	    <option value="searchcafeproduct" name="searchcafeproduct">카페상품</option>
+	</select>
+					<input class="form-control me-1" type="search"
+						placeholder="상품명을 입력해주세요" aria-label="Search" name="searchresult">
+					<button class="btn btn-outline-secondary" type="submit" >search</button>
+						
+						</form>
 						</div>
 					</div>
 					<hr />
@@ -99,7 +99,6 @@
 							<th scope="col">상세보기</th>
 							<th scope="col">혼잡도</th>
 							<th scope="col">조회수</th>
-							<th scope="col">좋아요</th>
 						</tr>
 						<c:if test="${list eq null || list eq ''}">
 							<tr>
@@ -110,13 +109,11 @@
 					<tbody>
 						<c:forEach items="${list}" var="bbs">
 							<tr>
-								<td class="align-middle">${bbs.idx}</td>
-								<td class="align-middle">${bbs.subject}</td>
-								<td class="align-middle">${bbs.user_name}</td>
-								<td class="align-middle">${bbs.reg_date}</td>
-								<td class="align-middle">${bbs.bHit}</td>
-								<td class="align-middle"><a href="detail?idx=${bbs.idx}"
-									class="btn btn-primary">상세보기</a></td>
+								<td class="align-middle"></td>
+								<td class="align-middle">${bbs.cafeName}</td>
+								<td class="align-middle"></td>
+								<td class="align-middle"></td>
+								<td class="align-middle"></td>							
 							</tr>
 						</c:forEach>
 					</tbody>

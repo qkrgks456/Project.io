@@ -2,5 +2,56 @@ package com.go.main.search;
 
 public class SearchDTO {
 	
+	private String cafeKey;
+	private String ownerNo;
+	private String cafeName;
+	private String Confusion;
+	private int likeNo;
+	private String productid;
+	private String productName;
+	
+	public String getCafeKey() {
+		return cafeKey;
+	}
+	public void setCafeKey(String cafeKey) {
+		this.cafeKey = cafeKey;
+	}
+	public String getOwnerNo() {
+		return ownerNo;
+	}
+	public void setOwnerNo(String ownerNo) {
+		this.ownerNo = ownerNo;
+	}
+	public String getCafeName() {
+		return cafeName;
+	}
+	public void setCafeName(String cafeName) {
+		this.cafeName = cafeName;
+	}
+	public String getConfusion() {
+		return Confusion;
+	}
+	public void setConfusion(String confusion) {
+		Confusion = confusion;
+	}
+	public int getLikeNo() {
+		return likeNo;
+	}
+	public void setLikeNo(int likeNo) {
+		this.likeNo = likeNo;
+	}
+	public String getProductid() {
+		return productid;
+	}
+	public void setProductid(String productid) {
+		this.productid = productid;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	
 	
 }
