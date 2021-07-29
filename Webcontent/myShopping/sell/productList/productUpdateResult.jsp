@@ -34,14 +34,23 @@
 						class="me-2 btn btn-secondary">
 						<i class="bi bi-text-left"></i>
 					</button>
-					<h2 class="fw-bold my-3">상품정보수정</h2>
+					<h2 class="fw-bold my-3">상품등록 완료</h2>
 				</div>
-				<hr />
+				<hr/>
 				<!-- 사이드 바 메뉴-->
 				<!-- 들어갈 내용 -->
+				
+				<img src="/Project/assets/img/n1.jpg" width="350" height="350" style="margin-left:auto; margin-right:auto; display:block;"/>
+		<h3 style="text-align:center">감사합니다.<br>
+		관리자의 승인은 24시간 이내에<br>있을 예정입니다<br><br>
+		<a class="btn btn-secondary btn-lg" href="/Project/index.jsp" role="button">메인으로</a></h3>
+		</div>
+		<br><br><br><br>
+		
+				
 			</div>
 		</div>
-	</div>
+	
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->

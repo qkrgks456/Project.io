@@ -34,7 +34,7 @@
 						class="me-2 btn btn-secondary">
 						<i class="bi bi-text-left"></i>
 					</button>
-					<h2 class="fw-bold my-3">상품등록결과페이지</h2>
+					<h2 class="fw-bold my-3">상품삭제완료</h2>
 				</div>
 				<hr />
 				<!-- 사이드 바 메뉴-->
@@ -48,5 +48,7 @@
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=4"></script>
+</body>
+</html>
 </body>
 </html>

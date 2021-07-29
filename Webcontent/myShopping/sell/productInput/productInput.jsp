@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html lang="ko">
-<head>
 <meta charset="utf-8">
 <!-- 부트스트랩 메타태그 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,7 +13,46 @@
 <!-- main css 추가 -->
 <link href="/Project/assets/css/main.css?ver=3" rel="stylesheet">
 <title>카페</title>
+<script>
+	var oTbl;
+	function insRow() {//옵션 추가
+		oTbl = document.getElementById("addTable");
+		var oRow = oTbl.insertRow();
+		oRow.onmouseover = function() {
+			oTbl.clickedRowIndex = this.rowIndex
+		}; //clickedRowIndex - 클릭한 옵션의 위치를 확인;
+		var oCell = oRow.insertCell();
+
+		//삽입될 Form Tag
+
+		var frmTag = "<div class='mt-2 d-flex'>"
+		frmTag += "<input class='form-control' type='text' name='addText'> ";
+		frmTag += "<input type='button' class='btn btn-dark ms-2' value='삭제' onClick='removeRow()' style='cursor:hand'>";
+		frmTag += "</div>"
+		oCell.innerHTML = frmTag;
+	}
+	//옵션 삭제
+	function removeRow() {
+		oTbl.deleteRow(oTbl.clickedRowIndex);
+	}
+
+	function frmCheck() {
+		var frm = document.form;
+
+		for (var i = 0; i <= frm.elements.length - 1; i++) {
+			if (frm.elements[i].name == "addText") {
+				if (!frm.elements[i].value) {
+					alert("텍스트박스에 값을 입력하세요");
+					frm.elements[i].focus();
+					return;
+				}
+			}
+		}
+	}
+</script>
 </head>
+
+
 <body>
 	<div class="wrap">
 		<!-- 상단 메뉴바 -->
@@ -34,19 +72,143 @@
 						class="me-2 btn btn-secondary">
 						<i class="bi bi-text-left"></i>
 					</button>
-					<h2 class="fw-bold my-3">상품등록</h2>
+					<h2 class="fw-bold my-3">상품 등록 및 수정</h2>
 				</div>
 				<hr />
 				<!-- 사이드 바 메뉴-->
 				<!-- 들어갈 내용 -->
+
+
+				<div class="container px-4 py-4 my-4 border shadow-lg" id="cont">
+					<h4 class="mb-3 fw-bold">상품 등록/수정</h4>
+					<hr />
+					<form
+						action="/Project/admin/adminList/adminInputProductList/adminInputProductList.jsp"
+						method="post" class="needs-validation" novalidate>
+						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">상품명</h6>
+						<div class="form-floating col-md-9 mb-3">
+							<input type="text" class="nullchecks nullcheck form-control"
+								id="ProductName" placeholder="상품명" required> <label
+								for="validationTooltip04" class="fw-bold">상품명</label>
+							<div class="invalid-feedback">필수 정보입니다</div>
+						</div>
+
+
+						<h6 class="text-muted mt-1 fw-bold" style="text-align: left;">카테고리</h6>
+						<div class="form-floating col-md-9 mb-3">
+							<select class="form-select">
+								<option selected disabled value="">필수선택</option>
+								<option>원두</option>
+								<option>MD</option>
+							</select>
+							<div class="invalid-feedback">카테고리를 설정해주세요</div>
+						</div>
+
+						<!-- 옵션추가 -->
+						<h6 class="text-muted mt-1 fw-bold" style="text-align: left;">옵션</h6>
+						<table width="400" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td colspan="2" align="left">
+									<table width="100%" border="0" cellpadding="0" cellspacing="0">
+										<tr>
+											<div class="text-secondary"><td colspan="5" height="25" align="left"><input
+												class="btn btn-secondary btn-sm  type="
+												button" onClick="insRow()" value="추가">
+											*버튼으로 옵션을 추가해주세요</div></td>
+										</tr>
+										<tr>
+											<td height="25">
+												<table id="addTable" width="400" cellspacing="0"
+													cellpadding="0" border="0">
+												</table>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+						<table width="400" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td height="10"></td>
+							</tr>
+						</table>
+
+						<!-- 수량 -->
+						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">수량</h6>
+						<div class="form-floating col-md-9 mb-3">
+							<input type="text" class="nullchecks nullcheck form-control"
+								id="Quantity" placeholder="수량" required> <label
+								for="validationTooltip04" class="fw-bold">수량</label>
+							<div class="invalid-feedback">필수 정보입니다</div>
+						</div>
+
+
+						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">가격</h6>
+						<div class="form-floating col-md-9 mb-3">
+							<input type="text" class="nullchecks nullcheck form-control"
+								id="Price" placeholder="가격" required> <label
+								for="validationTooltip04" class="fw-bold">가격</label>
+							<div class="invalid-feedback">필수 정보입니다</div>
+						</div>
+
+						<br>
+						<div class="mb-3">
+							<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">상품
+								대표 이미지</h6>
+							<input class="form-control" type="file" id="formFileMultiple"
+								multiple>
+						</div>
+
+						<br>
+						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">판매여부</h6>
+						<div class="form-floating col-md-9 mb-3">
+							<div class="form-check">
+								<input class="form-check-input" type="radio"
+									name="flexRadioDefault" id="flexRadioDefault1"> <label
+									class="form-check-label" for="flexRadioDefault1"> 판매</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio"
+									name="flexRadioDefault" id="flexRadioDefault2" checked>
+								<label class="form-check-label" for="flexRadioDefault2">
+									미판매 </label>
+							</div>
+						</div>
+
+
+
+						<input class="form-check-input" type="checkbox" value="1"
+							name="Check"><label class="form-check-label fw-bold"
+							for="defaultCheck1">&nbsp; 관리자의 심사가 있어야 상품이 최종 승인됩니다. 정보 재확인
+							바랍니다. <br>이에 동의하십니까?
+						</label>
+						<div class="invalid-feedback">동의해야만 등록이 가능합니다</div>
+
+						<div class="d-grid gap-3 d-md-flex justify-content-md-end">
+							<button class="btn btn-secondary me-md-1" type="button"
+								onclick="location.href='/Project/myShopping/sell/productList/productList.jsp'">취소</button>
+							<button class="btn btn-secondary" type="button"
+								onclick="location.href='/Project/myShopping/sell/productList/productUpdateResult.jsp'">등록</button>
+								<button class="btn btn-secondary" type="button"
+								onclick="location.href='/Project/myShopping/sell/productList/productUpdateResult.jsp'">삭제</button>
+
+
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
+
+
+
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=4"></script>
+
+
 </body>
 </html>

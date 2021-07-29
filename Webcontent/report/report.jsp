@@ -35,8 +35,82 @@
 		<div class="container px-5 mt-5 ">
 			<h2 class="fw-bold my-3">신고하기</h2>
 			<hr />
+			<div id = "sform">
+			<form action="#" method="post"
+				class="needs-validation" novalidate>
+				<div class="form-floating col-md-3 mb-3">
+					<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">아이디</h6>
+					<input class="form-control" type="text" value="qkrgks456****"
+						aria-label="Disabled input example" disabled readonly
+						name="UserId" id="UserId">
+				</div>
+				<div class="form-floating col-md-3 mb-3">
+					<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">신고
+						사유</h6>
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value=""
+							id="flexCheckDefault"> <label class="form-check-label"
+							for="flexCheckDefault"> 광고 / 음란성 </label>
+					</div>
+
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value=""
+							id="flexCheckDefault"> <label class="form-check-label"
+							for="flexCheckDefault"> 욕설 / 부적합한 말</label>
+					</div>
+
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value=""
+							id="flexCheckDefault"> <label class="form-check-label"
+							for="flexCheckDefault"> 회원 분란 유도 </label>
+					</div>
+
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value=""
+							id="flexCheckDefault"> <label class="form-check-label"
+							for="flexCheckDefault"> 회원 비방 </label>
+					</div>
+
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" value=""
+							id="flexCheckDefault"> <label class="form-check-label"
+							for="flexCheckDefault"> 도배성 </label>
+					</div>
+
+					<div class="mb-3">
+						<input type="email" class="form-control col-md-3 mb-3"
+							id="exampleFormControlInput1" placeholder="기타사유">
+					</div>
+					</div>
+				
+				<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">신고 날짜</h6>
+				<div class="col-md-3 mb-3">
+						<input type="email" class="form-control"
+							id="exampleFormControlInput1" placeholder="2021. 07. 28" disabled readonly>
+					</div>
+					
+					<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">신고 댓글</h6>
+					<div class="col-md-3 mb-3">
+						<input type="email" class="target form-control "
+							id="exampleFormControlInput1" placeholder="신고 댓글 내용 불러오기 신고 댓글 내용 불러오기신고 댓글 내용 불러오기신고 댓글 내용 불러오기신고 댓글 내용 불러오기신고 댓글 내용 불러오기신고 댓글 내용 불러오기" disabled readonly>
+					
+					</div></div>
+					</div>
+				
+					
+					
+				
+				
+				<hr />
+				<div class="col text-center">
+					<button class="btn btn-dark" type="button" id="signupbtn">신고하기</button>
+				</div>
+			</form>
+
+
 
 		</div>
+	</div>
 	</div>
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
