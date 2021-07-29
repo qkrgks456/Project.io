@@ -49,14 +49,16 @@
 						<label class="form-check-label" for="idCheck">아이디 저장</label>
 					</div>
 				</form>
+				<c:if test="${success eq 'fail'}">
 				<div id="redalert"
-					class="visually-hidden alert alert-danger d-flex align-items-center"
+					class=" alert alert-danger d-flex align-items-center"
 					role="alert">
 					<svg class="bi flex-shrink-0 me-2" width="24" height="24"
 						role="img" aria-label="Danger:">
 						<use xlink:href="#exclamation-triangle-fill" /></svg>
 					<div>없는 아이디거나 비밀번호가 틀립니다</div>
 				</div>
+				</c:if>
 				<hr />
 				<div>
 					<div class="float-start">
@@ -66,7 +68,8 @@
 						</div>
 					</div>
 					<div class="float-end">
-						<button type="button" class="btn btn-dark" id="login">로그인</button>
+					
+						<input type="button" class="btn btn-dark" form="loginform" id="login" value="로그인">
 						<a href="/Project/index.jsp"class="btn btn-secondary">메인</a>
 					</div>
 				</div>
@@ -78,6 +81,6 @@
 		<!-- 스크립트 cdn  -->
 		<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 		<!-- main js 추가 -->
-		<script src="/Project/assets/js/main.js?var=21"></script>
+		<script src="/Project/assets/js/main.js?var=3"></script>
 </body>
 </html>

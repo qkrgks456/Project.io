@@ -41,13 +41,20 @@
 							id="UserId" placeholder="아이디" value="" required> <label
 							for="validationTooltip01" class="fw-bold">아이디</label>
 						<div class="invalid-feedback">6자 이상 입력해주세요</div>
-						<button class="btn btn-dark btn-sm mt-2" id="ckBtn">중복확인</button>
-						<!-- 중복확인 시작  -->
 					
+					
+					
+					
+					<input type="button" class="btn btn-dark btn-sm mt-2" id="ckBtn" value="중복확인">
+					
+		
+
+					 
+						
 					
 						<!-- 중복확인 끝 -->
-						<p class="visually-hidden text-success mt-1">"사용가능합니다"</p>
-						<p class="visually-hidden text-danger mt-1">"사용불가"</p>
+						<p class="visually-hidden text-success mt-1" id="pass">"사용가능합니다"</p>
+						<p class="visually-hidden text-danger mt-1" id="fail">"사용불가"</p>
 					</div>
 					<div class="form-floating col-md-9 mb-3">
 						<input type="password" class="nullcheck form-control" name="UserPw" id="UserPw"
@@ -151,6 +158,42 @@
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 cdn  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
+	<script>
+	
+	$('#ckBtn').click(function(){
+	var userId=$('#UserId').val();
+		console.log("확인")
+		$.ajax({
+            type : "POST",//방식
+            url : "/Project/signupcheck",//주소
+            data : {
+            	userId : userId
+            },
+            dataType : 'JSON',
+            success : function(data) { //성공시
+               console.log(data);   
+            	if(data.suc){
+            		$('#pass').addClass("visually-hidden");
+            	   $('#fail').removeClass("visually-hidden");
+            	
+            	}else{
+            		$('#pass').removeClass("visually-hidden");
+             	   $('#fail').addClass("visually-hidden");
+            	}
+            },
+            error : function(e) { //실패시
+               console.log(e);
+            }
+         });
+
+	})
+	
+	
+	
+	</script>
+	
+
+	
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=6"></script>
 </body>

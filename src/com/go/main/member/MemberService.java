@@ -5,14 +5,22 @@ public class MemberService {
 	MemberDAO dao = new MemberDAO();
 	boolean result;
 	
-	public String login(MemberDTO dto){	
-		//String id = dao.login(dto);
-		boolean id=dao.login(dto);
-		dao.resClose();
-		return null;
+	public boolean login(MemberDTO dto){	
+		
+	
+		//dao.resClose();
+		return dao.login(dto);
+	
 	}
-	public boolean signup(MemberDTO dto) {
-		result = dao.signup(dto);
-		return true;
+	
+	public int signup(MemberDTO dto) {
+		int suc=0;
+		suc = dao.signup(dto);
+		return suc;
 	}
+	public boolean signupcheck(String memberKey) {
+		boolean suc3=dao.signupcheck(memberKey);
+		return suc3;
+	}
+	
 }

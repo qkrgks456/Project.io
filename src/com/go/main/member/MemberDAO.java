@@ -31,15 +31,17 @@ public class MemberDAO {
 			System.out.println("member커넥션 : "+conn);
 		} catch (Exception e) {
 			e.printStackTrace();
+			
+			
 		}	
 		
 		
 	}
 	
 	
-	
+
 	public boolean login(MemberDTO dto) {
-		sql = "SELECT id FROM users WHERE id=? AND pw=?";
+		sql = "SELECT memberkey FROM users WHERE memberkey=? AND pw=?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1,dto.getMemberKey());
@@ -55,10 +57,14 @@ public class MemberDAO {
 		}
 		return result;	
 		}
+
 		//return null;
 	
-	public boolean signup(MemberDTO dto) {
-sql = "INSERT INTO users (memberKey,pw,name,gender,email"
+	public int signup(MemberDTO dto) {
+		int suc=0;
+		
+				
+		sql = "INSERT INTO users (memberKey,pw,name,gender,email"
 		+",emailCheck,congestionCheck,deleteCheck,authority,location) "
 		+ "VALUES(?,?,?,?,?,?,?,'N','일반',?)"; //DTO 10개 
 		try {
@@ -73,40 +79,37 @@ sql = "INSERT INTO users (memberKey,pw,name,gender,email"
 			//ps.setString(8,dto.getDeleteCheck());
 			//ps.setString(9,dto.getAuthority());
 			ps.setString(8, dto.getLocation());
+				
+			suc = ps.executeUpdate();
 			
-			if(ps.executeUpdate()>0) {
-				result = true;
-			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
 			resClose();
 		}
 		
-		return result;
+		return suc;
 	}
 	
-	public int signupcheck(MemberDTO dto) {
-		sql = "SELECT id FROM users WHERE id=? ";
+	public boolean signupcheck(String memberkey) {
+		sql = "SELECT memberkey FROM users WHERE memberkey=? ";
+		boolean suc4=false;
+		
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1,dto.getMemberKey());
-			rs = ps.executeQuery();			
-			if(rs.next() || dto.getMemberKey().equals("") ) {
-				return 0; //이미 존재하는 회원 
-			}
+			ps.setString(1, memberkey);
+			rs=ps.executeQuery();
+			suc4=rs.next();
+				
 		}catch(Exception e){
 			e.printStackTrace();
 		}finally {
-			try {
-				 if(rs !=null) rs.close();
-				 if(ps !=null) ps.close();
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
+		   resClose();
 		}
-		return -1; // 데이터베이스 오류 
-		}
+		return suc4;
+	}
+		
 	
 	public void resClose() {
 		try {

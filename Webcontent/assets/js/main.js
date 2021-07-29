@@ -136,33 +136,15 @@ $(document).ready(function() {
 		}
 		else if ($('#InputId').val() == "") {
 			$('#InputId').addClass('form-control is-invalid');
-		} else { /* 모두 공백이 아닐경우 서버로 데이터 전송 */
-			var InputId = $("#InputId").val();
-			var InputPassword = $("#InputPassword").val();
-			$.ajax({
-				url: "/Project/login",
-				type: "POST",
-				dataType: "text",
-				data: {
-					"path": path,
-					"InputId": InputId,
-					"InputPassword": InputPassword,
-				},
-				success: function(data) {
-					/* 로그인 정보가 맞을경우 */
-					if (data == "1") {
-						location.href = "../index.jsp";
-					} else {/* 로그인 정보가 틀릴경우 */
-						$('#redalert').removeClass('visually-hidden');
-					}
-				},
-				error: function() {
-					alert("안 보내짐");
+		} else { 
+			$('#login').attr("type","submit");
+		
 				}
-
-			})
-		}
+   	
+			
+		
 	})
+	
 	// 로그인창 글자수 검사
 	$("#InputId").on("propertychange change keyup paste input", function() {
 		if ($(this).val().length >= 1) {
@@ -260,7 +242,6 @@ $(document).ready(function() {
 	});
 	
 	/* 카페등록 유효성 검사 */
-	
 })
 
 
