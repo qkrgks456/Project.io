@@ -13,6 +13,12 @@
 <!-- main css 추가 -->
 <link href="/Project/assets/css/main.css?ver=3" rel="stylesheet">
 <title>카페</title>
+<style>
+.box.on {
+	color: #999;
+}
+</style>
+
 <script>
 	var oTbl;
 	function insRow() {//옵션 추가
@@ -72,7 +78,7 @@
 						class="me-2 btn btn-secondary">
 						<i class="bi bi-text-left"></i>
 					</button>
-					<h2 class="fw-bold my-3">상품 등록 및 수정</h2>
+					<h2 class="fw-bold my-3">상품 등록</h2>
 				</div>
 				<hr />
 				<!-- 사이드 바 메뉴-->
@@ -80,7 +86,7 @@
 
 
 				<div class="container px-4 py-4 my-4 border shadow-lg" id="cont">
-					<h4 class="mb-3 fw-bold">상품 등록/수정</h4>
+					<h4 class="mb-3 fw-bold">상품 등록</h4>
 					<hr />
 					<form
 						action="/Project/admin/adminList/adminInputProductList/adminInputProductList.jsp"
@@ -88,7 +94,8 @@
 						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">상품명</h6>
 						<div class="form-floating col-md-9 mb-3">
 							<input type="text" class="nullchecks nullcheck form-control"
-								id="ProductName" placeholder="상품명" required> <label
+								id="ProductName" placeholder="상품명"
+								aria-describedby="inputGroupPrepend" required> <label
 								for="validationTooltip04" class="fw-bold">상품명</label>
 							<div class="invalid-feedback">필수 정보입니다</div>
 						</div>
@@ -111,10 +118,13 @@
 								<td colspan="2" align="left">
 									<table width="100%" border="0" cellpadding="0" cellspacing="0">
 										<tr>
-											<div class="text-secondary"><td colspan="5" height="25" align="left"><input
-												class="btn btn-secondary btn-sm  type="
-												button" onClick="insRow()" value="추가">
-											*버튼으로 옵션을 추가해주세요</div></td>
+											<div class="text-secondary">
+												<td colspan="5" height="25" align="left"><input
+													class="btn btn-secondary btn-sm  type="
+													button" onClick="insRow()" value="추가"> *버튼으로 옵션을
+													추가해주세요
+											</div>
+											</td>
 										</tr>
 										<tr>
 											<td height="25">
@@ -176,25 +186,29 @@
 						</div>
 
 
+						<div class="form-check mt-4">
 
-						<input class="form-check-input" type="checkbox" value="1"
-							name="Check"><label class="form-check-label fw-bold"
-							for="defaultCheck1">&nbsp; 관리자의 심사가 있어야 상품이 최종 승인됩니다. 정보 재확인
-							바랍니다. <br>이에 동의하십니까?
-						</label>
-						<div class="invalid-feedback">동의해야만 등록이 가능합니다</div>
+							<input type="checkbox" name="agree"
+								onClick="agreeCheck(this.form)"> <label
+								class="form-check-label fw-bold" for="update">관리자의 심사가
+								있어야 상품이 최종 승인됩니다. 정보 재확인 바랍니다. <br>이에 동의하십니까?
+							</label>
+							<div class="invalid-feedback">동의해야만 등록이 가능합니다</div>
+							<div class="d-grid gap-3 d-md-flex justify-content-md-end">
+								<div class="invalid-feedback">필수 동의입니다</div>
 
-						<div class="d-grid gap-3 d-md-flex justify-content-md-end">
-							<button class="btn btn-secondary me-md-1" type="button"
-								onclick="location.href='/Project/myShopping/sell/productList/productList.jsp'">취소</button>
-							<button class="btn btn-secondary" type="button"
-								onclick="location.href='/Project/myShopping/sell/productList/productUpdateResult.jsp'">등록</button>
-								<button class="btn btn-secondary" type="button"
-								onclick="location.href='/Project/myShopping/sell/productList/productUpdateResult.jsp'">삭제</button>
+								<button class="btn btn-dark type="
+									button" name="checkButton" value=" 확 인 "
+									 disabled>등록</button>
 
-
+								<button class="btn btn-dark me-md-1" type="button"
+									onclick="location.href='/Project/myShopping/sell/productList/productList.jsp'">취소</button>
+							</div>
 						</div>
 					</form>
+
+
+
 				</div>
 			</div>
 		</div>
@@ -205,6 +219,26 @@
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->
+	<script type="text/javascript">
+		function agreeCheck(frm) {
+			if (frm.checkButton.disabled == true)
+				frm.checkButton.disabled = false
+			else
+				frm.checkButton.disabled = true
+		}
+		$(document).ready(function(){
+		    $('#확인').click(function() {
+		        var result = confirm('최종 등록 신청 하시겠습니까?');
+		        if(result) {
+		           //yes
+		            location.href='/Project/myShopping/sell/productList/productUpdateResult.jsp';
+		        } else {
+		           location.href='/Project/index.jsp';
+		        }
+		    });
+		});
+	</script>
+
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=4"></script>

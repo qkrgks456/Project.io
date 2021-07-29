@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@page import="java.util.Calendar"%>
+<%
+	Calendar cal = Calendar.getInstance();
+%>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -19,6 +23,7 @@
 }
 </style>
 <title>카페</title>
+
 </head>
 <body>
 	<div class="wrap">
@@ -35,83 +40,95 @@
 		<div class="container px-5 mt-5 ">
 			<h2 class="fw-bold my-3">신고하기</h2>
 			<hr />
-			<div id = "sform">
-			<form action="#" method="post"
-				class="needs-validation" novalidate>
-				<div class="form-floating col-md-3 mb-3">
-					<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">아이디</h6>
-					<input class="form-control" type="text" value="qkrgks456****"
-						aria-label="Disabled input example" disabled readonly
-						name="UserId" id="UserId">
+
+			<div class="form-floating col-md-9 mb-3">
+				<div class="container px-4 py-4 my-4 border shadow-lg">
+					<div class="form-floating col-md-3 mb-4">
+
+						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">아이디</h6>
+						<form action="/Project/admin/adminComment/adminReportComment/adminReportCommentList.jsp" method="post" class="needs-validation "
+							novalidate>
+							<input class="form-control" type="text"
+								class="form-control col-md-3 mb-4" placeholder="qkrgks456***"
+								disabled readonly name="UserID" id="UserId">
+					</div>
+
+
+					<div class="form-floating col-md-3 mb-3 ">
+						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">신고
+							사유</h6>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value=""
+								id="flexCheckDefault"> <label class="form-check-label"
+								for="flexCheckDefault"> 광고 / 음란성 </label>
+						</div>
+
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value=""
+								id="flexCheckDefault"> <label class="form-check-label"
+								for="flexCheckDefault"> 욕설 / 부적합한 말</label>
+						</div>
+
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value=""
+								id="flexCheckDefault"> <label class="form-check-label"
+								for="flexCheckDefault"> 회원 분란 유도 </label>
+						</div>
+
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value=""
+								id="flexCheckDefault"> <label class="form-check-label"
+								for="flexCheckDefault"> 회원 비방 </label>
+						</div>
+
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value=""
+								id="flexCheckDefault"> <label class="form-check-label"
+								for="flexCheckDefault"> 도배성 </label>
+						</div>
+
+						<div class="mb-3">
+							<input type="email" class="form-control col-md-3 mb-4"
+								id="exampleFormControlInput1" placeholder="기타사유">
+						</div>
+						
+						
 				</div>
-				<div class="form-floating col-md-3 mb-3">
+
 					<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">신고
-						사유</h6>
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value=""
-							id="flexCheckDefault"> <label class="form-check-label"
-							for="flexCheckDefault"> 광고 / 음란성 </label>
+						날짜</h6>
+					<div class="col-md-3 mb-4">
+						<%=cal.get(Calendar.YEAR)%>년
+						<%=cal.get(Calendar.MONTH) + 1%>월
+						<%=cal.get(Calendar.DATE)%>일
+
+
 					</div>
 
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value=""
-							id="flexCheckDefault"> <label class="form-check-label"
-							for="flexCheckDefault"> 욕설 / 부적합한 말</label>
-					</div>
-
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value=""
-							id="flexCheckDefault"> <label class="form-check-label"
-							for="flexCheckDefault"> 회원 분란 유도 </label>
-					</div>
-
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value=""
-							id="flexCheckDefault"> <label class="form-check-label"
-							for="flexCheckDefault"> 회원 비방 </label>
-					</div>
-
-					<div class="form-check">
-						<input class="form-check-input" type="checkbox" value=""
-							id="flexCheckDefault"> <label class="form-check-label"
-							for="flexCheckDefault"> 도배성 </label>
-					</div>
-
-					<div class="mb-3">
-						<input type="email" class="form-control col-md-3 mb-3"
-							id="exampleFormControlInput1" placeholder="기타사유">
-					</div>
-					</div>
-				
-				<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">신고 날짜</h6>
-				<div class="col-md-3 mb-3">
-						<input type="email" class="form-control"
-							id="exampleFormControlInput1" placeholder="2021. 07. 28" disabled readonly>
-					</div>
-					
-					<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">신고 댓글</h6>
-					<div class="col-md-3 mb-3">
+					<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">신고
+						댓글</h6>
+					<div class="form-floating col-md-3 mb-6">
 						<input type="email" class="target form-control "
-							id="exampleFormControlInput1" placeholder="신고 댓글 내용 불러오기 신고 댓글 내용 불러오기신고 댓글 내용 불러오기신고 댓글 내용 불러오기신고 댓글 내용 불러오기신고 댓글 내용 불러오기신고 댓글 내용 불러오기" disabled readonly>
-					
-					</div></div>
+							id="exampleFormControlInput1" placeholder="신고댓글 자동으로 불러오기 "
+							disabled readonly><br>
+
+						<button class="btn btn-dark" type="submit" id="reportbtn">신고하기</button>
 					</div>
-				
 					
-					
-				
-				
-				<hr />
-				<div class="col text-center">
-					<button class="btn btn-dark" type="button" id="signupbtn">신고하기</button>
+					</form>
 				</div>
-			</form>
-
-
-
+			</div>
 		</div>
+
+
+
+
 	</div>
 	</div>
+
+
+
+
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->

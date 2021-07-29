@@ -51,11 +51,7 @@
 <!-- main css 추가 -->
 <link href="/Project/assets/css/main.css?ver=3" rel="stylesheet">
 <title>카페</title>
-
 </head>
-
-
-
 <body>
 	<div class="wrap">
 		<!-- 상단 메뉴바 -->
@@ -94,8 +90,7 @@
 						</thead>
 						<tbody>
 							<tr>
-								<th class="align-middle" scope="row"><input type="checkbox"
-									name="seller"></th>
+								<th class="align-middle" scope="row"><input type="checkbox" name="seller"></th>
 								<td><img src="/Project/assets/img/p1.jpg"
 									class="img-thumbnail"
 									style="width: 80px; height: 80px; object-fit: cover;" /></td>
@@ -104,7 +99,7 @@
 								<td class="align-middle">8,900원</td>
 								<td>
 									<div class="d-grid gap-2 col-6 mx-auto mt-1">
-										<a class="btn btn-secondary btn-sm" onclick="location.href='/Project/MainProduct/product.jsp'">상세보기</a> <a
+										<a class="btn btn-secondary btn-sm" onclick="location.href='/Project/myShopping/sell/productList/productUpdate.jsp'">상세보기</a> <a
 											class="btn btn-secondary btn-sm" onclick="location.href='/Project/myShopping/sell/productInput/productInput.jsp'">삭제</a>
 									</div>
 								</td>
@@ -120,7 +115,7 @@
 								<td class="align-middle">8,900원</td>
 								<td>
 									<div class="d-grid gap-2 col-6 mx-auto mt-1">
-										<a class="btn btn-secondary btn-sm" onclick="location.href='/Project/MainProduct/product.jsp'">상세보기</a> <a
+										<a class="btn btn-secondary btn-sm" onclick="location.href='/Project/myShopping/sell/productList/productUpdate.jsp'">상세보기</a> <a
 											class="btn btn-secondary btn-sm" onclick="location.href='/Project/myShopping/sell/productInput/productInput.jsp'">삭제</a>
 									</div>
 								</td>
@@ -136,7 +131,7 @@
 								<td class="align-middle">8,900원</td>
 								<td>
 									<div class="d-grid gap-2 col-6 mx-auto mt-1">
-										<a class="btn btn-secondary btn-sm" onclick="location.href='/Project/MainProduct/product.jsp'">상세보기</a> <a
+										<a class="btn btn-secondary btn-sm" onclick="location.href='/Project/myShopping/sell/productList/productUpdate.jsp'">상세보기</a> <a
 											class="btn btn-secondary btn-sm" onclick="location.href='/Project/myShopping/sell/productInput/productInput.jsp'">삭제</a>
 									</div>
 								</td>
