@@ -32,7 +32,67 @@
 			<jsp:include page="/admin/adminSideBar.jsp"></jsp:include>
 			<div class="cont container-fluid mx-5 py-5">
 			<!-- 여기부터 내용 넣으세요 -->
-				관리자페이지
+			<!-- 오른쪽 -->
+				<div class="cont container-fluid mx-5 py-5">
+				<!-- 회원정보 탭(여닫기) -->
+					<div class="d-flex align-items-center">
+						<button type="button" id="sidebarCollapse"
+							class="me-2 btn btn-secondary">
+							<i class="bi bi-text-left"></i>
+						</button>
+						<h2 class="fw-bold my-3">회원정보 상세</h2>
+					</div>
+					<hr>
+					<!-- 아래 내용 테이블 -->
+					<div class="row">
+					<div class = "cont container col-md-5 mb-7">
+					<table class="table table-bordered mt-4">
+						<tr>
+							<th class="center">아이디</th>
+							<td class="align-middle">아이디내용</td>
+						</tr>
+						<tr>
+							<th class="center">이름</th>
+							<td class="align-middle">이름 내용</td>
+						</tr>
+						<tr>
+							<th class="center">이메일</th>
+							<td class="align-middle">이메일 내용</td>
+						</tr>
+						<tr>
+							<th class="center">주소</th>
+							<td class="align-middle">주소 내용</td>
+						</tr>
+						<tr>
+							<th class="center">성별</th>
+							<td class="align-middle">성별 내용</td>
+						</tr>
+						<tr>
+							<th class="center">이메일 수신여부</th>
+							<td class="align-middle">이메일 수신내용</td>
+						</tr>
+						<tr>
+							<th class="center">혼잡도 알림 수신 여부</th>
+							<td class="align-middle">혼잡도수신내용</td>
+						</tr>
+						<tr>
+							<th class="center">블랙리스트 여부</th>
+							<td class="align-middle">블랙 여부 내용</td>
+						</tr>
+						<tr>
+							<th class="center">블랙리스트 사유</th>
+							<td class="align-middle">블랙 사유내용</td>
+						</tr>
+						<tr>
+							<th class="center">블랙리스트 추가자</th>
+							<td class="align-middle">블랙 추가자 내용</td>
+						</tr>
+
+					</table>
+					</div>
+					</div>
+					
+				</div>
 			</div>
 		</div>
 	</div>
