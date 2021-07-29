@@ -2,24 +2,21 @@ package com.go.main.member;
 
 public class MemberDTO {
 	
-	private String id;
-	private String pw;
-	private String email;
-	private String name;
-	private String phone;
-	private String gender;
-	private String position;
-	private int age;
-	private String date;
-	private String emailcheck;
-	private String crowdedcheck;
-	private String resigncheck;	
-	
-	public String getId() {
-		return id;
+	private String memberKey;  //1
+	private String pw;  //2
+	private String name;  //3
+	private String gender;  //4
+	private String email; //5 
+	private String emailCheck; //6
+	private String congestionCheck; //7
+	private String deleteCheck;  //8
+	private String authority; //9
+	private String location; //10 
+	public String getMemberKey() {
+		return memberKey;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setMemberKey(String memberKey) {
+		this.memberKey = memberKey;
 	}
 	public String getPw() {
 		return pw;
@@ -27,23 +24,11 @@ public class MemberDTO {
 	public void setPw(String pw) {
 		this.pw = pw;
 	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getPhone() {
-		return phone;
-	}
-	public void setPhone(String phone) {
-		this.phone = phone;
 	}
 	public String getGender() {
 		return gender;
@@ -51,41 +36,43 @@ public class MemberDTO {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public String getPosition() {
-		return position;
+	public String getEmail() {
+		return email;
 	}
-	public void setPosition(String position) {
-		this.position = position;
+	public void setEmail(String email) {
+		this.email = email;
 	}
-	public int getAge() {
-		return age;
+	public String getEmailCheck() {
+		return emailCheck;
 	}
-	public void setAge(int age) {
-		this.age = age;
+	public void setEmailCheck(String emailCheck) {
+		this.emailCheck = emailCheck;
 	}
-	public String getDate() {
-		return date;
+	public String getCongestionCheck() {
+		return congestionCheck;
 	}
-	public void setDate(String date) {
-		this.date = date;
+	public void setCongestionCheck(String congestionCheck) {
+		this.congestionCheck = congestionCheck;
 	}
-	public String getEmailcheck() {
-		return emailcheck;
+	public String getDeleteCheck() {
+		return deleteCheck;
 	}
-	public void setEmailcheck(String emailcheck) {
-		this.emailcheck = emailcheck;
+	public void setDeleteCheck(String deleteCheck) {
+		this.deleteCheck = deleteCheck;
 	}
-	public String getCrowdedcheck() {
-		return crowdedcheck;
+	public String getAuthority() {
+		return authority;
 	}
-	public void setCrowdedcheck(String crowdedcheck) {
-		this.crowdedcheck = crowdedcheck;
+	public void setAuthority(String authority) {
+		this.authority = authority;
 	}
-	public String getResigncheck() {
-		return resigncheck;
+	public String getLocation() {
+		return location;
 	}
-	public void setResigncheck(String resigncheck) {
-		this.resigncheck = resigncheck;
+	public void setLocation(String location) {
+		this.location = location;
 	}
+	
+	
 	
 }

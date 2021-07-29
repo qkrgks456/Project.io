@@ -6,7 +6,8 @@ public class MemberService {
 	boolean result;
 	
 	public String login(MemberDTO dto){	
-		String id = dao.login(dto);
+		//String id = dao.login(dto);
+		boolean id=dao.login(dto);
 		dao.resClose();
 		return null;
 	}
