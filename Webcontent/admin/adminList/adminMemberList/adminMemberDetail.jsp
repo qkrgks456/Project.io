@@ -43,13 +43,14 @@
 						<h2 class="fw-bold my-3">회원정보 상세</h2>
 					</div>
 					<hr>
-					<!-- 아래 내용 테이블 -->
-					<div class="row">
-					<div class = "cont container col-md-5 mb-7">
+					<!-- 회원정보 상세 테이블 -->
+					<div class="cont container">
+					
+					<div class = "col-md-9 mb-3"><!-- md 미디엄 -->
 					<table class="table table-bordered mt-4">
 						<tr>
-							<th class="center">아이디</th>
-							<td class="align-middle">아이디내용</td>
+							<th class="center" width="30%">아이디</th>
+							<td class="align-middle" width="70%">아이디내용</td>
 						</tr>
 						<tr>
 							<th class="center">이름</th>
@@ -89,8 +90,13 @@
 						</tr>
 
 					</table>
+					<button id="blackadd" class="btn btn-dark" type="button" onclick="location.href='./adminMemberBlack.jsp'">블랙리스트 추가</button>
+					<button id="blackminussubmit" class="btn btn-dark" type="button">블랙리스트 해제</button>
+					<button id="adminmemberlist" class="btn btn-dark" type="button" onclick="location.href='./adminMemberList.jsp'">리스트로</button>
 					</div>
+					
 					</div>
+					<!-- 블랙리스트 버튼 -->
 					
 				</div>
 			</div>
@@ -102,5 +108,20 @@
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=6"></script>
+	
+	<!-- blackaddsubmit 버튼이 눌릴시 팝업 -->
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$('#blackminussubmit').click(function() {
+			Swal.fire({
+					title: '블랙 리스트 해제완료',
+					 icon: 'success',
+					 confirmButtonColor: '#000',
+					 confirmButtonText: '확인',
+			})
+		})
+		
+	})	
+	</script>
 </body>
 </html>

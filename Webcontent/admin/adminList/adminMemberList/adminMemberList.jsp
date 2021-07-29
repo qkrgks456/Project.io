@@ -45,20 +45,23 @@
 						<h2 class="fw-bold my-3">회원정보</h2>
 					</div>
 					<hr />
+					
 					<!-- 아래 내용 -->
+					
 					<div class="cont container">
+						<form id="adminMemberListform" action="/Project/adminMemberList" method="post">
 						<!-- 셀렉/text/검색 3개 -->
 						<div class="row mb-1">
 							<!-- 셀렉트 -->
-							<div class="col-2 m-0 p-0">
-								<select class="form-select">
-									<option value="이름" selected>이름</option>
+							<div class="form-group col-2 m-0 p-0">
+								<select class="form-select" name="memberSearchSelect">
+									<option value="이름"  selected>이름</option>
 									<option value="아이디">아이디</option>
 									<option value="이메일">이매일</option>
 								</select>
 							</div>
 							<!-- 검색/버튼 -->
-							<div class="col-10 m-0 p-0">
+							<div class="form-group col-10 m-0 p-0">
 								<!-- 왼쪽으로 당기기 -->
 								<div class="row">
 									<!-- 검색 공간 -->
@@ -68,11 +71,13 @@
 									</div>
 									<!-- 검색 버튼 공간 -->
 									<div class="col-2 p-0 m-0">
-										<button id="membersearch" class="btn btn-dark" type="submit">검색</button>
+										<button id="membersearch" class="btn btn-dark" type="button">검색</button>
 									</div>
 								</div>
 							</div>
 						</div>
+						</form>
+						
 						<!-- 셀렉트 공간 오른쪽으로  -->
 						<div class="mt-4 d-flex justify-content-end">
 							<!-- div로 감싸서 위 내용 오른쪽 -->
@@ -101,7 +106,7 @@
 								<td class="align-middle">사업내용</td>
 								<td class="align-middle">탈퇴내용</td>
 								<td><button id="adminmemberdtail" class="btn btn-dark"
-										type="button" onclick="location.href='./adminMemberDetail.jsp'"=>상세보기</button></td>
+										type="button" onclick="location.href='./adminMemberDetail.jsp'">상세보기</button></td>
 							</tr>
 						</table>
 
@@ -109,7 +114,7 @@
 
 
 					</div>
-
+				
 				</div>
 			</div>
 		</div>

@@ -32,7 +32,44 @@
 			<jsp:include page="/admin/adminSideBar.jsp"></jsp:include>
 			<div class="cont container-fluid mx-5 py-5">
 			<!-- 여기부터 내용 넣으세요 -->
-				관리자페이지
+				<div class="cont container-fluid mx-5 py-5">
+				<!-- 회원정보 탭(여닫기) -->
+					<div class="d-flex align-items-center">
+						<button type="button" id="sidebarCollapse"
+							class="me-2 btn btn-secondary">
+							<i class="bi bi-text-left"></i>
+						</button>
+						<h2 class="fw-bold my-3">블랙리스트 추가</h2>
+					</div>
+					<hr>
+					<!-- 블랙 리스트 id, 이름 -->
+					<form id="adminblackform" action="#" method="post"
+						class="needs-validation py-3" novalidate>
+					
+					<div class = "form-floating col-md-9 mb-3"><!-- md 미디엄 -->
+					<table class="table table-bordered mt-4">
+						<tr>
+							<th class="center" width="55%">아이디</th>
+							<th class="center">이름</th>
+						</tr>
+						<tr>
+							<td class="align-middle" width="45%">아이디내용</td>
+							<td class="align-middle">이름 내용</td>
+						</tr>
+					</table>
+					<!-- 블랙 사유 텍스트에리어 -->
+					<div class="mb-3">
+	  					<label for="blackreason" class="form-label">사유 작성</label>
+	  					<textarea class="form-control" id="blackreason" rows="6"></textarea>
+					</div>
+					<!-- form 버튼  -->
+					<button id="blackaddsubmit" class="btn btn-dark" type="button">추가</button>
+					<button id="adminmemberlist" class="btn btn-dark" type="button" onclick="location.href='./adminMemberList.jsp'">리스트로</button>
+					</div>
+					</form>
+					
+					
+				</div>
 			</div>
 		</div>
 	</div>
@@ -42,5 +79,20 @@
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=6"></script>
+	
+	<!-- blackaddsubmit 버튼이 눌릴시 팝업 -->
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$('#blackaddsubmit').click(function() {
+			Swal.fire({
+					title: '블랙 리스트 추가완료',
+					 icon: 'success',
+					 confirmButtonColor: '#000',
+					 confirmButtonText: '확인',
+			})
+		})
+		
+	})	
+	</script>
 </body>
 </html>
