@@ -22,7 +22,7 @@ public class CafeController extends HttpServlet {
 		String uri = req.getRequestURI();
 		String ctx = req.getContextPath();
 		String addr = uri.substring(ctx.length());
-
+		HashMap<String, Object> map = null;
 		int suc = 0;
 		RequestDispatcher dis = null;
 		CafeService service = new CafeService(req);
@@ -32,19 +32,22 @@ public class CafeController extends HttpServlet {
 			suc = service.cafeInput();
 			System.out.println(suc);
 			if (suc > 0) {
-				resp.sendRedirect("cafeInputResult.jsp");
-			} 
-			if (suc == 0) {
-				System.out.println("이거 실행되나?");
-				req.setAttribute("suc", suc);
-				dis = req.getRequestDispatcher("myPage/cafeMenu/cafeInput/cafeInput.jsp");
-				dis.forward(req, resp);
+				map = new HashMap<String, Object>();
+				map.put("suc", suc);
+				resp.setContentType("text/html; charset=UTF-8");
+				resp.getWriter().print(new Gson().toJson(map));
+			} else {
+				System.out.println("아따 실패랑게요");
+				map = new HashMap<String, Object>();
+				map.put("suc", suc);
+				resp.setContentType("text/html; charset=UTF-8");
+				resp.getWriter().print(new Gson().toJson(map));	
 			}
 			break;
 		case "/ownerCheck":
 			System.out.println("사업자 번호 체크");
 			boolean ownerCheck = service.ownerCheck();
-			HashMap<String, Object> map = new HashMap<String, Object>();
+			map = new HashMap<String, Object>();
 			map.put("ownerCheck", ownerCheck);
 			resp.setContentType("text/html; charset=UTF-8");
 			resp.getWriter().print(new Gson().toJson(map));
@@ -61,6 +64,12 @@ public class CafeController extends HttpServlet {
 		case "/cafeUpdate":
 			System.out.println("카페정보 업데이트");
 			suc = service.cafeUpdate();
+			if(suc>0) {
+				map = new HashMap<String, Object>();
+				map.put("suc", suc);
+				resp.setContentType("text/html; charset=UTF-8");
+				resp.getWriter().print(new Gson().toJson(map));
+			}
 			break;
 		}
 	}

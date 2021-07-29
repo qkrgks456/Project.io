@@ -16,7 +16,6 @@ public class CafeDAO {
 	public Connection conn = null;
 	public ResultSet rs = null;
 	public PreparedStatement ps = null;
-	String sql = null;
 	CafeDTO dto = null;
 
 	public CafeDAO() {
@@ -54,7 +53,7 @@ public class CafeDAO {
 		ArrayList<HashMap<String, Object>> maparr = dto.getMaparr();
 		try {
 
-			sql = "SELECT cafeKey FROM cafeInfo WHERE cafeKey=?";
+			String sql = "SELECT cafeKey FROM cafeInfo WHERE cafeKey=?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, sessionId);
 			rs = ps.executeQuery();
@@ -113,7 +112,7 @@ public class CafeDAO {
 	}
 
 	public boolean ownerCheck(String ownerNo) {
-		sql = "SELECT ownerNo FROM cafeInfo WHERE ownerNo = ?";
+		String sql = "SELECT ownerNo FROM cafeInfo WHERE ownerNo = ?";
 		boolean ownerCheck = false;
 		try {
 			ps = conn.prepareStatement(sql);
@@ -129,11 +128,12 @@ public class CafeDAO {
 	}
 
 	public CafeDTO cafeInfoMyPage(String sessionId) {
-		ArrayList<HashMap<String, Object>> maparr = new ArrayList<HashMap<String,Object>>();
+		ArrayList<HashMap<String, Object>> maparr = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> map = null;
+		System.out.println("안녕");
 		try {
 			dto = new CafeDTO();
-			sql = "SELECT cafeName,cafeLocation,cafeAddress,cafePhone,cafeDetail,cafeTime"
+			String sql = "SELECT cafeName,cafeLocation,cafeAddress,cafePhone,cafeDetail,cafeTime"
 					+ ",parkingCheck,petCheck,childCheck,rooftopCheck,groupCheck FROM cafeInfo WHERE cafeKey = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, sessionId);
@@ -155,10 +155,10 @@ public class CafeDAO {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, sessionId);
 			rs = ps.executeQuery();
-			while(rs.next()) {
+			while (rs.next()) {
 				map = new HashMap<String, Object>();
-				map.put("newFileName",rs.getString("newFileName"));
-				map.put("fileIdx",rs.getString("fileIdx"));
+				map.put("newFileName", rs.getString("newFileName"));
+				map.put("fileIdx", rs.getString("fileIdx"));
 				if (map.get("fileIdx") != null) {
 					maparr.add(map);
 				}
@@ -171,8 +171,90 @@ public class CafeDAO {
 		} finally {
 			resClose();
 		}
-		System.out.println("maparr 있냐 : "+maparr);
+		System.out.println("maparr 있냐 : " + maparr);
 		return dto;
+	}
+
+	public int update(CafeDTO dto, String sessionId) {
+		int suc = 0;
+		ArrayList<HashMap<String, Object>> maparr = dto.getMaparr();
+		try {
+			System.out.println(dto.getCafeName());
+			System.out.println(dto.getCafeAddress());
+			System.out.println(dto.getCafePhone());
+			System.out.println(dto.getCafeTime());
+			System.out.println(dto.getCafeLocation());
+			String sql = "UPDATE cafeinfo SET cafeName=?,cafeAddress=?,cafePhone=?,cafeTime=?,cafeDetail=?"
+					+ ",cafeLocation=?,parkingCheck=?,petCheck=?,childCheck=?,rooftopCheck=?,groupCheck=? WHERE cafeKey=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, dto.getCafeName());
+			ps.setString(2, dto.getCafeAddress());
+			ps.setString(3, dto.getCafePhone());
+			ps.setString(4, dto.getCafeTime());
+			ps.setString(5, dto.getCafeDetail());
+			ps.setString(6, dto.getCafeLocation());
+			ps.setString(7, dto.getParkingCheck());
+			ps.setString(8, dto.getPetCheck());
+			ps.setString(9, dto.getChildCheck());
+			ps.setString(10, dto.getRooftopCheck());
+			ps.setString(11, dto.getGroupCheck());
+			ps.setString(12, sessionId);
+			suc = ps.executeUpdate();
+			if (suc > 0) {
+				if (maparr != null) {
+					for (HashMap<String, Object> map : maparr) {
+						sql = "INSERT INTO image(fileIdx,division,oriFileName,newFileName) VALUES(image_seq.NEXTVAL,?,?,?)";
+						ps = conn.prepareStatement(sql);
+						ps.setString(1, sessionId);
+						ps.setString(2, (String) map.get("oriFileName"));
+						ps.setString(3, (String) map.get("newFileName"));
+						ps.executeUpdate();
+					}
+				}
+			}
+			System.out.println(dto.getCafeName());
+			System.out.println(dto.getCafeAddress());
+			System.out.println(dto.getCafePhone());
+			System.out.println(dto.getCafeTime());
+			System.out.println(dto.getCafeLocation());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		return suc;
+	}
+
+	public int imgdel(CafeDTO dto) {
+		int suc = 0;	
+		ArrayList<String> delFileIdx = dto.getDelFileIdx();
+		ArrayList<String> newFileNames = new ArrayList<String>();
+		try {
+			String sql = "SELECT newFileName FROM image WHERE fileIdx = ?";
+			for (String fileIdx : delFileIdx) {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1,fileIdx);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					newFileNames.add(rs.getString("newFileName"));
+				}		
+			}
+			dto.setNewFileNames(newFileNames);
+			if(dto.getDelFileIdx()!=null) {
+				sql = "DELETE FROM image WHERE fileIdx=?";
+				for (String fileIdx : delFileIdx) {
+					ps = conn.prepareStatement(sql);
+					ps.setInt(1, Integer.parseInt(fileIdx));
+					suc = ps.executeUpdate();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		return suc;
 	}
 
 }

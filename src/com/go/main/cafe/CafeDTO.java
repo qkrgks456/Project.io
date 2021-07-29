@@ -18,6 +18,8 @@ public class CafeDTO {
 	private String onnerNo;
 	private ArrayList<HashMap<String, Object>> maparr;
 	private HashMap<String, Object> businessfilenames;
+	private ArrayList<String> delFileIdx;
+	private ArrayList<String> newFileNames;
 	
 	public String getCafeName() {
 		return cafeName;
@@ -102,6 +104,18 @@ public class CafeDTO {
 	}
 	public void setBusinessfilenames(HashMap<String, Object> businessfilenames) {
 		this.businessfilenames = businessfilenames;
+	}
+	public ArrayList<String> getDelFileIdx() {
+		return delFileIdx;
+	}
+	public void setDelFileIdx(ArrayList<String> delFileIdx) {
+		this.delFileIdx = delFileIdx;
+	}
+	public ArrayList<String> getNewFileNames() {
+		return newFileNames;
+	}
+	public void setNewFileNames(ArrayList<String> newFileNames) {
+		this.newFileNames = newFileNames;
 	}
 	
 }

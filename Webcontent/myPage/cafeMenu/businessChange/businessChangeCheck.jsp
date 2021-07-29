@@ -40,34 +40,61 @@
 				</div>
 				<hr />
 				<div class="cont container w-50">
-					<!-- 변경 폼 -->
-					<form id="myinfoform" action="#" method="post"
+					<!-- 본인확인 폼 -->
+					<form id="login" action="#" method="post"
 						class="needs-validation py-3" novalidate>
 						<div class="text-center">
-							<h3 class="fw-bold ">사업자번호변경</h3>
+							<h3 class="fw-bold">본인확인</h3>
 						</div>
 						<div class="col-md-9 mb-3">
-							<label for="validationTooltip02" class="fw-bold">바꿀사업자번호</label>
-							<input type="text" class="form-control" id="UserPw" value=""
-								required>
-							<div class="invalid-feedback">필수 정보 입니다</div>
-							<button class="btn btn-dark btn-sm mt-2">사업자번호확인</button>
-							<p class="visually-hidden text-success mt-1">"사용가능합니다"</p>
-							<p class="visually-hidden text-danger mt-1">"사용불가"</p>
+							<label for="validationTooltip02" class="fw-bold">아이디</label> <input
+								type="text" class="form-control nullcheckgo" id="businessUserId" name="businessUserId">
+							<div class="invalid-feedback">필수정보 입니다</div>
 						</div>
-						<div class="col text-center">
-							<button class="btn btn-dark" type="button">정보수정</button>
+						<div class="col-md-9 mb-3">
+							<label for="validationTooltip023" class="fw-bold">비밀번호</label> <input
+								type="password" class="form-control nullcheckgo" id="businessUserPw">
+							<div class="invalid-feedback">필수정보 입니다</div>
+						</div>
+						<div class="col-md-9 mb-3">
+							<label for="validationTooltip04" class="fw-bold">비밀번호확인</label> <input
+								type="password" class="form-control nullcheckgo" id="businessUserPwCheck"
+								>
+							<div class="invalid-feedback">필수정보 입니다</div>
+						</div>
+						<div class="col-md-9 mb-3">
+							<label for="validationTooltip02" class="fw-bold">현재사업자번호</label>
+							<input type="text" class="form-control nullcheckgo" id="businessNumber"
+								>
+							<div class="invalid-feedback">필수정보 입니다</div>
+						</div>
+						<div class="text-center">
+							<button class="btn btn-dark" type="button">확인</button>
+						
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
+			
+
 	</div>
-	
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
+	<script type="text/javascript">
+	$(".nullcheckgo").on("propertychange change keyup paste input", function() {
+		if ($(this).val().length >= 1) {
+			$(this).attr("class", "form-control nullcheckgo");
+		}
+		else {
+			$(this).attr("class", "form-control nullcheckgo is-invalid");
+		}
+	});
+	
+	</script>
+	
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=8"></script>
 </body>

@@ -41,41 +41,36 @@
 				<hr />
 				<!-- 내용시작 -->
 				<div class="cont container w-50">
-					<form action="/Project/cafewrite" method="post" id="cafeInputForm"
-						enctype="multipart/form-data" class="needs-validation py-3"
-						novalidate>
+					<div class="py-3">
 						<div class="form-floating col-md-9 mb-3">
 							<input type="text" class="form-control nullchecks" id="cafeName"
 								name="cafeName" placeholder="카페이름"> <label
-								for="cafeName" class="fw-bold">카페이름</label>
+								for="cafeName" class="fw-bold">카페이름(필수)</label>
 							<div class="invalid-feedback">필수 정보 입니다</div>
 						</div>
 						<div class="form-floating col-md-9 mb-3">
 							<input type="text" class="form-control nullchecks"
 								id="cafeAddress" name="cafeAddress" placeholder="주소" required>
-							<label for="cafeAddress" class="fw-bold">카페주소</label>
+							<label for="cafeAddress" class="fw-bold">카페주소(필수)</label>
 							<div class="invalid-feedback">필수 정보 입니다</div>
 						</div>
 
 						<div class="form-floating col-md-9 mb-3">
 							<input type="text" class="form-control nullchecks"
 								name="cafePhone" id="cafePhone" placeholder="몰라" required>
-							<label for="cafeAddress" class="fw-bold">카페연락처</label>
+							<label for="cafeAddress" class="fw-bold">카페연락처(필수)</label>
 							<div class="invalid-feedback">필수 정보 입니다</div>
 						</div>
-
-
-
 						<div class="form-floating col-md-9 mb-3">
 							<input type="text" class="form-control nullchecks" id="cafeTime"
 								name="cafeTime" placeholder="주소" required> <label
-								for="validationTooltip03" class="fw-bold">영업시간</label>
+								for="validationTooltip03" class="fw-bold">영업시간(필수)</label>
 							<div class="invalid-feedback">필수 정보 입니다</div>
 						</div>
 						<div class="form-floating col-md-9 mb-3">
 							<input type="text" class="form-control" id="ownerNo"
 								name="ownerNo" placeholder="주소" required> <label
-								for="ownerNo" class="fw-bold">사업자등록번호</label>
+								for="ownerNo" class="fw-bold">사업자등록번호(필수)</label>
 							<div class="invalid-feedback">사용 불가,중복확인을 다시 해주세요</div>
 							<div class="valid-feedback">사용 가능</div>
 							<input id="ownerNobtn" type="button"
@@ -83,7 +78,7 @@
 						</div>
 
 						<div class="col-md-9 mb-3">
-							<h6 class="fw-bold ">지역구선택 (해당지역에 맞는 손님에게 카페를 추천해드립니다)</h6>
+							<h6 class="fw-bold ">지역구선택<br/> (해당지역에 맞는 손님에게 카페를 추천해드립니다)</h6>
 							<select class="form-select" name="cafeLocation">
 								<option value="도봉구" selected>도봉구</option>
 								<option value="강북구">강북구</option>
@@ -101,13 +96,13 @@
 							</select>
 						</div>
 						<div class="col-md-9 mb-3">
-							<label for="ownerNoImg" class="form-label fw-bold">사업자등록증
-								첨부</label> <input class="form-control" type="file" id="ownerNoImg"
+							<label for="ownerNoImg" class="form-label fw-bold">사업자등록증 첨부(필수)
+								</label> <input class="form-control" type="file" id="ownerNoImg"
 								name="ownerNoImg">
 							<div class="invalid-feedback">꼭 첨부해주세요</div>
 						</div>
 						<div class="col-md-9 mb-3">
-							<label for="cafeImg" class="form-label fw-bold">카페이미지 첨부</label>
+							<label for="cafeImg" class="form-label fw-bold">카페이미지 첨부(필수)<br/>(9장이하만 등록 가능합니다)</label>
 							<input class="form-control" type="file" id="cafeImg"
 								name="cafeImg" multiple>
 							<div id="oneMust" class="invalid-feedback visually-hidden">1장
@@ -192,30 +187,12 @@
 							</div>
 						</div>
 						<c:if test="${suc eq 0}">
-							<div class="modal fade" tabindex="-1" id="failmodal">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<h5 class="modal-title">등록실패</h5>
-											<button type="button" class="btn-close"
-												data-bs-dismiss="modal" aria-label="Close"></button>
-										</div>
-										<div class="modal-body">
-											<p>이미 등록한 카페가 있습니다</p>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary"
-												data-bs-dismiss="modal">Close</button>
-										</div>
-									</div>
-								</div>
-							</div>
 						</c:if>
 						<hr />
 						<div class="col text-center">
 							<button id="cafeInputbtn" class="btn btn-dark" type="button">카페등록</button>
 						</div>
-					</form>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -268,7 +245,58 @@
 									  denyButtonText: '취소'
 									}).then((result) => {	
 										if (result.isConfirmed) {
-											$('#cafeInputForm').submit();
+											var formData = new FormData();
+											var ownerNoImg = $("input[name='ownerNoImg']");
+											var cafeImg = $("input[name='cafeImg']");
+											var filestwo = ownerNoImg[0].files;
+											var files = cafeImg[0].files;
+											formData.append('cafeName', $("input[name='cafeName']").val());
+											formData.append('cafeLocation', $("select[name='cafeLocation']").val());
+											formData.append('cafeAddress', $("input[name='cafeAddress']").val());
+											formData.append('cafePhone', $("input[name='cafePhone']").val());
+											formData.append('cafeTime', $("input[name='cafeTime']").val());
+											formData.append('cafeDetail', $("textarea[name='cafeDetail']").val());
+											formData.append('parkingCheck', $("input[name='parkingCheck']:checked").val());
+											formData.append('petCheck', $("input[name='petCheck']:checked").val());
+											formData.append('childCheck', $("input[name='childCheck']:checked").val());
+											formData.append('rooftopCheck', $("input[name='rooftopCheck']:checked").val());
+											formData.append('groupCheck', $("input[name='groupCheck']:checked").val());
+											for (var i = 0; i < files.length; i++) {
+												formData.append("cafeImg", files[i]);
+											}
+											for (var i = 0; i < filestwo.length; i++) {
+												formData.append("ownerNoImg", filestwo[i]);
+											}
+											$.ajax({
+												type: "POST",//방식
+												url: "/Project/cafewrite",//주소
+												data: formData,
+												contentType: false,
+												processData: false,
+												dataType: 'JSON',
+												success: function(data) {
+													console.log(data);
+													if (data.suc > 0) {
+														location.href('/Project/myPage/cafeMenu/cafeInput/cafeInputResult.jsp')
+													}else{
+														console.log("실패지롱");
+														Swal.fire(
+																{
+																	title: '등록실패',
+																	icon: 'error',
+																	confirmButtonColor: '#000',
+																	text: '이미 카페가 등록되어 있습니다',
+																	confirmButtonText: '확인',
+																}
+															).then((result) => {
+																
+														})
+													}
+												},
+												error: function(e) {//실패시
+													console.log(e);
+												}
+											})
 										}
 									})
 							}

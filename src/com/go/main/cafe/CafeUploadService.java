@@ -19,11 +19,15 @@ public class CafeUploadService {
 	}
 
 	public CafeDTO PhotoUpload() {
+		// 프로젝트 내 업로드 폴더 경로 얻기
+		String uploadImgPath = req.getSession().getServletContext().getRealPath("uploadImg");
+		String uploadImgPath2 = uploadImgPath.substring(0, uploadImgPath.indexOf("\\.metadata") + 1);
+		System.out.println(uploadImgPath2);
+		String uploadPath = uploadImgPath2 + "Project\\WebContent\\uploadImg";
+		System.out.println(uploadPath);
 		// 1. 용량 제한 10MB 설정 (1byte 단위)
 		int maxSize = 10 * 1024 * 1024;
-		// 2. 저장경로 설정
-		String uploadPath = "C:/img";
-		// 3. 만약 없으면 생성
+		// 2. 만약 없으면 생성
 		File dir = new File(uploadPath);
 		if (!dir.exists()) {
 			System.out.println("폴더없음 폴더생성");
@@ -41,7 +45,7 @@ public class CafeUploadService {
 		ArrayList<HashMap<String, Object>> maparr = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> map = null;
 		// 삭제할 이미지 파일 넘버모음
-		ArrayList<Integer> fileIdxs = new ArrayList<Integer>();
+		ArrayList<String> delFileIdxs = new ArrayList<String>();
 		CafeDTO dto = new CafeDTO();
 
 		// 업로드 해봅시다
@@ -86,61 +90,116 @@ public class CafeUploadService {
 					} else if (item.getFieldName().equals("groupCheck")) {
 						System.out.println("groupCheck 파라미터 : " + text);
 						dto.setGroupCheck(text);
+					} else if (item.getFieldName().equals("delFileIdx")) {
+						System.out.println("delFileIdx 파라미터 : " + text);
+						delFileIdxs.add(text);
 					}
 				} else { // 파일받기
-							// 파일등록을 했다면
-					if (!item.getName().equals("")) {
-						if (item.getFieldName().equals("ownerNoImg")) {
-							System.out.println("파일업로드");
-							File uploadFile = new File(uploadPath + "/" + item.getName());
-							item.write(uploadFile);// 요게 업로드 되는거 (파일객체로 담자)
-							// 이름바꾸기 배운거
-							String oriFileName = item.getName();
-							String[] fileSplit = item.getName().split("\\.");
-							String newFileName = System.nanoTime() + "." + fileSplit[1];
-							File oriName = new File(uploadPath + "/" + oriFileName);
-							File newName = new File(uploadPath + "/" + newFileName);
-							oriName.renameTo(newName);
-							System.out.println("기존파일명 : " + oriFileName + " / " + "바뀐파일명 : " + newFileName);
-							// 바뀐이름 map에 담기
-							map = new HashMap<String, Object>();
-							map.put("newFileName", newFileName);
-							map.put("oriFileName", oriFileName);
-							// 파일 이름이 잘 들어갔다면
-							if (map.get("newFileName") != null) {
-								dto.setBusinessfilenames(map);
-							}
-							System.out.println("업로드 성공 !");
-						} else if (item.getFieldName() == "cafeImg") {
-							System.out.println("파일업로드");
-							File uploadFile = new File(uploadPath + "/" + item.getName());
-							item.write(uploadFile);// 요게 업로드 되는거 (파일객체로 담자)
-							// 이름바꾸기 배운거
-							String oriFileName = item.getName();
-							String[] fileSplit = item.getName().split("\\.");
-							String newFileName = System.nanoTime() + "." + fileSplit[1];
-							File oriName = new File(uploadPath + "/" + oriFileName);
-							File newName = new File(uploadPath + "/" + newFileName);
-							oriName.renameTo(newName);
-							System.out.println("기존파일명 : " + oriFileName + " / " + "바뀐파일명 : " + newFileName);
-							// 바뀐이름 map에 담기
-							map = new HashMap<String, Object>();
-							map.put("newFileName", newFileName);
-							map.put("oriFileName", oriFileName);
-							// map안에 데이터가 잘 있다면
-							if (map != null) {
-								dto.setMaparr(maparr);
-							}
+					if (item.getFieldName().equals("ownerNoImg")) {
+						System.out.println("파일업로드");
+						File uploadFile = new File(uploadPath + "\\" + item.getName());
+						item.write(uploadFile);// 요게 업로드 되는거 (파일객체로 담자)
+						// 이름바꾸기 배운거
+						String oriFileName = item.getName();
+						String[] fileSplit = item.getName().split("\\.");
+						String newFileName = System.nanoTime() + "." + fileSplit[1];
+						File oriName = new File(uploadPath + "\\" + oriFileName);
+						File newName = new File(uploadPath + "\\" + newFileName);
+						oriName.renameTo(newName);
+						System.out.println("기존파일명 : " + oriFileName + " / " + "바뀐파일명 : " + newFileName);
+						// 바뀐이름 map에 담기
+						map = new HashMap<String, Object>();
+						map.put("newFileName", newFileName);
+						map.put("oriFileName", oriFileName);
+						// 파일 이름이 잘 들어갔다면
+						if (map.get("newFileName") != null) {
+							dto.setBusinessfilenames(map);
 						}
-
+						System.out.println("업로드 성공 !");
+					} else if (item.getFieldName().equals("cafeImg")) {
+						System.out.println("파일업로드");
+						File uploadFile = new File(uploadPath + "\\" + item.getName());
+						item.write(uploadFile);// 요게 업로드 되는거 (파일객체로 담자)
+						// 이름바꾸기 배운거
+						String oriFileName = item.getName();
+						String[] fileSplit = item.getName().split("\\.");
+						String newFileName = System.nanoTime() + "." + fileSplit[1];
+						File oriName = new File(uploadPath + "\\" + oriFileName);
+						File newName = new File(uploadPath + "\\" + newFileName);
+						oriName.renameTo(newName);
+						System.out.println("기존파일명 : " + oriFileName + " / " + "바뀐파일명 : " + newFileName);
+						// 바뀐이름 map에 담기
+						map = new HashMap<String, Object>();
+						map.put("newFileName", newFileName);
+						map.put("oriFileName", oriFileName);
+						// 파일 이름이 잘 들어갔다면
+						if (map.get("newFileName") != null) {
+							maparr.add(map);
+						}
+						System.out.println("업로드 성공 !");
 					}
+
 				}
+			}
+			// map안에 데이터가 잘 있다면
+			if (map != null) {
+				dto.setMaparr(maparr);
+			}
+			if (delFileIdxs != null) {
+				dto.setDelFileIdx(delFileIdxs);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return dto;
+	}
+
+	// 이미지 선택삭제
+	public boolean multidel(CafeDTO dto) {
+		// 프로젝트 내 업로드 폴더 경로 얻기
+		String uploadImgPath = req.getSession().getServletContext().getRealPath("uploadImg");
+		String uploadImgPath2 = uploadImgPath.substring(0, uploadImgPath.indexOf("\\.metadata") + 1);
+		System.out.println(uploadImgPath2);
+		String uploadPath = uploadImgPath2 + "Project\\WebContent\\uploadImg";
+		System.out.println(uploadPath);
+		ArrayList<String> newFileNames = dto.getNewFileNames();
+		boolean success = false;
+		for (String newFileName : newFileNames) {
+			File file = new File(uploadPath + "\\" + newFileName);
+			if (file.exists()) {
+				success = file.delete();
+				System.out.println("파일 삭제 성공 여부 : " + success);
+			}
+		}
+		return success;
+	}
+	
+	// 등록시 업로드된 사진삭제,카페삭제시 블라인드처리된 카페 사진삭제
+	public boolean failPhoto(CafeDTO dto) {
+		System.out.println("사진 정리시작");
+		boolean suc = false;
+		// 프로젝트 내 업로드 폴더 경로 얻기
+		String uploadImgPath = req.getSession().getServletContext().getRealPath("uploadImg");
+		String uploadImgPath2 = uploadImgPath.substring(0, uploadImgPath.indexOf("\\.metadata") + 1);
+		System.out.println(uploadImgPath2);
+		String uploadPath = uploadImgPath2 + "Project\\WebContent\\uploadImg";
+		System.out.println(uploadPath);
+		HashMap<String, Object> map = dto.getBusinessfilenames();		
+		ArrayList<HashMap<String, Object>> maparr = dto.getMaparr();
+		File file = new File(uploadPath + "\\" + map.get("newFileName"));
+		if (file.exists()) {
+			suc = file.delete();
+			System.out.println("파일 삭제 성공 여부 : " + suc);
+		}	
+		for (HashMap<String, Object> maps : maparr) {
+			file = new File(uploadPath + "\\" + maps.get("newFileName"));
+			if (file.exists()) {
+				suc = file.delete();
+				System.out.println("파일 삭제 성공 여부 : " + suc);
+			}	
+		}
+		return suc;
 	}
 
 }

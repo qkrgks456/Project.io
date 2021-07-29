@@ -42,6 +42,7 @@
 			</div>
 		</div>
 	</div>
+
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->

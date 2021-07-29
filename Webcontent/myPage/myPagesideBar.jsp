@@ -49,7 +49,7 @@
 				href="/Project/cafeInfoMyPage"
 				style="cursor: pointer;">카페정보</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myPage/cafeMenu/businessChange/businessChange.jsp"
+				href="/Project/myPage/cafeMenu/businessChange/businessChangeCheck.jsp"
 				style="cursor: pointer;">사업자번호수정</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
 				href="/Project/myPage/cafeMenu/cafeDrop.jsp"
