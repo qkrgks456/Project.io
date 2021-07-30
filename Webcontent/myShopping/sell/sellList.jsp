@@ -43,39 +43,208 @@
 								<th scope="col">#</th>
 								<th scope="col">이미지</th>
 								<th scope="col">상품명</th>
-								<th scope="col">상품설명</th>
 								<th scope="col">가격</th>
+								<th scope="col">수량</th>
+								<th scope="col">합계</th>
 								<th class="text-center" scope="col">상세보기</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="visually-hidden">
-								<th class="align-middle" scope="row">1</th>
-								<td><img src="/Project/assets/img/12.jpg"
-									class="img-thumbnail"
-									style="width: 80px; height: 80px; object-fit: cover;" /></td>
-								<td class="align-middle">상품명</td>
-								<td class="align-middle">상품코드</td>
-								<td class="align-middle">가격</td>
+							<tr class="">
+								<th class="align-middle" scope="row">
+
+
+									<div class="check">
+										<input type="checkbox" name="buy" value="260" checked="">
+									</div>
+								<td><div class="img">
+										<img src="/Project/assets/img/p11.jpg" class="img-thumbnail"
+											style="width: 80px; height: 80px; object-fit: cover;" />
+									</div></td>
+
+								<td class="align-middle">브라질 버본 산토스 No.2</td>
+
+								<td class="align-middle">
+									<div class="subdiv">
+										<div class="basketprice">
+											<input type="hidden" name="p_price" id="p_price1"
+												class="p_price" value="9500">9,500원
+										</div>
+									</div>
+								</td>
+
+								<td class="align-middle">
+											<div class="num">
+											<div class="updown">
+												<input type="text" name="p_num1" id="p_num1" size="2"
+													maxlength="4" class="p_num" value="2"
+													onkeyup="javascript:basket.changePNum(1);"> <span
+													onclick="javascript:basket.changePNum(1);"><i
+													class="fas fa-arrow-alt-circle-up up"></i></span> <span
+													onclick="javascript:basket.changePNum(1);"><i
+													class="fas fa-arrow-alt-circle-down down"></i></span>
+											</div>
+										</div>
+															
+								</td>
+								<td class="align-middle">
+									<div class="sum">40,000원</div>
+								</td>
 								<td>
 									<div class="d-grid gap-2 col-6 mx-auto mt-1">
 										<a class="btn btn-secondary btn-sm">상세보기</a> <a
-											class="btn btn-secondary btn-sm">좋아요취소</a>
+											class="btn btn-secondary btn-sm" onclick="javascript:basket.delItem();">삭제하기</a>
 									</div>
 								</td>
 							</tr>
 						</tbody>
-					</table>
-					<div class="text-center text-muted">판매한 상품정보가 없습니다</div>
+
+						<tr class="">
+							<th class="align-middle" scope="row">
+								<div class="check">
+									<input type="checkbox" name="buy" value="260" checked="">
+								</div>
+							<td><div class="img">
+									<img src="/Project/assets/img/m4.jpg" class="img-thumbnail"
+										style="width: 80px; height: 80px; object-fit: cover;" />
+								</div></td>
+							<td class="align-middle">텀블러</td>
+							<td class="align-middle">35,000원</td>
+							<td class="align-middle">
+								<div class="updown">
+									<input type="text" name="p_num1" id="p_num1" size="2"
+										maxlength="4" class="p_num" value="2"> <span><i
+										class="fas fa-arrow-alt-circle-up up"></i></span> <span><i
+										class="fas fa-arrow-alt-circle-down down"></i></span>
+								</div>
+								</div>
+							</td>
+							<td class="align-middle">
+								<div class="sum">40,000원</div>
+							</td>
+							<td>
+								<div class="d-grid gap-2 col-6 mx-auto mt-1">
+									<a class="btn btn-secondary btn-sm">상세보기</a> <a
+										class="btn btn-secondary btn-sm">삭제하기</a>
+								</div>
+							</td>
+						</tr>
+						</tbody>
+
+						<tr class="">
+							<th class="align-middle" scope="row">
+								<div class="check">
+									<input type="checkbox" name="buy" value="260" checked="">
+								</div>
+							<td><div class="img">
+									<img src="/Project/assets/img/m6.jpg" class="img-thumbnail"
+										style="width: 80px; height: 80px; object-fit: cover;" />
+								</div></td>
+							<td class="align-middle">시럽 세트</td>
+							<td class="align-middle">32,000원</td>
+							<td class="align-middle">
+								<div class="updown">
+									<input type="text" name="p_num1" id="p_num1" size="2"
+										maxlength="4" class="p_num" value="2"> <span><i
+										class="fas fa-arrow-alt-circle-up up"></i></span> <span><i
+										class="fas fa-arrow-alt-circle-down down"></i></span>
+								</div>
+								</div>
+							</td>
+							<td class="align-middle">
+								<div class="sum">40,000원</div>
+							</td>
+							<td>
+								<div class="d-grid gap-2 col-6 mx-auto mt-1">
+									<a class="btn btn-secondary btn-sm">상세보기</a> <a
+										class="btn btn-secondary btn-sm">삭제하기</a>
+								</div>
+							</td>
+						</tr>
+						</tbody>
+
+						<tr class="">
+							<th class="align-middle" scope="row">
+								<div class="check">
+									<input type="checkbox" name="buy" value="260" checked="">
+								</div>
+							<td><div class="img">
+									<img src="/Project/assets/img/p7.jpg" class="img-thumbnail"
+										style="width: 80px; height: 80px; object-fit: cover;" />
+								</div></td>
+							<td class="align-middle">과테말라 안티구아</td>
+							<td class="align-middle">8,900원</td>
+							<td class="align-middle">
+								<div class="updown">
+									<input type="text" name="p_num1" id="p_num1" size="2"
+										maxlength="4" class="p_num" value="2"> <span><i
+										class="fas fa-arrow-alt-circle-up up"></i></span> <span><i
+										class="fas fa-arrow-alt-circle-down down"></i></span>
+								</div>
+								</div>
+							</td>
+							<td class="align-middle">
+								<div class="sum">40,000원</div>
+							</td>
+							<td>
+								<div class="d-grid gap-2 col-6 mx-auto mt-1">
+									<a class="btn btn-secondary btn-sm">상세보기</a> <a
+										class="btn btn-secondary btn-sm">삭제하기</a>
+								</div>
+							</td>
+						</tr>
+						</tbody>
+
+						<tr class="">
+							<th class="align-middle" scope="row">
+								<div class="check">
+									<input type="checkbox" name="buy" value="260" checked="">
+								</div>
+							<td><div class="img">
+									<img src="/Project/assets/img/m7.jpg" class="img-thumbnail"
+										style="width: 80px; height: 80px; object-fit: cover;" />
+								</div></td>
+							<td class="align-middle">써머 주스잔</td>
+							<td class="align-middle">16,000원</td>
+							<td class="align-middle">
+								<div class="updown">
+									<input type="text" name="p_num1" id="p_num1" size="2"
+										maxlength="4" class="p_num" value="2"> <span><i
+										class="fas fa-arrow-alt-circle-up up"></i></span> <span><i
+										class="fas fa-arrow-alt-circle-down down"></i></span>
+								</script>
+								</div>
+								</div>
+							</td>
+							<td class="align-middle">
+								<div class="sum">40,000원</div>
+							</td>
+							<td>
+								<div class="d-grid gap-2 col-6 mx-auto mt-1">
+									<a class="btn btn-secondary btn-sm">상세보기</a> <a
+										class="btn btn-secondary btn-sm">삭제하기</a>
+								</div>
+							</td>
+						</tr>
+						</tbody>
+
+
+
 				</div>
+			</div>
 			</div>
 		</div>
 	</div>
+</body>
+</html>
+
+<!-- 하단 고정 퀵메뉴 -->
+	
+	</c:if>
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
-	<script src="/Project/assets/js/main.js?var=4"></script>
-</body>
-</html>
+<script src="/Project/assets/js/main.js?var=2"></script><c:if test="${sessionScope.loginId eq 'qkrgks456'}">
+		<jsp:include page="/fixMenu/quickMenu.html"></jsp:include>

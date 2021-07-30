@@ -9,6 +9,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 부트스트랩 파일 -->
 <link href="/Project/assets/css/bootstrap.css?ver=3" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+	<link rel="stylesheet" href="./10-11.css" />
+	<script type="text/javascript" src="./10-11.js"></script> 
 <!-- css cdn -->
 <jsp:include page="/assets/css/csscdn.jsp"></jsp:include>
 <!-- main css 추가 -->
@@ -80,15 +83,15 @@
 					</table>
 					<div class="text-center text-muted">구매한 상품정보가 없습니다</div>
 				</div>
-
 			</div>
 		</div>
 	</div>
 
 
-
-
-
+<!-- 하단 고정 퀵메뉴 -->
+	<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
+		<jsp:include page="/fixMenu/quickMenu.html"></jsp:include>
+	</c:if>
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->
