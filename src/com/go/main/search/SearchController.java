@@ -46,8 +46,10 @@ public class SearchController extends HttpServlet {
 				System.out.println("result(유저검색) 값 출력 : " + Sresult);				
 
 				if(Sname.equals("searchcafename")) {
-					service.namelist(Sresult);
-					req.setAttribute("list", service.namelist(Sresult));
+					//service.namelist(Sresult);
+					service.namelistpic(Sresult);
+					//req.setAttribute("list", service.namelist(Sresult));
+					req.setAttribute("nameimage", service.namelistpic(Sresult));
 					dis = req.getRequestDispatcher("search.jsp");
 					dis.forward(req, resp);
 				}

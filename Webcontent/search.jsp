@@ -4,6 +4,12 @@
 <!doctype html>
 <html lang="ko">
 <head>
+<style>
+table {
+	width: 500px;
+	table-layout: fixed;
+}
+</style>
 <meta charset="utf-8">
 <!-- 부트스트랩 메타태그 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -84,7 +90,7 @@
 									<option value="searchcafeproduct" name="searchcafeproduct">카페상품</option>
 								</select> <input class="form-control me-1" type="search"
 									placeholder="상품명을 입력해주세요" aria-label="Search"
-									name="searchresult">
+									name="searchresult" id="searchresult">
 								<button class="btn btn-outline-secondary" type="submit">search</button>
 
 							</form>
@@ -94,69 +100,81 @@
 				</div>
 				<!-- 검색창 끝 -->
 
-				<c:forEach items="${list}" var="bbs">
-					<table class="table table-hover">
-						<thead>
+				<table class="table table-hover">
+					<thead>
+						<p class="fw-bold mt-4 h3">카페검색</p>
+						<tr>
+							<th scope="col">이미지</th>
+							<th scope="col">카페 이름</th>
+							<th scope="col">지역구</th>
+							<th scope="col">상세보기</th>
+							<th scope="col">혼잡도</th>
+						</tr>
+
+					</thead>
+					<tbody>
+					
+						<c:forEach items="${nameimage}" var="bbs">
 							<tr>
-								<th scope="col">이미지</th>
-								<th scope="col">카페 이름</th>
-								<th scope="col">지역구</th>
-								<th scope="col">상세보기</th>
-								<th scope="col">혼잡도</th>								
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td class="align-middle"></td>
+								<td>
+								
+							
+										<img src="/photo/${bbs.newFileName}" width="75px"	height="75px" />
+							
+									
+								</td>
 								<td class="align-middle">${bbs.cafeName}</td>
 								<td class="align-middle">${bbs.cafeLocation}</td>
-								
+
 								<td class="align-middle"><a href=MainCafe/cafe.jsp>상세보기</a></td>
-								
+
 								<!-- 혼잡도 출력에 따른 색상처리 -->
 								<c:if test="${bbs.confusion eq '혼잡' }">
-									<td class="align-middle" style="color: red; font-weight: bold">${bbs.confusion}</td>
+									<td style="color: red; font-weight: bold" class="align-middle">${bbs.confusion}</td>
 								</c:if>
 								<c:if test="${bbs.confusion eq '보통' }">
-									<td class="align-middle"
-										style="color: #ffcc00; font-weight: bold;">${bbs.confusion}</td>
+									<td style="color: #ffcc00; font-weight: bold;" class="align-middle">${bbs.confusion}</td>
 								</c:if>
 								<c:if test="${bbs.confusion eq '여유' }">
-									<td class="align-middle"
-										style="color: green; font-weight: bold">${bbs.confusion}</td>
+									<td style="color: green; font-weight: bold" class="align-middle">${bbs.confusion}</td>
 								</c:if>
-								
 							</tr>
-						</tbody>
-					</table>
-				</c:forEach>
-		
-				<c:forEach items="${list2}" var="bbs2">
-					<table class="table table-hover">
-						<thead>
-							<tr>
-								<th scope="col">이미지</th>
-								<th scope="col">상품 이름</th>
-								<th scope="col">가격</th>
-								<th scope="col">카페 이름</th>
-								<th scope="col">카페 지역</th>							
-							</tr>
-						</thead>
-						<tbody>
+						</c:forEach>
+					</tbody>
+				</table>
+
+
+
+				<table class="table table-hover" >
+
+					<thead>
+						<p class="fw-bold mt-4 h3">상품검색</p>
+						<tr>
+							<th scope="col">이미지</th>
+							<th scope="col">상품 이름</th>
+							<th scope="col">가격</th>
+							<th scope="col">카페 이름</th>
+							<th scope="col">카페 지역</th>
+						</tr>
+
+					</thead>
+					<tbody>
+						<c:forEach items="${list2}" var="bbs2">
 							<tr>
 								<td class="align-middle"></td>
 								<td class="align-middle">${bbs2.productName}</td>
 								<td class="align-middle">${bbs2.price}</td>
-								
+
 								<td class="align-middle"><a href="MainCafe/cafe.jsp">${bbs2.cafeName}</a></td>
 								<td class="align-middle">${bbs2.cafeLocation}</td>
 							</tr>
-						</tbody>
-					</table>
-				</c:forEach>
-				
-				
-				
+						</c:forEach>
+					</tbody>
+
+				</table>
+
+
+
 			</div>
 			<script src="https://code.jquery.com/jquery-3.6.0.js"
 				integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
@@ -185,4 +203,8 @@
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=6"></script>
 </body>
+<script>
+
+</script>
+
 </html>

@@ -37,20 +37,21 @@ public class SearchDAO {
 	}
 	public ArrayList<SearchDTO> namelist(String sresult) {
 		String sql= "SELECT c.cafeName, c.cafeLocation, c.Confusion FROM cafeinfo c LEFT OUTER JOIN product p ON c.cafekey=p.cafekey WHERE c.cafename LIKE ?";
+		//나중에 디비전값 = 사업자 등록번호 맞춰줘야 함
 		ArrayList<SearchDTO> namelist = null;
 		SearchDTO dto = null;
 		try {			
+			namelist = new ArrayList<SearchDTO>();
 			ps = conn.prepareStatement(sql);
 			ps.setString(1,"%"+sresult+'%');
-			rs = ps.executeQuery();			
-			namelist = new ArrayList<SearchDTO>();
+			rs = ps.executeQuery();	
 			while(rs.next()) {
 			dto = new SearchDTO();
 			dto.setCafeName(rs.getString("cafeName"));		
 			dto.setCafeLocation(rs.getString("cafeLocation"));
-			dto.setConfusion(rs.getString("confusion"));
+			dto.setConfusion(rs.getString("confusion"));	
 			namelist.add(dto);
-			}			
+			}									
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
@@ -59,7 +60,53 @@ public class SearchDAO {
 		return namelist;
 		
 	}
-
+	public ArrayList<SearchDTO> namelistpic(String sresult) {
+		ArrayList<SearchDTO> namelistpic = null;
+		SearchDTO dto = null;		
+		String sql=
+				"SELECT  * FROM (SELECT fileidx,division,newFilename,cafename FROM cafeinfo c LEFT OUTER JOIN product p ON c.cafekey=p.cafekey left outer join image i on c.cafekey = i.division ORDER BY ROWNUM)"    
+				+"WHERE cafename like ? AND ROWNUM = 1";				
+		try {
+			ps=conn.prepareStatement(sql);
+			ps.setString(1,"%"+sresult+'%');
+			
+			if(rs.next()) {
+				namelistpic = new ArrayList<SearchDTO>();
+				dto = new SearchDTO();
+				dto.setFileIdx(rs.getInt("fileidx"));
+				dto.setDivision(rs.getString("division"));
+				dto.setNewFileName(rs.getString("newFileName"));
+				dto.setCafeName(rs.getString("cafename"));					
+				namelistpic.add(dto);
+			} 
+			rs = ps.executeQuery();	
+		
+			
+		sql= "SELECT c.cafeName, c.cafeLocation, c.Confusion FROM cafeinfo c LEFT OUTER JOIN product p ON c.cafekey=p.cafekey WHERE c.cafename LIKE ?";
+		ArrayList<SearchDTO> namelist = null;
+		dto = new SearchDTO();
+		
+			namelist = new ArrayList<SearchDTO>();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1,"%"+sresult+'%');			
+			while(rs.next()) {
+			dto = new SearchDTO();
+			dto.setCafeName(rs.getString("cafeName"));		
+			dto.setCafeLocation(rs.getString("cafeLocation"));
+			dto.setConfusion(rs.getString("confusion"));	
+			namelist.add(dto);
+			} 
+			rs = ps.executeQuery();			
+			}
+			catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}			
+		return namelistpic;		
+	}
+	
+	
 	public ArrayList<SearchDTO> productlist(String sresult) {
 		String sql = "SELECT p.productname, p.price, c.cafeName, c.cafeLocation FROM cafeinfo c LEFT OUTER JOIN product p ON c.cafekey=p.cafekey WHERE p.productname LIKE ?";
 		ArrayList<SearchDTO> productlist = null;
@@ -71,12 +118,12 @@ public class SearchDAO {
 			rs = ps.executeQuery();	
 			productlist = new ArrayList<SearchDTO>();
 			while(rs.next()) {
-			dto = new SearchDTO();
-			dto.setProductName(rs.getString("productName"));
-			dto.setPrice(rs.getInt("price"));
-			dto.setCafeName(rs.getString("cafeName"));		
-			dto.setCafeLocation(rs.getString("cafeLocation"));
-			productlist.add(dto);
+				dto = new SearchDTO();
+				dto.setProductName(rs.getString("productName"));
+				dto.setPrice(rs.getInt("price"));
+				dto.setCafeName(rs.getString("cafeName"));		
+				dto.setCafeLocation(rs.getString("cafeLocation"));
+				productlist.add(dto);
 			}			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -88,3 +135,4 @@ public class SearchDAO {
 	}
 	
 }
+

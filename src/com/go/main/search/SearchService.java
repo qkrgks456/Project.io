@@ -26,6 +26,13 @@ public class SearchService {
 		System.out.println("찾은 상품 갯수 : " + productlist.size());		
 		return productlist;		
 	}
+
+	public ArrayList<SearchDTO> namelistpic(String sresult) {
+		SearchDAO dao = new SearchDAO();
+		ArrayList<SearchDTO> namelistpic = dao.namelistpic(sresult);
+		System.out.println("찾은 카페 갯수 : " + namelistpic.size());
+		return namelistpic;	
+	}
 	
 	
 	

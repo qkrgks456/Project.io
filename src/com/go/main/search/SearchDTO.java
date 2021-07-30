@@ -11,6 +11,10 @@ public class SearchDTO {
 	private String productName;
 	private String cafeLocation;
 	private int price;
+	private int fileIdx;
+	private String oriFileName;
+	private String newFileName;
+	private String division;
 	
 	
 	public String getCafeKey() {
@@ -66,6 +70,30 @@ public class SearchDTO {
 	}
 	public void setPrice(int price) {
 		this.price = price;
+	}
+	public int getFileIdx() {
+		return fileIdx;
+	}
+	public void setFileIdx(int fileIdx) {
+		this.fileIdx = fileIdx;
+	}
+	public String getOriFileName() {
+		return oriFileName;
+	}
+	public void setOriFileName(String oriFileName) {
+		this.oriFileName = oriFileName;
+	}
+	public String getNewFileName() {
+		return newFileName;
+	}
+	public void setNewFileName(String newFileName) {
+		this.newFileName = newFileName;
+	}
+	public String getDivision() {
+		return division;
+	}
+	public void setDivision(String division) {
+		this.division = division;
 	}
 	
 	
