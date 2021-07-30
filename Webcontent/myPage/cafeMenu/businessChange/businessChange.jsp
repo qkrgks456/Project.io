@@ -17,6 +17,9 @@
 </head>
 <body>
 	<div class="wrap p-0 m-0">
+		<c:if test="${businessCheck ne true}">
+			<c:redirect url="businessChangeCheck.jsp"></c:redirect>
+		</c:if>
 		<!-- 상단 메뉴바 -->
 		<!-- 섹션에 아이디가 있다면 -->
 		<c:if test="${sessionScope.loginId ne null}">
@@ -41,33 +44,66 @@
 				<hr />
 				<div class="cont container w-50">
 					<!-- 변경 폼 -->
-					<form id="myinfoform" action="#" method="post"
-						class="needs-validation py-3" novalidate>
-						<div class="text-center">
-							<h3 class="fw-bold ">사업자번호변경</h3>
-						</div>
+					<form class="py-3" action="/Project/businessChange" method="post">
 						<div class="col-md-9 mb-3">
-							<label for="validationTooltip02" class="fw-bold">바꿀사업자번호</label>
-							<input type="text" class="form-control" id="UserPw" value=""
+							<label for="ownerNo" class="fw-bold">바꿀사업자번호</label> <input
+								id="ownerNo" type="text" class="form-control" name="ownerNo"
 								required>
-							<div class="invalid-feedback">필수 정보 입니다</div>
-							<button class="btn btn-dark btn-sm mt-2">사업자번호확인</button>
-							<p class="visually-hidden text-success mt-1">"사용가능합니다"</p>
-							<p class="visually-hidden text-danger mt-1">"사용불가"</p>
+							<div class="invalid-feedback">사용 불가,번호확인을 다시 해주세요</div>
+							<div class="valid-feedback">사용 가능</div>
+							<input id="ownerNobtn" type="button"
+								class="btn btn-dark btn-sm mt-2" value="사업자번호확인">
 						</div>
 						<div class="col text-center">
-							<button class="btn btn-dark" type="button">정보수정</button>
+							<input id="businessChangeBtn" type="button" class="btn btn-dark"
+								value="정보수정">
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
+	<script type="text/javascript">
+		$("#ownerNobtn").click(function() {
+			if ($('#ownerNo').val() == "") {
+				$('#ownerNo').addClass("is-invalid");
+			} else {
+				var ownerNum = $('#ownerNo').val()
+				$.ajax({
+					type : "POST",//방식
+					url : "/Project/ownerCheck",//주소
+					data : {
+						ownerNo : ownerNum
+					},
+					dataType : 'JSON',
+					success : function(data) { //성공시
+						console.log(data.ownerCheck);
+						if (data.ownerCheck == false) {
+							$('#ownerNo').removeClass("is-invalid");
+							$('#ownerNo').addClass("is-valid");
+						} else {
+							$('#ownerNo').addClass("is-invalid");
+							$('#ownerNo').removeClass("is-valid");
+						}
+					},
+					error : function(e) { //실패시
+						console.log(e);
+					}
+				});
+			}
+		})
+
+		$('#businessChangeBtn').click(function() {
+			if ($('#ownerNo').attr('class') == 'form-control is-valid') {
+				$(this).attr('type', 'submit');
+			}
+		})
+	</script>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=8"></script>
 </body>

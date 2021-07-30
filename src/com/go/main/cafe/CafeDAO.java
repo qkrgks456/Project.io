@@ -93,7 +93,7 @@ public class CafeDAO {
 					for (HashMap<String, Object> map : maparr) {
 						sql = "INSERT INTO image(fileIdx,division,oriFileName,newFileName) VALUES(image_seq.NEXTVAL,?,?,?)";
 						ps = conn.prepareStatement(sql);
-						ps.setString(1, dto.getOnnerNo());
+						ps.setString(1, sessionId);
 						ps.setString(2, (String) map.get("oriFileName"));
 						ps.setString(3, (String) map.get("newFileName"));
 						suc = ps.executeUpdate();
@@ -134,7 +134,7 @@ public class CafeDAO {
 		try {
 			dto = new CafeDTO();
 			String sql = "SELECT cafeName,cafeLocation,cafeAddress,cafePhone,cafeDetail,cafeTime"
-					+ ",parkingCheck,petCheck,childCheck,rooftopCheck,groupCheck FROM cafeInfo WHERE cafeKey = ?";
+					+ ",parkingCheck,petCheck,childCheck,rooftopCheck,groupCheck FROM cafeInfo WHERE cafeDel='N' AND openCheck='Y' AND cafeKey = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, sessionId);
 			rs = ps.executeQuery();
@@ -179,11 +179,6 @@ public class CafeDAO {
 		int suc = 0;
 		ArrayList<HashMap<String, Object>> maparr = dto.getMaparr();
 		try {
-			System.out.println(dto.getCafeName());
-			System.out.println(dto.getCafeAddress());
-			System.out.println(dto.getCafePhone());
-			System.out.println(dto.getCafeTime());
-			System.out.println(dto.getCafeLocation());
 			String sql = "UPDATE cafeinfo SET cafeName=?,cafeAddress=?,cafePhone=?,cafeTime=?,cafeDetail=?"
 					+ ",cafeLocation=?,parkingCheck=?,petCheck=?,childCheck=?,rooftopCheck=?,groupCheck=? WHERE cafeKey=?";
 			ps = conn.prepareStatement(sql);
@@ -212,12 +207,6 @@ public class CafeDAO {
 					}
 				}
 			}
-			System.out.println(dto.getCafeName());
-			System.out.println(dto.getCafeAddress());
-			System.out.println(dto.getCafePhone());
-			System.out.println(dto.getCafeTime());
-			System.out.println(dto.getCafeLocation());
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -227,21 +216,21 @@ public class CafeDAO {
 	}
 
 	public int imgdel(CafeDTO dto) {
-		int suc = 0;	
+		int suc = 0;
 		ArrayList<String> delFileIdx = dto.getDelFileIdx();
 		ArrayList<String> newFileNames = new ArrayList<String>();
 		try {
 			String sql = "SELECT newFileName FROM image WHERE fileIdx = ?";
 			for (String fileIdx : delFileIdx) {
 				ps = conn.prepareStatement(sql);
-				ps.setString(1,fileIdx);
+				ps.setString(1, fileIdx);
 				rs = ps.executeQuery();
-				if(rs.next()) {
+				if (rs.next()) {
 					newFileNames.add(rs.getString("newFileName"));
-				}		
+				}
 			}
 			dto.setNewFileNames(newFileNames);
-			if(dto.getDelFileIdx()!=null) {
+			if (dto.getDelFileIdx() != null) {
 				sql = "DELETE FROM image WHERE fileIdx=?";
 				for (String fileIdx : delFileIdx) {
 					ps = conn.prepareStatement(sql);
@@ -255,6 +244,152 @@ public class CafeDAO {
 			resClose();
 		}
 		return suc;
+	}
+
+	public boolean cafeInputCheck(String loginId) {
+		boolean check = false;
+		try {
+			String sql = "SELECT cafeKey FROM cafeInfo WHERE (cafeDel='N' OR cafeDel='Y') AND cafeKey=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, loginId);
+			rs = ps.executeQuery();
+			check = rs.next();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		System.out.println(check);
+		return check;
+
+	}
+
+	public boolean businessCheck(String businessUserId, String businessUserPw, String businessNumber) {
+		boolean check = false;
+		String sql = "SELECT u.memberKey,u.pw,o.ownerNo FROM " + "ownerUser o LEFT OUTER JOIN users u  "
+				+ "ON u.memberKey=o.memberKey WHERE u.memberKey=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, businessUserId);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				if (rs.getString("memberKey").equals(businessUserId) && rs.getString("ownerNo").equals(businessNumber)
+						&& rs.getString("pw").equals(businessUserPw)) {
+					check = true;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+
+		return check;
+	}
+
+	public int cafeDel(String cafeKey) {
+		int suc = 0;
+		try {
+			String sql = "UPDATE cafeinfo SET cafeDel='Y' WHERE cafeKey=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, cafeKey);
+			suc = ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		return suc;
+	}
+
+	public boolean cafeExist(String loginId) {
+		boolean check = false;
+		try {
+			String sql = "SELECT cafeKey FROM cafeInfo WHERE cafeDel='N' AND cafeKey=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, loginId);
+			rs = ps.executeQuery();
+			check = rs.next();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+
+		return check;
+	}
+
+	public HashMap<String, Object> cafeList(int page) {
+		ArrayList<CafeDTO> list = new ArrayList<CafeDTO>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		// 한블럭당 페이지 갯수
+		int pageLength = 5;
+		// 블럭 인덱스
+		int currentBlock = page % pageLength == 0 ? page / pageLength : (page / pageLength) + 1;
+		// 시작페이지
+		int startPage = (currentBlock - 1) * pageLength + 1;
+		// 끝페이지
+		int endPage = startPage + pageLength - 1;
+		System.out.println("시작 페이지 : " + startPage + " / 끝 페이지 : " + endPage);
+		// 노출할 데이터 갯수
+		int pagePerCnt = 8;
+		try {
+			String sql = "SELECT c.cafeKey,c.cafeName,c.cafeLocation,c.cafeDetail,c.confusion,i.newfilename "
+					+ "FROM (SELECT division,newFileName FROM image WHERE ROWID IN "
+					+ "(SELECT MIN(ROWID) FROM image GROUP BY division)) i "
+					+ "LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey "
+					+ "WHERE c.cafeDel='N' AND c.openCheck='Y'";
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				dto = new CafeDTO();
+				dto.setCafeKey(rs.getString("cafeKey"));
+				dto.setCafeName(rs.getString("cafeName"));
+				dto.setCafeLocation(rs.getString("cafeLocation"));
+				dto.setCafeDetail(rs.getString("cafeDetail"));
+				dto.setConfusion(rs.getString("confusion"));
+				dto.setNewFileName(rs.getString("newfilename"));
+				list.add(dto);
+			}
+			int total = totalCount(); // 총 게시글 수 가져옵시다
+			// 총 게시글 수에 나올 페이지수 나눠서 짝수면 나눠주고 홀수면 +1
+			int totalPages = total % pagePerCnt == 0 ? total / pagePerCnt : (total / pagePerCnt) + 1;
+			if (totalPages == 0) {
+				totalPages = 1;
+			}
+			// 끝지점을 맨 마지막 페이지로 지정
+			if (endPage > totalPages) {
+				endPage = totalPages;
+			}
+			map.put("list", list);
+			map.put("totalPage", totalPages);
+			map.put("currPage", page);
+			map.put("pageLength", pageLength);
+			map.put("startPage", startPage);
+			map.put("endPage", endPage);
+			System.out.println("총 갯수" + total);
+			System.out.println("토탈 페이지" + totalPages);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		return map;
+	}
+
+	public int totalCount() throws SQLException {
+		String sql = "SELECT COUNT(cafeKey) "
+				+ "FROM (SELECT division,newFileName FROM image WHERE ROWID IN "
+				+ "(SELECT MIN(ROWID) FROM image GROUP BY division)) i "
+				+ "LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey "
+				+ "WHERE c.cafeDel='N' AND c.openCheck='Y'";
+		ps = conn.prepareStatement(sql);
+		rs = ps.executeQuery();
+		int total = 0;
+		if (rs.next()) {
+			total = rs.getInt(1);
+		}
+		return total;
 	}
 
 }

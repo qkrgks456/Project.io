@@ -39,59 +39,67 @@
 					<h2 class="fw-bold my-3">혼잡도설정</h2>
 				</div>
 				<hr />
-				<div class="cont container d-flex justify-content-evenly mt-4">
-					<!-- 내 정보 수정 폼 -->
-					<form id="myinfoform" action="#" method="post"
-						class="needs-validation py-3 col-md-6 border-end" novalidate>
-						<div class="text-center">
-							<h3 class="fw-bold">테이블설정</h3>
-						</div>
-						<div class="col-md-9 mb-3 mt-4">
-							<label for="validationTooltip02" class="fw-bold">총좌석</label> <input
-								type="text" class="form-control" id="Used"
-								placeholder="숫자를 입력해주세요" value="" required>
-							<div class="invalid-feedback">숫자를 입력해주세요</div>
-						</div>
-						<div class="col-md-9 mb-3">
-							<label for="validationTooltip02" class="fw-bold">현재좌석</label> <input
-								type="text" class="form-control" id="Userd"
-								placeholder="숫자를 입력해주세요" value="" required>
-							<div class="invalid-feedback">숫자를 입력해주세요</div>
-						</div>
-						<div class="text-center">
-							<button class="btn btn-dark" type="button">확인</button>
-						</div>
-					</form>
+				<c:if test="${check eq true}">
+					<div class="cont container d-flex justify-content-evenly py-3">
+
+						<!-- 내 정보 수정 폼 -->
+						<form id="myinfoform" action="#" method="post"
+							class="needs-validation py-3 col-md-6 border-end" novalidate>
+							<div class="text-center">
+								<h3 class="fw-bold">테이블설정</h3>
+							</div>
+							<div class="col-md-9 mb-3 mt-4">
+								<label for="cafeTotalTable" class="fw-bold">총좌석</label> <input
+									type="text" class="form-control" id="cafeTotalTable" name="cafeTotalTable"
+									placeholder="숫자를 입력해주세요" value="" required>
+								<div class="invalid-feedback">숫자를 입력해주세요</div>
+							</div>
+							<div class="col-md-9 mb-3">
+								<label for="cafeCurrentTable" class="fw-bold">현재좌석</label> <input
+									type="text" class="form-control" id="cafeCurrentTable" name="cafeCurrentTable"
+									placeholder="숫자를 입력해주세요" value="" required>
+								<div class="invalid-feedback">숫자를 입력해주세요</div>
+							</div>
+							<div class="text-center">
+								<button class="btn btn-dark" type="button">확인</button>
+							</div>
+						</form>
 
 
-					<form id="myinfoform" action="#" method="post"
-						class="needs-validation py-3 col-md-6" novalidate>
-						<div class="text-center">
-							<h3 class="fw-bold">혼잡도 기준 설정</h3>
-						</div>
-						<div class="col-md-9 mb-3 mt-4">
-							<label for="validationTooltip02" class="fw-bold">여유</label> <input
-								type="text" class="form-control" id="UserPw"
-								placeholder="숫자를 입력해주세요" value="" required>
-							<div class="invalid-feedback">숫자를 입력해주세요</div>
-						</div>
-						<div class="col-md-9 mb-3">
-							<label for="validationTooltip02" class="fw-bold">보통</label> <input
-								type="text" class="form-control" id="UserPw"
-								placeholder="숫자를 입력해주세요" value="" required>
-							<div class="invalid-feedback">숫자를 입력해주세요</div>
-						</div>
-						<div class="col-md-9 mb-3">
-							<label for="validationTooltip02" class="fw-bold">혼잡</label> <input
-								type="text" class="form-control" id="UserPw"
-								placeholder="숫자를 입력해주세요" value="" required>
-							<div class="invalid-feedback">숫자를 입력해주세요</div>
-						</div>
-						<div class="text-center">
-							<button class="btn btn-dark" type="button">확인</button>
-						</div>
-					</form>
+						<form id="myinfoform" action="#" method="post"
+							class="needs-validation py-3 col-md-6" novalidate>
+							<div class="text-center">
+								<h3 class="fw-bold">혼잡도 기준 설정</h3>
+							</div>
+							<div class="col-md-9 mb-3 mt-4">
+								<label for="leisurely" class="fw-bold">여유</label> <input
+									type="text" class="form-control" id="leisurely" name="leisurely"
+									placeholder="숫자를 입력해주세요" value="" required>
+								<div class="invalid-feedback">숫자를 입력해주세요</div>
+							</div>
+							<div class="col-md-9 mb-3">
+								<label for="normal" class="fw-bold">보통</label> <input
+									type="text" class="form-control" id="normal" name="normal"
+									placeholder="숫자를 입력해주세요" value="" required>
+								<div class="invalid-feedback">숫자를 입력해주세요</div>
+							</div>
+							<div class="col-md-9 mb-3">
+								<label for="congest" class="fw-bold">혼잡</label> <input
+									type="text" class="form-control" id="congest" name="congest"
+									placeholder="숫자를 입력해주세요" value="" required>
+								<div class="invalid-feedback">숫자를 입력해주세요</div>
+							</div>
+							<div class="text-center">
+								<button class="btn btn-dark" type="button">확인</button>
+							</div>
+						</form>
+					</div>
+				</c:if>
+				<c:if test="${check eq false}">
+				<div class="text-center">
+					<p class="text-muted">등록된 카페정보가 없습니다</p>
 				</div>
+				</c:if>
 			</div>
 		</div>
 	</div>

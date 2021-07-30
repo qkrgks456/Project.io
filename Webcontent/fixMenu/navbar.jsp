@@ -16,7 +16,7 @@
 				<li class="nav-item"><a class="nav-link"
 					href="/Project/search.jsp">통합검색</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="/Project/MainCafe/cafeList.jsp">카페정보</a></li>
+					href="/Project/cafeList">카페정보</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="/Project/MainProduct/productList.jsp">상품구매</a></li>
 			</ul>

@@ -42,15 +42,16 @@
 				<!-- 내용시작 -->
 				<div class="cont container">
 					<!-- 회원탈퇴 폼 -->
-					<form id="exitform" class="py-3">
-						<p class="fs-4 fw-bold">안내사항</p>
-						<ul class="list-group list-group-flush">
-							<li class="list-group-item">* 등록하신 카페정보는 사이트상에서 더 이상 보이지 않게
-								됩니다 한번 등록하신 카페정보로 다시 등록 할 수 없습니다</li>
-							<li class="list-group-item">* 올린 상품정보는 탈퇴 시 자동 삭제되지 않고 그대로
-								남아 있습니다. 해당 상품정보는 탈퇴 후 삭제할 수 없습니다.</li>
-						</ul>
-						<textarea class="form-control my-3" rows="8" readonly>
+					<c:if test="${check eq true}">
+						<form id="exitform" class="py-3">
+							<p class="fs-4 fw-bold">안내사항</p>
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">* 등록하신 카페정보는 사이트상에서 더 이상 보이지 않게
+									됩니다 한번 등록하신 카페정보로 다시 등록 할 수 없습니다</li>
+								<li class="list-group-item">* 올린 상품정보는 탈퇴 시 자동 삭제되지 않고 그대로
+									남아 있습니다. 해당 상품정보는 탈퇴 후 삭제할 수 없습니다.</li>
+							</ul>
+							<textarea class="form-control my-3" rows="8" readonly>
 제1조(목적) 
 
   이 약관은 업체 회사(전자상거래 사업자)가 운영하는 업체 사이버 몰(이하 “몰”이라 한다)에서 제공하는 인터넷 관련 서비스(이하 “서비스”라 한다)를 이용함에 있어 사이버 몰과 이용자의 권리․의무 및 책임사항을 규정함을 목적으로 합니다.
@@ -117,19 +118,24 @@
  
   ④ 회원은 회원가입 시 등록한 사항에 변경이 있는 경우, 상당한 기간 이내에 “몰”에 대하여
 	</textarea>
-						<div class="form-check my-3">
-							<input class="form-check-input" type="checkbox" value="1"
-								name="exitcheck" id="exitcheck"> <label
-								class="form-check-label fw-bold text-danger" for="exitcheck">
-								안내 사항을 모두 확인하였으며, 이에 동의합니다 </label>
-							<div class="invalid-feedback">약관에 동의해주세요</div>
+							<div class="form-check my-3">
+								<input class="form-check-input" type="checkbox" value="1"
+									name="exitcheck" id="exitcheck"> <label
+									class="form-check-label fw-bold text-danger" for="exitcheck">
+									안내 사항을 모두 확인하였으며, 이에 동의합니다 </label>
+								<div class="invalid-feedback">약관에 동의해주세요</div>
+							</div>
+							<hr />
+							<div class="col text-center">
+								<button id="dropbtn" class="btn btn-dark mx-2" type="button">탈퇴하기</button>
+							</div>
+						</form>
+					</c:if>
+					<c:if test="${check eq false}">
+						<div class="text-center">
+							<p class="text-muted">등록된 카페정보가 없습니다</p>
 						</div>
-						<hr />
-						<div class="col text-center">
-							<button class="btn btn-dark mx-2" type="button">탈퇴하기</button>
-						</div>
-					</form>
-
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -138,6 +144,55 @@
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
+	<script type="text/javascript">
+	$('#dropbtn').click(function() {
+		if($('#exitcheck').is(":checked")){
+			Swal.fire({
+				  title: '정말 탈퇴하시겠습니까?',
+				  text: "* 등록하신 카페정보는 사이트상에서 더 이상 보이지 않게 됩니다 한번 등록하신 카페정보로 다시 등록 할 수 없습니다"
+					  + "* 올린 상품정보는 탈퇴 시 자동 삭제되지 않고 그대로 남아 있습니다. 해당 상품정보는 탈퇴 후 삭제할 수 없습니다.",
+				  icon: 'warning',
+				  showDenyButton: true,
+				  confirmButtonColor: '#000',
+				  confirmButtonText: '탈퇴하기',
+				  denyButtonText: '취소'
+				}).then((result) => {	
+					if (result.isConfirmed) {
+					$.ajax({
+						type:"POST",//방식
+						url:"/Project/cafeDel",//주소
+						data:{//파라미터
+						},
+						dataType: 'JSON',
+						success:function(data){
+							console.log(data);
+							if(data.suc>0){
+								Swal.fire({
+						    		title: '탈퇴완료',
+									 icon: 'success',
+									 confirmButtonColor: '#000',
+									 confirmButtonText: '확인',
+						    		}).then((result) => {	
+						    			if (result.isConfirmed) {
+						    				location.href="/Project/index.jsp"
+						    			}
+						    			})
+							} 
+						},
+						error:function(e){
+							console.log(e);
+						}
+					})
+					
+				   
+						}
+					})
+		}else{
+			$('#exitcheck').addClass('is-invalid');
+		}
+		
+	})
+	</script>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=23"></script>
 </body>

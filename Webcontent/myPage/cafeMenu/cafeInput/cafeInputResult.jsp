@@ -24,6 +24,7 @@
 		</c:if>
 		<!-- 섹션에 아이디가 없다면 -->
 		<c:if test="${sessionScope.loginId eq null}">
+			<c:redirect url="index.jsp"></c:redirect>
 			<jsp:include page="/fixMenu/navbar.jsp"></jsp:include>
 		</c:if>
 		<!-- 들어갈 내용 -->
@@ -37,9 +38,12 @@
 					<h2 class="mt-4 align-middle ms-2 fw-bold">카페등록 완료</h2>
 				</div>
 				<div class="text-center">
-					<p class="fs-5">* 저희사이트에 등록해주셔서 감사합니다 카페등록이 완료되었습니다.<br/>
-					검수가 진행된후, 사이트에 노출되게 됩니다 검수기간은 2~3일정도 소요됩니다</p>
-					<a href="/Project/index.jsp" class="btn btn-dark">메인으로</a>
+					<p class="fs-5">
+						* 저희사이트에 등록해주셔서 감사합니다 카페등록이 완료되었습니다.<br /> 검수가 진행된후, 사이트에 노출되게 됩니다
+						검수기간은 2~3일정도 소요됩니다
+					</p>
+					<a href="/Project/index.jsp" class="btn btn-dark">메인</a> <a
+						href="/Project/cafeInfoMyPage" class="btn btn-dark">내카페정보</a>
 				</div>
 			</div>
 		</div>

@@ -39,7 +39,7 @@ $(document).ready(function() {
 	})
 	/* 필수정보 유효성 검사 */
 	$(".nullcheckgo").on("propertychange change keyup paste input", function() {
-		if ($(this).val().length >= 1) {
+		if ($(this).val().trim() != "") {
 			$(this).attr("class", "form-control nullcheckgo");
 		}
 		else {

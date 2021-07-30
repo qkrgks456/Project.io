@@ -43,19 +43,16 @@
 		<div class="list-group list-group-flush mt-3">
 			<h4 class="fst-italic ms-3 fw-bold text-decoration-none">카페</h4>
 			<a class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myPage/cafeMenu/cafeInput/cafeInput.jsp"
+				href="/Project/cafeInputCheck"
 				style="cursor: pointer;">카페등록</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
 				href="/Project/cafeInfoMyPage"
 				style="cursor: pointer;">카페정보</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myPage/cafeMenu/businessChange/businessChangeCheck.jsp"
-				style="cursor: pointer;">사업자번호수정</a> <a
-				class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myPage/cafeMenu/cafeDrop.jsp"
+				href="/Project/cafeExist?menu=a"
 				style="cursor: pointer;">카페삭제</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myPage/cafeMenu/confusion.jsp"
+				href="/Project/cafeExist?menu=b"
 				style="cursor: pointer;">혼잡도설정</a>
 		</div>
 	</nav>

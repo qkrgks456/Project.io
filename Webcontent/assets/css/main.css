@@ -48,7 +48,7 @@ img.img-fluid {
 	height: 30rem;
 	object-fit: cover;
 }
-
+/* 글 길면 줄 자르기 */
 .target {
 	/* 한 줄 자르기 */
 	/* display: inline-block;
@@ -71,9 +71,9 @@ img.img-fluid {
 .tooltip{
         position:fixed;
 }
-.tooltip-inner{
+/* .tooltip-inner{
 	color : green;
-}
+} */
 /* 사이드바 css 건들기 ㄴㄴ .. */
 #sidebar-wrapper {
  /* 	min-height: 100%; */

@@ -96,7 +96,7 @@ public class CafeUploadService {
 					}
 				} else { // 파일받기
 					if (item.getFieldName().equals("ownerNoImg")) {
-						System.out.println("파일업로드");
+						System.out.println("사업자이미지");
 						File uploadFile = new File(uploadPath + "\\" + item.getName());
 						item.write(uploadFile);// 요게 업로드 되는거 (파일객체로 담자)
 						// 이름바꾸기 배운거
@@ -117,7 +117,7 @@ public class CafeUploadService {
 						}
 						System.out.println("업로드 성공 !");
 					} else if (item.getFieldName().equals("cafeImg")) {
-						System.out.println("파일업로드");
+						System.out.println("카페이미지");
 						File uploadFile = new File(uploadPath + "\\" + item.getName());
 						item.write(uploadFile);// 요게 업로드 되는거 (파일객체로 담자)
 						// 이름바꾸기 배운거

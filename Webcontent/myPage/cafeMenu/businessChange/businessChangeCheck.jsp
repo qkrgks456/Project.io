@@ -41,60 +41,87 @@
 				<hr />
 				<div class="cont container w-50">
 					<!-- 본인확인 폼 -->
-					<form id="login" action="#" method="post"
-						class="needs-validation py-3" novalidate>
+					<form action="/Project/businessCheck" method="post"
+						class="needs-validation py-3">
 						<div class="text-center">
 							<h3 class="fw-bold">본인확인</h3>
 						</div>
 						<div class="col-md-9 mb-3">
-							<label for="validationTooltip02" class="fw-bold">아이디</label> <input
-								type="text" class="form-control nullcheckgo" id="businessUserId" name="businessUserId">
+							<label for="businessUserId" class="fw-bold">아이디</label> <input
+								type="text" class="form-control nullcheckgo" id="businessUserId"
+								name="businessUserId">
 							<div class="invalid-feedback">필수정보 입니다</div>
 						</div>
 						<div class="col-md-9 mb-3">
-							<label for="validationTooltip023" class="fw-bold">비밀번호</label> <input
-								type="password" class="form-control nullcheckgo" id="businessUserPw">
+							<label for="businessUserPw" class="fw-bold">비밀번호</label> <input
+								type="password" class="form-control nullcheckgo"
+								id="businessUserPw" name="businessUserPw">
 							<div class="invalid-feedback">필수정보 입니다</div>
 						</div>
 						<div class="col-md-9 mb-3">
-							<label for="validationTooltip04" class="fw-bold">비밀번호확인</label> <input
-								type="password" class="form-control nullcheckgo" id="businessUserPwCheck"
-								>
-							<div class="invalid-feedback">필수정보 입니다</div>
+							<label for="businessUserPwCheck" class="fw-bold">비밀번호확인</label> <input
+								type="password" class="form-control" id="businessUserPwCheck">
+							<div class="invalid-feedback">동일한지 확인해주세요</div>
 						</div>
 						<div class="col-md-9 mb-3">
-							<label for="validationTooltip02" class="fw-bold">현재사업자번호</label>
-							<input type="text" class="form-control nullcheckgo" id="businessNumber"
-								>
+							<label for="businessNumber" class="fw-bold">현재사업자번호</label> <input
+								type="text" class="form-control nullcheckgo" id="businessNumber" name="businessNumber">
 							<div class="invalid-feedback">필수정보 입니다</div>
 						</div>
+						<c:if test="${businessCheck eq false}">
+						<div id="redalert"
+							class="alert alert-danger d-flex align-items-center"
+							role="alert">
+							<svg class="bi flex-shrink-0 me-2 " width="24" height="24"
+								role="img" aria-label="Danger:">
+						<use xlink:href="#exclamation-triangle-fill" /></svg>
+							<div>정보를 확인해 주세요</div>
+						</div>
+						</c:if>
 						<div class="text-center">
-							<button class="btn btn-dark" type="button">확인</button>
-						
+							<input id="businessChkBtn" class="btn btn-dark" type="button"
+								value="확인">
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
-			
-
 	</div>
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<script type="text/javascript">
-	$(".nullcheckgo").on("propertychange change keyup paste input", function() {
-		if ($(this).val().length >= 1) {
-			$(this).attr("class", "form-control nullcheckgo");
-		}
-		else {
-			$(this).attr("class", "form-control nullcheckgo is-invalid");
-		}
-	});
-	
+		$(".nullcheckgo").on(
+				"propertychange change keyup paste input",
+				function() {
+					if ($(this).val().length >= 1) {
+						$(this).attr("class",
+								"form-control nullcheckgo is-valid");
+					} else {
+						$(this).attr("class",
+								"form-control nullcheckgo is-invalid");
+					}
+				});
+		$("#businessUserPwCheck").on("propertychange change keyup paste input",
+				function() {
+					if ($("#businessUserPw").val() == $(this).val()) {
+						$(this).attr("class", "form-control is-valid");
+					} else {
+						$(this).attr("class", "form-control is-invalid");
+					}
+				});
+		$("#businessChkBtn")
+				.click(
+						function() {
+							if ($('#businessUserId').attr("class") == 'form-control nullcheckgo is-valid'
+									&& $('#businessUserPw').attr("class") == 'form-control nullcheckgo is-valid'
+									&& $('#businessNumber').attr("class") == 'form-control nullcheckgo is-valid'
+									&& $('#businessUserPwCheck').attr("class") == 'form-control is-valid') {
+								$('#businessChkBtn').attr("type", "submit");
+							}
+						})
 	</script>
-	
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=8"></script>
 </body>

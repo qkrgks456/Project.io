@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CafeDTO {
+	private String newFileName;
+	private String confusion;
+	private String cafeKey;
 	private String cafeName;
 	private String cafeLocation;
 	private String cafeAddress;
@@ -18,6 +21,7 @@ public class CafeDTO {
 	private String onnerNo;
 	private ArrayList<HashMap<String, Object>> maparr;
 	private HashMap<String, Object> businessfilenames;
+	private HashMap<String, Object> pagenation;
 	private ArrayList<String> delFileIdx;
 	private ArrayList<String> newFileNames;
 	
@@ -116,6 +120,30 @@ public class CafeDTO {
 	}
 	public void setNewFileNames(ArrayList<String> newFileNames) {
 		this.newFileNames = newFileNames;
+	}
+	public HashMap<String, Object> getPagenation() {
+		return pagenation;
+	}
+	public void setPagenation(HashMap<String, Object> pagenation) {
+		this.pagenation = pagenation;
+	}
+	public String getCafeKey() {
+		return cafeKey;
+	}
+	public void setCafeKey(String cafeKey) {
+		this.cafeKey = cafeKey;
+	}
+	public String getConfusion() {
+		return confusion;
+	}
+	public void setConfusion(String confusion) {
+		this.confusion = confusion;
+	}
+	public String getNewFileName() {
+		return newFileName;
+	}
+	public void setNewFileName(String newFileName) {
+		this.newFileName = newFileName;
 	}
 	
 }

@@ -83,11 +83,6 @@ $(document).ready(function() {
 			$('.nav-item a').eq(1).addClass("active");
 		}
 
-	/* 로그인버튼 누르면 로그인창 초기화*/
-	$('#loginbtn').click(function() {
-
-	})
-
 	/* 약관동의 사이트 이동 */
 	$("#allCheck").click(function() { //만약 전체 선택 체크박스가 체크된상태일경우 
 		if ($("#allCheck").prop("checked")) {
@@ -192,10 +187,10 @@ $(document).ready(function() {
 		}
 	});
 	$(".nullchecks").on("propertychange change keyup paste input", function() {
-		if ($(this).val().length >= 1) {
+		if ($(this).val().trim() != "") {
 			$(this).attr("class", "form-control is-valid");
-		}
-		else {
+		}else{
+			
 			$(this).attr("class", "form-control is-invalid");
 		}
 	});
