@@ -8,16 +8,11 @@
 <!-- 부트스트랩 메타태그 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 부트스트랩 파일 -->
-<link href="/Project/assets/css/bootstrap.css?ver=4" rel="stylesheet">
+<link href="/Project/assets/css/bootstrap.css?ver=3" rel="stylesheet">
 <!-- css cdn -->
 <jsp:include page="/assets/css/csscdn.jsp"></jsp:include>
 <!-- main css 추가 -->
-<link href="/Project/assets/css/main.css?ver=6" rel="stylesheet">
-<style type="text/css">
-.list-group-item {
-	border: 1px solid rgba(0, 0, 0, 0.125);
-}
-</style>
+<link href="/Project/assets/css/main.css?ver=3" rel="stylesheet">
 <title>카페</title>
 </head>
 <body>
@@ -31,15 +26,20 @@
 		<c:if test="${sessionScope.loginId eq null}">
 			<jsp:include page="/fixMenu/navbar.jsp"></jsp:include>
 		</c:if>
+
 		<!-- 들어갈 내용 -->
-		<div class="container px-5 mt-5 ">
-			<!-- 사이드 바 메뉴-->
-
-			<jsp:include page="/login/idPasswordMenu.jsp"></jsp:include>
-			<h2 class="fw-bold my-3">아이디 확인</h2>
-			${idchecksuc}
-			<hr />
-
+		<div class="container">
+			<div class="container mx-4 mt-5">
+				<div class="d-flex justify-content-center">
+					<i class="mx-2 bi bi-person-check-fill" style="font-size: 4.0rem;"></i>
+					<h2 class="mt-4 align-middle ms-2 fw-bold">내 정보 수정이 완료되었습니다.</h2>
+				</div>
+				<div class="text-center">
+					<p class="fs-5">다양한 재미가 기다리고 있습니다!</p>
+					<a href="/Project/index.jsp" class="btn btn-outline-secondary">메인으로</a>
+					<a href="/Project/myPage/myPageMenu/myInfo.jsp" class="btn btn-outline-secondary">마이페이지</a>
+				</div>
+			</div>
 		</div>
 	</div>
 	<!-- 하단 정보 -->

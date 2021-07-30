@@ -80,7 +80,7 @@ footer {
 							<div class="invalid-tooltip">Please provide a valid city.</div>
 						</div>
 						<div class="col-md-9 mb-3">
-							<label for="checks" class="fw-bold">이메일 수신</label>
+							<label for="checks" class="fw-bold" id="emailsusin">이메일 수신</label>
 							<div class="form-check form-check-inline mx-3">
 								<label class="form-check-label" for="emailcheckchange1">
 									동의 </label> <input class="form-check-input" type="radio"
@@ -93,7 +93,7 @@ footer {
 							</div>
 						</div>
 						<div class="col-md-9 mb-3">
-							<label for="checks" class="fw-bold">혼잡도 알림 여부</label>
+							<label for="checks" class="fw-bold" id ="congestionCheck">혼잡도 알림 여부</label>
 							<div class="form-check form-check-inline mx-3">
 								<label class="form-check-label" for="alertradiochange1">
 									동의 </label> <input class="form-check-input" type="radio"

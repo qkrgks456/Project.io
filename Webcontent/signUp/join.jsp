@@ -148,7 +148,13 @@
 
 					<hr />
 					<div class="col text-center">
-						<button class="btn btn-dark" type="submit" id="signupbtn">가입하기</button>
+						<!-- <button class="btn btn-dark" type="submit" id="signupbtn">가입하기</button> -->
+				
+						  
+				 <button  class="btn btn-dark" type="submit" id="signupbtn" 
+						    onclick="location.href='signUpresult.jsp'">가입하기</button>
+						   
+						 
 					</div>
 				</form>
 			</div>

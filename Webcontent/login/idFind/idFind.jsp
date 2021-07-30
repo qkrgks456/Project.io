@@ -40,7 +40,7 @@
 				<h2 class="fw-bold my-3">아이디찾기</h2>
 				<hr />
 				<div class="container px-3 w-50 border my-4">
-					<form class="my-4">
+					<form action="/Project/findIdByEmail  " method="post" class="my-4">
 						<h2 class="fw-bold">본인확인 이메일로 인증</h2>
 						<p>
 							* 본인확인 이메일 주소와 입력한 이메일 주소가 같아야,<br /> 이메일을 통하여 아이디를 확인 받을 수
@@ -49,15 +49,17 @@
 						<hr />
 						<div class="form col-md-9 mb-3 mt-3">
 							<label for="validationTooltip04" class="fw-bold my-1">이름</label>
-							<input type="text" class="form-control" id="UserName"
+							<input type="text" class="form-control" id="UserName" name="UserName"
 								placeholder="정확하게 입력해주세요" required>
 							<div class="invalid-feedback">필수 정보입니다</div>
 						</div>
 						<div class="form col-md-9 mb-3">
 							<label for="validationTooltipUsername" class="fw-bold my-1">이메일</label>
-							<input type="text" class="form-control" id="UserEmail"
+							<input type="text" class="form-control" id="UserEmail" name="UserEmail"
 								placeholder="정확하게 입력해주세요" required>
-							<div class="invalid-feedback">필수 정보입니다</div>
+								<!--  아이디 찾기 버튼 --> 
+								<input type="submit" value="아이디 찾기">
+							<div class="invalid-feedback">필수 정보입니다</div>						
 						</div>
 					</form>
 				</div>

@@ -3,6 +3,7 @@ package com.go.main.member;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -109,6 +110,100 @@ public class MemberDAO {
 		}
 		return suc4;
 	}
+	
+	//(login/idFind/idFind.jsp ) 이름 이메일 -> 아이디찾기 
+	public String findIdByEmail(String name, String email) {
+		
+		String sql = "SELECT memberKey FROM users Where name=? and email=? ";
+		String memberKey=null;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, name);
+			ps.setString(2, email);
+			rs = ps.executeQuery();
+
+			if(rs.next()) {
+			memberKey=rs.getString("memberKey");
+		
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+		}finally {
+		   resClose();
+		}
+		System.out.println(memberKey);
+		return memberKey;
+	}
+			
+			
+	// (login/passwordFind/passwordFind.jsp) 아이디 , 이름 , 이메일 -> 비밀번호 찾기 
+		public String findIdByEmailPw(String memberKey, String name, String email) {
+
+			String sql = "SELECT PW FROM users Where memberKey=? and name=? and email=? ";
+			 String PW=null;
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, memberKey);
+				ps.setString(2, name);
+				ps.setString(3, email);
+				rs = ps.executeQuery();
+
+			if(rs.next()) {
+				 PW=rs.getString("PW"); // 디비에서 가져온 cnt 를 저장 
+				}
+
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally {
+			   resClose();
+			}
+			return PW;
+			
+			
+		}	
+
+		//내정보 (myPage/myPageMenu/myInfo.jsp) 비밀번호, 이메일 ,주소 ,이메일수신,혼잡도 알림여부 -> 정보수정  
+		public int memberupdate(String PW, String email, 
+				String location, String emailCheck, String congestionCheck) {
+			int value= 0;
+						//비밀번호 , 연락처 , 이메일
+			String sql ="update users set PW=?, Email=? , location=? ,emailCheck=?,congestionCheck=? where memberkey=? ";
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, PW);
+				ps.setString(2, email);
+				ps.setString(3, location);
+				ps.setString(4, emailCheck);
+				ps.setString(5, congestionCheck);
+				value = ps.executeUpdate();			
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				resClose();
+			}
+			
+			return value;
+		}
+
+		///Project/myPage/myPageMenu/memberDrop.jsp
+		public boolean deleteMember(MemberDTO dto) {
+			sql = "DELETE FROM users WHERE MEMBERKEY=?";
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, dto.getMemberKey());
+				if (ps.executeUpdate() > 0) {
+					result = true;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				resClose();
+			}
+			return result;
+		}
+
+		
 		
 	
 	public void resClose() {
