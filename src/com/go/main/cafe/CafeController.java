@@ -135,7 +135,6 @@ public class CafeController extends HttpServlet {
 			break;
 		}
 	}
-
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		dual(req, resp);
