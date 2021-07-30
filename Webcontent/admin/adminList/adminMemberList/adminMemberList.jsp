@@ -54,24 +54,24 @@
 						<div class="row mb-1">
 							<!-- 셀렉트 -->
 							<div class="form-group col-2 m-0 p-0">
-								<select class="form-select" name="memberSearchSelect">
-									<option value="이름"  selected>이름</option>
-									<option value="아이디">아이디</option>
-									<option value="이메일">이매일</option>
+								<select class="form-select" name="adminSearchSelect">
+									<option value="adminSearchMemberName"  selected>이름</option>
+									<option value="adminSearchMemberId">아이디</option>
+									<option value="adminSearchMemberEmail">이매일</option>
 								</select>
 							</div>
 							<!-- 검색/버튼 -->
-							<div class="form-group col-10 m-0 p-0">
+							<div class="col-10 m-0 p-0">
 								<!-- 왼쪽으로 당기기 -->
 								<div class="row">
 									<!-- 검색 공간 -->
-									<div class="col-10 mp-0 me-0">
+									<div class="form-group col-10 mp-0 me-0">
 										<input type="text" class="form-control" id="adminmember"
-											name="adminmember" />
+											name="adminMember" />
 									</div>
 									<!-- 검색 버튼 공간 -->
-									<div class="col-2 p-0 m-0">
-										<button id="membersearch" class="btn btn-dark" type="button">검색</button>
+									<div class="form-group col-2 p-0 m-0">
+										<button class="btn btn-dark" type="submit">검색</button>
 									</div>
 								</div>
 							</div>
@@ -99,15 +99,21 @@
 								<th>탈퇴유무</th>
 								<th>상세보기</th>
 							</tr>
+							<c:if test="${list eq null || list eq ''}">
+							<tr><td colspan="6">해당 데이터가 존재하지 않습니다.</td></tr>
+							</c:if>
+							<c:forEach items="${list}" var="adminSearch">
 							<tr>
-								<td class="align-middle">아이디내용</td>
-								<td class="align-middle">이름 내용</td>
-								<td class="align-middle">블랙내용</td>
-								<td class="align-middle">사업내용</td>
-								<td class="align-middle">탈퇴내용</td>
+								<td class="align-middle">${adminSearch.memberkey}</td>
+								<td class="align-middle">${adminSearch.name}</td>
+								<td class="align-middle">${adminSearch.blackStatus}</td>
+								<td class="align-middle">${adminSearch.ownerNo}</td>
+								<td class="align-middle">${adminSearch.deleteCheck}</td>
 								<td><button id="adminmemberdtail" class="btn btn-dark"
-										type="button" onclick="location.href='./adminMemberDetail.jsp'">상세보기</button></td>
+										type="button" onclick="location.href='/Project/adminMemberListDetail?memberkey=${adminSearch.memberkey}'">상세보기</button></td>
 							</tr>
+							</c:forEach>
+							
 						</table>
 
 

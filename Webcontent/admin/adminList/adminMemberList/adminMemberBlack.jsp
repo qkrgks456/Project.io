@@ -64,7 +64,7 @@
 					</div>
 					<!-- form 버튼  -->
 					<button id="blackaddsubmit" class="btn btn-dark" type="button">추가</button>
-					<button id="adminmemberlist" class="btn btn-dark" type="button" onclick="location.href='./adminMemberList.jsp'">리스트로</button>
+					<button id="adminmemberlist" class="btn btn-dark" type="button" onclick="location.href='admin/adminList/adminMemberList/adminMemberList.jsp'">리스트로</button>
 					</div>
 					</form>
 					

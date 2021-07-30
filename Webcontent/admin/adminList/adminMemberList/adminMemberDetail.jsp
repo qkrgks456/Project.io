@@ -46,55 +46,56 @@
 					<!-- 회원정보 상세 테이블 -->
 					<div class="cont container">
 					
+					<form id="adminMemberblackform" action="/Project/adminMemberBlackAdd" method="post">
 					<div class = "col-md-9 mb-3"><!-- md 미디엄 -->
 					<table class="table table-bordered mt-4">
 						<tr>
 							<th class="center" width="30%">아이디</th>
-							<td class="align-middle" width="70%">아이디내용</td>
+							<td class="align-middle" width="70%">${adminMemberDetail.memberkey}</td>
 						</tr>
 						<tr>
 							<th class="center">이름</th>
-							<td class="align-middle">이름 내용</td>
+							<td class="align-middle">${adminMemberDetail.name}</td>
 						</tr>
 						<tr>
 							<th class="center">이메일</th>
-							<td class="align-middle">이메일 내용</td>
+							<td class="align-middle">${adminMemberDetail.email}</td>
 						</tr>
 						<tr>
 							<th class="center">주소</th>
-							<td class="align-middle">주소 내용</td>
+							<td class="align-middle">${adminMemberDetail.location}</td>
 						</tr>
 						<tr>
 							<th class="center">성별</th>
-							<td class="align-middle">성별 내용</td>
+							<td class="align-middle">${adminMemberDetail.gender}</td>
 						</tr>
 						<tr>
 							<th class="center">이메일 수신여부</th>
-							<td class="align-middle">이메일 수신내용</td>
+							<td class="align-middle">${adminMemberDetail.emailCheck}</td>
 						</tr>
 						<tr>
 							<th class="center">혼잡도 알림 수신 여부</th>
-							<td class="align-middle">혼잡도수신내용</td>
+							<td class="align-middle">${adminMemberDetail.congestionCheck}</td>
 						</tr>
 						<tr>
 							<th class="center">블랙리스트 여부</th>
-							<td class="align-middle">블랙 여부 내용</td>
+							<td class="align-middle">${adminMemberDetail.blackStatus}</td>
 						</tr>
 						<tr>
 							<th class="center">블랙리스트 사유</th>
-							<td class="align-middle">블랙 사유내용</td>
+							<td class="align-middle">${adminMemberDetail.blackReport}</td>
 						</tr>
 						<tr>
 							<th class="center">블랙리스트 추가자</th>
-							<td class="align-middle">블랙 추가자 내용</td>
+							<td class="align-middle">${adminMemberDetail.blackReporter}</td>
 						</tr>
 
 					</table>
-					<button id="blackadd" class="btn btn-dark" type="button" onclick="location.href='./adminMemberBlack.jsp'">블랙리스트 추가</button>
+					<button id="blackadd" class="btn btn-dark" type="button" onclick="location.href='/Project/adminMemberBlackAdd?memberkey=${adminMemberDetail.memberkey}'">블랙리스트 추가</button>
 					<button id="blackminussubmit" class="btn btn-dark" type="button">블랙리스트 해제</button>
-					<button id="adminmemberlist" class="btn btn-dark" type="button" onclick="location.href='./adminMemberList.jsp'">리스트로</button>
+					<button id="adminmemberlist" class="btn btn-dark" type="button" onclick="location.href='admin/adminList/adminMemberList/adminMemberList.jsp'">리스트로</button>
 					</div>
-					
+					</form>
 					</div>
 					<!-- 블랙리스트 버튼 -->
 					
@@ -110,7 +111,7 @@
 	<script src="/Project/assets/js/main.js?var=6"></script>
 	
 	<!-- blackaddsubmit 버튼이 눌릴시 팝업 -->
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 	$(document).ready(function() {
 		$('#blackminussubmit').click(function() {
 			Swal.fire({
@@ -122,6 +123,6 @@
 		})
 		
 	})	
-	</script>
+	</script> -->
 </body>
 </html>
