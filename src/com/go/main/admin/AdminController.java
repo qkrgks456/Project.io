@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet({"/adminMemberList","/adminMemberListDetail","/adminMemberBlackAdd"})
+@WebServlet({"/adminMemberList","/adminMemberListDetail","/adminMemberBlackAddPage","/adminMemberBlackMinus","/adminMemberBlackAdd"})
 public class AdminController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -32,9 +32,11 @@ public class AdminController extends HttpServlet {
 		String uri = req.getRequestURI();
 		String ctx = req.getContextPath();
 		String addr = uri.substring(ctx.length());
+		System.out.println("---------------------------------------");
 		System.out.println("들어온 주소: "+addr);
 		ArrayList<AdminDTO> list = null;
 		AdminDTO dto = new AdminDTO();
+		String memberkey="";
 		
 		AdminService service = new AdminService(req);
 		RequestDispatcher dis = null;
@@ -57,12 +59,34 @@ public class AdminController extends HttpServlet {
 			dis = req.getRequestDispatcher("admin/adminList/adminMemberList/adminMemberDetail.jsp");
 			dis.forward(req,resp);
 			break;
-		case "/adminMemberBlackAdd":
-			System.out.println("어드민에서 멤버 블랙리스트 추가");
-			dto = service.adminMemberBlackAdd();
+			
+		case "/adminMemberBlackAddPage":
+			System.out.println("어드민에서 멤버 블랙리스트 추가 페이지");
+			dto = service.adminMemberBlackAddPage();
 			req.setAttribute("adminMemberBlack", dto);
 			dis = req.getRequestDispatcher("admin/adminList/adminMemberList/adminMemberBlack.jsp");
 			dis.forward(req,resp);
+			break;
+			
+		case "/adminMemberBlackMinus":
+			System.out.println("어드민에서 멤버 블랙리스트 해제");
+			memberkey = req.getParameter("memberkey");
+			System.out.println("블랙리스트 해제할 id확인: "+memberkey);
+			
+			success =service.adminMemberBlackMinus(memberkey);
+			System.out.println("컨트롤러 해제 확인: " + success);
+			req.setAttribute("success",success);
+			resp.sendRedirect("/Project/adminMemberListDetail?memberkey="+memberkey);
+			break;
+			
+		case "/adminMemberBlackAdd":
+			System.out.println("어드민에서 블랙리스트 추가");
+			memberkey = req.getParameter("blackId");
+			System.out.println("블랙리스트 추가할 id확인: " +memberkey);
+			
+			success = service.adminMemberBlackAdd(memberkey);
+			req.setAttribute("success",success);
+			resp.sendRedirect("/Project/adminMemberListDetail?memberkey="+memberkey);
 			break;
 		}
 		

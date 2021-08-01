@@ -46,7 +46,7 @@
 					<!-- 회원정보 상세 테이블 -->
 					<div class="cont container">
 					
-					<form id="adminMemberblackform" action="/Project/adminMemberBlackAdd" method="post">
+					
 					<div class = "col-md-9 mb-3"><!-- md 미디엄 -->
 					<table class="table table-bordered mt-4">
 						<tr>
@@ -78,24 +78,53 @@
 							<td class="align-middle">${adminMemberDetail.congestionCheck}</td>
 						</tr>
 						<tr>
-							<th class="center">블랙리스트 여부</th>
-							<td class="align-middle">${adminMemberDetail.blackStatus}</td>
+						<th class="center">블랙리스트 여부</th>
+						<c:choose>
+								<c:when test="${adminMemberDetail.blackStatus eq null || adminMemberDetail.blackStatus eq ''}">
+									<td class="align-middle">N</td>
+								</c:when>
+								<c:when test="${adminSearch.blackStatus ne null || adminMemberDetail.blackStatus ne ''}">
+									<td class="align-middle">${adminMemberDetail.blackStatus}</td>
+								</c:when>
+						</c:choose>
+
 						</tr>
 						<tr>
 							<th class="center">블랙리스트 사유</th>
-							<td class="align-middle">${adminMemberDetail.blackReport}</td>
+							<c:choose>
+								<c:when test="${adminMemberDetail.blackReport eq null || adminMemberDetail.blackReport eq ''}">
+									<td class="align-middle">N</td>
+								</c:when>
+								<c:when test="${adminMemberDetail.blackReport ne null || adminMemberDetail.blackReport ne ''}">
+									<td class="align-middle">${adminMemberDetail.blackReport}</td>
+								</c:when>
+							</c:choose>
+
 						</tr>
 						<tr>
 							<th class="center">블랙리스트 추가자</th>
-							<td class="align-middle">${adminMemberDetail.blackReporter}</td>
+							<c:choose>
+								<c:when test="${adminMemberDetail.blackReporter eq null || adminMemberDetail.blackReporter eq ''}">
+									<td class="align-middle">N</td>
+								</c:when>
+								<c:when test="${adminMemberDetail.blackReporter ne null || adminMemberDetail.blackReporter ne ''}">
+									<td class="align-middle">${adminMemberDetail.blackReporter}</td>
+								</c:when>
+							</c:choose>
 						</tr>
-
+						
 					</table>
-					<button id="blackadd" class="btn btn-dark" type="button" onclick="location.href='/Project/adminMemberBlackAdd?memberkey=${adminMemberDetail.memberkey}'">블랙리스트 추가</button>
-					<button id="blackminussubmit" class="btn btn-dark" type="button">블랙리스트 해제</button>
-					<button id="adminmemberlist" class="btn btn-dark" type="button" onclick="location.href='admin/adminList/adminMemberList/adminMemberList.jsp'">리스트로</button>
+					<form id="adminMemberblackform" action="/Project/adminMemberBlackAddPage" method="post">
+					<div class="form-group">
+						<input class = form-control type="hidden" id="blackId" name="blackId" value="${adminMemberDetail.memberkey}">
+						<input class = form-control type="hidden" id="blackName" name="blackName" value="${adminMemberDetail.name}">
+						
+						<button id="blackadd" class="btn btn-dark" type="submit" onclick="location.href='/Project/adminMemberBlackAddPage'">블랙리스트 추가</button>
+						<button id="blackminussubmit" class="btn btn-dark" type="button" onclick="location.href='/Project/adminMemberBlackMinus?memberkey=${adminMemberDetail.memberkey}'">블랙리스트 해제</button>
+						<button id="adminmemberlist" class="btn btn-dark" type="button" onclick="location.href='admin/adminList/adminMemberList/adminMemberList.jsp'">리스트로</button>
 					</div>
 					</form>
+					</div>
 					</div>
 					<!-- 블랙리스트 버튼 -->
 					
@@ -110,19 +139,16 @@
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=6"></script>
 	
-	<!-- blackaddsubmit 버튼이 눌릴시 팝업 -->
-	<!-- <script type="text/javascript">
-	$(document).ready(function() {
-		$('#blackminussubmit').click(function() {
-			Swal.fire({
-					title: '블랙 리스트 해제완료',
-					 icon: 'success',
-					 confirmButtonColor: '#000',
-					 confirmButtonText: '확인',
-			})
-		})
-		
-	})	
-	</script> -->
+	<!-- blackminussubmit 버튼이 눌릴시 팝업 -->
+	<script>
+	if($memberkey==1){
+		alert("블랙 리스트 해제");
+		$id.focus();
+	}
+	else{
+		alert("블랙 리스트 해제 실패 ");
+		$id.focus();
+	}
+	</script>
 </body>
 </html>

@@ -57,7 +57,7 @@
 								<select class="form-select" name="adminSearchSelect">
 									<option value="adminSearchMemberName"  selected>이름</option>
 									<option value="adminSearchMemberId">아이디</option>
-									<option value="adminSearchMemberEmail">이매일</option>
+									<option value="adminSearchMemberEmail">이메일</option>
 								</select>
 							</div>
 							<!-- 검색/버튼 -->
@@ -102,12 +102,27 @@
 							<c:if test="${list eq null || list eq ''}">
 							<tr><td colspan="6">해당 데이터가 존재하지 않습니다.</td></tr>
 							</c:if>
+							<!-- 검색 리스트 출력 -->
 							<c:forEach items="${list}" var="adminSearch">
 							<tr>
 								<td class="align-middle">${adminSearch.memberkey}</td>
 								<td class="align-middle">${adminSearch.name}</td>
-								<td class="align-middle">${adminSearch.blackStatus}</td>
-								<td class="align-middle">${adminSearch.ownerNo}</td>
+								<c:choose>
+								<c:when test="${adminSearch.blackStatus eq null || adminSearch.ownerNo eq ''}">
+									<td class="align-middle">N</td>
+								</c:when>
+								<c:when test="${adminSearch.blackStatus ne null || adminSearch.ownerNo ne ''}">
+									<td class="align-middle">${adminSearch.blackStatus}</td>
+								</c:when>
+								</c:choose>
+								<c:choose>
+								<c:when test="${adminSearch.ownerNo eq null || adminSearch.ownerNo eq ''}">
+									<td class="align-middle">N</td>
+								</c:when>
+								<c:when test="${adminSearch.ownerNo ne null || adminSearch.ownerNo ne ''}">
+									<td class="align-middle">Y</td>
+								</c:when>
+								</c:choose>
 								<td class="align-middle">${adminSearch.deleteCheck}</td>
 								<td><button id="adminmemberdtail" class="btn btn-dark"
 										type="button" onclick="location.href='/Project/adminMemberListDetail?memberkey=${adminSearch.memberkey}'">상세보기</button></td>

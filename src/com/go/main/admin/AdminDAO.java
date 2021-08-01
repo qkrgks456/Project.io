@@ -118,24 +118,46 @@ public class AdminDAO {
 		
 		return dto;
 	}
-	public AdminDTO adminMemberBlackAdd(String memberkey) {
-		System.out.println("블랙리스트 추가 dao까지 연결확인: "+memberkey);
+	public AdminDTO adminMemberBlackAddPage(String memberkey, String name) {
+		System.out.println("블랙리스트 추가페이지 dao까지 연결확인: "+memberkey+"/"+name);
 		sql = "SELECT u.memberkey, u.name FROM users u";
+		
+		dto = new AdminDTO();
+		dto.setMemberkey(memberkey);
+		dto.setName(name);
+		return dto;
+	}
+	public int adminMemberBlackMinus(String memberkey) {
+		System.out.println("블랙리스트 해제 dao까지 연결확인: "+memberkey);
+		sql= "DELETE FROM blackList where memberKey = ?";
 		try {
 			ps=conn.prepareStatement(sql);
 			ps.setString(1, memberkey);
-			rs=ps.executeQuery();
-			if(rs.next()) {
-				dto = new AdminDTO();
-				dto.setMemberkey(rs.getString("memberKey"));
-				dto.setName(rs.getString("name"));
-				System.out.println("DTO에 어드민 블랙값 저장: "+dto.getMemberkey()+"/"+dto.getName());
-			}
+			success = ps.executeUpdate();
+			System.out.println("삭제 성공 여부: " +success);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return dto;
+		return success;
+		
+		
+	}
+	public int adminMemberBlackAdd(String memberkey, String blackRePort) {
+		System.out.println("블랙리스트 추가페이지 dao까지 연결확인: " +memberkey+"/"+blackRePort);
+		sql="INSERT INTO blackList(blacklistno,memberkey,blackreport,blackreporter,statusCheck) VALUES(blacklistNo_seq.nextval,?,?,'admin2','Y')";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, memberkey);
+			ps.setString(2, blackRePort);
+			success = ps.executeUpdate();
+			System.out.println("블랙리스트 추가성공 여부: " + success);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return success;
 	}
 
 }

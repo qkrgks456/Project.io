@@ -43,29 +43,35 @@
 					</div>
 					<hr>
 					<!-- 블랙 리스트 id, 이름 -->
-					<form id="adminblackform" action="#" method="post"
+					<form id="adminblackform" action="/Project/adminMemberBlackAdd" method="post"
 						class="needs-validation py-3" novalidate>
 					
-					<div class = "form-floating col-md-9 mb-3"><!-- md 미디엄 -->
+					<div class = "col-md-9 mb-3"><!-- md 미디엄 -->
 					<table class="table table-bordered mt-4">
 						<tr>
 							<th class="center" width="55%">아이디</th>
 							<th class="center">이름</th>
 						</tr>
 						<tr>
-							<td class="align-middle" width="45%">아이디내용</td>
-							<td class="align-middle">이름 내용</td>
+							<td class="align-middle" width="45%">${adminMemberBlack.memberkey}</td>
+							<td class="align-middle">${adminMemberBlack.name}</td>
 						</tr>
 					</table>
 					<!-- 블랙 사유 텍스트에리어 -->
 					<div class="mb-3">
 	  					<label for="blackreason" class="form-label">사유 작성</label>
-	  					<textarea class="form-control" id="blackreason" rows="6"></textarea>
+	  					<textarea class="form-control" id="blackRePort" name="blackRePort" rows="6"></textarea>
 					</div>
 					<!-- form 버튼  -->
-					<button id="blackaddsubmit" class="btn btn-dark" type="button">추가</button>
-					<button id="adminmemberlist" class="btn btn-dark" type="button" onclick="location.href='admin/adminList/adminMemberList/adminMemberList.jsp'">리스트로</button>
+					<div class="form-group md-3">
+						<input type="hidden"  class = "form-control" id="blackId" name="blackId" value=${adminMemberBlack.memberkey}>
+						<button id="blackaddsubmit" class="btn btn-dark" type="submit">추가</button>
+						<button id="adminmemberDetail" class="btn btn-dark" type="button" onclick="location.href='adminMemberListDetail?memberkey=${adminMemberBlack.memberkey}'">회원정보로</button>
+						<button id="adminmemberlist" class="btn btn-dark" type="button" onclick="location.href='admin/adminList/adminMemberList/adminMemberList.jsp'">리스트로</button>
 					</div>
+						
+					</div>
+					
 					</form>
 					
 					
@@ -81,7 +87,7 @@
 	<script src="/Project/assets/js/main.js?var=6"></script>
 	
 	<!-- blackaddsubmit 버튼이 눌릴시 팝업 -->
-	<script type="text/javascript">
+	 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#blackaddsubmit').click(function() {
 			Swal.fire({
@@ -93,6 +99,7 @@
 		})
 		
 	})	
-	</script>
+	
+	-->
 </body>
 </html>

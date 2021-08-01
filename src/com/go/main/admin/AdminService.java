@@ -42,13 +42,27 @@ public class AdminService {
 		return dto;
 	}
 
-	public AdminDTO adminMemberBlackAdd() {
-		String memberkey = req.getParameter("memberkey");
-		String name = req.getParameter("name");
-		System.out.println("블랙리스트 추가 id값이 넘어왔는지 확인: "+ memberkey);
-		dto = dao.adminMemberBlackAdd(memberkey);
+	public AdminDTO adminMemberBlackAddPage() {
+		String memberkey = req.getParameter("blackId");
+		String name = req.getParameter("blackName");
+		System.out.println("블랙리스트 추가 페이지 id값이 넘어왔는지 확인: "+ memberkey+"/"+name);
+		dto = dao.adminMemberBlackAddPage(memberkey, name);
 		dao.resClose();
 		return dto;
+	}
+
+	public int adminMemberBlackMinus(String memberkey) {
+		
+		success=dao.adminMemberBlackMinus(memberkey);
+		dao.resClose();
+		return success;
+	}
+
+	public int adminMemberBlackAdd(String memberkey) {
+		String blackRePort = req.getParameter("blackRePort");
+		success = dao.adminMemberBlackAdd(memberkey, blackRePort);
+		dao.resClose();
+		return success;
 	}
 
 }
