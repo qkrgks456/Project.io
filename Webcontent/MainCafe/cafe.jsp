@@ -12,7 +12,7 @@
 <!-- css cdn -->
 <jsp:include page="/assets/css/csscdn.jsp"></jsp:include>
 <!-- main css 추가 -->
-<link href="/Project/assets/css/main.css?ver=8" rel="stylesheet">
+<link href="/Project/assets/css/main.css?ver=65" rel="stylesheet">
 <title>카페</title>
 </head>
 <style>
@@ -127,63 +127,36 @@
 		</c:if>
 		<!-- 들어갈 내용 -->
 		<div class="container px-5 mt-5 my-2">
-			<h1 class="fw-bold" id="cafename">껠끄쇼즈</h1>
-			<hr />
+			<div class="row">
+				<div class="d-flex">
+					<p class="fw-bold mt-4 h1" id="cafename">${map.cafeName}</p>
+					<div class="col d-flex justify-content-end mt-4">
+						<div class="d-inline-flex justify-content-end"
+							style="height: 42px;">
+							<button class="btn btn-secondary"
+								onclick="location.href='/Project/cafeList?page=${map.cafePages}'">리스트</button>
+						</div>
+					</div>
+				</div>
+				<hr />
+			</div>
 			<div class="container px-5 mt-3">
 				<div class="row">
 					<div class="col-md-6">
-						<img src="/Project/assets/img/12.jpg"
+						<img src="/photo/${map.mainImage}"
 							class="rounded img-fluid float-end"
 							style="width: 450px; height: 435px; object-fit: cover;"
 							id="mainimg" />
 					</div>
 					<div class="col-md-6">
 						<div class="row row-col-3 d-float">
-							<div class="col-4 p-1" style="width: 150px; height: 145px">
-								<img src="/Project/assets/img/12.jpg"
-									class="visually-hidden rounded imgs h-100 w-100"
-									style="object-fit: cover;" />
-							</div>
-							<div class="col-4 p-1" style="width: 150px; height: 145px">
-								<img src="/Project/assets/img/a2.jpg"
-									class="visually-hidden rounded imgs h-100 w-100"
-									style="object-fit: cover;" />
-							</div>
-							<div class="col-4 p-1" style="width: 150px; height: 145px">
-								<img src="/Project/assets/img/a3.jpg"
-									class="visually-hidden rounded imgs h-100 w-100"
-									style="object-fit: cover;" />
-							</div>
-							<div class="col-4 p-1" style="width: 150px; height: 145px">
-								<img src="/Project/assets/img/a4.jpg"
-									class="visually-hidden rounded imgs h-100 w-100"
-									style="object-fit: cover;" />
-							</div>
-							<div class="col-4 p-1" style="width: 150px; height: 145px">
-								<img src="/Project/assets/img/a5.jpg"
-									class="visually-hidden rounded imgs h-100 w-100"
-									style="object-fit: cover;" />
-							</div>
-							<div class="col-4 p-1" style="width: 150px; height: 145px">
-								<img src="/Project/assets/img/a6.jpg"
-									class="visually-hidden rounded imgs h-100 w-100"
-									style="object-fit: cover;" />
-							</div>
-							<div class="col-4 p-1" style="width: 150px; height: 145px">
-								<img src="/Project/assets/img/a7.jpg"
-									class="visually-hidden rounded imgs h-100 w-100"
-									style="object-fit: cover;" />
-							</div>
-							<div class="col-4 p-1" style="width: 150px; height: 145px">
-								<img src="/Project/assets/img/a8.jpg"
-									class="visually-hidden rounded imgs h-100 w-100"
-									style="object-fit: cover;" />
-							</div>
-							<div class="col-4 p-1" style="width: 150px; height: 145px">
-								<img src="/Project/assets/img/a9.jpg"
-									class="visually-hidden rounded imgs h-100 w-100"
-									style="object-fit: cover;" />
-							</div>
+							<c:forEach items="${map.fileList}" var="fileLists">
+								<div class="col-4 p-1" style="width: 150px; height: 145px">
+									<img src="/photo/${fileLists}"
+										class="visually-hidden rounded imgs h-100 w-100"
+										style="object-fit: cover;" />
+								</div>
+							</c:forEach>
 						</div>
 					</div>
 				</div>
@@ -197,84 +170,118 @@
 				<div class="container px-5 mt-4">
 					<div class="row">
 						<div class="col-md-3 d-flex justify-content-center">
-							<div id="good" class="d-inline-flex align-items-center">
+							<div id="good" class="d-inline-flex align-items-center"
+								style="cursor: pointer;">
 								<i id="goodicon" class="bi bi-hand-thumbs-up-fill"
 									style="font-size: 2.0rem;"></i>
-								<p class="ms-2 mt-3 fw-bold">좋아요(1)</p>
-							</div>
-						</div>
-						<div class="col-md-3 d-flex justify-content-center">
-							<div id="commenticon" class="d-inline-flex align-items-center">
-								<i id="commenticons" class="bi bi-chat-square-text-fill mt-1"
-									style="font-size: 2.0rem;"></i>
-								<p class="ms-2 mt-3 fw-bold">댓글(1)</p>
-							</div>
-						</div>
-						<div class="col-md-3 p-0 d-flex justify-content-center">
-							<div id="commenticon" class="d-inline-flex align-items-center">
-								<i id="commenticons" class="bi bi-sunglasses mt-1"
-									style="font-size: 2.2rem;"></i>
-								<p class="ms-2 mt-3 fw-bold">조회수(1)</p>
+								<p id="goodtext" class="ms-2 mt-3 fw-bold">좋아요(${map.goodCount})</p>
 							</div>
 						</div>
 						<div class="col-md-3 d-flex justify-content-center">
 							<div id="commenticon" class="d-inline-flex align-items-center"
-								data-bs-toggle="tooltip" data-bs-html="true"
-								data-bs-placement="right" title="쾌적">
-								<i id="commenticons" class="bi bi-people-fill mt-1"
+								style="cursor: pointer;">
+								<i id="commenticons" class="bi bi-chat-square-text-fill mt-1"
 									style="font-size: 2.0rem;"></i>
-								<p class="ms-2 mt-3 fw-bold">혼잡도</p>
+								<p class="ms-2 mt-3 fw-bold">댓글(${map.commentCount})</p>
 							</div>
 						</div>
+						<div class="col-md-3 p-0 d-flex justify-content-center">
+							<div id="commenticon" class="d-inline-flex align-items-center" style="cursor:default" >
+								<i id="commenticons" class="bi bi-sunglasses mt-1"
+									style="font-size: 2.2rem;"></i>
+								<p class="ms-2 mt-3 fw-bold">조회수(${map.bHit})</p>
+							</div>
+						</div>
+						<div class="col-md-3 d-flex justify-content-center">
+							<c:if test="${map.confusion eq '혼잡'}">
+								<div id="commenticon" class="d-inline-flex align-items-center" style="cursor:default" >
+									<i id="commenticons" class="bi bi-people-fill mt-1 text-danger"
+										style="font-size: 2.0rem;"></i>
+									<p class="ms-2 mt-3 fw-bold text-danger">혼잡도(혼잡)</p>
+								</div>
+							</c:if>
+							<c:if test="${map.confusion eq '보통'}">
+								<div id="commenticon" class="d-inline-flex align-items-center" style="cursor:default" >
+									<i id="commenticons" class="bi bi-people-fill mt-1 text-dark"
+										style="font-size: 2.0rem;"></i>
+									<p class="ms-2 mt-3 fw-bold text-dark">혼잡도(보통)</p>
+								</div>
+							</c:if>
+							<c:if test="${map.confusion eq '쾌적'}">
+								<div id="commenticon" class="d-inline-flex align-items-center" style="cursor:default" >
+									<i id="commenticons"
+										class="bi bi-people-fill mt-1 text-success"
+										style="font-size: 2.0rem;"></i>
+									<p class="ms-2 mt-3 fw-bold text-success">혼잡도(쾌적)</p>
+								</div>
+							</c:if>
+						</div>
 					</div>
-					<div class="row">
-						<div class="col-sm-7 my-2">
-							<table class="table table-borderless my-2">
-								<tbody>
+					<div class="row justify-content-md-center">
+						<div class="col-sm-6 my-2 table-responsive h-100">
+							<table class="table table-borderless my-2 ">
+								<tbody class="">
 									<tr class="row">
 										<th class="col-sm-3">카페설명</th>
-										<td class="col"><p>텍스트 기준은 4줄로 더 늘어나게 되면 (...)으로 표시되게
-												됩니다 이런 효과주는게 간지가 나잖아요 그래서 만약에 더 쓰게 되면 ...으로 표시되고 남은내용은
-												자세히보기에서 상세히 볼 수 있습니다!</p></td>
+										<td class="col "><p class="text-break">${map.cafeDetail}</p></td>
 									</tr>
 									<tr class="row">
 										<th class="col-sm-3">주소</th>
-										<td class="col"><p id="add">서울특별시 강남구 도곡로70길 5</p></td>
+										<td class="col">${map.cafeAddress}</td>
 									</tr>
 									<tr class="row">
 										<th class="col-sm-3">영업시간</th>
-										<td class="col">12:30 - 19:30</td>
+										<td class="col">${map.cafeTime}</td>
 									</tr>
 									<tr class="row">
 										<th class="col-sm-3">연락처</th>
-										<td class="col">02-123-1234</td>
+										<td class="col">${map.cafePhone}</td>
 									</tr>
 									<tr class="row">
 										<th class="col-sm-3">주차</th>
-										<td class="col">불가</td>
+										<c:if test="${map.parkingCheck eq 'Y'}">
+											<td class="col">가능</td>
+										</c:if>
+										<c:if test="${map.parkingCheck eq 'N'}">
+											<td class="col">불가</td>
+										</c:if>
 									</tr>
 									<tr class="row">
 										<th class="col-sm-3">단체석</th>
-										<td class="col">유</td>
+										<c:if test="${map.groupCheck eq 'Y'}">
+											<td class="col">유</td>
+										</c:if>
+										<c:if test="${map.groupCheck eq 'N'}">
+											<td class="col">무</td>
+										</c:if>
 									</tr>
 									<tr class="row">
+
 										<th class="col-sm-3">루프탑</th>
-										<td class="col">무</td>
+										<c:if test="${map.rooftopCheck eq 'N'}">
+											<td class="col">무</td>
+										</c:if>
+										<c:if test="${map.rooftopCheck eq 'Y'}">
+											<td class="col">무</td>
+										</c:if>
 									</tr>
 									<tr class="row">
 										<th class="col-sm-3">유아동반</th>
-										<td class="col">가능</td>
+										<c:if test="${map.childCheck eq 'Y'}">
+											<td class="col">가능</td>
+										</c:if>
+										<c:if test="${map.childCheck eq 'N'}">
+											<td class="col">불가</td>
+										</c:if>
 									</tr>
 									<tr class="row">
 										<th class="col-sm-3">반려동물동반</th>
-										<td class="col">불가</td>
-									</tr>
-									<tr class="row">
-										<th class="col-sm-3">웹사이트</th>
-										<td class="col"><a
-											href="http://www.instagram.com/quelquechose_seoul/"
-											class="under_line" target="_blank" style="color: brown;">
-												카페 홈페이지로 이동</a></td>
+										<c:if test="${map.petCheck eq 'Y'}">
+											<td class="col">가능</td>
+										</c:if>
+										<c:if test="${map.petCheck eq 'N'}">
+											<td class="col">가능</td>
+										</c:if>
 									</tr>
 								</tbody>
 							</table>
@@ -304,8 +311,8 @@
 							<tr class="">
 								<td><img src="/Project/assets/img/12.jpg" class="rounded"
 									style="width: 80px; height: 80px; object-fit: cover;" /></td>
-								<td class="align-middle">카페명</td>
-								<td class="align-middle">카페설명</td>
+								<td class="align-middle">상품명</td>
+								<td class="align-middle">상품설명</td>
 								<td class="align-middle">가격</td>
 								<td class="align-middle">
 									<div class="d-grid gap-2 col-6 mx-auto mt-1">
@@ -318,33 +325,78 @@
 				</div>
 				<h3 id="comments" class="fw-bold mt-3">댓글</h3>
 				<hr />
-				<div class="d-flex align-items-center">
-					<div class="form-floating flex-grow-1 px-2">
-						<textarea class="form-control" placeholder="Leave a comment here"
-							id="floatingTextarea2" style="height: 100px"></textarea>
-						<label for="floatingTextarea2">qkrgks456님, 이곳에 댓글을 작성하세요</label>
+				<c:if test="${loginId!=''}">
+					<div class="d-flex align-items-center">
+						<div class="form-floating flex-grow-1 px-2">
+							<textarea class="form-control" placeholder="Leave a comment here"
+								name="commentContent" id="commentContent"
+								style="height: 100px; resize: none;"></textarea>
+							<div class="invalid-feedback">1자 이상 입력해주세요</div>
+							<label for="commentContent">${loginId}님, 이곳에 댓글을 작성하세요</label>
+						</div>
+						<a id="cafeCommentBtn" class="btn btn-secondary btn-sm"
+							title="${map.cafeKey}">등록</a>
 					</div>
-					<a class="btn btn-secondary btn-sm">등록</a>
+				</c:if>
+				<div id="commentLists" class="container px-5 py-4 my-4">
+					<c:forEach items="${map.commentList}" var="commentLists">
+						<div class="updateCheck">
+							<p class="fw-bold">${commentLists.memberKey}</p>
+							<p class="lh-sm">
+								${commentLists.cm_content}
+								<c:if test="${loginId ne commentLists.memberKey}">
+									<a class="float-end btn btn-secondary btn-sm"
+										href="/Project/report/report.jsp?commentNo=${commentLists.commentNo}">신고</a>
+								</c:if>
+								<c:if test="${loginId eq commentLists.memberKey}">
+									<a id="commentDelBtn"
+										class='commentDelBtn mx-2 float-end btn btn-secondary btn-sm'
+										title="${commentLists.commentNo}">삭제</a>
+									<a class='commentUpdateBtn float-end btn btn-secondary btn-sm'>수정</a>
+								</c:if>
+							</p>
+							<hr />
+						</div>
+						<div class="updateForm visually-hidden" id="updateForm">
+							<p class="fw-bold">${commentLists.memberKey}</p>
+							<div class="form-floating flex-grow-1 px-2">
+								<textarea class="commentUpdateContent form-control"
+									placeholder="Leave a comment here" name="commentUpdateContent"
+									id="commentUpdateContent" style="height: 100px; resize: none;">${commentLists.cm_content} </textarea>
+								<label for="commentUpdateContent">수정할 댓글을 작성하세요</label>
+							</div>
+							<div class="d-flex justify-content-end mt-2" id="commentUpdateOut">
+								<a class='commentUpdateContentBtn btn btn-secondary btn-sm mx-2' id="commentUpdateContentBtn"
+									title="${commentLists.commentNo}">등록</a> <a
+									class='cmUpdateCancel btn btn-secondary btn-sm'>취소</a>
+							</div>
+							<hr />
+						</div>
+					</c:forEach>
 				</div>
-				<div class="container px-5 py-4 my-4">
-					<p class="fw-bold">qkrgks789</p>
-					<p class="lh-sm">
-						이쪽에 댓글 내용이 들어갈겁니다 <a class="float-end btn btn-secondary btn-sm">신고</a>
-						<a class="mx-2 float-end btn btn-secondary btn-sm">삭제</a> <a
-							class="float-end btn btn-secondary btn-sm">수정</a>
-					</p>
-					<hr />
-					<p class="fw-bold">qkrgks456</p>
-					<p class="lh-sm">
-						이쪽에 댓글 내용이 들어갈겁니다<a class="float-end btn btn-secondary btn-sm">신고</a>
-					</p>
-					<hr />
-					<p class="fw-bold">qkrgks123</p>
-					<p class="lh-sm">
-						이쪽에 댓글 내용이 들어갈겁니다<a class="float-end btn btn-secondary btn-sm">신고</a>
-					</p>
-					<hr />
-				</div>
+				<ul id="paginations" class="pagination justify-content-center">
+					<c:if test="${map.startPage ne 1}">
+						<li class="page-item"><a class="page-link pageNum"
+							title="${map.startPage-1} ${map.cafeKey}" role="button"
+							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+						</a></li>
+					</c:if>
+					<c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
+						<c:if test="${i ne map.currPage}">
+							<li class="page-item"><a role="button"
+								class="page-link pageNum" title="${i} ${map.cafeKey}">${i}</a></li>
+						</c:if>
+						<c:if test="${i eq map.currPage}">
+							<li class="page-item active"><a class="page-link">${i}</a></li>
+						</c:if>
+					</c:forEach>
+					<c:if test="${map.totalPage ne map.endPage}">
+						<li class="page-item"><a class="page-link pageNum"
+							role="button" title="${map.endPage+1} ${map.cafeKey}"
+							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+						</a></li>
+					</c:if>
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -357,10 +409,105 @@
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
-	<script src="/Project/assets/js/main.js?var=12"></script>
+	<script src="/Project/assets/js/main.js?var=15"></script>
+	<script type="text/javascript">
+	/* 삭제 ajax */
+	$(document).on('click', '.commentUpdateContentBtn', function() {
+		var commentNo = $(this).attr('title');
+		var cafeKey = $('#cafeCommentBtn').attr("title");
+		var commentUpdateContent = $(this).parent().prev().children('.commentUpdateContent').val();
+		console.log(commentUpdateContent);
+		$.ajax({
+			type: "POST",//방식
+			url: "/Project/cafeCommentUpdate",//주소
+			data: {
+				commentUpdateContent: commentUpdateContent,
+				commentNo: commentNo,
+				cafeKey: cafeKey,
+			},
+			dataType: 'JSON',
+			success: function(data) { //성공시
+				var content = "";
+				var sessionId = data.sessionId;
+				$.each(data.list, function(i, item) {
+					var check = sessionId == item.memberKey;
+					content += "<div class='updateCheck'>"
+					content += "<p class='fw-bold'>" + item.memberKey + "</p>";
+					content += "<p class='lh-sm'>";
+					content += item.cm_content;
+					if (!check) {
+						content += "<a href='/Project/report/report.jsp' class='float-end btn btn-secondary btn-sm'>신고</a>";
+					} else {
+						content += "<a class='commentDelBtn mx-2 float-end btn btn-secondary btn-sm' title='" + item.commentNo + "'>삭제</a>";
+						content += "<a class='commentUpdateBtn float-end btn btn-secondary btn-sm'>수정</a>";
+					}
+					content += "</p>";
+					content += "<hr/>";
+					content += "</div>";
+					content += "<div class='updateForm visually-hidden'>"
+					content += "<p class='fw-bold'>" + item.memberKey + "</p>"
+					content += "<div class='form-floating flex-grow-1 px-2'>"
+					content += "<textarea class='commentUpdateContent form-control' placeholder='Leave a comment here'"
+					content += "name='commentUpdateContent' id='commentUpdateContent' style='height: 100px'>" + item.cm_content + "</textarea>"
+					content += "<label for='commentUpdateContent'>수정할 댓글을 작성하세요</label>"
+					content += "</div>"
+					content += "<div class='d-flex justify-content-end mt-2' id='updateGo'>"
+					content += "<a id='commentUpdateContentBtn' class='commentUpdateContentBtn btn btn-secondary btn-sm mx-2' title='" + item.commentNo + "'>등록</a>"
+					content += "<a class='cmUpdateCancel btn btn-secondary btn-sm'>취소</a>"
+					content += "</div>"
+					content += "<hr />"
+					content += "</div>"
+				});
+				$('#commentLists').empty();
+				$('#commentLists').append(content);
+				content = "";
+				content += "<i id='commenticons' class='bi bi-chat-square-text-fill mt-1' style='font-size: 2.0rem;'></i>"
+				content += "<p  class='ms-2 mt-3 fw-bold'>댓글(" + data.commentCount + ")</p>"
+				$('#commenticon').empty();
+				$('#commenticon').append(content);
+				/* 페이지네이션 불러오기 욕나오네 */
+				content = "";
+				content += '<ul id="paginations1" class="pagination justify-content-center">'
+				if (data.startPage != 1) {
+					content += '<li class="page-item"><a class="page-link pageNum"'
+					content += 'title="' + (data.startPage - 1) + '${map.cafeKey}" role="button"'
+					content += 'aria-label="Previous"> <span aria-hidden="true">&laquo;</span>'
+					content += '</a></li>'
+				}
+				for (var i = data.startPage; i <= data.endPage; i++) {
+					console.log(data.currPage)
+					if (data.currPage != i) {
+						content += '<li class="page-item"><a role="button" class="page-link pageNum"'
+						content += ' title="' + i + " " + data.cafeKey + '">' + i + '</a></li>'
+					} else {
+						content += '<li class="page-item active"><a class="page-link">' + i + '</a></li>'
+					}
+				}
+				if (data.totalPage != data.endPage) {
+					content += '<li class="page-item"><a class="page-link pageNum" role="button"'
+					content += 'title="' + (data.endPage + 1) + '" aria-label="Next">'
+					content += '<span aria-hidden="true">&raquo;</span>'
+					content += '</a></li>'
+				}
+				content += '</ul>'
+				$('#paginations').empty();
+				$('#paginations').prepend(content);
+			},
+			error: function(e) { //실패시
+				console.log(e);
+			}
+		});
+	})
+		
+		
+		
+		
+	</script>
+	<!-- cafe.js 추가 -->
+	<script src="/Project/assets/js/cafe.js?var=12"></script>
 	<!-- 카카오맵 api 추가 -->
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=96f67dd6c088728e30743d7db32a6789&libraries=services"></script>
-	<script src="/Project/assets/js/map.js?var=6"></script>
+	<script src="/Project/assets/js/map.js?var=10"></script>
 </body>
 </html>

@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CafeDTO {
+	private int bHit;
+	private String commentNo;
+	private String memberKey;
+	private String cm_content;
 	private String newFileName;
 	private String confusion;
 	private String cafeKey;
@@ -144,6 +148,30 @@ public class CafeDTO {
 	}
 	public void setNewFileName(String newFileName) {
 		this.newFileName = newFileName;
+	}
+	public String getMemberKey() {
+		return memberKey;
+	}
+	public void setMemberKey(String memberKey) {
+		this.memberKey = memberKey;
+	}
+	public String getCm_content() {
+		return cm_content;
+	}
+	public void setCm_content(String cm_content) {
+		this.cm_content = cm_content;
+	}
+	public String getCommentNo() {
+		return commentNo;
+	}
+	public void setCommentNo(String commentNo) {
+		this.commentNo = commentNo;
+	}
+	public int getbHit() {
+		return bHit;
+	}
+	public void setbHit(int bHit) {
+		this.bHit = bHit;
 	}
 	
 }

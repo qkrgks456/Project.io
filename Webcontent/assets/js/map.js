@@ -32,7 +32,7 @@ $(document).ready(function() {
 					position: coords
 				});
 				// 인포윈도우로 장소에 대한 설명을 표시합니다
-				var infowindow = new kakao.maps.InfoWindow(
+			var infowindow = new kakao.maps.InfoWindow(
 					{
 						content: '<div class="rounded" style="width:150px;text-align:center;padding:6px 0;">' + cafename + '</div>'
 					});

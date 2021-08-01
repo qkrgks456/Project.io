@@ -9,11 +9,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
 @WebServlet({ "/cafewrite", "/cafeInfoMyPage", "/ownerCheck", "/cafeUpdate", "/cafeInputCheck", "/businessCheck",
-		"/businessChange", "/cafeDel" ,"/cafeExist","/cafeList"})
+		"/businessChange", "/cafeDel", "/cafeExist", "/cafeList", "/cafeDetail" })
 public class CafeController extends HttpServlet {
 	// 안녕
 	private static final long serialVersionUID = 1L;
@@ -31,17 +32,17 @@ public class CafeController extends HttpServlet {
 		switch (addr) {
 		case "/cafeExist":
 			check = service.cafeExist();
-			if(req.getParameter("menu").equals("a")) {
+			if (req.getParameter("menu").equals("a")) {
 				req.setAttribute("check", check);
 				dis = req.getRequestDispatcher("myPage/cafeMenu/cafeDrop.jsp");
 				dis.forward(req, resp);
-			}else {
+			} else {
 				req.setAttribute("check", check);
 				dis = req.getRequestDispatcher("myPage/cafeMenu/confusion.jsp");
 				dis.forward(req, resp);
 			}
 			break;
-			
+
 		case "/cafeInputCheck":
 			check = service.cafeInputCheck();
 			req.setAttribute("check", check);
@@ -76,7 +77,7 @@ public class CafeController extends HttpServlet {
 			break;
 
 		case "/cafeInfoMyPage":
-			System.out.println("카페정보 마이페이지");
+			System.out.println("카페정보");
 			CafeDTO dto = service.cafeInfoMyPage();
 			System.out.println("dto체크 : " + dto);
 			req.setAttribute("dto", dto);
@@ -85,10 +86,13 @@ public class CafeController extends HttpServlet {
 			break;
 		case "/cafeUpdate":
 			System.out.println("카페정보 업데이트");
+			HttpSession session = req.getSession();
+			String sessionId = (String) session.getAttribute("loginId");
 			suc = service.cafeUpdate();
 			if (suc > 0) {
 				map = new HashMap<String, Object>();
 				map.put("suc", suc);
+				map.put("cafeKey",sessionId);
 				resp.setContentType("text/html; charset=UTF-8");
 				resp.getWriter().print(new Gson().toJson(map));
 			}
@@ -114,7 +118,7 @@ public class CafeController extends HttpServlet {
 			System.out.println("사업자 변경");
 			// suc = service.businessChange();
 			break;
-			
+
 		case "/cafeDel":
 			System.out.println("카페 삭제 처리(블라인드)");
 			suc = service.cafeDel();
@@ -125,7 +129,7 @@ public class CafeController extends HttpServlet {
 				resp.getWriter().print(new Gson().toJson(map));
 			}
 			break;
-			
+
 		case "/cafeList":
 			System.out.println("카페리스트");
 			map = service.cafeList();
@@ -133,8 +137,16 @@ public class CafeController extends HttpServlet {
 			dis = req.getRequestDispatcher("MainCafe/cafeList.jsp");
 			dis.forward(req, resp);
 			break;
+		case "/cafeDetail":
+			System.out.println("카페 상세");
+			map = service.cafeDetail();
+			req.setAttribute("map", map);
+			dis = req.getRequestDispatcher("MainCafe/cafe.jsp");
+			dis.forward(req, resp);
+			break;
 		}
 	}
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		dual(req, resp);

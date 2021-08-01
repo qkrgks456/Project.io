@@ -11,13 +11,6 @@ $(document).ready(function() {
 		return new bootstrap.Tooltip(tooltipTriggerEl);
 	})
 
-	/* 좋아요 hover 이벤트 */
-	$('#good').mouseover(function() {
-		$('#goodicon').css("color", "#0d6efd");
-	});
-	$('#good').mouseleave(function() {
-		$('#goodicon').css("color", "black");
-	});
 	/* 카페 이미지 마우스 올릴시 투명해짐 */
 	$('.imgs').mouseover(function() {
 		$(this).attr('style', 'width: 150px; height: 140px; object-fit: cover; opacity: 0.7; cursor: pointer;')
@@ -79,7 +72,10 @@ $(document).ready(function() {
 		
 	})
 	/* 현재페이지가 cafe.jsp라면*/
-	if($(location).attr('href').split('/').pop()== 'cafe.jsp'){
+	if($(location).attr('href').split('/').pop().search('cafe.jsp')>0){
+			$('.nav-item a').eq(1).addClass("active");
+		}
+	if($(location).attr('href').split('/').pop().search('cafeDetail')>0){
 			$('.nav-item a').eq(1).addClass("active");
 		}
 
@@ -161,7 +157,7 @@ $(document).ready(function() {
 
 	/* 회원가입시 공백 검사 */
 	$("#UserId").on("propertychange change keyup paste input", function() {
-		if ($(this).val().length >= 6) {
+		if ($(this).val().length >= 6 && $(this).val().trim() != "") {
 			$(this).attr("class", "form-control is-valid");
 		}
 		else {
@@ -170,7 +166,7 @@ $(document).ready(function() {
 	});
 
 	$("#UserPw").on("propertychange change keyup paste input", function() {
-		if ($(this).val().length >= 10) {
+		if ($(this).val().length >= 10 && $(this).val().trim() != "") {
 			$(this).attr("class", "form-control is-valid");
 		}
 		else {
@@ -222,19 +218,7 @@ $(document).ready(function() {
 			$("div.list-group a").eq(i).addClass("active")
 		}
 	})
-	/* 댓글 클릭시 하단 이동*/
-	$("#commenticon").click(function() {
-		$("html").animate({
-			scrollTop: $('#comments').offset().top
-		}, 0);
-	})
-	/* 댓글 over 이벤트 */
-	$('#commenticon').mouseover(function() {
-		$('#commenticons').css("color", "#ffc107");
-	});
-	$('#commenticon').mouseleave(function() {
-		$('#commenticons').css("color", "black");
-	});
+	
 	
 	/* 카페등록 유효성 검사 */
 })

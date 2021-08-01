@@ -5589,17 +5589,6 @@ textarea.form-control-lg {
   border-left-color: #000;
 }
 
-.tooltip-inner {
-  max-width: 200px;
-  padding: 0.25rem 0.5rem;
-  /* color: rgb(0, 0, 0); */
-  text-align: center;
-  border-radius: 0.25rem;
-  border: 1px solid;
-  margin-bottom: 2px;
-  margin-left: 5px;
-  background-color: rgba( 255, 255, 255, 0.1 );
-}
 
 .popover {
   position: absolute;

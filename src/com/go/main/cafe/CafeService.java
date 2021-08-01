@@ -1,5 +1,6 @@
 package com.go.main.cafe;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -122,6 +123,35 @@ public class CafeService {
 			page= "1";
 		}
 		return dao.cafeList(Integer.parseInt(page));
+	}
+
+	public HashMap<String, Object> cafeDetail() {
+		// 조회수랑 상세보기 자원정리는 여기서
+		String cafeKey = req.getParameter("cafeKey");
+		dao = new CafeDAO();
+		HashMap<String, Object> map = null;
+		String page = req.getParameter("page");
+		System.out.println("page : " + page);
+		if(page == null) {
+			page= "1";
+		}
+		try {
+			dao.conn.setAutoCommit(false);
+			if (dao.upHit(cafeKey) > 0) {// 조회수 올리기
+			map = dao.cafeDetail(cafeKey,Integer.parseInt(page));// 상세보기
+			}
+			if (map == null) {// commit || rollback
+				dao.conn.rollback();
+			} else {
+				dao.conn.commit();
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			dao.resClose();
+		}
+		return map;
 	}
 
 }

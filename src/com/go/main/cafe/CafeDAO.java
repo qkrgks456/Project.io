@@ -73,8 +73,8 @@ public class CafeDAO {
 				if (suc > 0) {
 					sql = "INSERT INTO cafeInfo"
 							+ "(cafeKey,ownerNo,cafeName,cafeLocation,cafeAddress,cafePhone,cafeDetail,cafeTime"
-							+ ",parkingCheck,petCheck,childCheck,rooftopCheck,groupCheck,cafeDel,openCheck,conFusion)"
-							+ "VALUES" + "(?,?,?,?,?,?,?,?,?,?,?,?,?,'N','Y','보통')";
+							+ ",parkingCheck,petCheck,childCheck,rooftopCheck,groupCheck,cafeDel,openCheck,conFusion,bHit,cafeNum)"
+							+ "VALUES" + "(?,?,?,?,?,?,?,?,?,?,?,?,?,'N','Y','보통',0,cafe_seq.NEXTVAL)";
 					ps = conn.prepareStatement(sql);
 					ps.setString(1, sessionId);
 					ps.setString(2, dto.getOnnerNo());
@@ -151,7 +151,7 @@ public class CafeDAO {
 				dto.setRooftopCheck(rs.getString("rooftopCheck"));
 				dto.setGroupCheck(rs.getString("groupCheck"));
 			}
-			sql = "SELECT newFileName,fileIdx FROM image WHERE division = ?";
+			sql = "SELECT newFileName,fileIdx FROM image WHERE division = ? ORDER BY fileIdx";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, sessionId);
 			rs = ps.executeQuery();
@@ -333,13 +333,22 @@ public class CafeDAO {
 		System.out.println("시작 페이지 : " + startPage + " / 끝 페이지 : " + endPage);
 		// 노출할 데이터 갯수
 		int pagePerCnt = 8;
+		int end = page * pagePerCnt;
+		int start = (end - pagePerCnt);
+		System.out.println(start);
+		System.out.println(end);
 		try {
-			String sql = "SELECT c.cafeKey,c.cafeName,c.cafeLocation,c.cafeDetail,c.confusion,i.newfilename "
-					+ "FROM (SELECT division,newFileName FROM image WHERE ROWID IN "
-					+ "(SELECT MIN(ROWID) FROM image GROUP BY division)) i "
-					+ "LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey "
-					+ "WHERE c.cafeDel='N' AND c.openCheck='Y'";
+			String sql = "SELECT cafeKey,newfilename,cafeName,cafeNum,cafeLocation,cafeDetail,confusion,bHit "
+					+ "FROM (SELECT i.newfilename,c.cafeName,c.cafeNum,c.cafeKey,c.cafeLocation,c.cafeDetail,c.confusion,c.bHit "
+					+ "FROM (SELECT division,newFileName FROM image "
+					+ "WHERE ROWID IN (SELECT MIN(ROWID) FROM image GROUP BY division)) i "
+					+ "LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey WHERE c.cafeDel='N' AND c.openCheck='Y')"
+					+ "ORDER BY cafeNum DESC OFFSET (?) ROWS FETCH FIRST (?) ROWS ONLY";
 			ps = conn.prepareStatement(sql);
+
+			ps.setInt(1, start);
+			ps.setInt(2, end);
+
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				dto = new CafeDTO();
@@ -349,6 +358,7 @@ public class CafeDAO {
 				dto.setCafeDetail(rs.getString("cafeDetail"));
 				dto.setConfusion(rs.getString("confusion"));
 				dto.setNewFileName(rs.getString("newfilename"));
+				dto.setbHit(rs.getInt("bHit"));
 				list.add(dto);
 			}
 			int total = totalCount(); // 총 게시글 수 가져옵시다
@@ -377,12 +387,161 @@ public class CafeDAO {
 		return map;
 	}
 
+	public HashMap<String, Object> cafeDetail(String cafeKey, int page) {
+		ArrayList<CafeDTO> commentList = new ArrayList<CafeDTO>();
+		ArrayList<String> fileList = new ArrayList<String>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int cafePage = 0;
+		try {
+			// 카페정보가져오기
+			String sql = "SELECT cafeKey,cafeName,cafeLocation,cafeDetail,cafeAddress,cafeTime,cafePhone"
+					+ ",parkingCheck,petCheck,childCheck,rooftopCheck,groupCheck"
+					+ ",confusion,bHit FROM cafeInfo WHERE cafeDel='N' AND openCheck='Y' AND cafeKey=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, cafeKey);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				map.put("cafeKey", rs.getString("cafeKey"));
+				map.put("cafeName", rs.getString("cafeName"));
+				map.put("cafeLocation", rs.getString("cafeLocation"));
+				map.put("cafeDetail", rs.getString("cafeDetail"));
+				map.put("cafeAddress", rs.getString("cafeAddress"));
+				map.put("cafeTime", rs.getString("cafeTime"));
+				map.put("cafePhone", rs.getString("cafePhone"));
+				map.put("parkingCheck", rs.getString("parkingCheck"));
+				map.put("petCheck", rs.getString("petCheck"));
+				map.put("childCheck", rs.getString("childCheck"));
+				map.put("rooftopCheck", rs.getString("rooftopCheck"));
+				map.put("groupCheck", rs.getString("groupCheck"));
+				map.put("confusion", rs.getString("confusion"));
+				map.put("bHit", rs.getInt("bHit"));
+			}
+			// 좋아요 개수
+			sql = "SELECT COUNT(likeNo) FROM good WHERE division=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, cafeKey);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				map.put("goodCount", rs.getInt(1));
+			}
+			// 댓글 갯수
+			sql = "SELECT COUNT(commentNo) FROM cm WHERE division=? AND commentDel='N'";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, cafeKey);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				map.put("commentCount", rs.getInt(1));
+			}
+			// 메인 이미지 가져오기
+			sql = "SELECT newFileName FROM image WHERE "
+					+ "fileIdx = (SELECT MIN(fileIdx) FROM image WHERE division=?)";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, cafeKey);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				map.put("mainImage", rs.getString(1));
+			}
+			// 이미지 가져오기
+			sql = "SELECT newFileName FROM image WHERE division=? ORDER BY fileIdx";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, cafeKey);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				fileList.add(rs.getString(1));
+			}
+			map.put("fileList", fileList);
+			// 한블럭당 페이지 갯수
+			int pageLength = 5;
+			// 블럭 인덱스
+			int currentBlock = page % pageLength == 0 ? page / pageLength : (page / pageLength) + 1;
+			// 시작페이지
+			int startPage = (currentBlock - 1) * pageLength + 1;
+			// 끝페이지
+			int endPage = startPage + pageLength - 1;
+			System.out.println("시작 페이지 : " + startPage + " / 끝 페이지 : " + endPage);
+			// 노출할 데이터 갯수
+			int pagePerCnt = 12;
+			int end = page * pagePerCnt;
+			int start = (end - pagePerCnt) + 1;
+			// 댓글 가져오기
+			sql = "SELECT commentNo,cm_content,memberKey FROM "
+					+ "(SELECT ROW_NUMBER() OVER(ORDER BY commentNo) AS rnum,commentNo,cm_content,memberKey FROM cm WHERE division=? AND commentDel='N')"
+					+ "WHERE rnum BETWEEN ? AND ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, cafeKey);
+			ps.setInt(2, start);
+			ps.setInt(3, end);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				dto = new CafeDTO();
+				dto.setCommentNo(rs.getString("commentNo"));
+				dto.setCm_content(rs.getString("cm_content"));
+				dto.setMemberKey(rs.getString("memberKey"));
+				commentList.add(dto);
+			}
+			int total = totalComment(cafeKey); // 총 댓글 수 가져옵시다
+			// 총 게시글 수에 나올 페이지수 나눠서 짝수면 나눠주고 홀수면 +1
+			int totalPages = total % pagePerCnt == 0 ? total / pagePerCnt : (total / pagePerCnt) + 1;
+			if (totalPages == 0) {
+				totalPages = 1;
+			}
+			// 끝지점을 맨 마지막 페이지로 지정
+			if (endPage > totalPages) {
+				endPage = totalPages;
+			}
+			// 디테일에서 리스트로 돌아갈시 페이지 반환
+			int cafePages = 1;
+			// 노출할 데이터 갯수
+			int cafePagesPerCnts = 8;
+			while(true) {				
+				// 데이터의 시작과 끝
+				int cafeEnds = cafePages * cafePagesPerCnts;
+				int cafeStarts = (cafeEnds - cafePagesPerCnts);
+				sql = "SELECT cafeKey FROM"
+						+"(SELECT cafeKey FROM cafeInfo ORDER BY cafeNum DESC OFFSET ? ROWS FETCH FIRST ? ROWS ONLY)"
+						+"WHERE cafeKey=?";
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, cafeStarts);
+				ps.setInt(2, cafeEnds);
+				ps.setString(3, cafeKey);
+				rs= ps.executeQuery();
+				if(rs.next()) {
+					break;
+				}else {
+					cafePages++;
+				}							
+			}			
+			System.out.println("총 갯수" + total);
+			System.out.println("토탈 페이지" + totalPages);
+			System.out.println(startPage);
+			System.out.println(endPage);
+			map.put("cafePages", cafePages);
+			map.put("commentList", commentList);
+			map.put("totalPage", totalPages);
+			map.put("currPage", page);
+			map.put("pageLength", pageLength);
+			map.put("startPage", startPage);
+			map.put("endPage", endPage);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return map;
+	}
+
+	private int totalComment(String cafeKey) throws SQLException {
+		String sql = "SELECT COUNT(commentNo) FROM cm WHERE division = ? AND commentDel='N'";
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, cafeKey);
+		rs = ps.executeQuery();
+		int total = 0;
+		if (rs.next()) {
+			total = rs.getInt(1);
+		}
+		return total;
+	}
+
 	public int totalCount() throws SQLException {
-		String sql = "SELECT COUNT(cafeKey) "
-				+ "FROM (SELECT division,newFileName FROM image WHERE ROWID IN "
-				+ "(SELECT MIN(ROWID) FROM image GROUP BY division)) i "
-				+ "LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey "
-				+ "WHERE c.cafeDel='N' AND c.openCheck='Y'";
+		String sql = "SELECT COUNT(cafeKey) FROM cafeInfo";
 		ps = conn.prepareStatement(sql);
 		rs = ps.executeQuery();
 		int total = 0;
@@ -392,4 +551,18 @@ public class CafeDAO {
 		return total;
 	}
 
+	public int upHit(String cafeKey) {
+
+		String sql = "UPDATE cafeInfo SET bHit = bHit+1 WHERE cafeKey=?";
+		int success = 0;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, cafeKey);
+			success = ps.executeUpdate();
+			System.out.println("조회수 올리기 성공 : " + success);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return success;
+	}
 }

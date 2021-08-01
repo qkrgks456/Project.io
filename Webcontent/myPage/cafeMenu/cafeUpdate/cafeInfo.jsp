@@ -254,7 +254,7 @@
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 
 	<!-- cafeInfo js 추가 -->
-	<script src="/Project/assets/js/cafeInfo.js?var=5"></script>
+	<script src="/Project/assets/js/cafeInfo.js?var=56"></script>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=95"></script>
 </body>

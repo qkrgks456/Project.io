@@ -8,11 +8,11 @@
 <!-- 부트스트랩 메타태그 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 부트스트랩 파일 -->
-<link href="/Project/assets/css/bootstrap.css?ver=9" rel="stylesheet">
+<link href="/Project/assets/css/bootstrap.css?ver=15" rel="stylesheet">
 <!-- css cdn -->
 <jsp:include page="/assets/css/csscdn.jsp"></jsp:include>
 <!-- main css 추가 -->
-<link href="/Project/assets/css/main.css?ver=56" rel="stylesheet">
+<link href="/Project/assets/css/main.css?ver=16" rel="stylesheet">
 <title>카페</title>
 </head>
 <body>
@@ -27,9 +27,7 @@
 			<jsp:include page="/fixMenu/navbar.jsp"></jsp:include>
 		</c:if>
 		<!-- 들어갈 내용 -->
-		<!-- 원두 상품 코너 -->
-
-		<div class="container mb-0">
+		<div class="container">
 			<!-- 검색창 -->
 			<div class="row">
 				<div class="d-flex">
@@ -45,32 +43,51 @@
 				</div>
 				<hr />
 			</div>
-			<!-- 판매창 -->
 			<div class="row row-cols-1 row-cols-md-4 g-4">
-				<c:forEach items="${map.list}" var="map">
+				<c:forEach items="${map.list}" var="map" varStatus="status">
 					<div class="col">
-						<div class="card mx-3 border">
-							<a href="/Project/MainCafe/cafe.jsp?cafeKey=${map.cafeKey}">
-								<img src="/photo/${map.newFileName}" class="card-img-top"
-								alt="...">
+						<div class="card showEvent" style="opacity:0;" title="${status.index}">
+							<a href="/Project/cafeDetail?cafeKey=${map.cafeKey}"> <img
+								src="/photo/${map.newFileName}" class="card-img-top" alt="...">
 							</a>
-							<div class="card-body text-center">
-								<h5 class="card-title fw-bold">${map.cafeName}</h5>
-								<div>
-									<p class="card-text target">${map.cafeDetail}</p>
-								</div>
-							</div>
-							<div class="card-footer">
-								<div class="text-center fw-bold">서울지역 :
-									${map.cafeLocation}</div>
+							<div class="card-body">
+								<h5 class="card-title fw-bold">${map.cafeName} (${map.cafeLocation})</h5>
+								<p class="text-muted target lh-base">${map.cafeDetail}</p>
+
 								<div class="text-center">
-									<span data-bs-toggle="tooltip" data-bs-html="true" id="confusiontooltip"
-										data-bs-placement="right" title="혼잡"> <i
-										class="bi bi-people-fill" style="font-size: 1.2rem;"></i> 혼잡도
+									<c:if test="${map.confusion eq '혼잡'}">
+										<span data-bs-toggle="tooltip" data-bs-html="true"
+											class="qwe fw-bold" id="confusiontooltip" style="cursor:default" 
+											data-bs-template='<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner text-danger fw-bold"></div></div>'
+											data-bs-placement="right" title="혼잡"> <i
+											class="bi bi-people-fill" style="font-size: 1.2rem;"></i> 혼잡도
+										</span>
+									</c:if>
+									<c:if test="${map.confusion eq '보통'}">
+										<span data-bs-toggle="tooltip" data-bs-html="true"
+											class="qwe fw-bold" id="confusiontooltip" style="cursor:default" 
+											data-bs-template='<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner text-dark fw-bold"></div></div>'
+											data-bs-placement="right" title="보통"> <i
+											class="bi bi-people-fill" style="font-size: 1.2rem;"></i> 혼잡도
+										</span>
+									</c:if>
+									<c:if test="${map.confusion eq '쾌적'}">
+										<span data-bs-toggle="tooltip" data-bs-html="true"
+											class="qwe fw-bold" id="confusiontooltip" style="cursor:default" 
+											data-bs-template='<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner text-success fw-bold"></div></div>'
+											data-bs-placement="right" title="쾌적"> <i
+											class="bi bi-people-fill" style="font-size: 1.2rem;"></i>혼잡도
+										</span>
+									</c:if>
+								</div>
+								<div class="text-center">
+									<span class="fw-bold" style="cursor:default" > <i class="bi bi-sunglasses"
+										style="font-size: 1.3rem;"></i> 조회수(${map.bHit})
 									</span>
 								</div>
+								<hr/>
 								<div class="text-center">
-									<a href="/Project/MainCafe/cafe.jsp?cafeKey=${map.cafeKey}"
+									<a href="/Project/cafeDetail?cafeKey=${map.cafeKey}"
 										class="btn btn-outline-dark my-2">자세히 보기</a>
 								</div>
 							</div>
@@ -84,8 +101,8 @@
 				<ul class="pagination justify-content-center">
 					<c:if test="${map.startPage ne 1}">
 						<li class="page-item"><a class="page-link"
-							href="/Project/cafeList?page=${map.startPage-1}" aria-label="Previous"> <span
-								aria-hidden="true">&laquo;</span>
+							href="/Project/cafeList?page=${map.startPage-1}"
+							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 						</a></li>
 					</c:if>
 					<c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
@@ -94,14 +111,14 @@
 								href="/Project/cafeList?page=${i}">${i}</a></li>
 						</c:if>
 						<c:if test="${i eq map.currPage}">
-							<li class="page-item active"><a class="page-link"
-								href="/Project/cafeList?page=${i}">${i}</a></li>
+							<li class="page-item active" style="cursor:default"><a class="page-link pageNum"
+							 title="${i}">${i}</a></li>
 						</c:if>
 					</c:forEach>
 					<c:if test="${map.totalPage ne map.endPage}">
 						<li class="page-item"><a class="page-link"
-							href="/Project/cafeList?page=${map.endPage+1}" aria-label="Next"> <span
-								aria-hidden="true">&raquo;</span>
+							href="/Project/cafeList?page=${map.endPage+1}" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
 						</a></li>
 					</c:if>
 				</ul>
@@ -114,20 +131,11 @@
 	</c:if>
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
+	
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<script type="text/javascript">
-		if($('#confusiontooltip').attr("title") == '보통'){
-			console.log($('.tooltip-inner').css('color'));
-		}else if($('#confusiontooltip').attr("title") == '혼잡'){
-			$('.tooltip-inner').css('color', 'red');
-		}else{
-			$('.tooltip-inner').css('color', 'green');
-		}
-
-	console.log($('.tooltip-inner').css('color'));
-	
-	
+	$('.showEvent').animate({opacity: "1"}, 500);
 	
 	</script>
 	<!-- main js 추가 -->

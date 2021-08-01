@@ -48,6 +48,19 @@ img.img-fluid {
 	height: 30rem;
 	object-fit: cover;
 }
+
+.tooltip-inner {
+  max-width: 200px;
+  padding: 0.25rem 0.5rem;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  border-radius: 0.25rem;
+  border: 1px solid;
+  margin-bottom: 2px;
+  margin-left: 5px;
+  background-color: rgba( 255, 255, 255, 0.1 );
+}
+
 /* 글 길면 줄 자르기 */
 .target {
 	/* 한 줄 자르기 */

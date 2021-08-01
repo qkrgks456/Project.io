@@ -42,8 +42,7 @@
 						* 저희사이트에 등록해주셔서 감사합니다 카페등록이 완료되었습니다.<br /> 검수가 진행된후, 사이트에 노출되게 됩니다
 						검수기간은 2~3일정도 소요됩니다
 					</p>
-					<a href="/Project/index.jsp" class="btn btn-dark">메인</a> <a
-						href="/Project/cafeInfoMyPage" class="btn btn-dark">내카페정보</a>
+					<a href="/Project/index.jsp" class="btn btn-dark">메인</a>
 				</div>
 			</div>
 		</div>
