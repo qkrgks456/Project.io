@@ -3,64 +3,25 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html lang="ko">
-<style>
-.rating .rate_radio, label {
-	position: relative;
-	display: inline-block;
-	margin-left: -4px;
-	z-index: 10;
-	width: 60px;
-	height: 60px;
-	background-image: url('./img/starrate.png');
-	background-repeat: no-repeat;
-	background-size: 60px 60px;
-	cursor: pointer;
-	background-color: #f0f0f0;
-}
-
-.rating .rate_radio:checked+label {
-	background-color: #ff8;
-}
-
-.cmd {
-	margin-top: 20px;
-	text-align: right;
-}
-
-.cmd input[type="button"] {
-	padding: 10px 20px;
-	border: 1px solid #e8e8e8;
-	background-color: #fff;
-	background-color: #000;
-	color: #fff;
-}
-
-.warning_msg {
-	display: none;
-	position: relative;
-	text-align: center;
-	background: #ffffff;
-	line-height: 26px;
-	width: 100%;
-	color: red;
-	padding: 10px;
-	box-sizing: border-box;
-	border: 1px solid #e0e0e0;
-}
-</style>
 <head>
 <meta charset="utf-8">
 <!-- 부트스트랩 메타태그 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 부트스트랩 파일 -->
 <link href="/Project/assets/css/bootstrap.css?ver=3" rel="stylesheet">
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
-	integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
-	crossorigin="anonymous">
-<link rel="stylesheet" href="./10-11.css" />
-
-<script type="text/javascript" src="./10-11.js">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+	<link rel="stylesheet" href="./10-11.css" />
+	<script type="text/javascript" src="./10-11.js"></script> 
+<!-- css cdn -->
+<jsp:include page="/assets/css/csscdn.jsp"></jsp:include>
+<!-- main css 추가 -->
+<link href="/Project/assets/css/main.css?ver=3" rel="stylesheet">
+<title>카페</title>
+</head>
+<body>
+	<div class="wrap p-0 m-0">
+		<!-- 상단 메뉴바 -->
+<script type="text/javascript">
 	document.addEventListener('DOMContentLoaded', function() {
 		document.querySelector('.basketrowcmd a:first-child').addEventListener(
 				'click', function() {
@@ -237,8 +198,7 @@
 <title>카페</title>
 </head>
 <body>
-
-	<div class="wrap p-0 m-0">
+	<div class="wrap">
 		<!-- 상단 메뉴바 -->
 		<!-- 섹션에 아이디가 있다면 -->
 		<c:if test="${sessionScope.loginId ne null}">
@@ -490,19 +450,19 @@
 
 
 					</div>
+</div></div></div></div></div>
 
+		
 
-				</div>
-			</div>
-		</div>
-	</div>
-
-
+<!-- 하단 고정 퀵메뉴 -->
+	<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
+		<jsp:include page="/fixMenu/quickMenu.html"></jsp:include>
+	</c:if>
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
-	<script src="/Project/assets/js/main.js?var=6"></script>
+	<script src="/Project/assets/js/main.js?var=2"></script>
 </body>
 </html>

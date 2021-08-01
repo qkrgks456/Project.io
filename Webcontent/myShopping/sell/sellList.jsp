@@ -9,6 +9,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 부트스트랩 파일 -->
 <link href="/Project/assets/css/bootstrap.css?ver=3" rel="stylesheet">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+	integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="./10-11.css" />
+<script type="text/javascript" src="./10-11.js"></script>
 <!-- css cdn -->
 <jsp:include page="/assets/css/csscdn.jsp"></jsp:include>
 <!-- main css 추가 -->
@@ -16,7 +22,7 @@
 <title>카페</title>
 </head>
 <body>
-	<div class="wrap">
+	<div class="wrap p-0 m-0">
 		<!-- 상단 메뉴바 -->
 		<!-- 섹션에 아이디가 있다면 -->
 		<c:if test="${sessionScope.loginId ne null}">
@@ -26,8 +32,12 @@
 		<c:if test="${sessionScope.loginId eq null}">
 			<jsp:include page="/fixMenu/navbar.jsp"></jsp:include>
 		</c:if>
+
+		<!-- 들어갈 내용 -->
+		<!-- 들어갈 내용 -->
 		<div class="d-flex" style="height: auto; min-height: 100vh;">
 			<jsp:include page="../myShoppingsideBar.jsp"></jsp:include>
+			<!-- 내용시작 -->
 			<div class="cont container-fluid mx-5 py-5">
 				<div class="d-flex align-items-center">
 					<button type="button" id="sidebarCollapse"
@@ -56,8 +66,7 @@
 
 									<div class="check">
 										<input type="checkbox" name="buy" value="260" checked="">
-									</div>
-								<td><div class="img">
+									</div> <td><div class="img">
 										<img src="/Project/assets/img/p11.jpg" class="img-thumbnail"
 											style="width: 80px; height: 80px; object-fit: cover;" />
 									</div></td>
@@ -74,26 +83,18 @@
 								</td>
 
 								<td class="align-middle">
-											<div class="num">
-											<div class="updown">
-												<input type="text" name="p_num1" id="p_num1" size="2"
-													maxlength="4" class="p_num" value="2"
-													onkeyup="javascript:basket.changePNum(1);"> <span
-													onclick="javascript:basket.changePNum(1);"><i
-													class="fas fa-arrow-alt-circle-up up"></i></span> <span
-													onclick="javascript:basket.changePNum(1);"><i
-													class="fas fa-arrow-alt-circle-down down"></i></span>
-											</div>
-										</div>
+									
+						2	
 															
 								</td>
 								<td class="align-middle">
-									<div class="sum">40,000원</div>
+									<div class="sum">19,000원</div>
 								</td>
 								<td>
 									<div class="d-grid gap-2 col-6 mx-auto mt-1">
 										<a class="btn btn-secondary btn-sm">상세보기</a> <a
-											class="btn btn-secondary btn-sm" onclick="javascript:basket.delItem();">삭제하기</a>
+											class="btn btn-secondary btn-sm"
+											onclick="javascript:basket.delItem();">삭제하기</a>
 									</div>
 								</td>
 							</tr>
@@ -104,6 +105,7 @@
 								<div class="check">
 									<input type="checkbox" name="buy" value="260" checked="">
 								</div>
+							
 							<td><div class="img">
 									<img src="/Project/assets/img/m4.jpg" class="img-thumbnail"
 										style="width: 80px; height: 80px; object-fit: cover;" />
@@ -111,16 +113,10 @@
 							<td class="align-middle">텀블러</td>
 							<td class="align-middle">35,000원</td>
 							<td class="align-middle">
-								<div class="updown">
-									<input type="text" name="p_num1" id="p_num1" size="2"
-										maxlength="4" class="p_num" value="2"> <span><i
-										class="fas fa-arrow-alt-circle-up up"></i></span> <span><i
-										class="fas fa-arrow-alt-circle-down down"></i></span>
-								</div>
-								</div>
+								1
 							</td>
 							<td class="align-middle">
-								<div class="sum">40,000원</div>
+								<div class="sum">35,000원</div>
 							</td>
 							<td>
 								<div class="d-grid gap-2 col-6 mx-auto mt-1">
@@ -136,6 +132,7 @@
 								<div class="check">
 									<input type="checkbox" name="buy" value="260" checked="">
 								</div>
+							
 							<td><div class="img">
 									<img src="/Project/assets/img/m6.jpg" class="img-thumbnail"
 										style="width: 80px; height: 80px; object-fit: cover;" />
@@ -143,16 +140,10 @@
 							<td class="align-middle">시럽 세트</td>
 							<td class="align-middle">32,000원</td>
 							<td class="align-middle">
-								<div class="updown">
-									<input type="text" name="p_num1" id="p_num1" size="2"
-										maxlength="4" class="p_num" value="2"> <span><i
-										class="fas fa-arrow-alt-circle-up up"></i></span> <span><i
-										class="fas fa-arrow-alt-circle-down down"></i></span>
-								</div>
-								</div>
+								1
 							</td>
 							<td class="align-middle">
-								<div class="sum">40,000원</div>
+								<div class="sum">32,000원</div>
 							</td>
 							<td>
 								<div class="d-grid gap-2 col-6 mx-auto mt-1">
@@ -168,6 +159,7 @@
 								<div class="check">
 									<input type="checkbox" name="buy" value="260" checked="">
 								</div>
+							
 							<td><div class="img">
 									<img src="/Project/assets/img/p7.jpg" class="img-thumbnail"
 										style="width: 80px; height: 80px; object-fit: cover;" />
@@ -175,16 +167,10 @@
 							<td class="align-middle">과테말라 안티구아</td>
 							<td class="align-middle">8,900원</td>
 							<td class="align-middle">
-								<div class="updown">
-									<input type="text" name="p_num1" id="p_num1" size="2"
-										maxlength="4" class="p_num" value="2"> <span><i
-										class="fas fa-arrow-alt-circle-up up"></i></span> <span><i
-										class="fas fa-arrow-alt-circle-down down"></i></span>
-								</div>
-								</div>
+							3
 							</td>
 							<td class="align-middle">
-								<div class="sum">40,000원</div>
+								<div class="sum">26,700원</div>
 							</td>
 							<td>
 								<div class="d-grid gap-2 col-6 mx-auto mt-1">
@@ -200,6 +186,7 @@
 								<div class="check">
 									<input type="checkbox" name="buy" value="260" checked="">
 								</div>
+							
 							<td><div class="img">
 									<img src="/Project/assets/img/m7.jpg" class="img-thumbnail"
 										style="width: 80px; height: 80px; object-fit: cover;" />
@@ -207,17 +194,10 @@
 							<td class="align-middle">써머 주스잔</td>
 							<td class="align-middle">16,000원</td>
 							<td class="align-middle">
-								<div class="updown">
-									<input type="text" name="p_num1" id="p_num1" size="2"
-										maxlength="4" class="p_num" value="2"> <span><i
-										class="fas fa-arrow-alt-circle-up up"></i></span> <span><i
-										class="fas fa-arrow-alt-circle-down down"></i></span>
-								</script>
-								</div>
-								</div>
+							2
 							</td>
 							<td class="align-middle">
-								<div class="sum">40,000원</div>
+								<div class="sum">32,000원</div>
 							</td>
 							<td>
 								<div class="d-grid gap-2 col-6 mx-auto mt-1">
@@ -225,26 +205,29 @@
 										class="btn btn-secondary btn-sm">삭제하기</a>
 								</div>
 							</td>
+					
 						</tr>
-						</tbody>
+							</tbody>
+						</table>
+						합계: 144,700원 <br>
+						수량: 9 개   ( 임시 -> UI고칠것임)
+			
+				
+</div>
+</div>
+</div>
+</div>
 
-
-
-				</div>
-			</div>
-			</div>
-		</div>
-	</div>
-</body>
-</html>
-
-<!-- 하단 고정 퀵메뉴 -->
-	
-
+<!-- 하단 고정 퀵메뉴 --> 
+<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
+		<jsp:include page="/fixMenu/quickMenu.html"></jsp:include>
+	</c:if>
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
-<script src="/Project/assets/js/main.js?var=2"></script>
-		<jsp:include page="/fixMenu/quickMenu.html"></jsp:include>
+	<script src="/Project/assets/js/main.js?var=2"></script>
+
+								</body>
+</html>
