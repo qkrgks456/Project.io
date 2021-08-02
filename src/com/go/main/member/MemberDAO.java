@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -66,8 +67,8 @@ public class MemberDAO {
 		
 				
 		sql = "INSERT INTO users (memberKey,pw,name,gender,email"
-		+",emailCheck,congestionCheck,deleteCheck,authority,location) "
-		+ "VALUES(?,?,?,?,?,?,?,'N','일반',?)"; //DTO 10개 
+		+",emailCheck,congestionCheck,deleteCheck,authority,location,address) "
+		+ "VALUES(?,?,?,?,?,?,?,'N','일반',?,?)"; //DTO 10개 
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1,dto.getMemberKey());
@@ -77,9 +78,8 @@ public class MemberDAO {
 			ps.setString(5,dto.getEmail());
 			ps.setString(6,dto.getEmailCheck());
 			ps.setString(7,dto.getCongestionCheck());
-			//ps.setString(8,dto.getDeleteCheck());
-			//ps.setString(9,dto.getAuthority());
 			ps.setString(8, dto.getLocation());
+			ps.setString(9, dto.getAddress());
 				
 			suc = ps.executeUpdate();
 			
@@ -125,6 +125,8 @@ public class MemberDAO {
 			if(rs.next()) {
 			memberKey=rs.getString("memberKey");
 		
+			}else {
+				memberKey="";
 			}
 		}catch(Exception e){
 			e.printStackTrace();
@@ -139,7 +141,7 @@ public class MemberDAO {
 	// (login/passwordFind/passwordFind.jsp) 아이디 , 이름 , 이메일 -> 비밀번호 찾기 
 		public String findIdByEmailPw(String memberKey, String name, String email) {
 
-			String sql = "SELECT PW FROM users Where memberKey=? and name=? and email=? ";
+			String sql = "SELECT pw FROM users Where memberKey=? and name=? and email=? ";
 			 String PW=null;
 			try {
 				ps = conn.prepareStatement(sql);
@@ -150,6 +152,8 @@ public class MemberDAO {
 
 			if(rs.next()) {
 				 PW=rs.getString("PW"); // 디비에서 가져온 cnt 를 저장 
+				}else {
+					PW="";
 				}
 
 			}catch(Exception e){
@@ -163,19 +167,20 @@ public class MemberDAO {
 		}	
 
 		//내정보 (myPage/myPageMenu/myInfo.jsp) 비밀번호, 이메일 ,주소 ,이메일수신,혼잡도 알림여부 -> 정보수정  
-		public int memberupdate(String PW, String email, 
-				String location, String emailCheck, String congestionCheck) {
-			int value= 0;
+		public int memberupdate(MemberDTO dto) {
+			int sucupdate= 0;
 						//비밀번호 , 연락처 , 이메일
-			String sql ="update users set PW=?, Email=? , location=? ,emailCheck=?,congestionCheck=? where memberkey=? ";
+			String sql ="update users set name=?, email=? , address=? ,location=?,emailCheck=?,congestionCheck=? where memberkey=? ";
 			try {
 				ps = conn.prepareStatement(sql);
-				ps.setString(1, PW);
-				ps.setString(2, email);
-				ps.setString(3, location);
-				ps.setString(4, emailCheck);
-				ps.setString(5, congestionCheck);
-				value = ps.executeUpdate();			
+				ps.setString(1, dto.getName());
+				ps.setString(2, dto.getEmail());
+				ps.setString(3, dto.getAddress());
+				ps.setString(4, dto.getLocation());
+				ps.setString(5, dto.getEmailCheck());
+				ps.setString(6, dto.getCongestionCheck() );
+				ps.setString(7, dto.getMemberKey());
+				sucupdate = ps.executeUpdate();			
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -183,7 +188,7 @@ public class MemberDAO {
 				resClose();
 			}
 			
-			return value;
+			return sucupdate;
 		}
 
 		///Project/myPage/myPageMenu/memberDrop.jsp
@@ -214,5 +219,30 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
+	}
+
+
+	//내정보 가져오기 
+	public MemberDTO myInfo(String sessionId) {
+		dto = new MemberDTO();
+		try {
+			String sql="SELECT name,email,address,location,emailCheck,congestionCheck FROM users WHERE MemberKey=?";
+			ps = conn.prepareStatement(sql);		
+			ps.setString(1, sessionId);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				dto.setName(rs.getString("name"));
+				dto.setEmail(rs.getString("email"));
+				dto.setAddress(rs.getString("address"));
+				dto.setLocation(rs.getString("location"));
+				dto.setEmailCheck(rs.getString("emailCheck"));
+				dto.setCongestionCheck(rs.getString("congestionCheck"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return dto;
 	}
 }

@@ -48,7 +48,7 @@
 			<div class="d-flex" id="loginmenu">
 				<a href="/Project/myShopping/buy/buyList.jsp" role="button" id="mypage"
 					class="btn btn-outline-light btn-sm mx-1">쇼핑</a> <a
-					href="/Project/myPage/myPageMenu/myInfo.jsp" role="button"
+					href="/Project/myInfo" role="button"
 					id="mypage" class="btn btn-outline-light btn-sm mx-1">마이페이지</a> <a
 					href="/Project/logout" role="button" id="logout"
 					class="btn btn-outline-light btn-sm mx-1">로그아웃</a>

@@ -1,6 +1,7 @@
 package com.go.main.search;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,11 +9,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.RequestWrapper;
+
+import org.apache.jasper.tagplugins.jstl.core.Param;
 
 import javafx.scene.control.Alert;
 
 
-@WebServlet({"/serachCafeName"})
+@WebServlet({"/serachCafeName","/test","/testTwo"})
 public class SearchController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -37,8 +41,9 @@ public class SearchController extends HttpServlet {
 		System.out.println("addr 값 : " + addr);
 		req.setCharacterEncoding("UTF-8");
 		RequestDispatcher dis = null;
-		SearchService service = new SearchService(req);
+		SearchService service = new SearchService(req, resp);
 		System.out.println(uri);
+		
 		switch (addr) {
 		case "/serachCafeName":
 			System.out.println("카페 네임 검색 요청");					
@@ -48,10 +53,8 @@ public class SearchController extends HttpServlet {
 				System.out.println("result(유저검색) 값 출력 : " + Sresult);				
 
 				if(Sname.equals("searchcafename")) {
-					service.namelist(Sresult);
-					//service.namelistpic(Sresult);
-					req.setAttribute("list", service.namelist(Sresult));
-					//req.setAttribute("nameimage", service.namelistpic(Sresult));
+					service.namelist(Sresult);			
+					req.setAttribute("list", service.namelist(Sresult));		
 					dis = req.getRequestDispatcher("search.jsp");
 					dis.forward(req, resp);
 				}
@@ -61,7 +64,27 @@ public class SearchController extends HttpServlet {
 					dis = req.getRequestDispatcher("search.jsp");
 					dis.forward(req, resp);				
 				}			
+				break;
+				
+		case "/test":			
+			String Snames = req.getParameter("searchtype");
+			System.out.println("카테고리값 : " + Snames);
+			try {
+				service.Alist();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			
+			break;
+			
+		case "/testTwo":
+			try {
+				Snames = req.getParameter("searchtype");
+				System.out.println("카테고리값 : " + Snames);
+				service.AlistT();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}			
 			break;
 		}		
 	}

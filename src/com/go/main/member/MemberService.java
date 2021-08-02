@@ -1,6 +1,6 @@
 package com.go.main.member;
 
-
+import java.util.HashMap;
 
 public class MemberService {
 	
@@ -43,13 +43,26 @@ public class MemberService {
 	}
 	
 	//내정보 (myPage/myPageMenu/myInfo.jsp) 비밀번호, 이메일 ,주소 ,이메일수신,혼잡도 알림여부 -> 정보수정 
-	public int memberupdate(String PW, String email , String location ,String emailCheck,String congestionCheck) {
-		int value=0;
-		value = dao.memberupdate(PW, email, location, emailCheck, congestionCheck);
-		return value;
-	}
+//	public int memberupdate(String PW, String email , String location ,String emailCheck,String congestionCheck) {
+//		int value=0;
+//		value = dao.memberupdate(PW, email, location, emailCheck, congestionCheck);
+//		return value;
+//	}
 	
 	public boolean deleteMember(MemberDTO dto) {
 		return dao.deleteMember(dto);
+	}
+
+	//내 정보 가져오기 
+	public MemberDTO myInfo(String sessionId) {
+	  return dao.myInfo(sessionId);
+	}
+
+	public int memberupdate(MemberDTO dto)
+	{
+		
+		int sucupdate=0;
+		sucupdate=dao.memberupdate(dto);
+		return sucupdate;
 	}
 }

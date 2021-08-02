@@ -156,14 +156,14 @@ $(document).ready(function() {
 	$("input[name=UserId]").focus();
 
 	/* 회원가입시 공백 검사 */
-	$("#UserId").on("propertychange change keyup paste input", function() {
-		if ($(this).val().length >= 6 && $(this).val().trim() != "") {
-			$(this).attr("class", "form-control is-valid");
+	/* $("#UserId").on("propertychange change keyup paste input", function() {
+		if ($(this).val().trim() != "") {
+			$(this).attr("class", "form-control");
 		}
 		else {
 			$(this).attr("class", "form-control is-invalid");
 		}
-	});
+	}); */
 
 	$("#UserPw").on("propertychange change keyup paste input", function() {
 		if ($(this).val().length >= 10 && $(this).val().trim() != "") {
@@ -192,24 +192,7 @@ $(document).ready(function() {
 	});
 
 	/* 회원가입시 유효성 검사 */
-	$("#signupbtn").click(function() {
-		$('.nullcheck').each(function() {
-			if ($(this).val() == "") {
-				$(this).addClass = ("is-invalid");
-			}
-		});
-
-		if ($("#UserId").attr("class") == "form-control is-valid"
-			&& $("#UserPw").attr("class") == "form-control is-valid"
-			&& $("#UserPwch").attr("class") == "form-control is-valid"
-			&& $("#UserName").attr("class") == "form-control is-valid"
-			&& $("#UserEmail").attr("class") == "form-control is-valid"
-			&& $("#UserAddress").attr("class") == "form-control is-valid"
-			&& $("#UserDate").attr("class") == "form-control is-valid"
-			&& $("#Userphone").attr("class") == "form-control is-valid") {
-			$(this).attr("type", "submit");
-		}
-	})
+	
 
 	/* 사이드바 활성화 */
 	$("div.list-group a").each(function(i) {
@@ -221,6 +204,30 @@ $(document).ready(function() {
 	
 	
 	/* 카페등록 유효성 검사 */
+	 $("#signupbtn").click(function() {
+              			$('.nullchecks').each(function() {
+              				if ($(this).val().trim() == "") {
+              					$(this).addClass("is-invalid");
+              				}
+              			});
+              			
+              			if ($("#UserPw").val() != $("#UserPwch").val()) {
+              				$("#UserPwch").attr("class", "form-control is-invalid");
+              			}
+              			if($("#UserId").attr("class") == "form-control"){
+              				$("#UserId").addClass("form-control is-invalid");
+              			}
+              			console.log($("#UserId").attr("class"));
+              			if ($("#UserId").attr("class") == "form-control is-valid"
+              				&& $("#UserPw").attr("class") == "form-control is-valid"
+              				&& $("#UserPwch").attr("class") == "form-control is-valid"
+              				&& $("#UserName").attr("class") == "form-control is-valid"
+              				&& $("#UserEmail").attr("class") == "form-control is-valid"
+              				&& $("#UserAddress").attr("class") == "form-control is-valid"
+              				) {
+              				$(this).attr("type", "submit");
+              			}
+              		})
 })
 
 

@@ -82,26 +82,30 @@ table {
 						<p class="fw-bold mt-4 h1">통합 검색 시스템</p>
 						<div class="col d-flex justify-content-end mt-4">
 							<form class="d-inline-flex justify-content-end"
-								style="height: 42px;" action="serachCafeName" method="post" id="sresult">
+								style="height: 42px;" action="serachCafeName" method="post"
+								id="sresult">
 
 								<select name="searchtype"
-									class="d-inline-flex justify-content-end me-2"
-									style="height: 42px;">
-									<option value="searchcafename" name="searchcafename">카페이름</option>
-									<option value="searchcafeproduct" name="searchcafeproduct">카페상품</option>
-								</select> <input class="form-control me-1" type="search" aria-label="Search"
-								placeholder="검색어를 입력해주세요."	name="searchresult" id="searchresult">
-								<button class="btn btn-outline-secondary" type="submit" id="sbtn">search</button>
+									class="form-select d-inline-flex justify-content-end me-2"
+									style="height: 42px;" id="searchtype">
+									<option value="searchdefault" name="searchdefault"	id="searchdefault">선택</option>
+									<option value="searchcafename" name="searchcafename"	id="searchcafename">카페이름</option>
+									<option value="searchcafeproduct" name="searchcafeproduct"	id="searchcafeproduct">카페상품</option>
+								</select> <input class="form-control me-1" type="search"
+									aria-label="Search" placeholder="검색어"
+									name="searchresult" id="searchresult">
+								<button class="btn btn-outline-secondary" type="submit"
+									id="sbtn">search</button>
 							</form>
 						</div>
 					</div>
 					<hr />
 				</div>
 				<!-- 검색창 끝 -->
-
+				<div id="cafebox" >
+						<p class="fw-bold mt-4 h3">카페검색</p>
 				<table class="table table-hover">
 					<thead>
-						<p class="fw-bold mt-4 h3">카페검색</p>
 						<tr>
 							<th scope="col">이미지</th>
 							<th scope="col">카페 이름</th>
@@ -111,81 +115,67 @@ table {
 						</tr>
 
 					</thead>
-					<tbody>
-					
+
+					<tbody id="searchtbody">
 						<c:forEach items="${list}" var="bbs">
 							<tr>
-								<td>
-								
-							<c:forEach items="${nameimage }" var="bbs2">
-										<img src="/photo/${bbs2.newFileName}" width="75px"	height="75px" />
-							</c:forEach>
-									
-								</td>
+								<td><img src="/photo/${bbs.newFileName}" width="75px"
+									height="75px" /></td>
 								<td class="align-middle">${bbs.cafeName}</td>
 								<td class="align-middle">${bbs.cafeLocation}</td>
 
-								<td class="align-middle"><a href="cafeDetail?cafeKey=${bbs.cafeKey }">상세보기</a></td>
+								<td class="align-middle"><a
+									href="cafeDetail?cafeKey=${bbs.cafeKey}">상세보기</a></td>
 
 								<!-- 혼잡도 출력에 따른 색상처리 -->
 								<c:if test="${bbs.confusion eq '혼잡' }">
 									<td style="color: red; font-weight: bold" class="align-middle">${bbs.confusion}</td>
 								</c:if>
 								<c:if test="${bbs.confusion eq '보통' }">
-									<td style="color: #ffcc00; font-weight: bold;" class="align-middle">${bbs.confusion}</td>
+									<td style="color: #ffcc00; font-weight: bold;"
+										class="align-middle">${bbs.confusion}</td>
 								</c:if>
 								<c:if test="${bbs.confusion eq '여유' }">
-									<td style="color: green; font-weight: bold" class="align-middle">${bbs.confusion}</td>
+									<td style="color: green; font-weight: bold"
+										class="align-middle">${bbs.confusion}</td>
 								</c:if>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
+				</div>
 
-
-
-				<table class="table table-hover " >
-
-						<p class="fw-bold mt-4 h3">상품검색</p>
-					<thead>
-						<tr>
-							<th scope="col">이미지</th>
-							<th scope="col">상품 이름</th>
-							<th scope="col">가격</th>
-							<th scope="col">카페 이름</th>
-							<th scope="col">카페 지역</th>
-						</tr>
-
-					</thead>
-					<tbody>
-						<c:forEach items="${list2}" var="bbs2">
+				<div id="productbox" >
+					<p class="fw-bold mt-4 h3 ">상품검색</p>
+					<table class="table table-hover">
+						<thead>
 							<tr>
-								<td class="align-middle"></td>
-								<td class="align-middle">${bbs2.productName}</td>
-								<td class="align-middle">${bbs2.price}</td>
-
-								<td class="align-middle"><a href="MainCafe/cafe.jsp">${bbs2.cafeName}</a></td>
-								<td class="align-middle">${bbs2.cafeLocation}</td>
+								<th scope="col">이미지</th>
+								<th scope="col">상품 이름</th>
+								<th scope="col">가격</th>
+								<th scope="col">카페 이름</th>
+								<th scope="col">카페 지역</th>
 							</tr>
-						</c:forEach>
-					</tbody>
 
-				</table>
+						</thead>
+						<tbody id="productbody">
+							<c:forEach items="${list2}" var="bbs2">
+								<tr>
+									<td class="align-middle"></td>
+									<td class="align-middle">${bbs2.productName}</td>
+									<td class="align-middle">${bbs2.price}</td>
 
+									<td class="align-middle"><a href="MainCafe/cafe.jsp">${bbs2.cafeName}</a></td>
+									<td class="align-middle">${bbs2.cafeLocation}</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+
+					</table>
+				</div>
 
 
 			</div>
-			<script src="https://code.jquery.com/jquery-3.6.0.js"
-				integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
-				crossorigin="anonymous">
-				
-			</script>
-			<script
-				src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-				integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-				crossorigin="anonymous">
-				
-			</script>
 			<!-- 게시판 끝  -->
 
 
@@ -203,11 +193,118 @@ table {
 	<script src="/Project/assets/js/main.js?var=6"></script>
 </body>
 <script>
-$(document).ready(function() {
-$("#sbtn").click(function(){
-	if($("#searchresult").val().length==0){alert("검색어를 입력해 주세요."); $("#searchresult").focus(); return false;}
-})
-});
+	var param = {};
+
+	$("#sbtn").click(function() {
+		if ($("#searchtype").val() == ("searchdefault")) {
+			alert("카테고리를 선택해 주세요.");
+			$("#searchtype").focus();
+			return false;
+		}
+		if ($("#searchresult").val().length == 0) {
+			alert("검색어를 입력해 주세요.");
+			$("#searchresult").focus();
+			return false;
+		}
+
+	});
+
+	$(document).on('change', '#searchtype', function() {
+		param = $("#searchtype option:selected").val(); // title, board_title, reg_id
+		
+		if(param=="searchcafename"){
+			SetSelectBox(param);
+			$("#productbox").addClass("visually-hidden");
+			$("#cafebox").removeClass("visually-hidden");	
+			
+		}else if(param=="searchcafeproduct"){
+			SetSelectBoxTwo(param);
+			$("#cafebox").addClass("visually-hidden");	
+			$("#productbox").removeClass("visually-hidden");
+		}		
+	})
+	
+	function SetSelectBox(param) {
+		$.ajax({    type : 'POST',
+					url : '/Project/test',
+					data : {
+						searchtype : param
+					},
+					dataType : 'JSON',
+					success : function(data) {
+						console.log(data);
+						content = "";
+						$.each(data.Alist,function(i, item) {
+											console.log(item.newFileName);
+											content += '<tr>'
+											content += '<td>'
+											content += '<img src="/photo/'+item.newFileName+'" width="75px"	height="75px" />'
+											console.log("상세보기 :"+ item.cafekey);
+											content += '</td>'
+											content += '<td class="align-middle">'+ item.cafeName + '</td>'
+											content += '<td class="align-middle">'+ item.cafeLocation+ '</td>'
+											content += '<td class="align-middle"><a href="cafeDetail?cafeKey='+ item.cafeKey+ '">상세보기</a></td>'
+
+											if (item.Confusion == '혼잡') {
+												content += '<td style="color: red; font-weight: bold" class="align-middle">'
+														+ item.Confusion
+														+ '</td>'
+											} else if (item.Confusion == '보통') {
+												content += '<td style="color: #ffcc00; font-weight: bold;" class="align-middle">'
+														+ item.Confusion
+														+ '</td>'
+											} else {
+												content += '<td style="color: green; font-weight: bold" class="align-middle">'
+														+ item.Confusion
+														+ '</td>'
+											}
+											content += '</tr>'
+
+										})
+						console.log(content);
+						$("#searchtbody").empty();
+						$("#searchtbody").append(content);
+
+					},
+					error : function(e) {
+						console.log(e);
+					}
+				});
+
+	};
+	function SetSelectBoxTwo(param) {
+		$.ajax({    type : 'POST',
+					url : '/Project/testTwo',
+					data : {
+						searchtype : param
+					},
+					dataType : 'JSON',
+					success : function(data) {
+						console.log(data);
+						content = "";
+						$.each(data.AlistT,function(i, item) {
+											console.log(item.newFileName);
+											content += '<tr>'
+											content += '<td>'
+											content += '<img src="/photo/'+item.newFileName+'" width="75px"	height="75px" />'											
+											content += '</td>'
+											content += '<td class="align-middle">'+ item.productName +'</td>'
+											content += '<td class="align-middle">'+ item.price+'</td>'
+											content += '<td class="align-middle"><a href="cafeDetail?cafeKey="'+ item.cafeName+'>상세보기</a></td>'
+											content += '<td class="align-middle">'+ item.cafeLocation+'</td>'
+											content += '</tr>'
+										})
+						console.log(content);
+						$("#productbody").empty();
+						$("#productbody").append(content);
+
+					},
+					error : function(e) {
+						console.log(e);
+					}
+				});
+
+	};
 </script>
 
 </html>
