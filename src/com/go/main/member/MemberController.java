@@ -7,6 +7,7 @@ import java.util.HashMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,9 +18,10 @@ import com.go.main.member.MemberService;
 import com.google.gson.Gson;
 
 import sun.awt.RepaintArea;
+import sun.print.resources.serviceui_es;
 
 @WebServlet({ "/login", "/logout", "/signup", "/signupcheck", 
-	"/findIdByEmail","/findIdByEmailPw","/memberupdate","/deleteMember" })
+	"/findIdByEmail","/findIdByEmailPw","/memberupdate","/deleteMember","/myInfo" })
 public class MemberController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -44,14 +46,16 @@ public class MemberController extends HttpServlet {
 		String congestionCheck = null;
 		String emailCheck = null;
 		String location = null;
+		String idCheck =null;
+	
 
-		int age = 0;
+		
 		int result = 0;
 		RequestDispatcher dis;
 		HttpSession session = req.getSession();
 		MemberDTO dto = new MemberDTO();
 		MemberService service = new MemberService();
-
+		Cookie cookie = null;
 		switch (subAddr) {
 		// 로그인 로직(테스트)
 		case "/login":
@@ -60,8 +64,9 @@ public class MemberController extends HttpServlet {
 			req.setCharacterEncoding("UTF-8");
 			memberKey = req.getParameter("InputId");
 			pw = req.getParameter("InputPassword");
-			path = req.getParameter("path");
-			System.out.println(memberKey + " " + pw + " " + path);
+			idCheck = req.getParameter("idCheck");
+			
+			System.out.println(memberKey + " " + pw + " " + idCheck);
 			// 값 넣기
 			dto.setMemberKey(memberKey);
 			dto.setPw(pw);
@@ -69,6 +74,17 @@ public class MemberController extends HttpServlet {
 			// result = service.login(dto); ?
 			boolean suc2 = service.login(dto);
 			if (suc2) {
+				if(idCheck!=null) {
+					cookie = new Cookie("memberKey", memberKey);
+					cookie.setPath("/");
+					cookie.setMaxAge(60*60*24*30);
+					resp.addCookie(cookie);
+				}else {
+					cookie = new Cookie("memberKey", "");
+					cookie.setPath("/");
+					cookie.setMaxAge(0);
+					resp.addCookie(cookie);
+				}
 				session.setAttribute("loginId", memberKey);
 				resp.sendRedirect("index.jsp");
 				System.out.println("로그인 성공했습니다");
@@ -77,6 +93,8 @@ public class MemberController extends HttpServlet {
 				dis = req.getRequestDispatcher("login/login.jsp");
 				dis.forward(req, resp);
 			}
+			
+			
 			break;
 
 		// 로그아웃 로직
@@ -96,7 +114,7 @@ public class MemberController extends HttpServlet {
 			email = req.getParameter("UserEmail");
 			address = req.getParameter("UserAddress");
 			gender = req.getParameter("genderradio");
-			location = req.getParameter("select");
+			location = req.getParameter("userLocation");
 			emailCheck = req.getParameter("emailradio");
 			congestionCheck = req.getParameter("alertradio");
 			System.out.println("회원가입정보 : " + memberKey + " " + pw + " " + pwcheck + /* " " + age + */ " " + name + " "
@@ -111,6 +129,7 @@ public class MemberController extends HttpServlet {
 			dto.setLocation(location);
 			dto.setEmailCheck(emailCheck);
 			dto.setCongestionCheck(congestionCheck);
+			dto.setAddress(address);
 
 			// 서비스 일 전달
 			// result = service.join(dto);
@@ -135,6 +154,7 @@ public class MemberController extends HttpServlet {
 			suc = service.signupcheck(memberKey);
 
 			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("memberKey", memberKey);
 			map.put("suc", suc);
 			resp.setContentType("text/html; charset=UTF-8");
 			resp.getWriter().print(new Gson().toJson(map));
@@ -165,64 +185,101 @@ public class MemberController extends HttpServlet {
 			break;
 			
 			// (login/passwordFind/passwordFind.jsp) 아이디 , 이름 , 이메일 -> 비밀번호 찾기 
-		case "findIdByEmailPw":
+		case "/findIdByEmailPw":
 			System.out.println("아이디 , 이름 , 이메일 -> 비밀번호 찾기 ");
-			memberKey = req.getParameter("userId");
+			memberKey = req.getParameter("UserId");
 			name = req.getParameter("UserName");
 			email = req.getParameter("UserEmail");
 			System.out.println(memberKey);
 			System.out.println(name);
 			System.out.println(email);
-			/* 수정해야됩니다...
-			boolean suc6 = true;
-			suc6 = service.findIdByEmailPw(memberKey, name, email);
-			HashMap<String, Object> map2 = new HashMap<String, Object>();
-			map2.put("suc6", suc6);
-			resp.setContentType("text/html; charset=UTF-8");
-			resp.getWriter().print(new Gson().toJson(map2));
-			*/
+			
+			String pwchecksuc = service.findIdByEmailPw(memberKey,name, email);
+			if(pwchecksuc.equals("")){
+				req.setAttribute("pwchecksuc", pwchecksuc );
+				dis = req.getRequestDispatcher("login/passwordFind/passwordFind.jsp");
+				//겟리퀘스트 는 상대경로 개념이라서 이렇게 적어주면 된다.
+				dis.forward(req, resp);
+			}else {
+				req.setAttribute("pwchecksuc", pwchecksuc);
+				dis = req.getRequestDispatcher("login/passwordFind/passwordFindResult.jsp");
+				//겟리퀘스트 는 상대경로 개념이라서 이렇게 적어주면 된다.
+				dis.forward(req, resp);
+			}
+			
 			break;
 			
+			
+			
+			//myPage/myPageMenu
+		case "/myInfo":
+			System.out.println("내 정보 보여주기 ");
+			String sessionId = (String)session.getAttribute("loginId");			
+			dto = service.myInfo(sessionId);
+			req.setAttribute("dto", dto);
+			dis = req.getRequestDispatcher("myPage/myPageMenu/myInfo.jsp");
+			//겟리퀘스트 는 상대경로 개념이라서 이렇게 적어주면 된다.
+			dis.forward(req, resp);
+			
+			break;
+			
+			
+			
 			//내정보 (myPage/myPageMenu/myInfo.jsp) 비밀번호, 이메일 ,주소 ,이메일수신,혼잡도 알림여부 -> 정보수정 
-			case "memberupdate":
-			System.out.println("회원정보수정");
+			case "/memberupdate":
+			System.out.println("회원정보수정 합니다.");
 			// 파라미터 체크
-			req.setCharacterEncoding("UTF-8");
-			pw = req.getParameter("UserPw");
-			pwcheck = req.getParameter("UserPwch");
-			email = req.getParameter("UserEmail");
-			location = req.getParameter("UserAddress");
-			emailCheck = req.getParameter("emailsusin");
-			congestionCheck = req.getParameter("alertradio");
-			System.out.println(pw);
-			System.out.println(pwcheck);
+			req.setCharacterEncoding("UTF-8");  //한글 인코딩 
+			name =req.getParameter("UserName");
+			email=req.getParameter("UserEmail");
+			address=req.getParameter("UserAddress");
+			location=req.getParameter("select");
+			emailCheck=req.getParameter("emailcheckchange");
+			congestionCheck=req.getParameter("alertradiochange");
+			System.out.println(name);
 			System.out.println(email);
+			System.out.println(address);
 			System.out.println(location);
 			System.out.println(emailCheck);
 			System.out.println(congestionCheck);
 			
+			String sucupdate = (String)session.getAttribute("sucupdate");			
+			dto = service.myInfo(sucupdate);
+			req.setAttribute("dto", dto);
+			dis = req.getRequestDispatcher("myPage/myPageMenu/myInfo.jsp");
+			//겟리퀘스트 는 상대경로 개념이라서 이렇게 적어주면 된다.
+			dis.forward(req, resp);
+			
+			
+			/*
 			//값넣기
-			dto.setPw(pw);
-			dto.setPw(pwcheck);
-			dto.setEmail(email);
+			dto.setName(name);
+			dto.setEmail(emailCheck);
+			dto.setAddress(address);
 			dto.setLocation(location);
 			dto.setEmailCheck(emailCheck);
 			dto.setCongestionCheck(congestionCheck);
 			
 			// 서비스 일 전달
 			// result = service.join(dto);
-			result = service.signup(dto);
-			System.out.println("result : " + result);
-			if (result > 0) {
+			int sucupdate = service.memberupdate(dto);
+			if (sucupdate > 0) {
+				
+				
 			resp.sendRedirect("/Project/myPage/myPageMenu/myInforesult.jsp");
 			//샌드는 경로를 다적어줘야한다.
 			} else {
 			req.setAttribute("success", "fail");
+			//dis = req.getRequestDispatcher("myPageMenu/myInfo.jsp");
 			dis = req.getRequestDispatcher("myPageMenu/myInfo.jsp");
 			//겟리퀘스트 는 상대경로 개념이라서 이렇게 적어주면 된다.
 			dis.forward(req, resp);
-		}
+			*/
+		
 			break;
+			
+			
+			
 			
 			case "/deleteMember":
 				System.out.println("회원을 삭제합니다.");
@@ -234,6 +291,7 @@ public class MemberController extends HttpServlet {
 				dis = req.getRequestDispatcher("main");
 				dis.forward(req, resp);
 				break;
+			
 		}
 		
 	

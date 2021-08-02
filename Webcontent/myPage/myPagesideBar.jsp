@@ -6,7 +6,7 @@
 		<div class="list-group list-group-flush mt-3">
 			<h4 class="fst-italic ms-3 fw-bold text-decoration-none">마이페이지</h4>
 			<a class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myPage/myPageMenu/myInfo.jsp"
+				href="/Project/myInfo"
 				style="cursor: pointer;">내정보</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
 				href="/Project/myPage/myPageMenu/memberDrop.jsp"

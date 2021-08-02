@@ -58,7 +58,9 @@
 							<input type="text" class="form-control" id="UserEmail" name="UserEmail"
 								placeholder="정확하게 입력해주세요" required>
 								<!--  아이디 찾기 버튼 --> 
-								<input type="submit" value="아이디 찾기">
+								<div class="text-center mt-2">
+								<input class="btn btn-secondary" type="submit" value="아이디 찾기">
+								</div>
 							<div class="invalid-feedback">필수 정보입니다</div>						
 						</div>
 					</form>

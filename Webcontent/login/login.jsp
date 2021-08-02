@@ -35,6 +35,7 @@
 					<div class="form-group">
 						<label for="InputId" class="fw-bold">아이디</label> <input
 							type="text" class="form-control" name="InputId" id="InputId"
+							<c:if test="${cookie.memberKey ne null}"> value="${cookie.memberKey.value}" </c:if>
 							placeholder="아이디를 입력해주세요">
 						<div class="invalid-feedback">아이디를 입력해주세요</div>
 					</div>
@@ -45,7 +46,7 @@
 						<div class="invalid-feedback">비밀번호를 입력해주세요</div>
 					</div>
 					<div class="form-check mt-2">
-						<input type="checkbox" class="form-check-input" id="idCheck">
+						<input type="checkbox" class="form-check-input" id="idCheck" name="idCheck" >
 						<label class="form-check-label" for="idCheck">아이디 저장</label>
 					</div>
 				</form>

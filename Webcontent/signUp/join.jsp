@@ -30,36 +30,27 @@
 
 	<!-- 들어갈 내용 -->
 	<div class="wrap">
-		<section>
 			<div class="container px-4 py-4 my-4 border shadow-lg" id="cont">
 				<h4 class="mb-3 fw-bold">회원가입</h4>
 				<hr />
 				<form action="/Project/signup" method="post"
 					class="needs-validation" novalidate>
 					<div class="form-floating col-md-9 mb-3">
-						<input type="text" class="nullcheck form-control" name="UserId"
+						<input type="text" class="form-control" name="UserId"
 							id="UserId" placeholder="아이디" value="" required> <label
 							for="validationTooltip01" class="fw-bold">아이디</label>
-						<div class="invalid-feedback">6자 이상 입력해주세요</div>
-					
-					
-					
-					
-					<input type="button" class="btn btn-dark btn-sm mt-2" id="ckBtn" value="중복확인">
-					
-		
-
-					 
-						
-					
+							<div id="check1" class="invalid-feedback">중복확인을 다시 해주세요</div>
+							<div id="check2" class="invalid-feedback visually-hidden">필수 정보입니다</div>
+						<input type="button" class="btn btn-dark btn-sm mt-2" id="ckBtn"
+							value="중복확인">
 						<!-- 중복확인 끝 -->
 						<p class="visually-hidden text-success mt-1" id="pass">"사용가능합니다"</p>
 						<p class="visually-hidden text-danger mt-1" id="fail">"사용불가"</p>
 					</div>
 					<div class="form-floating col-md-9 mb-3">
-						<input type="password" class="nullcheck form-control" name="UserPw" id="UserPw"
-							 placeholder="비밀번호" value="" required> <label
-							for="validationTooltip02" class="fw-bold">비밀번호</label>
+						<input type="password" class="nullchecks form-control"
+							name="UserPw" id="UserPw" placeholder="비밀번호" value="" required>
+						<label for="validationTooltip02" class="fw-bold">비밀번호</label>
 						<div class="invalid-feedback">10자 이상 입력해주세요</div>
 					</div>
 					<div class="form-floating col-md-9 mb-3">
@@ -70,26 +61,26 @@
 					</div>
 					<div class="form-floating col-md-9 mb-3">
 						<input type="text" class="nullchecks nullcheck form-control"
-							id="UserName" name="UserName" placeholder="이름" required> <label
-							for="validationTooltip04" class="fw-bold">이름</label>
+							id="UserName" name="UserName" placeholder="이름" required>
+						<label for="validationTooltip04" class="fw-bold">이름</label>
 						<div class="invalid-feedback">필수 정보입니다</div>
 					</div>
 					<div class="form-floating col-md-9 mb-3">
 						<input type="text" class="nullchecks nullcheck form-control"
-							id="UserEmail" name="UserEmail" placeholder="이름" required> <label
-							for="validationTooltip04" class="fw-bold">이메일</label>
+							id="UserEmail" name="UserEmail" placeholder="이름" required>
+						<label for="validationTooltip04" class="fw-bold">이메일</label>
 						<div class="invalid-feedback">필수 정보입니다</div>
 					</div>
 
 					<div class="form-floating col-md-9 mb-3">
 						<input type="text" class="nullchecks nullcheck form-control"
-							id="UserAddress" name="UserAddress" placeholder="주소" required> <label
-							for="validationTooltip03" class="fw-bold">주소</label>
+							id="UserAddress" name="UserAddress" placeholder="주소" required>
+						<label for="validationTooltip03" class="fw-bold">주소</label>
 						<div class="invalid-feedback">필수 정보입니다</div>
 					</div>
 					<div class="col-md-9 mb-3">
-						<h6 class="fw-bold " >지역구선택 (해당지역 카페를 추천해드립니다)</h6>
-						<select class="form-select" name="select" >
+						<h6 class="fw-bold ">지역구선택 (해당지역 카페를 추천해드립니다)</h6>
+						<select class="form-select" name="userLocation">
 							<option value="도봉구" selected>도봉구</option>
 							<option value="강북구">강북구</option>
 							<option value="노원구">노원구</option>
@@ -123,13 +114,13 @@
 						<label for="validationTooltip05" class="fw-bold">이메일 수신</label>
 						<div class="form-check form-check-inline mx-3">
 							<label class="form-check-label" for="flexRadioDefault1">
-								동의 </label> <input class="form-check-input" type="radio"
-								value="Y" name="emailradio" id="emailradio1" checked>
+								동의 </label> <input class="form-check-input" type="radio" value="Y"
+								name="emailradio" id="emailradio1" checked>
 						</div>
 						<div class="form-check form-check-inline">
 							<input class="form-check-input" type="radio" name="emailradio"
-							value="N" id="emailradio2"> <label class="form-check-label"
-								for="flexRadioDefault2"> 거부 </label>
+								value="N" id="emailradio2"> <label
+								class="form-check-label" for="flexRadioDefault2"> 거부 </label>
 						</div>
 					</div>
 					<div class="col-md-9 mb-3">
@@ -141,24 +132,18 @@
 						</div>
 						<div class="form-check form-check-inline">
 							<input class="form-check-input" type="radio" name="alertradio"
-								id="alertradio2" value="N"> <label class="form-check-label"
-								for="alertradio2"> 거부 </label>
+								id="alertradio2" value="N"> <label
+								class="form-check-label" for="alertradio2"> 거부 </label>
 						</div>
 					</div>
 
 					<hr />
 					<div class="col text-center">
-						<!-- <button class="btn btn-dark" type="submit" id="signupbtn">가입하기</button> -->
-				
-						  
-				 <button  class="btn btn-dark" type="submit" id="signupbtn" 
-						    onclick="location.href='signUpresult.jsp'">가입하기</button>
-						   
-						 
+						<input class="btn btn-dark" type="button" id="signupbtn"
+							value="가입하기">
 					</div>
 				</form>
 			</div>
-		</section>
 	</div>
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
@@ -167,41 +152,46 @@
 	<script>
 	
 	$('#ckBtn').click(function(){
-	var userId=$('#UserId').val();
-		console.log("확인")
-		$.ajax({
-            type : "POST",//방식
-            url : "/Project/signupcheck",//주소
-            data : {
-            	userId : userId
-            },
-            dataType : 'JSON',
-            success : function(data) { //성공시
-               console.log(data);   
-            	if(data.suc){
-            		$('#pass').addClass("visually-hidden");
-            	   $('#fail').removeClass("visually-hidden");
-            	
-            	}else{
-            		$('#pass').removeClass("visually-hidden");
-             	   $('#fail').addClass("visually-hidden");
-            	}
-            },
-            error : function(e) { //실패시
-               console.log(e);
-            }
-         });
-
-	})
-	
-	
-	
+	var userId=$('#UserId').val().trim();
+		console.log(userId);
+		if(userId != ""){
+			$('#check2').addClass('visually-hidden');
+			$('#check1').removeClass('visually-hidden');
+			$.ajax({
+	            type : "POST",//방식
+	            url : "/Project/signupcheck",//주소
+	            data : {
+	            	userId : userId
+	            },
+	            dataType : 'JSON',
+	            success : function(data) { //성공시
+	               console.log(data);   
+	            	if(data.suc){
+	            		$('#pass').addClass("visually-hidden");
+	            	   $('#fail').removeClass("visually-hidden");
+	            	   $('#UserId').removeClass("is-valid");
+	            	   $('#UserId').addClass("is-invalid");      	  
+	            	}else{
+	            		$('#pass').removeClass("visually-hidden");
+	             	   $('#fail').addClass("visually-hidden");
+	             	  $('#UserId').removeClass("is-invalid");
+	             	  $('#UserId').addClass("is-valid");   
+	             	 $('#UserId').attr('readonly',true)
+	            	}
+	            },
+	            error : function(e) { //실패시
+	               console.log(e);
+	            }
+	         });
+		}else{
+			$('#check2').removeClass('visually-hidden');
+			$('#check1').addClass('visually-hidden');
+			 $('#UserId').addClass("is-invalid"); 
+		}
+	})	
 	</script>
-	
-
-	
 	<!-- main js 추가 -->
-	<script src="/Project/assets/js/main.js?var=6"></script>
+	<script src="/Project/assets/js/main.js?var=55"></script>
 </body>
 
 </html>

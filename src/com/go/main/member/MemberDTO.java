@@ -12,6 +12,7 @@ public class MemberDTO {
 	private String deleteCheck;  //8
 	private String authority; //9
 	private String location; //10 
+	private String address;
 	public String getMemberKey() {
 		return memberKey;
 	}
@@ -71,6 +72,12 @@ public class MemberDTO {
 	}
 	public void setLocation(String location) {
 		this.location = location;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	
 	
