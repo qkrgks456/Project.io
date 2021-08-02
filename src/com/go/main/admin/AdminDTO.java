@@ -1,19 +1,39 @@
 package com.go.main.admin;
 
 public class AdminDTO {
-	String memberkey;
-	String name;
-	String blackStatus;
-	String ownerNo;
-	String deleteCheck;
-	String email;
-	String emailCheck;
-	String blackReporter;
-	String location;
-	String gender;
-	String congestionCheck;
-	String blackReport;
+	private String memberkey;
+	private String name;
+	private String blackStatus;
+	private String ownerNo;
+	private String deleteCheck;
+	private String email;
+	private String emailCheck;
+	private String blackReporter;
+	private String address;
+	private String gender;
+	private String congestionCheck;
+	private String blackReport;
+	private String authority;
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	private String location;
 	
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getAuthority() {
+		return authority;
+	}
+	public void setAuthority(String authority) {
+		this.authority = authority;
+	}
 	public String getEmailCheck() {
 		return emailCheck;
 	}
@@ -26,12 +46,7 @@ public class AdminDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getLocation() {
-		return location;
-	}
-	public void setLocation(String location) {
-		this.location = location;
-	}
+	
 	public String getGender() {
 		return gender;
 	}

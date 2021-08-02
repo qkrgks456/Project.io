@@ -31,8 +31,18 @@
 		<!-- 사이드바 불러오기 -->
 			<jsp:include page="/admin/adminSideBar.jsp"></jsp:include>
 			<div class="cont container-fluid mx-5 py-5">
-			<!-- 여기부터 내용 넣으세요 -->
-				관리자페이지
+			<!--오른쪽 내용넣기 -->
+				<div class="cont container-fluid mx-5 py-5">
+				<!-- 회원정보 탭(여닫기) -->
+					<div class="d-flex align-items-center">
+						<button type="button" id="sidebarCollapse"
+							class="me-2 btn btn-secondary">
+							<i class="bi bi-text-left"></i>
+						</button>
+						<h2 class="fw-bold my-3">회원정보</h2>
+					</div>
+					<hr />
+				</div>
 			</div>
 		</div>
 	</div>

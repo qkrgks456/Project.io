@@ -14,6 +14,11 @@
 <!-- main css 추가 -->
 <link href="/Project/assets/css/main.css?ver=4" rel="stylesheet">
 <title>카페</title>
+<style>
+	#authority{
+		color:#ff0000;
+	}
+</style>
 </head>
 <body>
 	<div class="wrap p-0 m-0">
@@ -32,7 +37,71 @@
 			<jsp:include page="/admin/adminSideBar.jsp"></jsp:include>
 			<div class="cont container-fluid mx-5 py-5">
 			<!-- 여기부터 내용 넣으세요 -->
-				관리자페이지
+				<!-- 오른쪽내용 -->
+			<div class="cont container-fluid mx-5 py-5">
+				<!-- 회원정보 탭(여닫기) -->
+					<div class="d-flex align-items-center">
+						<button type="button" id="sidebarCollapse"
+							class="me-2 btn btn-secondary">
+							<i class="bi bi-text-left"></i>
+						</button>
+						<h2 class="fw-bold my-3">관리자 상세</h2>
+					</div>
+					<hr />
+					
+					<!-- 아래 내용 -->
+					<!-- 관리자 상세 테이블 -->
+					<div class="cont container">
+					
+					
+					<div class = "col-md-9 mb-3"><!-- md 미디엄 -->
+					
+					<table class="table table-bordered mt-4">
+						<tr>
+							<th class="center" width="30%">아이디</th>
+							<td class="align-middle" width="70%">${adminDetail.dto.memberkey}</td>
+						</tr>
+						<tr>
+							<th class="center">이름</th>
+							<td class="align-middle">${adminDetail.dto.name}</td>
+						</tr>
+						<tr>
+							<th class="center">이메일</th>
+							<td class="align-middle">${adminDetail.dto.email}</td>
+						</tr>
+						
+						<tr>
+							<th class="center">주소 </th>
+							<td class="align-middle">${adminDetail.dto.address}</td>
+						</tr>
+						
+						<tr>
+							<th class="center">등급</th>
+							<td class="align-middle">${adminDetail.dto.authority}</td>
+						</tr>
+					
+					</table>
+					<div>
+					<c:if test="${adminDetail.suc eq 0}">
+						<a id="authority">"권한이 없습니다."</a>
+					</c:if>
+
+					</div>
+					<form id="deleteauthorityForm" action="/Project/authorityDelete" method="post">
+					<div class="for-group">
+						<input class = form-control type="hidden" name = "sessionId" id= "sessionId" value="${sessionScope.loginId}">
+						<input class = form-control type="hidden" name = "memberkey" id= "memberkey" value=">${adminDetail.memberkey}">
+						<c:if test="${adminDetail.suc eq 1}">
+						<button id="deleteauthority" class="btn btn-dark" type="submit">권한 삭제</button>
+						</c:if>
+						<button id="deleteauthority" class="btn btn-dark" type="button" onclick ="location.href='admin/adminSelect/adminSearch.jsp'">리스트로</button>
+					</div>
+					</form>
+					
+					
+					</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -42,5 +111,21 @@
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=6"></script>
+	<script>
+	$.ajax({
+		type:'post',
+		url:'/adminDetail',
+		data:{},
+		dataType:'JSON',
+		success:function(data){
+			console.log("관리자 권한이 있습니다.);
+		},
+		error: function(e){
+			console.log("관리자 권한이 없습니다.);
+		}
+		
+		
+	});
+	</script>
 </body>
 </html>

@@ -31,8 +31,53 @@
 		<!-- 사이드바 불러오기 -->
 			<jsp:include page="/admin/adminSideBar.jsp"></jsp:include>
 			<div class="cont container-fluid mx-5 py-5">
-			<!-- 여기부터 내용 넣으세요 -->
-				관리자페이지
+			<!-- 회원정보 탭(여닫기) -->
+					<div class="d-flex align-items-center">
+						<button type="button" id="sidebarCollapse"
+							class="me-2 btn btn-secondary">
+							<i class="bi bi-text-left"></i>
+						</button>
+						<h2 class="fw-bold my-3">관리자 조회</h2>
+					</div>
+					<hr />
+					<form id="deleteauthorityForm" action="/Project/adminDetail" method="post">
+					<!-- 아래 내용(테이블) -->
+					<div class="cont container">
+					
+					<%-- <% response.sendRedirect("/Project/adminSearch"); %> --%>
+					<div class = "col-md-9 mb-3"><!-- md 미디엄 -->
+					<button id="adminSearch" class="btn btn-dark" type=button onclick="location.href='/Project/adminSearch'">관리자 조회</button>
+					<table class="table table-bordered mt-4">
+						<tr>
+							<th class="center" >아이디</th>
+							<th class="center" >이름</th>
+							<th class="center" >이메일</th>
+							<th class="center" >성별</th>
+							<th class="center" >등급</th>
+							<th class="center" >상세보기</th>
+							
+						</tr>
+						<div class="for-group">
+						<tr>
+							<td class="align-middle">${adminSearch.memberkey}</td>
+							<td class="align-middle">${adminSearch.name}</td>
+							<td class="align-middle">${adminSearch.eamil}</td>
+							<td class="align-middle">${adminSearch.gender}</td>
+							<td class="align-middle">${adminSearch.authority}</td>
+							<td><button id="adminDetail" class="btn btn-dark" type="submit">상세보기</button></td>
+							<input class = form-control type="hidden" name = "sessionId" id= "sessionId" value="${sessionScope.loginId}">
+							<input class = form-control type="hidden" name = "memberkey" id= "memberkey" value=">${adminDetail.memberkey}">
+						</tr>
+
+						</div>
+					
+					
+					
+						
+					</table>
+					</div>
+				</div>
+				</form>
 			</div>
 		</div>
 	</div>

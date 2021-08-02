@@ -21,6 +21,7 @@
 		<!-- 섹션에 아이디가 있다면 -->
 		<c:if test="${sessionScope.loginId ne null}">
 			<jsp:include page="/fixMenu/loginnav.jsp"></jsp:include>
+
 		</c:if>
 		<!-- 섹션에 아이디가 없다면 -->
 		<c:if test="${sessionScope.loginId eq null}">
@@ -147,4 +148,9 @@
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=6"></script>
 </body>
+<script>
+	/* $(document).ready(function() {
+		
+	} */
+</script>
 </html>

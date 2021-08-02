@@ -2,6 +2,7 @@ package com.go.main.admin;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -62,6 +63,33 @@ public class AdminService {
 		String blackRePort = req.getParameter("blackRePort");
 		success = dao.adminMemberBlackAdd(memberkey, blackRePort);
 		dao.resClose();
+		return success;
+	}
+
+
+	public ArrayList<AdminDTO> adminSearch() {
+		list = dao.adminSearch();
+		dao.resClose();
+		return list;
+	}
+
+	public HashMap<String, Object> adminDetail() {
+		HashMap<String, Object> map=null;
+		String memberkey = req.getParameter("memberkey");
+		String sessionId = req.getParameter("sessionId");
+		System.out.println("관리자 상세보기할 id: " +memberkey+"/세션: "+sessionId);
+		map = dao.adminDetail(memberkey,sessionId);
+		dao.resClose();
+		return map;
+		
+	}
+
+	public int authorityDelete() {
+		String memberkey = req.getParameter("memberkey");
+		String sessionId = req.getParameter("sessionId");
+		System.out.println("멤버와 세션값 확인: " + memberkey+"/세션: "+sessionId);
+		
+		success = dao.authorityDelete(memberkey,sessionId);
 		return success;
 	}
 
