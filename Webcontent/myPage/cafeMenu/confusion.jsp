@@ -42,55 +42,53 @@
 				<c:if test="${check eq true}">
 					<div class="cont container d-flex justify-content-evenly py-3">
 
-						<!-- 내 정보 수정 폼 -->
-						<form id="myinfoform" action="#" method="post"
-							class="needs-validation py-3 col-md-6 border-end" novalidate>
+						<!-- 좌석수정 -->
+						<div id="myinfoform" class="needs-validation py-3 col-md-6 border-end">
 							<div class="text-center">
 								<h3 class="fw-bold">테이블설정</h3>
 							</div>
-							<div class="col-md-9 mb-3 mt-4">
+							<div id="totalTable" class="col-md-9 mb-3 mt-4">
 								<label for="cafeTotalTable" class="fw-bold">총좌석</label> <input
-									type="text" class="form-control" id="cafeTotalTable" name="cafeTotalTable"
+									type="text" class="numCheck form-control" id="cafeTotalTable" name="cafeTotalTable"
 									placeholder="숫자를 입력해주세요" value="" required>
 								<div class="invalid-feedback">숫자를 입력해주세요</div>
 							</div>
-							<div class="col-md-9 mb-3">
+							<div id="curTable" class="col-md-9 mb-3">
 								<label for="cafeCurrentTable" class="fw-bold">현재좌석</label> <input
-									type="text" class="form-control" id="cafeCurrentTable" name="cafeCurrentTable"
+									type="text" class="numCheck form-control" id="cafeCurrentTable" name="cafeCurrentTable"
 									placeholder="숫자를 입력해주세요" value="" required>
 								<div class="invalid-feedback">숫자를 입력해주세요</div>
 							</div>
 							<div class="text-center">
-								<button class="btn btn-dark" type="button">확인</button>
+								<input id="tableChange" class="btn btn-dark" type="button" value="수정">
 							</div>
-						</form>
-
-
-						<form id="myinfoform" action="#" method="post"
+						</div>
+						<!-- 기준수정 -->
+						<form id="myinfoformss" action="#" method="post"
 							class="needs-validation py-3 col-md-6" novalidate>
 							<div class="text-center">
 								<h3 class="fw-bold">혼잡도 기준 설정</h3>
 							</div>
 							<div class="col-md-9 mb-3 mt-4">
 								<label for="leisurely" class="fw-bold">여유</label> <input
-									type="text" class="form-control" id="leisurely" name="leisurely"
+									type="text" class="numCheck form-control" id="leisurely" name="leisurely"
 									placeholder="숫자를 입력해주세요" value="" required>
 								<div class="invalid-feedback">숫자를 입력해주세요</div>
 							</div>
 							<div class="col-md-9 mb-3">
 								<label for="normal" class="fw-bold">보통</label> <input
-									type="text" class="form-control" id="normal" name="normal"
+									type="text" class="numCheck form-control" id="normal" name="normal"
 									placeholder="숫자를 입력해주세요" value="" required>
 								<div class="invalid-feedback">숫자를 입력해주세요</div>
 							</div>
 							<div class="col-md-9 mb-3">
 								<label for="congest" class="fw-bold">혼잡</label> <input
-									type="text" class="form-control" id="congest" name="congest"
+									type="text" class="numCheck form-control" id="congest" name="congest"
 									placeholder="숫자를 입력해주세요" value="" required>
 								<div class="invalid-feedback">숫자를 입력해주세요</div>
 							</div>
 							<div class="text-center">
-								<button class="btn btn-dark" type="button">확인</button>
+								<button class="btn btn-dark" type="button">수정</button>
 							</div>
 						</form>
 					</div>
@@ -107,6 +105,71 @@
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
+	<script type="text/javascript">
+	$('.numCheck').on("propertychange change keyup paste input",function(){
+		if(isNaN($(this).val())||$(this).val().trim()==""){
+			$(this).removeClass("is-valid");
+			$(this).addClass("is-invalid");
+		}else{
+			$(this).removeClass("is-invalid");
+			$(this).addClass("is-valid");
+		}
+	})
+	$(document).on('click','#tableChange',function() {
+		if($('#cafeTotalTable').val().trim()==""){
+			$('#cafeTotalTable').addClass("is-invalid");
+		}
+		if($('#cafeCurrentTable').val().trim()==""){
+			$('#cafeCurrentTable').addClass("is-invalid");
+		}
+		
+		if($('#cafeTotalTable').attr('class')=='numCheck form-control is-valid'&&
+			$('#cafeCurrentTable').attr('class')=='numCheck form-control is-valid'){
+			var cafeTotalTable = $('#cafeTotalTable').val();
+			var cafeCurrentTable = $('#cafeCurrentTable').val();
+			$.ajax({
+				type: "POST",//방식
+				url: "/Project/confusionTableChange",//주소
+				data: {
+					cafeTotalTable: cafeTotalTable,
+					cafeCurrentTable: cafeCurrentTable,
+				},
+				dataType: 'JSON',
+				success: function(data) { //성공시
+					console.log(data);
+					 Swal.fire({
+			    		title: '수정완료',
+						 icon: 'success',
+						 confirmButtonColor: '#000',
+						 confirmButtonText: '확인',
+			    		}).then((result) => {	
+			    			if (result.isConfirmed) {
+			    				var content = "";
+								content += '<label for="cafeTotalTable" class="fw-bold">총좌석</label> <input'
+									content +=	' type="text" class="numCheck form-control" id="cafeTotalTable" name="cafeTotalTable"'
+										content +=		'placeholder="숫자를 입력해주세요" value="'+data.cafeTotalTable+'" required>'
+										content +=	'<div class="invalid-feedback">숫자를 입력해주세요</div>'
+								$('#totalTable').empty();
+								$('#totalTable').append(content);
+								content = "";
+								content += 	'<label for="cafeCurrentTable" class="fw-bold">현재좌석</label> <input'
+								content += 		' type="text" class="numCheck form-control" id="cafeCurrentTable" name="cafeCurrentTable"'
+									content += 		'placeholder="숫자를 입력해주세요" value="'+data.cafeCurrentTable+'" required>'
+								content += 	'<div class="invalid-feedback">숫자를 입력해주세요</div>'
+									$('#curTable').empty();
+								$('#curTable').append(content);
+			    			}
+			    			}) 			
+				},
+				error: function(e) { //실패시
+					console.log(e);
+				}
+			})
+		}
+	})
+	
+	
+	</script>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=8"></script>
 </body>

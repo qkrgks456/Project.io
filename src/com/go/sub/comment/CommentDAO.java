@@ -66,7 +66,7 @@ public class CommentDAO {
 			}
 			while (true) {
 				// 노출할 데이터 갯수
-				int pagePerCnt = 12;
+				int pagePerCnt = 8;
 				// 데이터의 시작과 끝
 				int end = page * pagePerCnt;
 				int start = (end - pagePerCnt) + 1;
@@ -130,7 +130,7 @@ public class CommentDAO {
 			int endPage = startPage + pageLength - 1;
 			System.out.println("시작 페이지 : " + startPage + " / 끝 페이지 : " + endPage);
 			// 노출할 데이터 갯수
-			int pagePerCnt = 12;
+			int pagePerCnt = 8;
 			int end = page * pagePerCnt;
 			int start = (end - pagePerCnt) + 1;
 			System.out.println("시작" + start);
@@ -186,7 +186,7 @@ public class CommentDAO {
 		try {
 			while (true) {
 				// 노출할 데이터 갯수
-				int pagePerCnt = 12;
+				int pagePerCnt = 8;
 				// 데이터의 시작과 끝
 				int end = page * pagePerCnt;
 				int start = (end - pagePerCnt) + 1;
@@ -213,7 +213,7 @@ public class CommentDAO {
 			if (suc > 0 && page != 1) {
 				while (true) { // 노출할 데이터 갯수 
 					// 데이터의 시작과 끝
-					int pagePerCnt = 12; 
+					int pagePerCnt = 8; 
 					int end = page * pagePerCnt;
 					int start = (end - pagePerCnt) + 1;
 					sql = "SELECT commentNo,cm_content,memberKey FROM "
@@ -261,7 +261,7 @@ public class CommentDAO {
 			if(suc>0) {
 				while (true) {
 					// 노출할 데이터 갯수
-					int pagePerCnt = 12;
+					int pagePerCnt = 8;
 					// 데이터의 시작과 끝
 					int end = page * pagePerCnt;
 					int start = (end - pagePerCnt) + 1;

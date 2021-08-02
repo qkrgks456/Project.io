@@ -130,11 +130,10 @@ $(document).ready(function() {
 				success: function(data) { //성공시
 					console.log(data.ownerCheck);
 					if (data.ownerCheck == false) {
-						$('#ownerNo').attr('class',
-							'form-control is-valid');
+						$('#ownerNo').attr('class','form-control is-valid');
+						$('#ownerNo').attr('readonly','true');
 					} else {
-						$('#ownerNo').attr('class',
-							'form-control is-invalid');
+						$('#ownerNo').attr('class','form-control is-invalid');
 					}
 				},
 				error: function(e) { //실패시

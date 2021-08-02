@@ -172,7 +172,7 @@
 						<div class="col-md-3 d-flex justify-content-center">
 							<div id="good" class="d-inline-flex align-items-center"
 								style="cursor: pointer;">
-								<i id="goodicon" class="bi bi-hand-thumbs-up-fill"
+								<i id="goodicon" class="bi bi-hand-thumbs-up-fill" title="${map.goodCheck}"
 									style="font-size: 2.0rem;"></i>
 								<p id="goodtext" class="ms-2 mt-3 fw-bold">좋아요(${map.goodCount})</p>
 							</div>
@@ -364,6 +364,7 @@
 									placeholder="Leave a comment here" name="commentUpdateContent"
 									id="commentUpdateContent" style="height: 100px; resize: none;">${commentLists.cm_content} </textarea>
 								<label for="commentUpdateContent">수정할 댓글을 작성하세요</label>
+								<div class="invalid-feedback">1자 이상 입력해주세요</div>
 							</div>
 							<div class="d-flex justify-content-end mt-2" id="commentUpdateOut">
 								<a class='commentUpdateContentBtn btn btn-secondary btn-sm mx-2' id="commentUpdateContentBtn"
@@ -411,100 +412,83 @@
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=15"></script>
 	<script type="text/javascript">
-	/* 삭제 ajax */
-	$(document).on('click', '.commentUpdateContentBtn', function() {
-		var commentNo = $(this).attr('title');
-		var cafeKey = $('#cafeCommentBtn').attr("title");
-		var commentUpdateContent = $(this).parent().prev().children('.commentUpdateContent').val();
-		console.log(commentUpdateContent);
-		$.ajax({
-			type: "POST",//방식
-			url: "/Project/cafeCommentUpdate",//주소
-			data: {
-				commentUpdateContent: commentUpdateContent,
-				commentNo: commentNo,
-				cafeKey: cafeKey,
-			},
-			dataType: 'JSON',
-			success: function(data) { //성공시
-				var content = "";
-				var sessionId = data.sessionId;
-				$.each(data.list, function(i, item) {
-					var check = sessionId == item.memberKey;
-					content += "<div class='updateCheck'>"
-					content += "<p class='fw-bold'>" + item.memberKey + "</p>";
-					content += "<p class='lh-sm'>";
-					content += item.cm_content;
-					if (!check) {
-						content += "<a href='/Project/report/report.jsp' class='float-end btn btn-secondary btn-sm'>신고</a>";
-					} else {
-						content += "<a class='commentDelBtn mx-2 float-end btn btn-secondary btn-sm' title='" + item.commentNo + "'>삭제</a>";
-						content += "<a class='commentUpdateBtn float-end btn btn-secondary btn-sm'>수정</a>";
-					}
-					content += "</p>";
-					content += "<hr/>";
-					content += "</div>";
-					content += "<div class='updateForm visually-hidden'>"
-					content += "<p class='fw-bold'>" + item.memberKey + "</p>"
-					content += "<div class='form-floating flex-grow-1 px-2'>"
-					content += "<textarea class='commentUpdateContent form-control' placeholder='Leave a comment here'"
-					content += "name='commentUpdateContent' id='commentUpdateContent' style='height: 100px'>" + item.cm_content + "</textarea>"
-					content += "<label for='commentUpdateContent'>수정할 댓글을 작성하세요</label>"
-					content += "</div>"
-					content += "<div class='d-flex justify-content-end mt-2' id='updateGo'>"
-					content += "<a id='commentUpdateContentBtn' class='commentUpdateContentBtn btn btn-secondary btn-sm mx-2' title='" + item.commentNo + "'>등록</a>"
-					content += "<a class='cmUpdateCancel btn btn-secondary btn-sm'>취소</a>"
-					content += "</div>"
-					content += "<hr />"
-					content += "</div>"
-				});
-				$('#commentLists').empty();
-				$('#commentLists').append(content);
-				content = "";
-				content += "<i id='commenticons' class='bi bi-chat-square-text-fill mt-1' style='font-size: 2.0rem;'></i>"
-				content += "<p  class='ms-2 mt-3 fw-bold'>댓글(" + data.commentCount + ")</p>"
-				$('#commenticon').empty();
-				$('#commenticon').append(content);
-				/* 페이지네이션 불러오기 욕나오네 */
-				content = "";
-				content += '<ul id="paginations1" class="pagination justify-content-center">'
-				if (data.startPage != 1) {
-					content += '<li class="page-item"><a class="page-link pageNum"'
-					content += 'title="' + (data.startPage - 1) + '${map.cafeKey}" role="button"'
-					content += 'aria-label="Previous"> <span aria-hidden="true">&laquo;</span>'
-					content += '</a></li>'
-				}
-				for (var i = data.startPage; i <= data.endPage; i++) {
-					console.log(data.currPage)
-					if (data.currPage != i) {
-						content += '<li class="page-item"><a role="button" class="page-link pageNum"'
-						content += ' title="' + i + " " + data.cafeKey + '">' + i + '</a></li>'
-					} else {
-						content += '<li class="page-item active"><a class="page-link">' + i + '</a></li>'
-					}
-				}
-				if (data.totalPage != data.endPage) {
-					content += '<li class="page-item"><a class="page-link pageNum" role="button"'
-					content += 'title="' + (data.endPage + 1) + '" aria-label="Next">'
-					content += '<span aria-hidden="true">&raquo;</span>'
-					content += '</a></li>'
-				}
-				content += '</ul>'
-				$('#paginations').empty();
-				$('#paginations').prepend(content);
-			},
-			error: function(e) { //실패시
-				console.log(e);
+	$(document).ready(function() {
+		var goodCheckBtn = $('#goodicon').attr("title");
+		console.log($('#goodicon').attr("title"));
+		var cafeKey = $('#cafeCommentBtn').attr("title");	
+		if(goodCheckBtn == 'false'){
+			$('#goodicon').css("font-size", "2.0rem");
+			$('#goodicon').css("color", "#0d6efd");
+			$('#goodtext').addClass("text-primary");
+		}else{
+			$('#goodicon').css("font-size", "2.0rem");
+			$('#goodicon').css("color", "black");
+			$('#goodtext').removeClass("text-primary");
+		}
+		$('#good').mouseup(function() {
+			if (goodCheckBtn == 'true') {			
+				$.ajax({
+					type: "POST",//방식
+					url: "/Project/cafeGood",//주소
+					data: {
+						goodCheckBtn: goodCheckBtn,
+						cafeKey: cafeKey,
+					},
+					dataType: 'JSON',
+					success: function(data) { //성공시
+						
+						console.log(data);
+						goodCheckBtn = 'false';
+						content="";
+						content+=	'<i id="goodicon" class="bi bi-hand-thumbs-up-fill" title="'+goodCheckBtn+'"';
+							content+=	' style="font-size: 2.0rem;"></i>';
+							content+=	'<p id="goodtext" class="ms-2 mt-3 fw-bold">좋아요('+data.cafeGoodCount+')</p>'
+							$('#good').empty();
+							$('#good').append(content);
+							$('#goodicon').css("color", "#0d6efd");
+							$('#goodtext').addClass("text-primary");
+					},
+					error: function(e) { //실패시
+						console.log(e);
+					}			
+				})
+				
+			} else {
+			
+				$.ajax({
+					type: "POST",//방식
+					url: "/Project/cafeGood",//주소
+					data: {
+						goodCheckBtn: goodCheckBtn,
+						cafeKey: cafeKey,
+					},
+					dataType: 'JSON',
+					success: function(data) { //성공시
+						console.log(data);
+						goodCheckBtn = 'true';
+						content="";
+						content+=	'<i id="goodicon" class="bi bi-hand-thumbs-up-fill" title="'+goodCheckBtn+'"';
+							content+=	' style="font-size: 2.0rem;"></i>';
+							content+=	'<p id="goodtext" class="ms-2 mt-3 fw-bold">좋아요('+data.cafeGoodCount+')</p>'
+							$('#good').empty();
+							$('#good').append(content);
+							$('#goodicon').css("color", "black");
+							$('#goodtext').removeClass("text-primary");
+		
+					},
+					error: function(e) { //실패시
+						console.log(e);
+					}			
+				})
 			}
-		});
+		})
 	})
-		
-		
+	
 		
 		
 	</script>
 	<!-- cafe.js 추가 -->
-	<script src="/Project/assets/js/cafe.js?var=12"></script>
+	<script src="/Project/assets/js/cafe.js?var=89"></script>
 	<!-- 카카오맵 api 추가 -->
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=96f67dd6c088728e30743d7db32a6789&libraries=services"></script>

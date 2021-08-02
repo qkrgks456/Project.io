@@ -387,7 +387,7 @@ public class CafeDAO {
 		return map;
 	}
 
-	public HashMap<String, Object> cafeDetail(String cafeKey, int page) {
+	public HashMap<String, Object> cafeDetail(String cafeKey, int page, String sessionId) {
 		ArrayList<CafeDTO> commentList = new ArrayList<CafeDTO>();
 		ArrayList<String> fileList = new ArrayList<String>();
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -423,6 +423,17 @@ public class CafeDAO {
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				map.put("goodCount", rs.getInt(1));
+			}
+			// 좋아요 눌렀는지 안눌렀는지 상태 체크
+			sql = "SELECT likeNo FROM good WHERE memberKey=? AND division=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			ps.setString(2, cafeKey);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				map.put("goodCheck", false);
+			}else {
+				map.put("goodCheck", true);
 			}
 			// 댓글 갯수
 			sql = "SELECT COUNT(commentNo) FROM cm WHERE division=? AND commentDel='N'";
@@ -460,7 +471,7 @@ public class CafeDAO {
 			int endPage = startPage + pageLength - 1;
 			System.out.println("시작 페이지 : " + startPage + " / 끝 페이지 : " + endPage);
 			// 노출할 데이터 갯수
-			int pagePerCnt = 12;
+			int pagePerCnt = 8;
 			int end = page * pagePerCnt;
 			int start = (end - pagePerCnt) + 1;
 			// 댓글 가져오기
@@ -564,5 +575,49 @@ public class CafeDAO {
 			e.printStackTrace();
 		}
 		return success;
+	}
+
+	public HashMap<String, Object> confusionTableChange(String sessionId, int cafeTotalTable, int cafeCurrentTable) {
+		int suc = 0;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		try {
+			String sql = "SELECT * FROM congestion WHERE cafeKey = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				sql = "UPDATE congestion SET cafeTotalTable = ?,cafeCurrentTable = ? WHERE cafeKey = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, cafeTotalTable);
+				ps.setInt(2, cafeCurrentTable);
+				ps.setString(3, sessionId);
+				suc = ps.executeUpdate();		
+			}else {
+				sql = "INSERT INTO congestion VALUES(?,?,?)";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, sessionId);
+				ps.setInt(2, cafeTotalTable);
+				ps.setInt(3, cafeCurrentTable);
+				suc = ps.executeUpdate();
+			}
+			if(suc>0) {
+				sql = "SELECT * FROM congestion WHERE cafeKey = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, sessionId);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					map.put("cafeTotalTable", rs.getInt("cafeTotalTable"));
+					map.put("cafeCurrentTable", rs.getInt("cafeCurrentTable"));
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		
+		
+		return map;
 	}
 }

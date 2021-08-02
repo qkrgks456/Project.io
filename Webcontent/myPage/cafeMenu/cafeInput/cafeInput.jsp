@@ -213,7 +213,7 @@
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- cafeInput js 추가 -->
-	<script src="/Project/assets/js/cafeInput.js?var=29"></script>
+	<script src="/Project/assets/js/cafeInput.js?var=52"></script>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=12"></script>
 </body>

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 
 @WebServlet({ "/cafewrite", "/cafeInfoMyPage", "/ownerCheck", "/cafeUpdate", "/cafeInputCheck", "/businessCheck",
-		"/businessChange", "/cafeDel", "/cafeExist", "/cafeList", "/cafeDetail" })
+		"/businessChange", "/cafeDel", "/cafeExist", "/cafeList", "/cafeDetail","/confusionInfo","/confusionTableChange" })
 public class CafeController extends HttpServlet {
 	// 안녕
 	private static final long serialVersionUID = 1L;
@@ -143,6 +143,15 @@ public class CafeController extends HttpServlet {
 			req.setAttribute("map", map);
 			dis = req.getRequestDispatcher("MainCafe/cafe.jsp");
 			dis.forward(req, resp);
+			break;
+		case "/confusionInfo":
+			System.out.println("혼잡도 현재 상태");
+			break;
+		case "/confusionTableChange":
+			System.out.println("혼잡도 테이블 수정");
+			map = service.confusionTableChange();
+			resp.setContentType("text/html; charset=UTF-8");
+			resp.getWriter().print(new Gson().toJson(map));
 			break;
 		}
 	}

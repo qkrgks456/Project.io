@@ -126,6 +126,8 @@ public class CafeService {
 	}
 
 	public HashMap<String, Object> cafeDetail() {
+		HttpSession session = req.getSession();
+		String sessionId = (String) session.getAttribute("loginId");
 		// 조회수랑 상세보기 자원정리는 여기서
 		String cafeKey = req.getParameter("cafeKey");
 		dao = new CafeDAO();
@@ -138,7 +140,7 @@ public class CafeService {
 		try {
 			dao.conn.setAutoCommit(false);
 			if (dao.upHit(cafeKey) > 0) {// 조회수 올리기
-			map = dao.cafeDetail(cafeKey,Integer.parseInt(page));// 상세보기
+			map = dao.cafeDetail(cafeKey,Integer.parseInt(page),sessionId);// 상세보기
 			}
 			if (map == null) {// commit || rollback
 				dao.conn.rollback();
@@ -152,6 +154,15 @@ public class CafeService {
 			dao.resClose();
 		}
 		return map;
+	}
+
+	public HashMap<String, Object> confusionTableChange() {
+		HttpSession session = req.getSession();
+		String sessionId = (String) session.getAttribute("loginId");
+		int cafeTotalTable = Integer.parseInt(req.getParameter("cafeTotalTable"));   
+		int cafeCurrentTable = Integer.parseInt(req.getParameter("cafeCurrentTable"));
+		dao = new CafeDAO();
+		return dao.confusionTableChange(sessionId,cafeTotalTable,cafeCurrentTable);
 	}
 
 }
