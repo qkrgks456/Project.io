@@ -20,6 +20,7 @@ table {
 <!-- main css 추가 -->
 <link href="/Project/assets/css/main.css?ver=10" rel="stylesheet">
 <title>카페</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 	<div class="wrap">
@@ -81,18 +82,16 @@ table {
 						<p class="fw-bold mt-4 h1">통합 검색 시스템</p>
 						<div class="col d-flex justify-content-end mt-4">
 							<form class="d-inline-flex justify-content-end"
-								style="height: 42px;" action="serachCafeName" method="post">
+								style="height: 42px;" action="serachCafeName" method="post" id="sresult">
 
 								<select name="searchtype"
 									class="d-inline-flex justify-content-end me-2"
 									style="height: 42px;">
 									<option value="searchcafename" name="searchcafename">카페이름</option>
 									<option value="searchcafeproduct" name="searchcafeproduct">카페상품</option>
-								</select> <input class="form-control me-1" type="search"
-									placeholder="상품명을 입력해주세요" aria-label="Search"
-									name="searchresult" id="searchresult">
-								<button class="btn btn-outline-secondary" type="submit">search</button>
-
+								</select> <input class="form-control me-1" type="search" aria-label="Search"
+								placeholder="검색어를 입력해주세요."	name="searchresult" id="searchresult">
+								<button class="btn btn-outline-secondary" type="submit" id="sbtn">search</button>
 							</form>
 						</div>
 					</div>
@@ -114,19 +113,19 @@ table {
 					</thead>
 					<tbody>
 					
-						<c:forEach items="${nameimage}" var="bbs">
+						<c:forEach items="${list}" var="bbs">
 							<tr>
 								<td>
 								
-							
-										<img src="/photo/${bbs.newFileName}" width="75px"	height="75px" />
-							
+							<c:forEach items="${nameimage }" var="bbs2">
+										<img src="/photo/${bbs2.newFileName}" width="75px"	height="75px" />
+							</c:forEach>
 									
 								</td>
 								<td class="align-middle">${bbs.cafeName}</td>
 								<td class="align-middle">${bbs.cafeLocation}</td>
 
-								<td class="align-middle"><a href=MainCafe/cafe.jsp>상세보기</a></td>
+								<td class="align-middle"><a href="cafeDetail?cafeKey=${bbs.cafeKey }">상세보기</a></td>
 
 								<!-- 혼잡도 출력에 따른 색상처리 -->
 								<c:if test="${bbs.confusion eq '혼잡' }">
@@ -145,10 +144,10 @@ table {
 
 
 
-				<table class="table table-hover" >
+				<table class="table table-hover " >
 
-					<thead>
 						<p class="fw-bold mt-4 h3">상품검색</p>
+					<thead>
 						<tr>
 							<th scope="col">이미지</th>
 							<th scope="col">상품 이름</th>
@@ -204,7 +203,11 @@ table {
 	<script src="/Project/assets/js/main.js?var=6"></script>
 </body>
 <script>
-
+$(document).ready(function() {
+$("#sbtn").click(function(){
+	if($("#searchresult").val().length==0){alert("검색어를 입력해 주세요."); $("#searchresult").focus(); return false;}
+})
+});
 </script>
 
 </html>
