@@ -36,7 +36,9 @@
 			<!-- 사이드 바 메뉴-->
 
 			<jsp:include page="/login/idPasswordMenu.jsp"></jsp:include>
-			<h2 class="fw-bold my-3">아이디 확인</h2>
+			<!--  <h2 class="fw-bold my-3">아이디 확인</h2> -->
+			<div class="mt-3 flex-grow-1 alert alert-warning" role="alert">알림
+							예시입니다</div>
 			${idchecksuc}
 			<hr />
 
