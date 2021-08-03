@@ -12,7 +12,7 @@
 <!-- css cdn -->
 <jsp:include page="/assets/css/csscdn.jsp"></jsp:include>
 <!-- main css 추가 -->
-<link href="/Project/assets/css/main.css?ver=6" rel="stylesheet">
+<link href="/Project/assets/css/main.css?ver=5" rel="stylesheet">
 <style type="text/css">
 .list-group-item {
 	border: 1px solid rgba(0, 0, 0, 0.125);
@@ -31,19 +31,33 @@
 		<c:if test="${sessionScope.loginId eq null}">
 			<jsp:include page="/fixMenu/navbar.jsp"></jsp:include>
 		</c:if>
-		<!-- 들어갈 내용 -->
-		<div class="container px-5 mt-5 ">
-			<!-- 사이드 바 메뉴-->
+	<section>
+			<div class="container px-5 mt-5 ">
+				<!-- 사이드 바 메뉴-->
 
-			<jsp:include page="/login/idPasswordMenu.jsp"></jsp:include>
-			<!--  <h2 class="fw-bold my-3">아이디 확인</h2> -->
-			<div class="mt-3 flex-grow-1 alert alert-warning" role="alert">알림
-							예시입니다</div>
-			${idchecksuc}
-			<hr />
-
-		</div>
+				<jsp:include page="/login/idPasswordMenu.jsp"></jsp:include>
+				<h2 class="fw-bold my-3">아이디 확인</h2>
+				<hr />
+				<div class="container px-3 w-50 border my-4">
+					<form action="/Project/findIdByEmail  " method="post" class="my-4">
+						<h2 class="fw-bold">가입한 아이디 확인</h2>
+						<p>
+							*본인확인 이메일 주소와 회원가입시 입력한 이메일 주소가 같아야,<br /> 
+							이메일을 통하여 아이디를 확인 받을 수 있습니다.
+						</p>
+						<hr />
+						<div class="form col-md-9 mb-3 mt-3">
+							<label for="validationTooltip04" class="fw-bold my-1">아이디</label>
+							
+						         <h2 class="fw-bold">   ${idchecksuc} </h2>
+						  	
+						</div>
+					</form>
+				</div>
+			</div>
+		</section>
 	</div>
+	
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->

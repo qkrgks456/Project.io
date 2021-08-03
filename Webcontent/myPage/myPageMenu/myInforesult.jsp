@@ -16,7 +16,9 @@
 <title>카페</title>
 </head>
 <body>
+	
 	<div class="wrap">
+	
 		<!-- 상단 메뉴바 -->
 		<!-- 섹션에 아이디가 있다면 -->
 		<c:if test="${sessionScope.loginId ne null}">
@@ -26,10 +28,13 @@
 		<c:if test="${sessionScope.loginId eq null}">
 			<jsp:include page="/fixMenu/navbar.jsp"></jsp:include>
 		</c:if>
-
+			<form action="/Project/memberupdate  " method="post" class="my-4">
 		<!-- 들어갈 내용 -->
+		
 		<div class="container">
+			
 			<div class="container mx-4 mt-5">
+	
 				<div class="d-flex justify-content-center">
 					<i class="mx-2 bi bi-person-check-fill" style="font-size: 4.0rem;"></i>
 					<h2 class="mt-4 align-middle ms-2 fw-bold">내 정보 수정이 완료되었습니다.</h2>
@@ -38,9 +43,13 @@
 					<p class="fs-5">다양한 재미가 기다리고 있습니다!</p>
 					<a href="/Project/index.jsp" class="btn btn-outline-secondary">메인으로</a>
 					<a href="/Project/myPage/myPageMenu/myInfo.jsp" class="btn btn-outline-secondary">마이페이지</a>
+				
 				</div>
+				
 			</div>
 		</div>
+			
+	
 	</div>
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>

@@ -167,7 +167,7 @@ public class MemberDAO {
 		}	
 
 		//내정보 (myPage/myPageMenu/myInfo.jsp) 비밀번호, 이메일 ,주소 ,이메일수신,혼잡도 알림여부 -> 정보수정  
-		public int memberupdate(String sessionId) {
+		public int memberupdate(MemberDTO dto) {
 			dto = new MemberDTO();
 			int sucupdate= 0;
 						//비밀번호 , 연락처 , 이메일

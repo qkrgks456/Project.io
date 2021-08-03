@@ -21,6 +21,7 @@
 <title>카페</title>
 </head>
 <body>
+   
 	<div class="wrap">
 		<!-- 상단 메뉴바 -->
 		<!-- 섹션에 아이디가 있다면 -->
@@ -32,6 +33,8 @@
 			<jsp:include page="/fixMenu/navbar.jsp"></jsp:include>
 		</c:if>
 		<!-- 들어갈 내용 -->
+		<form action="/Project/findIdByEmail  " method="post" class="my-4">
+			<section>
 			<div class="container px-5 mt-5 ">
 				<!-- 사이드 바 메뉴-->
 
@@ -40,8 +43,26 @@
 				<hr />
 				<div class="container px-3 w-50 border my-4">
 				
+						<h2 class="fw-bold">저장한 비밀번호 확인</h2>
+						
+						<p>
+							*본인확인 이메일 주소와 회원가입시 입력한 이메일 주소가 같아야, <br /> 
+							이메일을 통하여 비밀번호를 확인 받을 수 있습니다.
+							
+						</p>
+						
+						<hr />
+						<div class="form col-md-9 mb-3 mt-3">
+							<label for="validationTooltip04" class="fw-bold my-1">비밀번호</label>
+							
+						         <h2 class="fw-bold">   ${pwchecksuc} </h2>
+						  	
+						</div>
+					</form>
 				</div>
 			</div>
+		</section>
+
 	</div>
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>

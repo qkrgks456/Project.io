@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -243,15 +244,6 @@ public class MemberController extends HttpServlet {
 			System.out.println(emailCheck);
 			System.out.println(congestionCheck);
 			
-			String sucupdate = (String)session.getAttribute("sucupdate");			
-			dto = service.myInfo(sucupdate);
-			req.setAttribute("dto", dto);
-			dis = req.getRequestDispatcher("myPage/myPageMenu/myInfo.jsp");
-			//겟리퀘스트 는 상대경로 개념이라서 이렇게 적어주면 된다.
-			dis.forward(req, resp);
-			
-			
-			/*
 			//값넣기
 			dto.setName(name);
 			dto.setEmail(emailCheck);
@@ -262,23 +254,28 @@ public class MemberController extends HttpServlet {
 			
 			// 서비스 일 전달
 			// result = service.join(dto);
+		
+			
+			
+			
+		
 			int sucupdate = service.memberupdate(dto);
 			if (sucupdate > 0) {
 				
 				
-			resp.sendRedirect("/Project/myPage/myPageMenu/myInforesult.jsp");
+			resp.sendRedirect("/Project/myPage/myPageMenu/myInfo.jsp");
 			//샌드는 경로를 다적어줘야한다.
 			} else {
 			req.setAttribute("success", "fail");
 			//dis = req.getRequestDispatcher("myPageMenu/myInfo.jsp");
-			dis = req.getRequestDispatcher("myPageMenu/myInfo.jsp");
+			dis = req.getRequestDispatcher("myPage/myPageMenu/myInfomyInforesult.jsp");
 			//겟리퀘스트 는 상대경로 개념이라서 이렇게 적어주면 된다.
 			dis.forward(req, resp);
-			*/
 		
+	
 			break;
 			
-			
+			}
 			
 			
 			case "/deleteMember":
@@ -288,7 +285,7 @@ public class MemberController extends HttpServlet {
 				boolean suc7 = true;
 				suc7 = service.deleteMember(dto);
 				req.setAttribute("success", "del");
-				dis = req.getRequestDispatcher("main");
+				dis = req.getRequestDispatcher("myPage/myPageMenu/memberDrop.jsp");
 				dis.forward(req, resp);
 				break;
 			

@@ -26,6 +26,8 @@
 		<c:if test="${sessionScope.loginId eq null}">
 			<jsp:include page="/fixMenu/navbar.jsp"></jsp:include>
 		</c:if>
+			<form action="/Project/deleteMember  " method="post" class="my-4">
+		
 		<!-- 들어갈 내용 -->
 		<div class="d-flex" style="height: auto; min-height: 100vh;">
 			<jsp:include page="../myPagesideBar.jsp"></jsp:include>
@@ -42,6 +44,7 @@
 				<!-- 내용시작 -->
 				<div class="cont container">
 					<!-- 회원탈퇴 폼 -->
+				
 					<form id="exitform" class="py-3">
 						<p class="fs-4 fw-bold">안내사항</p>
 						<ul class="list-group list-group-flush">
@@ -130,10 +133,10 @@
 						</div>
 						<hr />
 						<div class="col text-center">
-							<button id="dropbtn" class="btn btn-dark mx-2" type="button">탈퇴하기</button>
+							<button id="dropbtn" class="btn btn-dark mx-2" type="submit">탈퇴하기</button>
 						</div>
 					</form>
-
+</form>
 				</div>
 			</div>
 		</div>
@@ -145,6 +148,8 @@
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=23"></script>
 	<script type="text/javascript">
+	
+	/*
 	$(document).ready(function() {
 		$('#dropbtn').click(function() {
 			if($('#exitcheck').is(":checked")){
@@ -173,7 +178,7 @@
 			
 		})
 	})
-	
+	*/
 	</script>
 </body>
 </html>
