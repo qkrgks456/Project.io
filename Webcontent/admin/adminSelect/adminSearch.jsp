@@ -40,11 +40,10 @@
 						<h2 class="fw-bold my-3">관리자 조회</h2>
 					</div>
 					<hr />
-					<form id="deleteauthorityForm" action="/Project/adminDetail" method="post">
+					
 					<!-- 아래 내용(테이블) -->
 					<div class="cont container">
 					
-					<%-- <% response.sendRedirect("/Project/adminSearch"); %> --%>
 					<div class = "col-md-9 mb-3"><!-- md 미디엄 -->
 					<button id="adminSearch" class="btn btn-dark" type=button onclick="location.href='/Project/adminSearch'">관리자 조회</button>
 					<table class="table table-bordered mt-4">
@@ -57,19 +56,26 @@
 							<th class="center" >상세보기</th>
 							
 						</tr>
-						<div class="for-group">
+						<c:if test="${empty adminSearch}">
 						<tr>
-							<td class="align-middle">${adminSearch.memberkey}</td>
-							<td class="align-middle">${adminSearch.name}</td>
-							<td class="align-middle">${adminSearch.eamil}</td>
-							<td class="align-middle">${adminSearch.gender}</td>
-							<td class="align-middle">${adminSearch.authority}</td>
-							<td><button id="adminDetail" class="btn btn-dark" type="submit">상세보기</button></td>
-							<input class = form-control type="hidden" name = "sessionId" id= "sessionId" value="${sessionScope.loginId}">
-							<input class = form-control type="hidden" name = "memberkey" id= "memberkey" value=">${adminDetail.memberkey}">
+							<td colspan="6">조회된 데이터가 없습니다.</td>
+						</tr>
+						</c:if>
+						<c:if test="${!empty adminSearch}">
+						<c:forEach items="${adminSearch}" var="i"> 
+						
+						<tr>
+							<td class="align-middle">${i.memberkey}</td>
+							<td class="align-middle">${i.name}</td>
+							<td class="align-middle">${i.email}</td>
+							<td class="align-middle">${i.gender}</td>
+							<td class="align-middle">${i.authority}</td>
+							<td><button id="adminDetail" class="btn btn-dark" type="button" onclick ="location.href='./adminDetail?sessionId=${sessionScope.loginId}&memberkey=${i.memberkey}'">상세보기</button></td>
+						
 						</tr>
 
-						</div>
+						</c:forEach>
+						</c:if>
 					
 					
 					
@@ -77,7 +83,7 @@
 					</table>
 					</div>
 				</div>
-				</form>
+			
 			</div>
 		</div>
 	</div>

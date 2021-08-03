@@ -88,12 +88,10 @@
 
 					</div>
 					<form id="deleteauthorityForm" action="/Project/authorityDelete" method="post">
-					<div class="for-group">
+					<div class="form-group">
 						<input class = form-control type="hidden" name = "sessionId" id= "sessionId" value="${sessionScope.loginId}">
 						<input class = form-control type="hidden" name = "memberkey" id= "memberkey" value=">${adminDetail.memberkey}">
-						<c:if test="${adminDetail.suc eq 1}">
 						<button id="deleteauthority" class="btn btn-dark" type="submit">권한 삭제</button>
-						</c:if>
 						<button id="deleteauthority" class="btn btn-dark" type="button" onclick ="location.href='admin/adminSelect/adminSearch.jsp'">리스트로</button>
 					</div>
 					</form>

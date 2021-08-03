@@ -39,6 +39,7 @@ public class AdminController extends HttpServlet {
 		ArrayList<AdminDTO> list = null;
 		AdminDTO dto = new AdminDTO();
 		String memberkey="";
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		AdminService service = new AdminService(req);
 		RequestDispatcher dis = null;
@@ -104,7 +105,7 @@ public class AdminController extends HttpServlet {
 			
 		case "/adminDetail":
 			System.out.println("어드민에서 관리자 상세보기");
-			HashMap<String, Object> map=null;
+			
 			map = service.adminDetail();
 			req.setAttribute("adminDetail", map);
 			dis = req.getRequestDispatcher("admin/adminSelect/adminDetail.jsp");
@@ -113,8 +114,8 @@ public class AdminController extends HttpServlet {
 			
 		case "/authorityDelete":
 			System.out.println("어드민에서 권한 삭제");
-			success = service.authorityDelete();
-			req.setAttribute("authority", success);
+			map = service.authorityDelete();
+			req.setAttribute("authority", map);
 			dis = req.getRequestDispatcher("admin/adminSelect/adminDetail.jsp");
 			break;
 			

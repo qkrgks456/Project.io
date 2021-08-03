@@ -22,7 +22,7 @@
 					href="/Project/MainProduct/productList.jsp">상품구매</a></li>
 				<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
 					<li class="nav-item"><a class="nav-link"
-						href="/Project/admin/adminSelect/adminSearch.jsp">관리자</a></li>
+						href="/Project/adminSearch">관리자</a></li>
 				</c:if>
 			</ul>
 			<!-- 쇼핑카트 알림 -->

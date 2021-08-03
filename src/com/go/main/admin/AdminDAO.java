@@ -171,14 +171,13 @@ public class AdminDAO {
 	public ArrayList<AdminDTO> adminSearch() {
 		System.out.println("관리자 조회 DAO");
 		sql = "SELECT memberKey, name, email, gender, authority FROM users WHERE authority = ? ";
-		ArrayList<AdminDTO> list=null;
+		ArrayList<AdminDTO> list = new ArrayList<AdminDTO>();
 		try {
 			ps = conn.prepareStatement(sql);
 			/* ps.setString(1, "판매자"); */
 			ps.setString(1, "일반");
 			rs = ps.executeQuery();
-			if (rs.next()) {
-				list = new ArrayList<AdminDTO>();
+			while (rs.next()) {
 				dto = new AdminDTO();
 				dto.setMemberkey(rs.getString("memberKey"));
 				dto.setName(rs.getString("name"));
@@ -198,12 +197,11 @@ public class AdminDAO {
 
 	public HashMap<String, Object> adminDetail(String memberkey, String sessionId) {
 		System.out.println("어드민에서 관리자 상세보기 DAO연결:" +memberkey+"/로그인한 관리자: " + sessionId );
-		String memberkey2 = "dsadsa";
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		sql = "SELECT memberKey,name,email,address,authority FROM users WHERE memberKey = ?";
 		try {
 			ps=conn.prepareStatement(sql);
-			ps.setString(1, memberkey2);
+			ps.setString(1, memberkey);
 			rs = ps.executeQuery();
 			if(rs.next()) {
 				dto = new AdminDTO();
@@ -242,7 +240,7 @@ public class AdminDAO {
 		
 	}
 
-	public int authorityDelete(String memberkey, String sessionId) {
+	public HashMap<String, Object> authorityDelete(String memberkey, String sessionId) {
 		System.out.println("어드민 관리자 삭제값 조회할 id: " + memberkey+"/로그인한 관리자: " + sessionId );
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		sql = "SELECT * FROM users WHERE authority = '최고관리자' AND memberkey = ? ";
@@ -253,7 +251,6 @@ public class AdminDAO {
 			rs = ps.executeQuery();
 			if(!rs.next()) {
 				System.out.println("관리자 권한이 없습니다.");
-				
 			}
 			else {
 				System.out.println("관리자 권한 확인완료");
@@ -263,7 +260,9 @@ public class AdminDAO {
 			
 			e.printStackTrace();
 		}
-		return success;
+		map.put("suc", success);
+		
+		return map;
 		
 	}
 	

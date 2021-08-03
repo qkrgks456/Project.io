@@ -84,13 +84,15 @@ public class AdminService {
 		
 	}
 
-	public int authorityDelete() {
+	public HashMap<String, Object> authorityDelete() {
+		HashMap<String, Object> map=null;
 		String memberkey = req.getParameter("memberkey");
 		String sessionId = req.getParameter("sessionId");
 		System.out.println("멤버와 세션값 확인: " + memberkey+"/세션: "+sessionId);
 		
-		success = dao.authorityDelete(memberkey,sessionId);
-		return success;
+		map = dao.authorityDelete(memberkey,sessionId);
+		dao.resClose();
+		return map;
 	}
 
 }
