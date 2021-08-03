@@ -29,6 +29,7 @@
 		</c:if>
 		<!-- 섹션에 아이디가 없다면 -->
 		<c:if test="${sessionScope.loginId eq null}">
+		
 			<jsp:include page="/fixMenu/navbar.jsp"></jsp:include>
 		</c:if>
 		<!-- 들어갈 내용 -->

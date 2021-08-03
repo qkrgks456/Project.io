@@ -64,6 +64,7 @@
 		<!-- 상단 메뉴바 -->
 		<!-- 섹션에 아이디가 있다면 -->
 		<c:if test="${sessionScope.loginId ne null}">
+		
 			<jsp:include page="/fixMenu/loginnav.jsp"></jsp:include>
 		</c:if>
 		<!-- 섹션에 아이디가 없다면 -->

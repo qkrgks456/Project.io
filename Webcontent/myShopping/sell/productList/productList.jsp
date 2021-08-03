@@ -51,7 +51,11 @@
 <!-- main css 추가 -->
 <link href="/Project/assets/css/main.css?ver=3" rel="stylesheet">
 <title>카페</title>
+
 </head>
+
+
+
 <body>
 	<div class="wrap">
 		<!-- 상단 메뉴바 -->
@@ -65,7 +69,7 @@
 		</c:if>
 		<div class="d-flex" style="height: auto; min-height: 100vh;">
 			<jsp:include page="/myShopping/myShoppingsideBar.jsp"></jsp:include>
-			<div class="cont container-fluid mx-3 py-5">
+			<div class="cont container-fluid mx-5 py-5">
 				<div class="d-flex align-items-center">
 					<button type="button" id="sidebarCollapse"
 						class="me-2 btn btn-secondary">
@@ -77,62 +81,57 @@
 					<h2 class="fw-bold my-3">상품정보</h2>
 				</div>
 				<div class="container">
-					<table class="table table-hover mt-1">
+					<table class="table table-hover mt-2">
 						<thead class="table-light">
 							<tr>
-								<th class="text-center" scope="col">#</th>
-								<th class="text-center" scope="col">이미지</th>
-								<th class="text-center" scope="col">상품명</th>
-								<th class="text-center" scope="col">상품코드</th>
-								<th class="text-center" scope="col">가격</th>
+								<th scope="col">#</th>
+								<th scope="col">상품명</th>
+								<th scope="col">상품코드</th>
+								<th scope="col">가격</th>
+								<th scope="col">수량</th>
 								<th class="text-center" scope="col">관리</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<th class="align-middle" scope="row"><input type="checkbox" name="seller"></th>
-								<td><img src="/Project/assets/img/p1.jpg"
-									class="img-thumbnail"
-									style="width: 80px; height: 80px; object-fit: cover;" /></td>
-								<td class="align-middle">에티오피아 예가체프 G2</td>
-								<td class="align-middle">30120</td>
-								<td class="align-middle">8,900원</td>
+								<th class="align-middle" scope="row"><input type="checkbox"
+									name="seller"></th>
+									<td class="align-middle">상품명</td>
+									<td class="align-middle">상품코드</td>
+								<td class="align-middle">가격</td>
+								<td class="align-middle">수량</td>
 								<td>
 									<div class="d-grid gap-2 col-6 mx-auto mt-1">
-										<a class="btn btn-secondary btn-sm" onclick="location.href='/Project/myShopping/sell/productList/productUpdate.jsp'">상세보기</a> <a
-											class="btn btn-secondary btn-sm" onclick="location.href='/Project/myShopping/sell/productInput/productInput.jsp'">삭제</a>
+										<a class="btn btn-secondary btn-sm">상세보기</a> <a
+											class="btn btn-secondary btn-sm">삭제</a>
 									</div>
 								</td>
 							</tr>
 							<tr>
 								<th class="align-middle" scope="row"><input type="checkbox"
 									name="seller"></th>
-								<td><img src="/Project/assets/img/p1.jpg"
-									class="img-thumbnail"
-									style="width: 80px; height: 80px; object-fit: cover;" /></td>
-								<td class="align-middle">에티오피아 예가체프 G2</td>
-								<td class="align-middle">30120</td>
-								<td class="align-middle">8,900원</td>
+								<td class="align-middle">상품명</td>
+									<td class="align-middle">상품코드</td>
+								<td class="align-middle">가격</td>
+								<td class="align-middle">수량</td>
 								<td>
 									<div class="d-grid gap-2 col-6 mx-auto mt-1">
-										<a class="btn btn-secondary btn-sm" onclick="location.href='/Project/myShopping/sell/productList/productUpdate.jsp'">상세보기</a> <a
-											class="btn btn-secondary btn-sm" onclick="location.href='/Project/myShopping/sell/productInput/productInput.jsp'">삭제</a>
+										<a class="btn btn-secondary btn-sm">상세보기</a> <a
+											class="btn btn-secondary btn-sm">삭제</a>
 									</div>
 								</td>
 							</tr>
 							<tr>
 								<th class="align-middle" scope="row"><input type="checkbox"
 									name="seller"></th>
-								<td><img src="/Project/assets/img/p1.jpg"
-									class="img-thumbnail"
-									style="width: 80px; height: 80px; object-fit: cover;" /></td>
-								<td class="align-middle">에티오피아 예가체프 G2</td>
-								<td class="align-middle">30120</td>
-								<td class="align-middle">8,900원</td>
+								<td class="align-middle">상품명</td>
+									<td class="align-middle">상품코드</td>
+								<td class="align-middle">가격</td>
+								<td class="align-middle">수량</td>
 								<td>
 									<div class="d-grid gap-2 col-6 mx-auto mt-1">
-										<a class="btn btn-secondary btn-sm" onclick="location.href='/Project/myShopping/sell/productList/productUpdate.jsp'">상세보기</a> <a
-											class="btn btn-secondary btn-sm" onclick="location.href='/Project/myShopping/sell/productInput/productInput.jsp'">삭제</a>
+										<a class="btn btn-secondary btn-sm">상세보기</a> <a
+											class="btn btn-secondary btn-sm">삭제</a>
 									</div>
 								</td>
 							</tr>
@@ -187,10 +186,6 @@
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=4"></script>
-	<!-- 하단 고정 퀵메뉴 -->
-	<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
-		<jsp:include page="/fixMenu/quickMenu.html"></jsp:include>
-	</c:if>
 </body>
 
 </html>
