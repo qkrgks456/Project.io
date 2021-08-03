@@ -48,7 +48,7 @@ public class SearchController extends HttpServlet {
 		case "/serachCafeName":
 			System.out.println("카페 네임 검색 요청");					
 			String Sname = req.getParameter("searchtype");//// 옵션 키워드
-			String Sresult = req.getParameter("searchresult");//// 검색 키워드
+			String Sresult = req.getParameter("Sresult");//// 검색 키워드
 				System.out.println("name(옵션) 값 : " + Sname);
 				System.out.println("result(유저검색) 값 출력 : " + Sresult);				
 

@@ -47,7 +47,7 @@ public class SearchDAO {
 			e.printStackTrace();
 		}		
 	}
-	public ArrayList<SearchDTO> namelist(String sresult) throws IOException {
+	public ArrayList<SearchDTO> namelist(String Sresult) throws IOException {
 		String sql= "SELECT newFileName,cafename,cafeLocation,confusion,cafekey	FROM (SELECT i.newfilename,c.cafeName,c.cafeNum,c.cafeKey,c.cafeLocation,c.cafeDetail,c.confusion,c.bHit FROM (SELECT division,newFileName FROM image WHERE ROWID IN (SELECT MIN(ROWID) FROM image GROUP BY division)) i LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey WHERE c.cafeDel='N' AND c.openCheck='Y') WHERE cafename LIKE ?";
 		//나중에 디비전값 = 사업자 등록번호 맞춰줘야 함
 		ArrayList<SearchDTO> namelist = null;
@@ -55,7 +55,7 @@ public class SearchDAO {
 		try {			
 			namelist = new ArrayList<SearchDTO>();
 			ps = conn.prepareStatement(sql);
-			ps.setString(1,"%"+sresult+'%');
+			ps.setString(1,"%"+Sresult+'%');
 			rs = ps.executeQuery();	
 			while(rs.next()) {
 			dto = new SearchDTO();
@@ -76,6 +76,7 @@ public class SearchDAO {
 	
 		
 	}
+	/*
 	public ArrayList<SearchDTO> namelistpic(String sresult) {
 		ArrayList<SearchDTO> namelistpic = null;
 		SearchDTO dto = null;		
@@ -106,7 +107,7 @@ public class SearchDAO {
 		}			
 		return namelistpic;		
 	}
-	
+	*/
 	
 	public ArrayList<SearchDTO> productlist(String sresult) {
 		String sql = "SELECT p.productname, p.price, c.cafeName, c.cafeLocation FROM cafeinfo c LEFT OUTER JOIN product p ON c.cafekey=p.cafekey WHERE p.productname LIKE ?";
@@ -152,7 +153,6 @@ public class SearchDAO {
 				dto.setConfusion(rs.getString("Confusion"));	
 				dto.setCafeKey(rs.getString("cafeKey"));
 				Alist.add(dto);
-				System.out.println("안녕");
 			}			
 		
 		} catch (Exception e) {
@@ -164,7 +164,7 @@ public class SearchDAO {
 		}
 
 	public ArrayList<SearchDTO> AlistT() {
-		String sql = "SELECT newFileName,productName,price,cafeName,cafeLocation FROM (SELECT i.newfilename,c.cafeName,c.cafeNum,c.cafeKey,c.cafeLocation,c.cafeDetail,c.confusion,c.bHit,p.productname,p.price FROM (SELECT division,newFileName FROM image WHERE ROWID IN (SELECT MIN(ROWID) FROM image GROUP BY division)) i LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey LEFT OUTER JOIN product p ON c.cafeKey = p.cafekey WHERE c.cafeDel='N' AND c.openCheck='Y')";
+		String sql = "SELECT newFileName,productName,price,cafeName,cafeLocation FROM (SELECT i.newfilename,c.cafeName,c.cafeNum,c.cafeKey,c.cafeLocation,c.cafeDetail,c.confusion,c.bHit,p.productname,p.price FROM (SELECT division,newFileName FROM image WHERE ROWID IN (SELECT MIN(ROWID) FROM image GROUP BY division)) i LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey LEFT OUTER JOIN product p ON c.cafeKey = p.cafekey WHERE c.cafeDel='N' AND c.openCheck='Y' AND PRICE IS NOT NULL)";
 		ArrayList<SearchDTO> AlistT = null;
 		SearchDTO dto = null;
 		

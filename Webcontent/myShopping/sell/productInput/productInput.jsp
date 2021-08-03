@@ -79,7 +79,7 @@
 						class="me-2 btn btn-secondary">
 						<i class="bi bi-text-left"></i>
 					</button>
-					<h2 class="fw-bold my-3">상품 등록 및 수정</h2>
+					<h2 class="fw-bold my-3">상품 등록</h2>
 				</div>
 				<hr />
 				<!-- 사이드 바 메뉴-->
@@ -87,41 +87,34 @@
 
 
 				<div class="container px-4 py-4 my-4 border shadow-lg" id="cont">
-					<h4 class="mb-3 fw-bold">상품 등록 및 수정</h4>
+					<h4 class="mb-3 fw-bold">상품 등록</h4>
 					<hr />
 					<form
-						action="/Project/admin/adminList/adminInputProductList/adminInputProductList.jsp"
+						action="/Project/productinsert"
 						method="post" class="needs-validation" novalidate>
-						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">카페명</h6>
-						<div class="form-floating col-md-9 mb-3">
-							<input type="text" class="nullchecks nullcheck form-control"
-								id="cafeName" placeholder="키페명"
-								aria-describedby="inputGroupPrepend" required> <label
-								for="validationTooltip04" class="fw-bold">카페명</label>
-							<div class="invalid-feedback">필수 정보입니다</div>
-						</div>
+						
 
 						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">상품명</h6>
 						<div class="form-floating col-md-9 mb-3">
 							<input type="text" class="nullchecks nullcheck form-control"
-								id="ProductName" placeholder="상품명"
-								aria-describedby="inputGroupPrepend" required> <label
-								for="validationTooltip04" class="fw-bold">상품명</label>
+								id="productName" placeholder="상품명"
+								aria-describedby="inputGroupPrepend" required> 
+								<label for="validationTooltip04" class="fw-bold">상품명</label>
 							<div class="invalid-feedback">필수 정보입니다</div>
 						</div>
 
 
 						<h6 class="text-muted mt-1 fw-bold" style="text-align: left;">카테고리</h6>
 						<div class="form-floating col-md-9 mb-3">
-							<select class="form-select">
+							<select class="form-select" id="categoryName">
 								<option selected disabled value="">필수선택</option>
-								<option>원두</option>
-								<option>MD</option>
+								<option value="원두" name="wondu">원두</option>
+								<option value="엠디" name="MD">MD</option>
 							</select>
 							<div class="invalid-feedback">카테고리를 설정해주세요</div>
 						</div>
-
-						<!-- 옵션추가 -->
+<!-- 
+						옵션추가
 						<h6 class="text-muted mt-1 fw-bold" style="text-align: left;">옵션</h6>
 						<table width="400" border="0" cellspacing="0" cellpadding="0">
 							<tr>
@@ -132,9 +125,9 @@
 												<td colspan="5" height="25" align="left"><input
 													class="btn btn-secondary btn-sm  type="
 													button" onClick="insRow()" value="추가"> *버튼으로 옵션을
-													추가해주세요</td>
-											</div>
-
+													추가해주세요
+											</td></div>
+											
 										</tr>
 										<tr>
 											<td height="25">
@@ -152,7 +145,7 @@
 								<td height="10"></td>
 							</tr>
 						</table>
-
+ -->
 						<!-- 수량 -->
 						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">수량</h6>
 						<div class="form-floating col-md-9 mb-3">
@@ -166,8 +159,16 @@
 						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">가격</h6>
 						<div class="form-floating col-md-9 mb-3">
 							<input type="text" class="nullchecks nullcheck form-control"
-								id="price" placeholder="가격" required> <label
+								id="Price" placeholder="가격" required> <label
 								for="validationTooltip04" class="fw-bold">가격</label>
+							<div class="invalid-feedback">필수 정보입니다</div>
+						</div>
+						
+						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">제품 설명</h6>
+						<div class="form-floating col-md-9 mb-3">
+							<input type="text" class="nullchecks nullcheck form-control"
+								id="explanation" placeholder="제품 설명란" required> <label
+								for="validationTooltip04" class="fw-bold">제품 설명</label>
 							<div class="invalid-feedback">필수 정보입니다</div>
 						</div>
 
@@ -181,39 +182,41 @@
 
 						<br>
 						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">판매여부</h6>
-						<div class="form-floating col-md-9 mb-3">
+						<div class="form-floating col-md-9 mb-3" id="sellCheck">
 							<div class="form-check">
 								<input class="form-check-input" type="radio"
-									name="flexRadioDefault" id="flexRadioDefault1"> <label
+									name="productsell" value="Y" id="flexRadioDefault1"> <label
 									class="form-check-label" for="flexRadioDefault1"> 판매</label>
 							</div>
 							<div class="form-check">
 								<input class="form-check-input" type="radio"
-									name="flexRadioDefault" id="flexRadioDefault2" checked>
+									name="productsell" value="N" id="flexRadioDefault2" checked>
 								<label class="form-check-label" for="flexRadioDefault2">
 									미판매 </label>
 							</div>
 						</div>
 
-
+				<!-- 
 						<div class="form-check mt-4">
-
-							<input type="checkbox" name="agree"
-								onClick="agreeCheck(this.form)"> <label
-								class="form-check-label fw-bold" for="update">관리자의 심사가
-								있어야 상품이 최종 승인됩니다. 정보 재확인 바랍니다. <br>이에 동의하십니까?
-							</label>
+							<input type="checkbox" name="agree" id="agreeupdate" onClick="agreeCheck(this.form)"> 
+								<label class="form-check-label fw-bold" for="agreeupdate">
+								관리자의 심사가 있어야 상품이 최종 승인됩니다. 정보 재확인 바랍니다. <br>이에 동의하십니까?
+								</label>
+								
 							<div class="invalid-feedback">동의해야만 등록이 가능합니다</div>
 							<div class="d-grid gap-3 d-md-flex justify-content-md-end">
 								<div class="invalid-feedback">필수 동의입니다</div>
 
-								<button class="btn btn-dark type=" button" name="checkButton"
-									value=" 확 인 " disabled>등록</button>
+								<button class="btn btn-dark" type="button" name="checkButton"  disabled >등록</button>
 
 								<button class="btn btn-dark me-md-1" type="button"
 									onclick="location.href='/Project/myShopping/sell/productList/productList.jsp'">취소</button>
 							</div>
 						</div>
+						-->
+						
+						<button class="btn btn-dark" type="submit" name="checkButton">등록</button>
+						
 					</form>
 				</div>
 			</div>

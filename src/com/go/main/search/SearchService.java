@@ -39,12 +39,11 @@ public class SearchService {
 	}
 	
 
-	public void namelist(String sresult) throws IOException {
+	public void namelist(String Sresult) throws IOException {
 
 		SearchDAO dao = new SearchDAO(req, resp);
-		ArrayList<SearchDTO> namelist = dao.namelist(sresult);
+		ArrayList<SearchDTO> namelist = dao.namelist(Sresult);
 		System.out.println("찾은 카페 갯수 : " + namelist.size());
-		//return namelist;	
 		if(namelist != null) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("list", namelist);
@@ -60,22 +59,32 @@ public class SearchService {
 	}
 	
 
-	public ArrayList<SearchDTO> productlist(String sresult) {
+	public void productlist(String sresult) {
 		SearchDAO dao = new SearchDAO(req, resp);
 		ArrayList<SearchDTO> productlist = dao.productlist(sresult);
 		System.out.println("찾은 상품 갯수 : " + productlist.size());		
-		return productlist;		
+			if(productlist != null) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("listT", productlist);
+			Gson gson = new Gson();
+			resp.setContentType("text/html; charset=UTF-8");//한글 깨짐 방지
+			try {
+				resp.getWriter().println(gson.toJson(map));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	
-	
+	/*
 	public ArrayList<SearchDTO> namelistpic(String sresult) {
 		SearchDAO dao = new SearchDAO(req, resp);
 		ArrayList<SearchDTO> namelistpic = dao.namelistpic(sresult);
 		System.out.println("찾은 카페 갯수2 : " + namelistpic.size());
 		return namelistpic;	
 	}
-
+*/
 	public void Alist() {		
 		SearchDAO dao = new SearchDAO(req, resp);
 		ArrayList<SearchDTO> Alist = dao.Alist();

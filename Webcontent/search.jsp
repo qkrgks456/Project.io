@@ -81,9 +81,8 @@ table {
 					<div class="d-flex">
 						<p class="fw-bold mt-4 h1">통합 검색 시스템</p>
 						<div class="col d-flex justify-content-end mt-4">
-							<form class="d-inline-flex justify-content-end"
-								style="height: 42px;" action="serachCafeName" method="post"
-								id="sresult">
+							<div class="d-inline-flex justify-content-end"
+								style="height: 42px;" id="sresult">
 
 								<select name="searchtype"
 									class="form-select d-inline-flex justify-content-end me-2"
@@ -91,12 +90,16 @@ table {
 									<option value="searchdefault" name="searchdefault"	id="searchdefault">선택</option>
 									<option value="searchcafename" name="searchcafename"	id="searchcafename">카페이름</option>
 									<option value="searchcafeproduct" name="searchcafeproduct"	id="searchcafeproduct">카페상품</option>
-								</select> <input class="form-control me-1" type="search"
+								</select> 
+								
+								<input class="form-control me-1" type="search"
 									aria-label="Search" placeholder="검색어"
 									name="searchresult" id="searchresult">
-								<button class="btn btn-outline-secondary" type="submit"
-									id="sbtn">search</button>
-							</form>
+									
+								<input type="button" class="btn btn-outline-secondary" type="submit"
+									value="serach" id="sbtn">
+							</div>
+							
 						</div>
 					</div>
 					<hr />
@@ -194,7 +197,7 @@ table {
 </body>
 <script>
 	var param = {};
-	cl = "";
+	var cl = {};
 	$("#sbtn").click(function() {
 		if ($("#searchtype").val() == ("searchdefault")) {
 			alert("카테고리를 선택해 주세요.");
@@ -205,35 +208,37 @@ table {
 			alert("검색어를 입력해 주세요.");
 			$("#searchresult").focus();
 			return false;
-		}		
+		}			
+	});
+	
+	
+	$(document).on('click', '#sbtn', function() {
 		cl = $("#searchtype option:selected").val();
-		
-		if($("#searchtype option:selected").val() == ("searchcafename")){
+		param = $("#searchresult").val();
+		if(cl == "searchcafename"){
+			SetSearch(cl);
 			$("#productbox").addClass("visually-hidden");
 			$("#cafebox").removeClass("visually-hidden");	
-			SetSearch(cl);
-		}else if($("#searchtype option:selected").val() == ("searchcafeproduct")){
+		}else if(cl == "searchcafeproduct"){
+			SetSearchTwo(cl);
 			$("#cafebox").addClass("visually-hidden");	
 			$("#productbox").removeClass("visually-hidden");
 		}
 
-	});
-	
-	
-
+	})
 	
 	$(document).on('change', '#searchtype', function() {
 		param = $("#searchtype option:selected").val(); // title, board_title, reg_id
 		
 		if(param=="searchcafename"){
+			SetSelectBox(param);
 			$("#productbox").addClass("visually-hidden");
 			$("#cafebox").removeClass("visually-hidden");	
-			SetSelectBox(param);
 			
 		}else if(param=="searchcafeproduct"){
+			SetSelectBoxTwo(param);
 			$("#cafebox").addClass("visually-hidden");	
 			$("#productbox").removeClass("visually-hidden");
-			SetSelectBoxTwo(param);
 		}		
 	})
 	
@@ -289,6 +294,7 @@ table {
 					url : '/Project/testTwo',
 					data : {
 						searchtype : param
+						
 					},
 					dataType : 'JSON',
 					success : function(data) {
@@ -322,13 +328,14 @@ table {
 		$.ajax({    type : 'POST',
 					url : '/Project/serachCafeName',
 					data : {
-						searchtype : param
+						searchtype : cl,
+						Sresult : param
 					},
 					dataType : 'JSON',
 					success : function(data) {
 						console.log(data);
 						content = "";
-						$.each(data.Alist,function(i, item) {
+						$.each(data.list,function(i, item) {
 											console.log(item.newFileName);
 											content += '<tr>'
 											content += '<td>'
@@ -354,9 +361,43 @@ table {
 											content += '</tr>'
 
 										})
-						console.log(content);
+						console.log(content); 
 						$("#searchtbody").empty();
 						$("#searchtbody").append(content);
+						
+					},
+					error : function(e) {
+						console.log(e);
+					}
+				});
+
+	};
+	function SetSearchTwo(cl) {
+		$.ajax({    type : 'POST',
+					url : '/Project/serachCafeName',
+					data : {
+						searchtype : cl,
+						Sresult : param
+					},
+					dataType : 'JSON',
+					success : function(data) {
+						console.log(data);
+						content = "";
+						$.each(data.listT,function(i, item) {
+											console.log(item.newFileName);
+											content += '<tr>'
+											content += '<td>'
+											content += '<img src="/photo/'+item.newFileName+'" width="75px"	height="75px" />'											
+											content += '</td>'
+											content += '<td class="align-middle">'+ item.productName +'</td>'
+											content += '<td class="align-middle">'+ item.price+'</td>'
+											content += '<td class="align-middle"><a href="cafeDetail?cafeKey="'+ item.cafeName+'>상세보기</a></td>'
+											content += '<td class="align-middle">'+ item.cafeLocation+'</td>'
+											content += '</tr>'
+										})
+						console.log(content);
+						$("#productbody").empty();
+						$("#productbody").append(content);
 
 					},
 					error : function(e) {

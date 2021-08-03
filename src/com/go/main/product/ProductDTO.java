@@ -14,6 +14,8 @@ public class ProductDTO {
 	private String delCheck;
 	private String sellCheck;
 	private String kingMenu;
+	private String categoryName;
+	
 	public int getProductId() {
 		return productId;
 	}
@@ -85,6 +87,12 @@ public class ProductDTO {
 	}
 	public void setKingMenu(String kingMenu) {
 		this.kingMenu = kingMenu;
+	}
+	public String getCategoryName() {
+		return categoryName;
+	}
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 	
 	

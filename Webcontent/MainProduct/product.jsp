@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html lang="ko">
 
@@ -43,7 +42,6 @@
 						<div class="card-body">
 							<br>
 							<h3 class="bold">에티오피아 예가체프 G2</h3>
-							<h3>${vo.productName}</h3>
 							<br>
 							<p class="text-muted mt-2">
 								부드러우면서 짙은 꽃향기, 목넘김 이후에 남는 아련한 향, 부드러운 바디, 달콤한 신맛 등<br>
