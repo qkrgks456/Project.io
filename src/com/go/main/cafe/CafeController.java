@@ -49,7 +49,7 @@ public class CafeController extends HttpServlet {
 					dis.forward(req, resp);
 				}
 			} else {
-				resp.sendRedirect("index.jsp");
+				resp.sendRedirect("/Project/main");
 			}
 
 			break;
@@ -61,7 +61,7 @@ public class CafeController extends HttpServlet {
 				dis = req.getRequestDispatcher("myPage/cafeMenu/cafeInput/cafeInput.jsp");
 				dis.forward(req, resp);
 			} else {
-				resp.sendRedirect("index.jsp");
+				resp.sendRedirect("/main");
 			}
 			break;
 		case "/cafewrite":
@@ -82,7 +82,7 @@ public class CafeController extends HttpServlet {
 					resp.getWriter().print(new Gson().toJson(map));
 				}
 			} else {
-				resp.sendRedirect("index.jsp");
+				resp.sendRedirect("/main");
 			}
 			break;
 		case "/ownerCheck":
@@ -95,7 +95,7 @@ public class CafeController extends HttpServlet {
 				resp.setContentType("text/html; charset=UTF-8");
 				resp.getWriter().print(new Gson().toJson(map));
 			} else {
-				resp.sendRedirect("index.jsp");
+				resp.sendRedirect("/main");
 			}
 			break;
 
@@ -108,7 +108,7 @@ public class CafeController extends HttpServlet {
 				dis = req.getRequestDispatcher("myPage/cafeMenu/cafeUpdate/cafeInfo.jsp");
 				dis.forward(req, resp);
 			} else {
-				resp.sendRedirect("index.jsp");
+				resp.sendRedirect("/main");
 			}
 			break;
 		case "/cafeUpdate":
@@ -123,7 +123,7 @@ public class CafeController extends HttpServlet {
 					resp.getWriter().print(new Gson().toJson(map));
 				}
 			} else {
-				resp.sendRedirect("index.jsp");
+				resp.sendRedirect("/main");
 			}
 			break;
 
@@ -143,7 +143,7 @@ public class CafeController extends HttpServlet {
 					dis.forward(req, resp);
 				}
 			} else {
-				resp.sendRedirect("index.jsp");
+				resp.sendRedirect("/main");
 			}
 			break;
 
@@ -164,7 +164,7 @@ public class CafeController extends HttpServlet {
 					resp.getWriter().print(new Gson().toJson(map));
 				}
 			} else {
-				resp.sendRedirect("index.jsp");
+				resp.sendRedirect("/main");
 			}
 			break;
 
@@ -178,14 +178,10 @@ public class CafeController extends HttpServlet {
 			break;
 		case "/cafeDetail":
 			System.out.println("카페 상세");
-			if (sessionId != null) {
 				map = service.cafeDetail();
 				req.setAttribute("map", map);
 				dis = req.getRequestDispatcher("MainCafe/cafe.jsp");
-				dis.forward(req, resp);
-			} else {
-				resp.sendRedirect("index.jsp");
-			}
+				dis.forward(req, resp);			
 			break;
 		case "/confusionInfo":
 			if (sessionId != null) {
@@ -199,7 +195,7 @@ public class CafeController extends HttpServlet {
 				dis = req.getRequestDispatcher("myPage/cafeMenu/confusion.jsp");
 				dis.forward(req, resp);
 			} else {
-				resp.sendRedirect("index.jsp");
+				resp.sendRedirect("/main");
 			}
 			break;
 		case "/confusionTableChange":
@@ -209,7 +205,7 @@ public class CafeController extends HttpServlet {
 				resp.setContentType("text/html; charset=UTF-8");
 				resp.getWriter().print(new Gson().toJson(map));
 			} else {
-				resp.sendRedirect("index.jsp");
+				resp.sendRedirect("/main");
 			}
 			break;
 		case "/standardChange":
@@ -219,7 +215,7 @@ public class CafeController extends HttpServlet {
 				resp.setContentType("text/html; charset=UTF-8");
 				resp.getWriter().print(new Gson().toJson(map));
 			} else {
-				resp.sendRedirect("index.jsp");
+				resp.sendRedirect("/main");
 			}
 			break;
 		case "/cafeAlarmList":
@@ -230,7 +226,7 @@ public class CafeController extends HttpServlet {
 				dis = req.getRequestDispatcher("myPage/myPageMenu/alerm.jsp");
 				dis.forward(req, resp);
 			} else {
-				resp.sendRedirect("index.jsp");
+				resp.sendRedirect("/main");
 			}
 			break;
 		case "/cafeAlarmDel":
@@ -242,7 +238,7 @@ public class CafeController extends HttpServlet {
 				resp.setContentType("text/html; charset=UTF-8");
 				resp.getWriter().print(new Gson().toJson(map));
 			} else {
-				resp.sendRedirect("index.jsp");
+				resp.sendRedirect("/main");
 			}
 
 			break;
@@ -255,7 +251,7 @@ public class CafeController extends HttpServlet {
 				resp.setContentType("text/html; charset=UTF-8");
 				resp.getWriter().print(new Gson().toJson(map));
 			} else {
-				resp.sendRedirect("index.jsp");
+				resp.sendRedirect("/main");
 			}
 
 			break;

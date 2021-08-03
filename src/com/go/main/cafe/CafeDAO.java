@@ -74,7 +74,7 @@ public class CafeDAO {
 					sql = "INSERT INTO cafeInfo"
 							+ "(cafeKey,ownerNo,cafeName,cafeLocation,cafeAddress,cafePhone,cafeDetail,cafeTime"
 							+ ",parkingCheck,petCheck,childCheck,rooftopCheck,groupCheck,cafeDel,openCheck,conFusion,bHit,cafeNum)"
-							+ "VALUES" + "(?,?,?,?,?,?,?,?,?,?,?,?,?,'N','N','보통',0,cafe_seq.NEXTVAL)";
+							+ "VALUES" + "(?,?,?,?,?,?,?,?,?,?,?,?,?,'N','Y','보통',0,cafe_seq.NEXTVAL)";
 					ps = conn.prepareStatement(sql);
 					ps.setString(1, sessionId);
 					ps.setString(2, dto.getOnnerNo());
@@ -596,6 +596,7 @@ public class CafeDAO {
 			ps.setString(1, cafeKey);
 			rs = ps.executeQuery();
 			while (rs.next()) {
+				dto = new CafeDTO();
 				dto.setProductName(rs.getString("productName"));
 				dto.setPrice(rs.getInt("price"));
 				dto.setExplanation(rs.getString("explanation"));

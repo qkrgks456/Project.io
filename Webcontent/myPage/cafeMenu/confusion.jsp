@@ -12,7 +12,7 @@
 <!-- css cdn -->
 <jsp:include page="/assets/css/csscdn.jsp"></jsp:include>
 <!-- main css 추가 -->
-<link href="/Project/assets/css/main.css?ver=19" rel="stylesheet">
+<link href="/Project/assets/css/main.css?ver=56" rel="stylesheet">
 <title>카페</title>
 </head>
 <body>

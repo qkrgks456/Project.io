@@ -2,6 +2,7 @@ $(document).ready(function() {
 
 	/* 등록 ajax */
 	$('#cafeCommentBtn').click(function() {
+	console.log("안녕");
 		var commentContent = $('#commentContent').val();
 		if (commentContent.trim() != "") {
 			$('#commentContent').removeClass('is-invalid');

@@ -13,6 +13,7 @@ public class CafeDTO {
 	private int cafeCurrentTable;
 	private int cafeTotalTable;
 	private boolean cafeCheck;
+	private int goodCount;
 	private int bHit;
 	private String commentNo;
 	private String memberKey;
@@ -235,6 +236,12 @@ public class CafeDTO {
 	}
 	public void setAlarmContent(String alarmContent) {
 		this.alarmContent = alarmContent;
+	}
+	public int getGoodCount() {
+		return goodCount;
+	}
+	public void setGoodCount(int goodCount) {
+		this.goodCount = goodCount;
 	}
 	
 }
