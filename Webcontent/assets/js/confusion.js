@@ -10,7 +10,7 @@ $(document).ready(function() {
 	})
 
 	// 좌석변경 ajax
-	$(document).on('click', '#tableChange', function() {
+	$(document).on('click','#tableChange', function() {
 		if ($('#cafeTotalTable').val().trim() == "") {
 			$('#cafeTotalTable').addClass("is-invalid");
 		}

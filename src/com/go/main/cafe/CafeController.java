@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-@WebServlet({ "/","/cafewrite", "/cafeInfoMyPage", "/ownerCheck", "/cafeUpdate", "/cafeInputCheck", "/businessCheck",
+@WebServlet({"/cafewrite", "/cafeInfoMyPage", "/ownerCheck", "/cafeUpdate", "/cafeInputCheck", "/businessCheck",
 		"/businessChange", "/cafeDel", "/cafeExist", "/cafeList", "/cafeDetail", "/confusionInfo",
 		"/confusionTableChange", "/standardChange", "/cafeAlarmList", "/cafeAlarmDel", "/realTimeAlarm" })
 public class CafeController extends HttpServlet {
@@ -35,10 +35,6 @@ public class CafeController extends HttpServlet {
 		HttpSession session = req.getSession();
 		String sessionId = (String) session.getAttribute("loginId");
 		switch (addr) {
-		case "/":
-			System.out.println("메인가나");
-			resp.sendRedirect("index.jsp");
-			break;
 		case "/cafeExist":
 			if (sessionId != null) {
 				check = service.cafeExist();
