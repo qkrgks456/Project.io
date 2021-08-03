@@ -1,11 +1,11 @@
 package com.go.main.cafe;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 
 public class CafeService {
 	HttpServletRequest req = null;
@@ -98,10 +98,10 @@ public class CafeService {
 		String businessUserId = req.getParameter("businessUserId");
 		String businessUserPw = req.getParameter("businessUserPw");
 		String businessNumber = req.getParameter("businessNumber");
-		System.out.println(businessUserId+ " "+businessUserPw +" "+ businessNumber);
-		return dao.businessCheck(businessUserId,businessUserPw,businessNumber);
+		System.out.println(businessUserId + " " + businessUserPw + " " + businessNumber);
+		return dao.businessCheck(businessUserId, businessUserPw, businessNumber);
 	}
-	
+
 // 없는 기능
 //	public int businessChange() {
 //		String ownerNo = req.getParameter("ownerNo");
@@ -111,8 +111,9 @@ public class CafeService {
 	// 카페이미지 블라인드
 	public int cafeDel() {
 		dao = new CafeDAO();
-		return dao.cafeDel((String)req.getSession().getAttribute("loginId"));
+		return dao.cafeDel((String) req.getSession().getAttribute("loginId"));
 	}
+
 	// 카페존재여부
 	public boolean cafeExist() {
 		dao = new CafeDAO();
@@ -120,13 +121,14 @@ public class CafeService {
 		dao.resClose();
 		return check;
 	}
+
 	// 카페리스트
 	public HashMap<String, Object> cafeList() {
 		dao = new CafeDAO();
 		String page = req.getParameter("page");
 		System.out.println("page : " + page);
-		if(page == null) {
-			page= "1";
+		if (page == null) {
+			page = "1";
 		}
 		return dao.cafeList(Integer.parseInt(page));
 	}
@@ -138,15 +140,16 @@ public class CafeService {
 		String cafeKey = req.getParameter("cafeKey");
 		dao = new CafeDAO();
 		HashMap<String, Object> map = null;
+		HashMap<String, Object> resultMap = null;
 		String page = req.getParameter("page");
 		System.out.println("page : " + page);
-		if(page == null) {
-			page= "1";
+		if (page == null) {
+			page = "1";
 		}
 		try {
 			dao.conn.setAutoCommit(false);
 			if (dao.upHit(cafeKey) > 0) {// 조회수 올리기
-			map = dao.cafeDetail(cafeKey,Integer.parseInt(page),sessionId);// 상세보기
+				map = dao.cafeDetail(cafeKey, Integer.parseInt(page), sessionId);// 상세보기
 			}
 			if (map == null) {// commit || rollback
 				dao.conn.rollback();
@@ -156,19 +159,19 @@ public class CafeService {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			dao.resClose();
 		}
-		return map;
+		resultMap = dao.productList(map, cafeKey);
+		dao.resClose();
+		return resultMap;
 	}
 
 	public HashMap<String, Object> confusionTableChange() {
 		HttpSession session = req.getSession();
 		String sessionId = (String) session.getAttribute("loginId");
-		int cafeTotalTable = Integer.parseInt(req.getParameter("cafeTotalTable"));   
+		int cafeTotalTable = Integer.parseInt(req.getParameter("cafeTotalTable"));
 		int cafeCurrentTable = Integer.parseInt(req.getParameter("cafeCurrentTable"));
 		dao = new CafeDAO();
-		return dao.confusionTableChange(sessionId,cafeTotalTable,cafeCurrentTable);
+		return dao.confusionTableChange(sessionId, cafeTotalTable, cafeCurrentTable);
 	}
 
 	public HashMap<String, Object> confusionInfo() {
@@ -181,16 +184,51 @@ public class CafeService {
 	public HashMap<String, Object> standardChange() {
 		HttpSession session = req.getSession();
 		String sessionId = (String) session.getAttribute("loginId");
-		int leisurely = Integer.parseInt(req.getParameter("leisurely"));   
+		int leisurely = Integer.parseInt(req.getParameter("leisurely"));
 		int normal = Integer.parseInt(req.getParameter("normal"));
 		int congest = Integer.parseInt(req.getParameter("congest"));
 		dao = new CafeDAO();
-		return dao.standardChange(sessionId,leisurely,normal,congest);
+		return dao.standardChange(sessionId, leisurely, normal, congest);
 	}
 
+
+	public ArrayList<CafeDTO> cafeAlarmList() {
+		HttpSession session = req.getSession();
+		String sessionId = (String) session.getAttribute("loginId");
+		dao = new CafeDAO();
+		ArrayList<CafeDTO> cafeAlarmList = dao.cafeAlarmList(sessionId);
+		dao.resClose();
+		return cafeAlarmList;
+	}
+
+	public ArrayList<CafeDTO> cafeAlarmDel() {
+		ArrayList<CafeDTO> cafeAlarmList = null;
+		HttpSession session = req.getSession();
+		String sessionId = (String) session.getAttribute("loginId");
+		ArrayList<Integer> cafeAlarmDelNumArr = new ArrayList<Integer>();
+		String[] cafeAlarmDelNum = req.getParameterValues("cafeAlarmDelNum[]");
+		for (String num : cafeAlarmDelNum) {
+			cafeAlarmDelNumArr.add(Integer.parseInt(num));
+		}
+		dao = new CafeDAO();
+		suc = dao.cafeAlarmDel(cafeAlarmDelNumArr);
+		if (suc > 0) {
+			cafeAlarmList = dao.cafeAlarmList(sessionId);
+		}
+		dao.resClose();
+		return cafeAlarmList;
+	}
+	
 	public HashMap<String, Object> main() {
 		dao = new CafeDAO();
 		return null;
+	}
+
+	public boolean realTimeAlarm() {
+		HttpSession session = req.getSession();
+		String sessionId = (String) session.getAttribute("loginId");
+		dao = new CafeDAO();
+		return dao.realTimeAlarm(sessionId);
 	}
 
 }

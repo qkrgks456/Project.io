@@ -15,104 +15,6 @@
 <link href="/Project/assets/css/main.css?ver=65" rel="stylesheet">
 <title>카페</title>
 </head>
-<style>
-* {
-	box-sizing: border-box;
-}
-
-.slider {
-	width: 200px;
-	border-radius: 10px;
-	overflow: hidden;
-}
-
-.slides {
-	display: flex;
-	overflow-x: auto;
-	/* overflow: hidden; */
-	scroll-snap-type: x mandatory;
-	scroll-behavior: smooth;
-	-webkit-overflow-scrolling: touch;
-}
-
-.slides::-webkit-scrollbar {
-	width: 10px;
-	height: 10px;
-}
-
-.slides::-webkit-scrollbar-thumb {
-	background: #343a40;
-	border-radius: 10px;
-}
-
-.slides::-webkit-scrollbar-track {
-	background: transparent;
-}
-
-.slides>div {
-	scroll-snap-align: start;
-	flex-shrink: 0;
-	width: 200px;
-	height: 200px;
-	margin-right: 50px;
-	border-radius: 10px;
-	overflow: hidden;
-	background: #eee;
-	transform-origin: center center;
-	transform: scale(1);
-	transition: transform 0.5s;
-	position: relative;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 100px;
-}
-
-.author-info {
-	background: rgba(0, 0, 0, 0.75);
-	color: white;
-	padding: 0.75rem;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	width: 100%;
-	margin: 0;
-}
-
-.author-info a {
-	color: white;
-}
-
-.slider>img {
-	object-fit: cover;
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-}
-
-.slider>a {
-	display: inline-flex;
-	width: 1.5rem;
-	height: 1.5rem;
-	background: #eee;
-	text-decoration: none;
-	align-items: center;
-	justify-content: center;
-	border-radius: 50%;
-	margin: 0 0 0.5rem 0;
-	position: relative;
-}
-
-.slider>a:active {
-	top: 1px;
-}
-
-.slider>a:focus {
-	background: #000;
-}
-</style>
 <body>
 	<div class="wrap">
 		<!-- 상단 메뉴바 -->
@@ -310,10 +212,11 @@
 					</div>
 				</div>
 				<div>
-					<h3 class="fw-bold">대표메뉴</h3>
+					<h3 class="fw-bold">메뉴</h3>
 					<hr />
-					<!-- 이미지 슬라이드 -->
+					
 					<div class="container px-5 my-2">
+						<c:if test="${map.productList[0].productName ne null}">
 						<table class="table table-hover mt-2">
 							<thead class="">
 								<tr>
@@ -324,22 +227,25 @@
 								</tr>
 							</thead>
 							<tbody>
+							<c:forEach items="${map.productList}" var="productLists">
 								<tr class="">
-									<td><img src="/Project/assets/img/12.jpg" class="rounded"
+									<td><img src="/photo/${productLists.newFileName}" class="rounded"
 										style="width: 80px; height: 80px; object-fit: cover;" /></td>
-									<td class="align-middle">상품명</td>
-									<td class="align-middle">상품설명</td>
-									<td class="align-middle">가격</td>
+									<td class="align-middle">${productLists.productName}</td>
+									<td class="align-middle">${productLists.explanation}</td>
+									<td class="align-middle">${productLists.price}</td>
 								</tr>
+							</c:forEach>
 							</tbody>
 						</table>
+						</c:if>
 					</div>
 				</div>
 				<div>
 					<h3 class="fw-bold">판매상품</h3>
 					<hr />
-					<!-- 이미지 슬라이드 -->
 					<div class="container px-5 my-2">
+					<c:if test="${map.sellProductList[0].productName ne null}">
 						<table class="table table-hover mt-2">
 							<thead class="">
 								<tr>
@@ -351,20 +257,23 @@
 								</tr>
 							</thead>
 							<tbody>
+							<c:forEach items="${map.sellProductList}" var="sellProductLists">
 								<tr class="">
-									<td><img src="/Project/assets/img/12.jpg" class="rounded"
+									<td><img src="/photo/${sellProductList.newFileName}" class="rounded"
 										style="width: 80px; height: 80px; object-fit: cover;" /></td>
-									<td class="align-middle">상품명</td>
-									<td class="align-middle">상품설명</td>
-									<td class="align-middle">가격</td>
+									<td class="align-middle">${sellProductList.productName}</td>
+									<td class="align-middle">${sellProductList.explanation}</td>
+									<td class="align-middle">${sellProductList.price}</td>
 									<td class="align-middle">
 										<div class="d-grid gap-2 col-6 mx-auto mt-1">
-											<a class="btn btn-secondary btn-sm">상세보기</a>
+											<a href="${sellProductList.productId}"class="btn btn-secondary btn-sm">상세보기</a>
 										</div>
 									</td>
 								</tr>
+							</c:forEach>
 							</tbody>
 						</table>
+						</c:if>
 					</div>
 				</div>
 				<h3 id="comments" class="fw-bold mt-3">댓글</h3>
@@ -457,7 +366,7 @@
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=15"></script>
 	<!-- cafe.js 추가 -->
-	<script src="/Project/assets/js/cafe.js?var=95"></script>
+	<script src="/Project/assets/js/cafe.js?var=45"></script>
 	<!-- 카카오맵 api 추가 -->
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=96f67dd6c088728e30743d7db32a6789&libraries=services"></script>

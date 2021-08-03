@@ -1,6 +1,7 @@
 package com.go.main.cafe;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
@@ -13,9 +14,9 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-@WebServlet({"/cafewrite", "/cafeInfoMyPage", "/ownerCheck", "/cafeUpdate", "/cafeInputCheck", "/businessCheck",
-		"/businessChange", "/cafeDel", "/cafeExist", "/cafeList", "/cafeDetail","/confusionInfo","/confusionTableChange",
-		"/standardChange"})
+@WebServlet({ "/","/cafewrite", "/cafeInfoMyPage", "/ownerCheck", "/cafeUpdate", "/cafeInputCheck", "/businessCheck",
+		"/businessChange", "/cafeDel", "/cafeExist", "/cafeList", "/cafeDetail", "/confusionInfo",
+		"/confusionTableChange", "/standardChange", "/cafeAlarmList", "/cafeAlarmDel", "/realTimeAlarm" })
 public class CafeController extends HttpServlet {
 	// 안녕
 	private static final long serialVersionUID = 1L;
@@ -30,92 +31,123 @@ public class CafeController extends HttpServlet {
 		RequestDispatcher dis = null;
 		boolean check = false;
 		CafeService service = new CafeService(req);
+		ArrayList<CafeDTO> cafeAlarmList = null;
+		HttpSession session = req.getSession();
+		String sessionId = (String) session.getAttribute("loginId");
 		switch (addr) {
-		/*
-		 * case "/" : map = service.main(); req.setAttribute("map", map); dis =
-		 * req.getRequestDispatcher("main.jsp"); dis.forward(req, resp); break;
-		 */
+		case "/":
+			System.out.println("메인가나");
+			resp.sendRedirect("index.jsp");
+			break;
 		case "/cafeExist":
-			check = service.cafeExist();
-			System.out.println(check);
-			if (req.getParameter("menu").equals("a")) {
-				req.setAttribute("check", check);
-				dis = req.getRequestDispatcher("myPage/cafeMenu/cafeDrop.jsp");
-				dis.forward(req, resp);
+			if (sessionId != null) {
+				check = service.cafeExist();
+				System.out.println(check);
+				if (req.getParameter("menu").equals("a")) {
+					req.setAttribute("check", check);
+					dis = req.getRequestDispatcher("myPage/cafeMenu/cafeDrop.jsp");
+					dis.forward(req, resp);
+				} else {
+					req.setAttribute("check", check);
+					dis = req.getRequestDispatcher("/confusionInfo");
+					dis.forward(req, resp);
+				}
 			} else {
-				req.setAttribute("check", check);
-				dis = req.getRequestDispatcher("/confusionInfo");
-				dis.forward(req, resp);
+				resp.sendRedirect("index.jsp");
 			}
+
 			break;
 
 		case "/cafeInputCheck":
-			check = service.cafeInputCheck();
-			req.setAttribute("check", check);
-			dis = req.getRequestDispatcher("myPage/cafeMenu/cafeInput/cafeInput.jsp");
-			dis.forward(req, resp);
+			if (sessionId != null) {
+				check = service.cafeInputCheck();
+				req.setAttribute("check", check);
+				dis = req.getRequestDispatcher("myPage/cafeMenu/cafeInput/cafeInput.jsp");
+				dis.forward(req, resp);
+			} else {
+				resp.sendRedirect("index.jsp");
+			}
 			break;
 		case "/cafewrite":
 			System.out.println("카페 등록");
-			suc = service.cafeInput();
-			System.out.println(suc);
-			if (suc > 0) {
-				map = new HashMap<String, Object>();
-				map.put("suc", suc);
-				resp.setContentType("text/html; charset=UTF-8");
-				resp.getWriter().print(new Gson().toJson(map));
+			if (sessionId != null) {
+				suc = service.cafeInput();
+				System.out.println(suc);
+				if (suc > 0) {
+					map = new HashMap<String, Object>();
+					map.put("suc", suc);
+					resp.setContentType("text/html; charset=UTF-8");
+					resp.getWriter().print(new Gson().toJson(map));
+				} else {
+					System.out.println("아따 실패랑게요");
+					map = new HashMap<String, Object>();
+					map.put("suc", suc);
+					resp.setContentType("text/html; charset=UTF-8");
+					resp.getWriter().print(new Gson().toJson(map));
+				}
 			} else {
-				System.out.println("아따 실패랑게요");
-				map = new HashMap<String, Object>();
-				map.put("suc", suc);
-				resp.setContentType("text/html; charset=UTF-8");
-				resp.getWriter().print(new Gson().toJson(map));
+				resp.sendRedirect("index.jsp");
 			}
 			break;
 		case "/ownerCheck":
 			System.out.println("사업자 번호 체크");
-			boolean ownerCheck = service.ownerCheck();
-			map = new HashMap<String, Object>();
-			map.put("businessCheck", true);
-			map.put("ownerCheck", ownerCheck);
-			resp.setContentType("text/html; charset=UTF-8");
-			resp.getWriter().print(new Gson().toJson(map));
+			if (sessionId != null) {
+				boolean ownerCheck = service.ownerCheck();
+				map = new HashMap<String, Object>();
+				map.put("businessCheck", true);
+				map.put("ownerCheck", ownerCheck);
+				resp.setContentType("text/html; charset=UTF-8");
+				resp.getWriter().print(new Gson().toJson(map));
+			} else {
+				resp.sendRedirect("index.jsp");
+			}
 			break;
 
 		case "/cafeInfoMyPage":
 			System.out.println("카페정보");
-			CafeDTO dto = service.cafeInfoMyPage();
-			System.out.println("dto체크 : " + dto);
-			req.setAttribute("dto", dto);
-			dis = req.getRequestDispatcher("myPage/cafeMenu/cafeUpdate/cafeInfo.jsp");
-			dis.forward(req, resp);
+			if (sessionId != null) {
+				CafeDTO dto = service.cafeInfoMyPage();
+				System.out.println("dto체크 : " + dto);
+				req.setAttribute("dto", dto);
+				dis = req.getRequestDispatcher("myPage/cafeMenu/cafeUpdate/cafeInfo.jsp");
+				dis.forward(req, resp);
+			} else {
+				resp.sendRedirect("index.jsp");
+			}
 			break;
 		case "/cafeUpdate":
-			System.out.println("카페정보 업데이트");
-			HttpSession session = req.getSession();
-			String sessionId = (String) session.getAttribute("loginId");
-			suc = service.cafeUpdate();
-			if (suc > 0) {
-				map = new HashMap<String, Object>();
-				map.put("suc", suc);
-				map.put("cafeKey",sessionId);
-				resp.setContentType("text/html; charset=UTF-8");
-				resp.getWriter().print(new Gson().toJson(map));
+			if (sessionId != null) {
+				System.out.println("카페정보 업데이트");
+				suc = service.cafeUpdate();
+				if (suc > 0) {
+					map = new HashMap<String, Object>();
+					map.put("suc", suc);
+					map.put("cafeKey", sessionId);
+					resp.setContentType("text/html; charset=UTF-8");
+					resp.getWriter().print(new Gson().toJson(map));
+				}
+			} else {
+				resp.sendRedirect("index.jsp");
 			}
 			break;
 
 		case "/businessCheck":
 			System.out.println("비즈니스 체크");
-			boolean businessCheck = service.businessCheck();
-			System.out.println(businessCheck);
-			if (businessCheck) {
-				req.setAttribute("businessCheck", businessCheck);
-				dis = req.getRequestDispatcher("myPage/cafeMenu/businessChange/businessChange.jsp");
-				dis.forward(req, resp);
+
+			if (sessionId != null) {
+				boolean businessCheck = service.businessCheck();
+				System.out.println(businessCheck);
+				if (businessCheck) {
+					req.setAttribute("businessCheck", businessCheck);
+					dis = req.getRequestDispatcher("myPage/cafeMenu/businessChange/businessChange.jsp");
+					dis.forward(req, resp);
+				} else {
+					req.setAttribute("businessCheck", businessCheck);
+					dis = req.getRequestDispatcher("myPage/cafeMenu/businessChange/businessChangeCheck.jsp");
+					dis.forward(req, resp);
+				}
 			} else {
-				req.setAttribute("businessCheck", businessCheck);
-				dis = req.getRequestDispatcher("myPage/cafeMenu/businessChange/businessChangeCheck.jsp");
-				dis.forward(req, resp);
+				resp.sendRedirect("index.jsp");
 			}
 			break;
 
@@ -127,12 +159,16 @@ public class CafeController extends HttpServlet {
 
 		case "/cafeDel":
 			System.out.println("카페 삭제 처리(블라인드)");
-			suc = service.cafeDel();
-			if (suc > 0) {
-				map = new HashMap<String, Object>();
-				map.put("suc", suc);
-				resp.setContentType("text/html; charset=UTF-8");
-				resp.getWriter().print(new Gson().toJson(map));
+			if (sessionId != null) {
+				suc = service.cafeDel();
+				if (suc > 0) {
+					map = new HashMap<String, Object>();
+					map.put("suc", suc);
+					resp.setContentType("text/html; charset=UTF-8");
+					resp.getWriter().print(new Gson().toJson(map));
+				}
+			} else {
+				resp.sendRedirect("index.jsp");
 			}
 			break;
 
@@ -146,34 +182,86 @@ public class CafeController extends HttpServlet {
 			break;
 		case "/cafeDetail":
 			System.out.println("카페 상세");
-			map = service.cafeDetail();
-			req.setAttribute("map", map);
-			dis = req.getRequestDispatcher("MainCafe/cafe.jsp");
-			dis.forward(req, resp);
+			if (sessionId != null) {
+				map = service.cafeDetail();
+				req.setAttribute("map", map);
+				dis = req.getRequestDispatcher("MainCafe/cafe.jsp");
+				dis.forward(req, resp);
+			} else {
+				resp.sendRedirect("index.jsp");
+			}
 			break;
 		case "/confusionInfo":
-			check = service.cafeExist();
-			/* check = Boolean.parseBoolean(); */
-			System.out.println(check);
-			System.out.println("혼잡도 현재 상태");
-			map = service.confusionInfo();
-			map.put("check", check);
-			req.setAttribute("map", map);
-			dis = req.getRequestDispatcher("myPage/cafeMenu/confusion.jsp");
-			dis.forward(req, resp);
-			
+			if (sessionId != null) {
+				check = service.cafeExist();
+				/* check = Boolean.parseBoolean(); */
+				System.out.println(check);
+				System.out.println("혼잡도 현재 상태");
+				map = service.confusionInfo();
+				map.put("check", check);
+				req.setAttribute("map", map);
+				dis = req.getRequestDispatcher("myPage/cafeMenu/confusion.jsp");
+				dis.forward(req, resp);
+			} else {
+				resp.sendRedirect("index.jsp");
+			}
 			break;
 		case "/confusionTableChange":
 			System.out.println("혼잡도 테이블 수정");
-			map = service.confusionTableChange();
-			resp.setContentType("text/html; charset=UTF-8");
-			resp.getWriter().print(new Gson().toJson(map));
+			if (sessionId != null) {
+				map = service.confusionTableChange();
+				resp.setContentType("text/html; charset=UTF-8");
+				resp.getWriter().print(new Gson().toJson(map));
+			} else {
+				resp.sendRedirect("index.jsp");
+			}
 			break;
 		case "/standardChange":
 			System.out.println("혼잡도 기준 수정");
-			map = service.standardChange();
-			resp.setContentType("text/html; charset=UTF-8");
-			resp.getWriter().print(new Gson().toJson(map));			
+			if (sessionId != null) {
+				map = service.standardChange();
+				resp.setContentType("text/html; charset=UTF-8");
+				resp.getWriter().print(new Gson().toJson(map));
+			} else {
+				resp.sendRedirect("index.jsp");
+			}
+			break;
+		case "/cafeAlarmList":
+			System.out.println("회원 좋아요 누른 카페에서 알림오면 리스트");
+			if (sessionId != null) {
+				cafeAlarmList = service.cafeAlarmList();
+				req.setAttribute("cafeAlarmList", cafeAlarmList);
+				dis = req.getRequestDispatcher("myPage/myPageMenu/alerm.jsp");
+				dis.forward(req, resp);
+			} else {
+				resp.sendRedirect("index.jsp");
+			}
+			break;
+		case "/cafeAlarmDel":
+			System.out.println("알림삭제");
+			if (sessionId != null) {
+				cafeAlarmList = service.cafeAlarmDel();
+				map = new HashMap<String, Object>();
+				map.put("cafeAlarmList", cafeAlarmList);
+				resp.setContentType("text/html; charset=UTF-8");
+				resp.getWriter().print(new Gson().toJson(map));
+			} else {
+				resp.sendRedirect("index.jsp");
+			}
+
+			break;
+		case "/realTimeAlarm":
+			System.out.println("실시간 알람");
+			if (sessionId != null) {
+				check = service.realTimeAlarm();
+				map = new HashMap<String, Object>();
+				map.put("check", check);
+				resp.setContentType("text/html; charset=UTF-8");
+				resp.getWriter().print(new Gson().toJson(map));
+			} else {
+				resp.sendRedirect("index.jsp");
+			}
+
 			break;
 		}
 	}

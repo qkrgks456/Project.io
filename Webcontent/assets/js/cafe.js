@@ -178,7 +178,7 @@ $(document).ready(function() {
 		content += '<ul id="paginations1" class="pagination justify-content-center">'
 		if (data.startPage != 1) {
 			content += '<li class="page-item"><a class="page-link pageNum"'
-			content += 'title="' + (data.startPage - 1) + '${map.cafeKey}" role="button"'
+			content += 'title="' + (data.startPage - 1) +" "+data.cafeKey+'" role="button"'
 			content += 'aria-label="Previous"> <span aria-hidden="true">&laquo;</span>'
 			content += '</a></li>'
 		}
@@ -193,7 +193,7 @@ $(document).ready(function() {
 		}
 		if (data.totalPage != data.endPage) {
 			content += '<li class="page-item"><a class="page-link pageNum" role="button"'
-			content += 'title="' + (data.endPage + 1) + '" aria-label="Next">'
+			content += 'title="' + (data.endPage + 1)+" "+data.cafeKey+'" aria-label="Next">'
 			content += '<span aria-hidden="true">&raquo;</span>'
 			content += '</a></li>'
 		}

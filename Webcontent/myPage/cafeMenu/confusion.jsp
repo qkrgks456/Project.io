@@ -100,7 +100,7 @@
 								<input id="standardChange" class="btn btn-dark" type="button"
 									value="수정">
 							</div>
-							<div class="text-center mt-2">
+							<div id="explanationBox" class="text-center mt-2">
 								<p>* 잘못된 수치를 넣으실 혼잡도가 수정되지 않습니다</p>
 								<p>0 < (쾌적) < ${map.leisurely} < (보통) < ${map.normal} < (혼잡)
 									< ${map.congest}</p>
@@ -121,7 +121,7 @@
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- confusion.js 추가 -->
-	<script src="/Project/assets/js/confusion.js?var=16"></script>
+	<script src="/Project/assets/js/confusion.js?var=56"></script>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=8"></script>
 </body>

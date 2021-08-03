@@ -32,14 +32,14 @@
 			<div class="row">
 				<div class="d-flex">
 					<p class="fw-bold mt-4 h1">카페정보</p>
-					<div class="col d-flex justify-content-end mt-4">
+				<!-- 	<div class="col d-flex justify-content-end mt-4">
 						<form class="d-inline-flex justify-content-end"
 							style="height: 42px;">
 							<input class="form-control me-1" type="search"
 								placeholder="카페명을 입력해주세요" aria-label="Search">
 							<button class="btn btn-outline-secondary" type="submit">search</button>
 						</form>
-					</div>
+					</div> -->
 				</div>
 				<hr />
 			</div>

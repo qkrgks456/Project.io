@@ -334,7 +334,7 @@ public class CafeDAO {
 		System.out.println(start);
 		System.out.println(end);
 		try {
-			String sql ="SELECT b.cafeKey,b.newfilename,b.cafeName,b.cafeNum,b.cafeLocation,"
+			String sql = "SELECT b.cafeKey,b.newfilename,b.cafeName,b.cafeNum,b.cafeLocation,"
 					+ "b.cafeDetail,b.confusion,b.bHit,c.cafeTotalTable,c.cafeCurrentTable FROM"
 					+ "(SELECT cafeKey,newfilename,cafeName,cafeNum,cafeLocation,cafeDetail,confusion,bHit FROM"
 					+ "(SELECT i.newfilename,c.cafeName,c.cafeNum,c.cafeKey,c.cafeLocation,c.cafeDetail,c.confusion,c.bHit FROM"
@@ -363,7 +363,6 @@ public class CafeDAO {
 				dto.setbHit(rs.getInt("bHit"));
 				dto.setCafeTotalTable(rs.getInt("cafeTotalTable"));
 				dto.setCafeCurrentTable(rs.getInt("cafeCurrentTable"));
-				System.out.println("여기");
 				list.add(dto);
 			}
 			int total = totalCount(); // 총 게시글 수 가져옵시다
@@ -543,6 +542,7 @@ public class CafeDAO {
 		}
 		return map;
 	}
+
 	// 댓글 총개수
 	private int totalComment(String cafeKey) throws SQLException {
 		String sql = "SELECT COUNT(commentNo) FROM cm WHERE division = ? AND commentDel='N'";
@@ -555,6 +555,7 @@ public class CafeDAO {
 		}
 		return total;
 	}
+
 	// 카페정보 총 갯수
 	public int totalCount() throws SQLException {
 		String sql = "SELECT COUNT(cafeKey) FROM cafeInfo";
@@ -566,6 +567,7 @@ public class CafeDAO {
 		}
 		return total;
 	}
+
 	// 조회수
 	public int upHit(String cafeKey) {
 
@@ -581,12 +583,64 @@ public class CafeDAO {
 		}
 		return success;
 	}
+
+	// 상품리스트 담기
+	public HashMap<String, Object> productList(HashMap<String, Object> map, String cafeKey) {
+		ArrayList<CafeDTO> productList = new ArrayList<CafeDTO>();
+		ArrayList<CafeDTO> sellProductList = new ArrayList<CafeDTO>();
+		try {
+			String sql = "SELECT p.productName,p.price,p.explanation,i.newfilename "
+					+ "FROM product p LEFT OUTER JOIN image i ON p.productID = i.division "
+					+ "WHERE delCheck='N' AND selCheck='N' AND p.cafeKey=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, cafeKey);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				dto.setProductName(rs.getString("productName"));
+				dto.setPrice(rs.getInt("price"));
+				dto.setExplanation(rs.getString("explanation"));
+				dto.setNewFileName(rs.getString("newfilename"));
+				productList.add(dto);
+			}
+			sql = "SELECT p.productId,p.productName,p.price,p.explanation,i.newfilename "
+					+ "FROM product p LEFT OUTER JOIN image i ON p.productID = i.division "
+					+ "WHERE delCheck='N' AND selCheck='Y' AND p.cafeKey=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, cafeKey);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				dto.setProductId(rs.getInt("productId"));
+				dto.setProductName(rs.getString("productName"));
+				dto.setPrice(rs.getInt("price"));
+				dto.setExplanation(rs.getString("explanation"));
+				dto.setNewFileName(rs.getString("newfilename"));
+				sellProductList.add(dto);
+			}
+			map.put("productList", productList);
+			map.put("sellProductList", sellProductList);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return map;
+	}
+
 	// 혼잡도 좌석 변경
 	public HashMap<String, Object> confusionTableChange(String sessionId, int cafeTotalTable, int cafeCurrentTable) {
 		int suc = 0;
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<String> goodMemberKey = new ArrayList<String>();
+		String cafeName = "";
 		try {
-			String sql = "SELECT * FROM congestion WHERE cafeKey = ?";
+			//카페이름 가져오기
+			String sql = "SELECT cafeName FROM cafeInfo WHERE cafeKey=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				cafeName = rs.getString("cafeName");
+			}
+			sql = "SELECT * FROM congestion WHERE cafeKey = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, sessionId);
 			rs = ps.executeQuery();
@@ -620,18 +674,72 @@ public class CafeDAO {
 						ps.setString(1, "혼잡");
 						ps.setString(2, sessionId);
 						suc = ps.executeUpdate();
+						if (suc > 0) {
+							sql = "SELECT u.memberKey FROM good g LEFT OUTER JOIN users u "
+									+ "ON u.memberKey=g.memberKey "
+									+ "WHERE g.division=? AND u.congestionCheck='Y'";
+							ps = conn.prepareStatement(sql);
+							ps.setString(1, sessionId);
+							rs = ps.executeQuery();
+							while (rs.next()) {
+								goodMemberKey.add(rs.getString("memberKey"));
+							}
+							for (String memberKey : goodMemberKey) {
+								sql = "INSERT INTO alarm(alarmNum,memberKey,alarmContent,alarmCheck) VALUES(alarm_seq.NEXTVAL,?,?,'N')";
+								ps = conn.prepareStatement(sql);
+								ps.setString(1, memberKey);
+								ps.setString(2, cafeName+"의 혼잡도가 혼잡입니다");
+								ps.executeUpdate();
+							}
+						}
 					} else if (cafeCurrentTable >= leisurely && cafeCurrentTable <= normal) {
 						sql = "UPDATE cafeInfo SET confusion=? WHERE cafeKey =?";
 						ps = conn.prepareStatement(sql);
 						ps.setString(1, "보통");
 						ps.setString(2, sessionId);
 						suc = ps.executeUpdate();
+						if (suc > 0) {
+							sql = "SELECT u.memberKey FROM good g LEFT OUTER JOIN users u "
+									+ "ON u.memberKey=g.memberKey "
+									+ "WHERE g.division=? AND u.congestionCheck='Y'";
+							ps = conn.prepareStatement(sql);
+							ps.setString(1, sessionId);
+							rs = ps.executeQuery();
+							while (rs.next()) {
+								goodMemberKey.add(rs.getString("memberKey"));
+							}
+							for (String memberKey : goodMemberKey) {
+								sql = "INSERT INTO alarm(alarmNum,memberKey,alarmContent,alarmCheck) VALUES(alarm_seq.NEXTVAL,?,?,'N')";
+								ps = conn.prepareStatement(sql);
+								ps.setString(1, memberKey);
+								ps.setString(2, cafeName+"의 혼잡도가 보통입니다");
+								ps.executeUpdate();
+							}
+						}
 					} else if (cafeCurrentTable <= leisurely) {
 						sql = "UPDATE cafeInfo SET confusion=? WHERE cafeKey =?";
 						ps = conn.prepareStatement(sql);
 						ps.setString(1, "쾌적");
 						ps.setString(2, sessionId);
 						suc = ps.executeUpdate();
+						if (suc > 0) {
+							sql = "SELECT u.memberKey FROM good g LEFT OUTER JOIN users u "
+									+ "ON u.memberKey=g.memberKey "
+									+ "WHERE g.division=? AND u.congestionCheck='Y'";
+							ps = conn.prepareStatement(sql);
+							ps.setString(1, sessionId);
+							rs = ps.executeQuery();
+							while (rs.next()) {
+								goodMemberKey.add(rs.getString("memberKey"));
+							}
+							for (String memberKey : goodMemberKey) {
+								sql = "INSERT INTO alarm(alarmNum,memberKey,alarmContent,alarmCheck) VALUES(alarm_seq.NEXTVAL,?,?,'N')";
+								ps = conn.prepareStatement(sql);
+								ps.setString(1, memberKey);
+								ps.setString(2, cafeName+"의 혼잡도가 쾌적입니다");
+								ps.executeUpdate();
+							}
+						}
 					}
 				}
 				if (suc > 0) {
@@ -653,10 +761,12 @@ public class CafeDAO {
 
 		return map;
 	}
+
 	// 혼잡도 정보 나타나기
 	public HashMap<String, Object> confusionInfo(String sessionId) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		try {
+			
 			String sql = "SELECT cafeTotalTable,cafeCurrentTable FROM congestion WHERE cafeKey=?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, sessionId);
@@ -681,12 +791,23 @@ public class CafeDAO {
 		}
 		return map;
 	}
+
 	// 혼잡도 기준 변경
 	public HashMap<String, Object> standardChange(String sessionId, int leisurely, int normal, int congest) {
 		int suc = 0;
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<String> goodMemberKey = new ArrayList<String>();
+		String cafeName = "";
 		try {
-			String sql = "SELECT * FROM congestionStandard WHERE cafeKey = ?";
+			//카페이름 가져오기
+			String sql = "SELECT cafeName FROM cafeInfo WHERE cafeKey=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				cafeName = rs.getString("cafeName");
+			}
+			sql = "SELECT * FROM congestionStandard WHERE cafeKey = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, sessionId);
 			rs = ps.executeQuery();
@@ -720,18 +841,72 @@ public class CafeDAO {
 						ps.setString(1, "혼잡");
 						ps.setString(2, sessionId);
 						suc = ps.executeUpdate();
+						if (suc > 0) {
+							sql = "SELECT u.memberKey FROM good g LEFT OUTER JOIN users u "
+									+ "ON u.memberKey=g.memberKey "
+									+ "WHERE g.division=? AND u.congestionCheck='Y'";
+							ps = conn.prepareStatement(sql);
+							ps.setString(1, sessionId);
+							rs = ps.executeQuery();
+							while (rs.next()) {
+								goodMemberKey.add(rs.getString("memberKey"));
+							}
+							for (String memberKey : goodMemberKey) {
+								sql = "INSERT INTO alarm(alarmNum,memberKey,alarmContent,alarmCheck) VALUES(alarm_seq.NEXTVAL,?,?,'N')";
+								ps = conn.prepareStatement(sql);
+								ps.setString(1, memberKey);
+								ps.setString(2, cafeName+"의 혼잡도가 혼잡입니다");
+								ps.executeUpdate();
+							}
+						}
 					} else if (cafeCurrentTable >= leisurely && cafeCurrentTable <= normal) {
 						sql = "UPDATE cafeInfo SET confusion=? WHERE cafeKey =?";
 						ps = conn.prepareStatement(sql);
 						ps.setString(1, "보통");
 						ps.setString(2, sessionId);
 						suc = ps.executeUpdate();
+						if (suc > 0) {
+							sql = "SELECT u.memberKey FROM good g LEFT OUTER JOIN users u "
+									+ "ON u.memberKey=g.memberKey "
+									+ "WHERE g.division=? AND u.congestionCheck='Y'";
+							ps = conn.prepareStatement(sql);
+							ps.setString(1, sessionId);
+							rs = ps.executeQuery();
+							while (rs.next()) {
+								goodMemberKey.add(rs.getString("memberKey"));
+							}
+							for (String memberKey : goodMemberKey) {
+								sql = "INSERT INTO alarm(alarmNum,memberKey,alarmContent,alarmCheck) VALUES(alarm_seq.NEXTVAL,?,?,'N')";
+								ps = conn.prepareStatement(sql);
+								ps.setString(1, memberKey);
+								ps.setString(2, cafeName+"의 혼잡도가 보통입니다");
+								ps.executeUpdate();
+							}
+						}
 					} else if (cafeCurrentTable <= leisurely) {
 						sql = "UPDATE cafeInfo SET confusion=? WHERE cafeKey =?";
 						ps = conn.prepareStatement(sql);
 						ps.setString(1, "쾌적");
 						ps.setString(2, sessionId);
 						suc = ps.executeUpdate();
+						if (suc > 0) {
+							sql = "SELECT u.memberKey FROM good g LEFT OUTER JOIN users u "
+									+ "ON u.memberKey=g.memberKey "
+									+ "WHERE g.division=? AND u.congestionCheck='Y'";
+							ps = conn.prepareStatement(sql);
+							ps.setString(1, sessionId);
+							rs = ps.executeQuery();
+							while (rs.next()) {
+								goodMemberKey.add(rs.getString("memberKey"));
+							}
+							for (String memberKey : goodMemberKey) {
+								sql = "INSERT INTO alarm(alarmNum,memberKey,alarmContent,alarmCheck) VALUES(alarm_seq.NEXTVAL,?,?,'N')";
+								ps = conn.prepareStatement(sql);
+								ps.setString(1, memberKey);
+								ps.setString(2, cafeName+"의 혼잡도가 쾌적입니다");
+								ps.executeUpdate();
+							}
+						}
 					}
 				}
 			}
@@ -752,5 +927,68 @@ public class CafeDAO {
 			resClose();
 		}
 		return map;
+	}
+
+	public ArrayList<CafeDTO> cafeAlarmList(String sessionId) {
+		ArrayList<CafeDTO> cafeAlarmList = new ArrayList<CafeDTO>();
+		try {
+			String sql = "SELECT * FROM alarm WHERE memberKey = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				sql = "UPDATE alarm SET alarmCheck = 'Y' WHERE memberKey=?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, sessionId);
+				ps.executeUpdate();
+			}
+			sql= "SELECT alarmContent,alarmNum FROM alarm WHERE memberKey=? ORDER BY alarmNum";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			rs= ps.executeQuery();
+			while(rs.next()) {
+				dto = new CafeDTO();
+				dto.setAlarmContent(rs.getString("alarmContent"));
+				dto.setAlarmNum(rs.getInt("alarmNum"));
+				cafeAlarmList.add(dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return cafeAlarmList;
+	}
+
+	public int cafeAlarmDel(ArrayList<Integer> cafeAlarmDelNumArr) {
+		int suc = 0;
+		try {
+			for (Integer alarmNum : cafeAlarmDelNumArr) {
+				String sql = "DELETE FROM alarm WHERE alarmNum=?";
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, alarmNum);
+				suc = ps.executeUpdate();
+			}			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return suc;
+	}
+
+	public boolean realTimeAlarm(String sessionId) {
+		boolean check = false;
+		try {
+			String sql = "SELECT * FROM alarm WHERE memberKey=? AND alarmCheck='N'";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				check = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		return check;
 	}
 }

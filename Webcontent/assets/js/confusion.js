@@ -122,6 +122,11 @@ $(document).ready(function() {
 						content += '<div class="invalid-feedback">숫자를 입력해주세요</div>'
 						$('#congestBox').empty();
 						$('#congestBox').append(content);
+						content = "";			
+						content += 		'<p>* 잘못된 수치를 넣으실 혼잡도가 수정되지 않습니다</p>'
+						content += 		'<p>0 < (쾌적) < '+data.leisurely+' < (보통) < '+data.normal+' < (혼잡) < '+data.congest+' </p>'
+						$('#explanationBox').empty();
+						$('#explanationBox').append(content);
 					}
 				})
 			},

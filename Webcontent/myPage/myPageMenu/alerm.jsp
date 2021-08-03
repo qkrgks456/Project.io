@@ -41,29 +41,22 @@
 				</div>
 				<hr />
 				<!-- 내용시작 -->
-				<div class="cont container w-50">
+				<div id="cafeAlarmBox" class="cont container w-50">
+				<c:if test="${cafeAlarmList[0].alarmContent ne null}">
+				<c:forEach items="${cafeAlarmList}" var="cafeAlarmLists">				
 					<div class="d-flex form-check align-items-center m-0 p-0">
-						<input class="form-check-input me-2" type="checkbox" value=""
-							id="flexCheckChecked">
-						<div class="mt-3 flex-grow-1 alert alert-warning" role="alert">알림
-							예시입니다</div>
-					</div>
-					<div class="d-flex form-check align-items-center m-0 p-0">
-						<input class="form-check-input me-2" type="checkbox" value=""
-							id="flexCheckChecked">
-						<div class="mt-3 flex-grow-1 alert alert-warning" role="alert">알림
-							예시입니다</div>
-					</div>
-					<div class="d-flex form-check align-items-center m-0 p-0">
-						<input class="form-check-input me-2" type="checkbox" value=""
-							id="flexCheckChecked">
-						<div class="mt-3 flex-grow-1 alert alert-warning" role="alert">알림
-							예시입니다</div>
-					</div>
-					<div class="text-center text-muted">등록된 알림이 없습니다</div>
-					<div class="col text-center">
-						<button class="btn btn-dark" type="button">삭제</button>
-					</div>
+						<input class="form-check-input me-2" type="checkbox" value="${cafeAlarmLists.alarmNum}"
+							id="flexCheckChecked" name="cafeAlarmDelNum">
+						<div class="mt-3 flex-grow-1 alert alert-warning" role="alert">${cafeAlarmLists.alarmContent}</div>
+					</div>				
+				</c:forEach>
+				<div class="col text-center">
+						<button id="cafeAlarmDelBtn"class="btn btn-dark" type="button">삭제</button>
+				</div>
+				</c:if>
+				<c:if test="${cafeAlarmList[0].alarmContent eq null}">
+					<div class="text-center text-muted">등록된 알림이 없습니다</div>				
+				</c:if>
 				</div>
 			</div>
 		</div>
@@ -72,6 +65,49 @@
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
+	<script type="text/javascript">
+	$(document).on('click','#cafeAlarmDelBtn',function() {
+		var cafeAlarmDelNum = [];
+		$('input[name="cafeAlarmDelNum"]:checked').each(function(i, element) {
+			cafeAlarmDelNum.push($(this).val());
+		})
+		console.log(cafeAlarmDelNum);
+		$.ajax({
+			type: "POST",//방식
+			url: "/Project/cafeAlarmDel",//주소
+			data: {
+				cafeAlarmDelNum: cafeAlarmDelNum,
+			},
+			dataType: 'JSON',
+			success: function(data) { //성공시
+				console.log(data.cafeAlarmList.length);
+				content="";
+				if(data.cafeAlarmList.length != 0){
+					$.each(data.cafeAlarmList,function(i, item) {
+						content +=	'<div class="d-flex form-check align-items-center m-0 p-0">'
+							content += '<input class="form-check-input me-2" type="checkbox" value="'+item.alarmNum+'"'
+							content +=	' id="flexCheckChecked" name="cafeAlarmDelNum">'
+								content += '<div class="mt-3 flex-grow-1 alert alert-warning" role="alert">'+item.alarmContent+'</div>'
+								content += '</div>'
+					})								
+					content += 	'<div class="col text-center">'
+					content += 	'<button id="cafeAlarmDelBtn"class="btn btn-dark" type="button">삭제</button>'
+					content += 	'</div>'
+					
+				}else{
+					content +='<div class="text-center text-muted">등록된 알림이 없습니다</div>'		
+				}
+
+			$('#cafeAlarmBox').empty();
+			$('#cafeAlarmBox').append(content);
+			},
+			error: function(e) { //실패시
+				console.log(e);
+			}
+		});
+	})
+	
+	</script>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=2"></script>
 </body>

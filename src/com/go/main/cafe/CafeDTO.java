@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CafeDTO {
+	private String alarmContent;
+	private int alarmNum;
+	private int productId;
+	private String productName;
+	private int price;
+	private String explanation;	
 	private int cafeCurrentTable;
 	private int cafeTotalTable;
 	private boolean cafeCheck;
@@ -193,6 +199,42 @@ public class CafeDTO {
 	}
 	public void setCafeCurrentTable(int cafeCurrentTable) {
 		this.cafeCurrentTable = cafeCurrentTable;
+	}
+	public int getProductId() {
+		return productId;
+	}
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public String getExplanation() {
+		return explanation;
+	}
+	public void setExplanation(String explanation) {
+		this.explanation = explanation;
+	}
+	public int getAlarmNum() {
+		return alarmNum;
+	}
+	public void setAlarmNum(int alarmNum) {
+		this.alarmNum = alarmNum;
+	}
+	public String getAlarmContent() {
+		return alarmContent;
+	}
+	public void setAlarmContent(String alarmContent) {
+		this.alarmContent = alarmContent;
 	}
 	
 }

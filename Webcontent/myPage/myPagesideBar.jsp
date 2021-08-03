@@ -15,9 +15,7 @@
 				href="/Project/myPage/myPageMenu/passChange.jsp"
 				style="cursor: pointer;">비밀번호변경</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myPage/myPageMenu/alerm.jsp" style="cursor: pointer;">알림리스트<span
-				id="alertnumsidebar"
-				class="ms-1 badge bg-secondary text-white rounded-pill">1</span></a> <a
+				href="/Project/cafeAlarmList" style="cursor: pointer;">알림리스트</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
 				href="/Project/myPage/myPageMenu/goodCafe.jsp"
 				style="cursor: pointer;">좋아요카페</a> <a
