@@ -245,6 +245,34 @@
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->
+	<script>
+		//이벤트 리스너 등록
+
+		document.addEventListener('DOMContentLoaded', function() {
+			// "선택 상품 삭제" 버튼 클릭
+
+			document.querySelector('.basketrowcmd a:first-child')
+					.addEventListener('click', function() {
+
+						basket.delCheckedItem();
+
+					});
+			// 장바구니 행 "삭제" 버튼 클릭
+
+			document.querySelectorAll('.basketcmd a').forEach(
+
+			function(item) {
+
+				item.addEventListener('click', function() {
+
+					basket.delItem();
+
+				});
+
+			}
+
+			);
+			</script>
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=2"></script>

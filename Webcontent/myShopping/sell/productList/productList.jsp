@@ -4,42 +4,6 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<script type="text/javascript">
-	function setCheckUserList() {
-		
-		//체크된 체크박스 개수구하기
-		console.log("length: "+$("input:checkbos[name=userList]:checked").length);
-	
-		var idList = "";
-		var nameList = "";
-		
-		//체크된 체크박스 가져오기
-		var checkbox=$("input:checkbox[name=userList]:checked");
-		
-		//체크된 체크박스의 값을 반복해 불러오기
-		checkbox.each(function(i){
-			
-			var tr = checkbox.parent().parent()eq(i);
-			var td = tr.children();
-			
-			var name = td.eq(0).text();
-			var userid = td.eq(1).text();
-			
-			nameList +=name+"/";
-			idList +=userid+"/";
-			
-			
-		});
-		
-		nameList = nameList.subString(0,nameList.length-1);
-		idList=idList.substring(0,idList.length-1); //끝에 '/'삭제
-		$("seluserNmList").val(nameList);
-		$("#userIdList").val(idList);
-	
-	}
-
-	
-</script>
 
 <meta charset="utf-8">
 <!-- 부트스트랩 메타태그 -->
@@ -93,50 +57,63 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
-								<th class="align-middle" scope="row"><input type="checkbox"
-									name="seller"></th>
-									<td class="align-middle">상품명</td>
-									<td class="align-middle">상품코드</td>
-								<td class="align-middle">가격</td>
-								<td class="align-middle">수량</td>
+						<tr>
+								<th class="align-middle" scope="row"><div class="check">
+											<input type="checkbox" name="buy" value="262" checked=""
+												onclick="javascript:basket.checkItem();">&nbsp;
+										</div></th>
+									<td class="align-middle">콜롬비아 수프리모</td>
+									<td class="align-middle">30142</td>
+								<td class="align-middle">8,000원</td>
+								<td class="align-middle">87개</td>
 								<td>
 									<div class="d-grid gap-2 col-6 mx-auto mt-1">
-										<a class="btn btn-secondary btn-sm">상세보기</a> <a
+										<button class="btn btn-secondary btn-sm" type="button"
+									onclick="location.href='/Project/myShopping/sell/productInput/productInput.jsp'">상세보기</button>
+									<a href="javascript:void(0)" class="btn btn-secondary btn-sm" type="button"
+												onclick="javascript:basket.delItem();">삭제</a>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<th class="align-middle" scope="row"><div class="check">
+											<input type="checkbox" name="buy" value="261" checked=""
+												onclick="javascript:basket.checkItem();">&nbsp;
+										</div></th>
+								<td class="align-middle">써머 주스잔</td>
+									<td class="align-middle">23123</td>
+								<td class="align-middle">18,000원</td>
+								<td class="align-middle">17개</td>
+								<td>
+									<div class="d-grid gap-2 col-6 mx-auto mt-1">
+										<button class="btn btn-secondary btn-sm" type="button"
+									onclick="location.href='/Project/myShopping/sell/productInput/productInput.jsp'">상세보기</button> <a
 											class="btn btn-secondary btn-sm">삭제</a>
 									</div>
 								</td>
 							</tr>
 							<tr>
-								<th class="align-middle" scope="row"><input type="checkbox"
-									name="seller"></th>
-								<td class="align-middle">상품명</td>
-									<td class="align-middle">상품코드</td>
-								<td class="align-middle">가격</td>
-								<td class="align-middle">수량</td>
+								<th class="align-middle" scope="row"><div class="check">
+											<input type="checkbox" name="buy" value="262" checked=""
+												onclick="javascript:basket.checkItem();">&nbsp;
+										</div></th>
+								<td class="align-middle">과테말라 안티구아</td>
+									<td class="align-middle">30133</td>
+								<td class="align-middle">8,900원</td>
+								<td class="align-middle">53개</td>
 								<td>
 									<div class="d-grid gap-2 col-6 mx-auto mt-1">
-										<a class="btn btn-secondary btn-sm">상세보기</a> <a
-											class="btn btn-secondary btn-sm">삭제</a>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<th class="align-middle" scope="row"><input type="checkbox"
-									name="seller"></th>
-								<td class="align-middle">상품명</td>
-									<td class="align-middle">상품코드</td>
-								<td class="align-middle">가격</td>
-								<td class="align-middle">수량</td>
-								<td>
-									<div class="d-grid gap-2 col-6 mx-auto mt-1">
-										<a class="btn btn-secondary btn-sm">상세보기</a> <a
+										<button class="btn btn-secondary btn-sm" type="button"
+									onclick="location.href='/Project/myShopping/sell/productInput/productInput.jsp'">상세보기</button> <a
 											class="btn btn-secondary btn-sm">삭제</a>
 									</div>
 								</td>
 							</tr>
 						</tbody>
 					</table>
+					<a href="javascript:void(0)" class="btn btn-dark" type="button"
+									onclick="javascript:basket.delCheckedItem();">선택상품삭제</a>
+						
 				</div>
 			</div>
 		</div>
@@ -145,42 +122,41 @@
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<script>
-		$("#selectBtn").click(function() {
-			var rowData = new Array();
-			var tdArr = new Array();
-			var checkbox = $("input[name=user_CheckBox]:checked");
+	<script>
+	//이벤트 리스너 등록
 
-			//체크된 체크박스값 가져오기
-			checkbox.each(function(i) {
+	document.addEventListener('DOMContentLoaded', function() {
 
-				//checkbox.parent():checkbox의 부모는 <td>
-				//checkbox.parent().parent():<td>의 부모이므로 <tr>
+		// "선택 상품 삭제" 버튼 클릭
 
-				var tr = checkbox.parent().parent().eq(i);
-				var td = tr.chidren();
+		document.querySelector('.basketrowcmd a:first-child')
+				.addEventListener('click', function() {
 
-				//체크된 row의 모든 값을 배열에 담기
-				rowData.push(tr.text());
+					basket.delCheckedItem();
 
-				//td.eq(0)은 체크박스 이므로 td.eq(1)의 값부터 가져온다.
+				});
 
-				var no = td.eq(1).text + ", "
-				var userid = td.eq(2).text() + ", ";
-				var name = td.eq(3).text() + ", ";
-				var email = td.eq(4).text() + ", ";
+		document.querySelectorAll('.basketcmd a').forEach(
 
-				//가져온 값을 배열에 담기
-				tdArr.push(no);
-				tdArr.push(userid);
-				tdArr.push(name);
-				tdArr.push(email);
+		function(item) {
+
+			item.addEventListener('click', function() {
+
+				basket.delItem();
 
 			});
 
-			$("#ex3_Result1").html("*체크된 Row의 모든 데이터=" + rowData);
-			$("$ex3_Result2").html(tdArr);
+		}
 
-		});
+		);
+		
+		delItem : function() {
+
+			event.target.parentElement.parentElement.parentElement.remove();
+
+		}
+
+	}
 	</script>
 
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>

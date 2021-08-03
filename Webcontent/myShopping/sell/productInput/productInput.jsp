@@ -64,7 +64,7 @@
 		<!-- 상단 메뉴바 -->
 		<!-- 섹션에 아이디가 있다면 -->
 		<c:if test="${sessionScope.loginId ne null}">
-		
+
 			<jsp:include page="/fixMenu/loginnav.jsp"></jsp:include>
 		</c:if>
 		<!-- 섹션에 아이디가 없다면 -->
@@ -79,7 +79,7 @@
 						class="me-2 btn btn-secondary">
 						<i class="bi bi-text-left"></i>
 					</button>
-					<h2 class="fw-bold my-3">상품 등록</h2>
+					<h2 class="fw-bold my-3">상품 등록 및 수정</h2>
 				</div>
 				<hr />
 				<!-- 사이드 바 메뉴-->
@@ -87,11 +87,20 @@
 
 
 				<div class="container px-4 py-4 my-4 border shadow-lg" id="cont">
-					<h4 class="mb-3 fw-bold">상품 등록</h4>
+					<h4 class="mb-3 fw-bold">상품 등록 및 수정</h4>
 					<hr />
 					<form
 						action="/Project/admin/adminList/adminInputProductList/adminInputProductList.jsp"
 						method="post" class="needs-validation" novalidate>
+						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">카페명</h6>
+						<div class="form-floating col-md-9 mb-3">
+							<input type="text" class="nullchecks nullcheck form-control"
+								id="cafeName" placeholder="키페명"
+								aria-describedby="inputGroupPrepend" required> <label
+								for="validationTooltip04" class="fw-bold">카페명</label>
+							<div class="invalid-feedback">필수 정보입니다</div>
+						</div>
+
 						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">상품명</h6>
 						<div class="form-floating col-md-9 mb-3">
 							<input type="text" class="nullchecks nullcheck form-control"
@@ -123,9 +132,9 @@
 												<td colspan="5" height="25" align="left"><input
 													class="btn btn-secondary btn-sm  type="
 													button" onClick="insRow()" value="추가"> *버튼으로 옵션을
-													추가해주세요
+													추가해주세요</td>
 											</div>
-											</td>
+
 										</tr>
 										<tr>
 											<td height="25">
@@ -148,7 +157,7 @@
 						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">수량</h6>
 						<div class="form-floating col-md-9 mb-3">
 							<input type="text" class="nullchecks nullcheck form-control"
-								id="Quantity" placeholder="수량" required> <label
+								id="productQuantity" placeholder="수량" required> <label
 								for="validationTooltip04" class="fw-bold">수량</label>
 							<div class="invalid-feedback">필수 정보입니다</div>
 						</div>
@@ -157,7 +166,7 @@
 						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">가격</h6>
 						<div class="form-floating col-md-9 mb-3">
 							<input type="text" class="nullchecks nullcheck form-control"
-								id="Price" placeholder="가격" required> <label
+								id="price" placeholder="가격" required> <label
 								for="validationTooltip04" class="fw-bold">가격</label>
 							<div class="invalid-feedback">필수 정보입니다</div>
 						</div>
@@ -198,18 +207,14 @@
 							<div class="d-grid gap-3 d-md-flex justify-content-md-end">
 								<div class="invalid-feedback">필수 동의입니다</div>
 
-								<button class="btn btn-dark type="
-									button" name="checkButton" value=" 확 인 "
-									 disabled>등록</button>
+								<button class="btn btn-dark type=" button" name="checkButton"
+									value=" 확 인 " disabled>등록</button>
 
 								<button class="btn btn-dark me-md-1" type="button"
 									onclick="location.href='/Project/myShopping/sell/productList/productList.jsp'">취소</button>
 							</div>
 						</div>
 					</form>
-
-
-
 				</div>
 			</div>
 		</div>
@@ -227,23 +232,27 @@
 			else
 				frm.checkButton.disabled = true
 		}
-		$(document).ready(function(){
-		    $('#확인').click(function() {
-		        var result = confirm('최종 등록 신청 하시겠습니까?');
-		        if(result) {
-		           //yes
-		            location.href='/Project/myShopping/sell/productList/productUpdateResult.jsp';
-		        } else {
-		           location.href='/Project/index.jsp';
-		        }
-		    });
-		});
+		$(document)
+				.ready(
+						function() {
+							$('#확인')
+									.click(
+											function() {
+												var result = confirm('최종 등록 신청 하시겠습니까?');
+												if (result) {
+													//yes
+													location.href = '/Project/myShopping/sell/productList/productUpdateResult.jsp';
+												} else {
+													location.href = '/Project/index.jsp';
+												}
+											});
+						});
 	</script>
 
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=4"></script>
-<!-- 하단 고정 퀵메뉴 -->
+	<!-- 하단 고정 퀵메뉴 -->
 	<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
 		<jsp:include page="/fixMenu/quickMenu.html"></jsp:include>
 	</c:if>
