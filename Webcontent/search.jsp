@@ -102,7 +102,7 @@ table {
 					<hr />
 				</div>
 				<!-- 검색창 끝 -->
-				<div id="cafebox" >
+				<div id="cafebox" class="visually-hidden">
 						<p class="fw-bold mt-4 h3">카페검색</p>
 				<table class="table table-hover">
 					<thead>
@@ -145,7 +145,7 @@ table {
 				</table>
 				</div>
 
-				<div id="productbox" >
+				<div id="productbox" class="visually-hidden">
 					<p class="fw-bold mt-4 h3 ">상품검색</p>
 					<table class="table table-hover">
 						<thead>
@@ -194,7 +194,7 @@ table {
 </body>
 <script>
 	var param = {};
-
+	cl = "";
 	$("#sbtn").click(function() {
 		if ($("#searchtype").val() == ("searchdefault")) {
 			alert("카테고리를 선택해 주세요.");
@@ -205,22 +205,35 @@ table {
 			alert("검색어를 입력해 주세요.");
 			$("#searchresult").focus();
 			return false;
+		}		
+		cl = $("#searchtype option:selected").val();
+		
+		if($("#searchtype option:selected").val() == ("searchcafename")){
+			$("#productbox").addClass("visually-hidden");
+			$("#cafebox").removeClass("visually-hidden");	
+			SetSearch(cl);
+		}else if($("#searchtype option:selected").val() == ("searchcafeproduct")){
+			$("#cafebox").addClass("visually-hidden");	
+			$("#productbox").removeClass("visually-hidden");
 		}
 
 	});
+	
+	
 
+	
 	$(document).on('change', '#searchtype', function() {
 		param = $("#searchtype option:selected").val(); // title, board_title, reg_id
 		
 		if(param=="searchcafename"){
-			SetSelectBox(param);
 			$("#productbox").addClass("visually-hidden");
 			$("#cafebox").removeClass("visually-hidden");	
+			SetSelectBox(param);
 			
 		}else if(param=="searchcafeproduct"){
-			SetSelectBoxTwo(param);
 			$("#cafebox").addClass("visually-hidden");	
 			$("#productbox").removeClass("visually-hidden");
+			SetSelectBoxTwo(param);
 		}		
 	})
 	
@@ -239,7 +252,6 @@ table {
 											content += '<tr>'
 											content += '<td>'
 											content += '<img src="/photo/'+item.newFileName+'" width="75px"	height="75px" />'
-											console.log("상세보기 :"+ item.cafekey);
 											content += '</td>'
 											content += '<td class="align-middle">'+ item.cafeName + '</td>'
 											content += '<td class="align-middle">'+ item.cafeLocation+ '</td>'
@@ -297,6 +309,54 @@ table {
 						console.log(content);
 						$("#productbody").empty();
 						$("#productbody").append(content);
+
+					},
+					error : function(e) {
+						console.log(e);
+					}
+				});
+
+	};
+	
+	function SetSearch(cl) {
+		$.ajax({    type : 'POST',
+					url : '/Project/serachCafeName',
+					data : {
+						searchtype : param
+					},
+					dataType : 'JSON',
+					success : function(data) {
+						console.log(data);
+						content = "";
+						$.each(data.Alist,function(i, item) {
+											console.log(item.newFileName);
+											content += '<tr>'
+											content += '<td>'
+											content += '<img src="/photo/'+item.newFileName+'" width="75px"	height="75px" />'
+											content += '</td>'
+											content += '<td class="align-middle">'+ item.cafeName + '</td>'
+											content += '<td class="align-middle">'+ item.cafeLocation+ '</td>'
+											content += '<td class="align-middle"><a href="cafeDetail?cafeKey='+ item.cafeKey+ '">상세보기</a></td>'
+
+											if (item.Confusion == '혼잡') {
+												content += '<td style="color: red; font-weight: bold" class="align-middle">'
+														+ item.Confusion
+														+ '</td>'
+											} else if (item.Confusion == '보통') {
+												content += '<td style="color: #ffcc00; font-weight: bold;" class="align-middle">'
+														+ item.Confusion
+														+ '</td>'
+											} else {
+												content += '<td style="color: green; font-weight: bold" class="align-middle">'
+														+ item.Confusion
+														+ '</td>'
+											}
+											content += '</tr>'
+
+										})
+						console.log(content);
+						$("#searchtbody").empty();
+						$("#searchtbody").append(content);
 
 					},
 					error : function(e) {

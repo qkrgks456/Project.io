@@ -39,13 +39,26 @@ public class SearchService {
 	}
 	
 
-	public ArrayList<SearchDTO> namelist(String sresult) throws IOException {
+	public void namelist(String sresult) throws IOException {
 
 		SearchDAO dao = new SearchDAO(req, resp);
 		ArrayList<SearchDTO> namelist = dao.namelist(sresult);
 		System.out.println("찾은 카페 갯수 : " + namelist.size());
-		return namelist;	
+		//return namelist;	
+		if(namelist != null) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("list", namelist);
+			Gson gson = new Gson();
+			resp.setContentType("text/html; charset=UTF-8");//한글 깨짐 방지
+			try {
+				resp.getWriter().println(gson.toJson(map));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
+	
 
 	public ArrayList<SearchDTO> productlist(String sresult) {
 		SearchDAO dao = new SearchDAO(req, resp);

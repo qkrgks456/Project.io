@@ -180,9 +180,7 @@ public class SearchDAO {
 				dto.setCafeName(rs.getString("cafeName"));	
 				dto.setCafeLocation(rs.getString("cafeLocation"));
 				AlistT.add(dto);
-				System.out.println("안녕2");
 			}			
-			System.out.println("DTO 값 받아오나 : " + dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
