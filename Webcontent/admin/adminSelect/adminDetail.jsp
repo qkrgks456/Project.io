@@ -90,7 +90,7 @@
 					<form id="deleteauthorityForm" action="/Project/authorityDelete" method="post">
 					<div class="form-group">
 						<input class = form-control type="hidden" name = "sessionId" id= "sessionId" value="${sessionScope.loginId}">
-						<input class = form-control type="hidden" name = "memberkey" id= "memberkey" value=">${adminDetail.memberkey}">
+						<input class = form-control type="hidden" name = "memberkey" id= "memberkey" value="${adminDetail.dto.memberkey}">
 						<button id="deleteauthority" class="btn btn-dark" type="submit">권한 삭제</button>
 						<button id="deleteauthority" class="btn btn-dark" type="button" onclick ="location.href='admin/adminSelect/adminSearch.jsp'">리스트로</button>
 					</div>

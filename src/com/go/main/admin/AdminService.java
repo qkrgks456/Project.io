@@ -95,4 +95,25 @@ public class AdminService {
 		return map;
 	}
 
+	public ArrayList<AdminDTO> adminSelect() {
+		
+		String adminSearchSelect = req.getParameter("adminSearchSelect");
+		String adminSelect  = req.getParameter("adminSelect");
+		
+		System.out.println("관리자 임명 데이터 확인 " +adminSearchSelect +"/"+ adminSelect );
+		list=dao.adminSelect(adminSearchSelect, adminSelect);
+		dao.resClose();
+		return list;
+	}
+
+	public HashMap<String, Object> memberAppoint() {
+		HashMap<String, Object> map=null;
+		String sessionId = req.getParameter("sessionId");
+		String memberKey = req.getParameter("memberKey");
+		System.out.println("세션값 확인: "+sessionId+"임명할 멤버: "+memberKey);
+		map = dao.memberAppoint(sessionId , memberKey);
+		dao.resClose();
+		return map;
+	}
+
 }

@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet({"/adminMemberList","/adminMemberListDetail","/adminMemberBlackAddPage","/adminMemberBlackMinus","/adminMemberBlackAdd","/adminSearch","/adminDetail"
-		,"/authorityDelete"})
+@WebServlet({"/adminMemberList","/adminMemberListDetail","/adminMemberBlackAddPage","/adminMemberBlackMinus"
+		,"/adminMemberBlackAdd","/adminSearch","/adminDetail","/authorityDelete","/adminSelect","/memberAppoint"})
 public class AdminController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -105,7 +105,7 @@ public class AdminController extends HttpServlet {
 			
 		case "/adminDetail":
 			System.out.println("어드민에서 관리자 상세보기");
-			
+	
 			map = service.adminDetail();
 			req.setAttribute("adminDetail", map);
 			dis = req.getRequestDispatcher("admin/adminSelect/adminDetail.jsp");
@@ -115,10 +115,26 @@ public class AdminController extends HttpServlet {
 		case "/authorityDelete":
 			System.out.println("어드민에서 권한 삭제");
 			map = service.authorityDelete();
+			System.out.println(map.get("memberkey"));
 			req.setAttribute("authority", map);
-			dis = req.getRequestDispatcher("admin/adminSelect/adminDetail.jsp");
+			resp.sendRedirect("/Project/adminDetail?memberkey="+map.get("memberkey")+"&?suc="+map.get("suc"));
+
 			break;
+		case "/adminSelect":
+			System.out.println("어드민에서 관리자 임명");
+			list = service.adminSelect();
+			req.setAttribute("adminSelect", list);
+			dis = req.getRequestDispatcher("admin/adminSelect/adminSelect.jsp");
+			dis.forward(req, resp);
+			break;
+		case "/memberAppoint":
+			System.out.println("일반회원 부관리자 임명");
+			map = service.memberAppoint();
+			req.setAttribute("adminSearchSelect", map.get("adminSearchSelect"));
+			req.setAttribute("adminSelect", map.get("memberkey"));
+			dis = req.getRequestDispatcher("adminSelect");
 			
+			break;
 		}
 		
 		

@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -20,7 +20,6 @@ public class AdminDAO {
 
 	AdminDTO dto = null;
 	ArrayList<AdminDTO> list = null;
-	List<AdminDTO> dtoList=null;
 	String sql = "";
 	int success = 0;
 
@@ -170,12 +169,13 @@ public class AdminDAO {
 
 	public ArrayList<AdminDTO> adminSearch() {
 		System.out.println("관리자 조회 DAO");
-		sql = "SELECT memberKey, name, email, gender, authority FROM users WHERE authority = ? ";
+		sql = "SELECT memberKey, name, email, gender, authority FROM users WHERE authority = ? OR authority=? ";
 		ArrayList<AdminDTO> list = new ArrayList<AdminDTO>();
 		try {
 			ps = conn.prepareStatement(sql);
 			/* ps.setString(1, "판매자"); */
 			ps.setString(1, "일반");
+			ps.setString(2, "부관리자");
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				dto = new AdminDTO();
@@ -197,7 +197,10 @@ public class AdminDAO {
 
 	public HashMap<String, Object> adminDetail(String memberkey, String sessionId) {
 		System.out.println("어드민에서 관리자 상세보기 DAO연결:" +memberkey+"/로그인한 관리자: " + sessionId );
+
 		HashMap<String,Object> map = new HashMap<String,Object>();
+		//임시 관리자 아이디
+		String sessionId2 = "sunwoolee1";
 		sql = "SELECT memberKey,name,email,address,authority FROM users WHERE memberKey = ?";
 		try {
 			ps=conn.prepareStatement(sql);
@@ -216,11 +219,10 @@ public class AdminDAO {
 			success = 0;
 			try {
 				ps = conn.prepareStatement(sql);
-				ps.setString(1, sessionId);
+				ps.setString(1, sessionId2);
 				rs = ps.executeQuery();
 				if(!rs.next()) {
 					System.out.println("관리자 권한이 없습니다.");
-					
 				}
 				else {
 					System.out.println("관리자 권한 확인완료");
@@ -243,11 +245,14 @@ public class AdminDAO {
 	public HashMap<String, Object> authorityDelete(String memberkey, String sessionId) {
 		System.out.println("어드민 관리자 삭제값 조회할 id: " + memberkey+"/로그인한 관리자: " + sessionId );
 		HashMap<String,Object> map = new HashMap<String,Object>();
+		String sessionId2 = "sunwoolee1";
+		int delauthority =0;
+		int delcheck = 0;
 		sql = "SELECT * FROM users WHERE authority = '최고관리자' AND memberkey = ? ";
 		success = 0;
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, sessionId);
+			ps.setString(1, sessionId2);
 			rs = ps.executeQuery();
 			if(!rs.next()) {
 				System.out.println("관리자 권한이 없습니다.");
@@ -255,17 +260,130 @@ public class AdminDAO {
 			else {
 				System.out.println("관리자 권한 확인완료");
 				success = 1;
-			}
+				
+					sql = "SELECT authority from users where memberkey= ?";
+		
+						ps = conn.prepareStatement(sql);
+						ps.setString(1, memberkey);
+						rs=ps.executeQuery();
+						if(rs.next()) {
+							String authority = rs.getString("authority");
+							if(authority.equals("일반")) {
+								delauthority = 0;
+							}
+							else if(authority.equals("부관리자")) {
+								delauthority = 1;
+								sql="UPDATE users set authority = '일반' where memberkey=?";
+								ps = conn.prepareStatement(sql);
+								ps.setString(1, memberkey);
+								delcheck = ps.executeUpdate();
+								if(delcheck==1) {System.out.println(memberkey+ "가 부관리자->일반회원으로 수정");
+							}
+				
+							}
+						}
+					
+				}
+			
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
 		}
-		map.put("suc", success);
 		
+		
+		 
+			
+	
+		
+		map.put("suc", success);
+		map.put("memberkey", memberkey);
+		map.put("delauthority", delauthority);
+		map.put("delcheck", delcheck);
 		return map;
 		
 	}
+
+	public ArrayList<AdminDTO> adminSelect(String adminSearchSelect, String adminSelect) {
+		System.out.println("관리자 임명 데이터 dao전달확인: "+"검색메뉴: "+adminSearchSelect+"/"+"검색내용: "+adminSelect);
+		String session2 = "sunwoolee1";
+		list = new ArrayList<AdminDTO>();
+		
+		switch(adminSearchSelect) {
+		case "memberkey":
+			sql = "SELECT memberkey, name, email, gender from users WHERE authority = '일반' AND memberkey LIKE ? ";
+			break;
+		case "name":
+			sql = "SELECT memberkey, name, email, gender from users WHERE authority = '일반' AND name LIKE ? ";
+			break;
+		case "email":
+			sql = "SELECT memberkey, name, email, gender from users WHERE authority = '일반' AND email LIKE ? ";
+			break;
+		}
+		
+		//목록조회
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, "%" + adminSelect + "%");
+			rs = ps.executeQuery();
+			//목록받기
+			while(rs.next()) {
+				dto = new AdminDTO();
+				dto.setMemberkey(rs.getString("memberkey"));
+				dto.setName(rs.getString("name"));
+				dto.setEmail(rs.getString("email"));
+				dto.setGender(rs.getString("gender"));
+				System.out.println("어드민 셀렉트 dao 받아온 값 출력: "+ dto.getMemberkey()+"/"+dto.getName()+"/"+dto.getEmail()+"/"+dto.getGender());
+				list.add(dto);
+			}
+			//최고 관리자가 아닐때
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+		
+	}
 	
+
+	 
+
+	public HashMap<String, Object> memberAppoint(String sessionId, String memberKey) {
+		System.out.println("임명 세션, memberkey값 dao도착 확인: "+sessionId+"/"+ memberKey);
+		//최고관리자가 아니라면 x 1값을 반환하여 권한없음 표시, 최고관리자라면 내용 진행 0반환
+ 		success=0;
+		sql = "SELECT * FROM users WHERE authority='최고관리자' AND memberkey = ? "; 
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		//관리자 구분값
+		//임의의 최고관리자
+		String session2 = "sunwoolee1";
+		try {
+			ps = conn.prepareStatement(sql); 
+			ps.setString(1, session2); 
+			rs = ps.executeQuery(); 
+			//최고 관리자일때 
+			if(rs.next()) {
+				sql = "UPDATE users set authority = '부관리자' where memberkey=?";
+				ps.setString(1, memberKey);
+				success=ps.executeUpdate();
+				success=0;
+			}
+			else if(!rs.next()) {
+				success=1;
+			}
+			map.put("suc",success);
+			map.put("memberKey",memberKey);
+			map.put("adminSearchSelect","memberkey");
+		}
+		
+		
+		
+		catch (SQLException e) { 
+		e.printStackTrace(); 
+		}
+		return map;
+	}
 
 
 }
