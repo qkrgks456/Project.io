@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class CafeDTO {
+	private int cafeCurrentTable;
+	private int cafeTotalTable;
+	private boolean cafeCheck;
 	private int bHit;
 	private String commentNo;
 	private String memberKey;
@@ -172,6 +175,24 @@ public class CafeDTO {
 	}
 	public void setbHit(int bHit) {
 		this.bHit = bHit;
+	}
+	public boolean isCafeCheck() {
+		return cafeCheck;
+	}
+	public void setCafeCheck(boolean cafeCheck) {
+		this.cafeCheck = cafeCheck;
+	}
+	public int getCafeTotalTable() {
+		return cafeTotalTable;
+	}
+	public void setCafeTotalTable(int cafeTotalTable) {
+		this.cafeTotalTable = cafeTotalTable;
+	}
+	public int getCafeCurrentTable() {
+		return cafeCurrentTable;
+	}
+	public void setCafeCurrentTable(int cafeCurrentTable) {
+		this.cafeCurrentTable = cafeCurrentTable;
 	}
 	
 }

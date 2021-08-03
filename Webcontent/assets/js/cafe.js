@@ -69,7 +69,7 @@ $(document).ready(function() {
 			}
 		});
 	})
-	
+
 	/* 업데이트 ajax */
 	$(document).on('click', '.commentUpdateContentBtn', function() {
 		var commentNo = $(this).attr('title');
@@ -77,27 +77,27 @@ $(document).ready(function() {
 		var commentUpdateContent = $(this).parent().prev().children('.commentUpdateContent').val();
 		console.log(commentUpdateContent);
 		if (commentUpdateContent.trim() != "") {
-		$.ajax({
-			type: "POST",//방식
-			url: "/Project/cafeCommentUpdate",//주소
-			data: {
-				commentUpdateContent: commentUpdateContent,
-				commentNo: commentNo,
-				cafeKey: cafeKey,
-			},
-			dataType: 'JSON',
-			success: function(data) { //성공시
-				commentList(data);
-			},
-			error: function(e) { //실패시
-				console.log(e);
-			}
-		});
-		}else{
+			$.ajax({
+				type: "POST",//방식
+				url: "/Project/cafeCommentUpdate",//주소
+				data: {
+					commentUpdateContent: commentUpdateContent,
+					commentNo: commentNo,
+					cafeKey: cafeKey,
+				},
+				dataType: 'JSON',
+				success: function(data) { //성공시
+					commentList(data);
+				},
+				error: function(e) { //실패시
+					console.log(e);
+				}
+			});
+		} else {
 			$(this).parent().prev().children('.commentUpdateContent').addClass('is-invalid');
 		}
 	})
-	
+
 	/* 수정 누를시 폼 변환 */
 	$('#commentLists').on('click', '.commentUpdateBtn', function() {
 		$(this).parents('.updateCheck').addClass("visually-hidden");
@@ -108,11 +108,11 @@ $(document).ready(function() {
 		$(this).parents('.updateForm').prev('.updateCheck').removeClass("visually-hidden");
 	})
 	/* 좋아요 버튼 누를시 크기 변경 색상변경 */
-	
+
 	$('#good').mousedown(function() {
 		$('#goodicon').css("font-size", "1.8rem");
 	})
-	
+
 
 	/* 댓글 버튼 누를시 크기 변경 */
 	$('#commenticon').mousedown(function() {
@@ -128,13 +128,13 @@ $(document).ready(function() {
 			scrollTop: $('#comments').offset().top
 		}, 0);
 	})
-	
+
 	/* 댓글 리스트 메서드 */
-	function commentList(data){
+	function commentList(data) {
 		console.log(data);
 		var content = "";
 		var sessionId = data.sessionId;
-	
+
 		$.each(data.list, function(i, item) {
 			var check = sessionId == item.memberKey;
 			content += "<div class='updateCheck'>"
@@ -167,7 +167,7 @@ $(document).ready(function() {
 		});
 		$('#commentLists').empty();
 		$('#commentLists').append(content);
-		
+
 		content = "";
 		content += "<i id='commenticons' class='bi bi-chat-square-text-fill mt-1' style='font-size: 2.0rem;'></i>"
 		content += "<p  class='ms-2 mt-3 fw-bold'>댓글(" + data.commentCount + ")</p>"
@@ -201,5 +201,76 @@ $(document).ready(function() {
 		$('#paginations').empty();
 		$('#paginations').prepend(content);
 	}
+	// 변수 가져오기
+	var goodCheckBtn = $('#goodicon').attr("title");
+	var cafeKey = $('#cafeCommentBtn').attr("title");
+	// 좋아요 체크
+	if (goodCheckBtn == 'false') {
+		$('#goodicon').css("font-size", "2.0rem");
+		$('#goodicon').css("color", "#0d6efd");
+		$('#goodtext').addClass("text-primary");
+	} else {
+		$('#goodicon').css("font-size", "2.0rem");
+		$('#goodicon').css("color", "black");
+		$('#goodtext').removeClass("text-primary");
+	}
+	// 좋아요 ajax
+	$('#good').mouseup(function() {
+		if (goodCheckBtn == 'true') {
+			$.ajax({
+				type: "POST",//방식
+				url: "/Project/cafeGood",//주소
+				data: {
+					goodCheckBtn: goodCheckBtn,
+					cafeKey: cafeKey,
+				},
+				dataType: 'JSON',
+				success: function(data) { //성공시
+
+					console.log(data);
+					goodCheckBtn = 'false';
+					content = "";
+					content += '<i id="goodicon" class="bi bi-hand-thumbs-up-fill" title="' + goodCheckBtn + '"';
+					content += ' style="font-size: 2.0rem;"></i>';
+					content += '<p id="goodtext" class="ms-2 mt-3 fw-bold">좋아요(' + data.cafeGoodCount + ')</p>'
+					$('#good').empty();
+					$('#good').append(content);
+					$('#goodicon').css("color", "#0d6efd");
+					$('#goodtext').addClass("text-primary");
+				},
+				error: function(e) { //실패시
+					console.log(e);
+				}
+			})
+
+		} else {
+
+			$.ajax({
+				type: "POST",//방식
+				url: "/Project/cafeGood",//주소
+				data: {
+					goodCheckBtn: goodCheckBtn,
+					cafeKey: cafeKey,
+				},
+				dataType: 'JSON',
+				success: function(data) { //성공시
+					console.log(data);
+					goodCheckBtn = 'true';
+					content = "";
+					content += '<i id="goodicon" class="bi bi-hand-thumbs-up-fill" title="' + goodCheckBtn + '"';
+					content += ' style="font-size: 2.0rem;"></i>';
+					content += '<p id="goodtext" class="ms-2 mt-3 fw-bold">좋아요(' + data.cafeGoodCount + ')</p>'
+					$('#good').empty();
+					$('#good').append(content);
+					$('#goodicon').css("color", "black");
+					$('#goodtext').removeClass("text-primary");
+
+				},
+				error: function(e) { //실패시
+					console.log(e);
+				}
+			})
+		}
+	})
 
 })

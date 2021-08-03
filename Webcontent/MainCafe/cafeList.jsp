@@ -46,7 +46,7 @@
 			<div class="row row-cols-1 row-cols-md-4 g-4">
 				<c:forEach items="${map.list}" var="map" varStatus="status">
 					<div class="col">
-						<div class="card showEvent" style="opacity:0;" title="${status.index}">
+						<div class="card showEvent" style="opacity:0;">
 							<a href="/Project/cafeDetail?cafeKey=${map.cafeKey}"> <img
 								src="/photo/${map.newFileName}" class="card-img-top" alt="...">
 							</a>
@@ -59,7 +59,7 @@
 										<span data-bs-toggle="tooltip" data-bs-html="true"
 											class="qwe fw-bold" id="confusiontooltip" style="cursor:default" 
 											data-bs-template='<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner text-danger fw-bold"></div></div>'
-											data-bs-placement="right" title="혼잡"> <i
+											data-bs-placement="right" title="혼잡<c:if test="${map.cafeTotalTable-map.cafeCurrentTable ne 0}">(${map.cafeTotalTable}/${map.cafeCurrentTable}석)</c:if>"> <i
 											class="bi bi-people-fill" style="font-size: 1.2rem;"></i> 혼잡도
 										</span>
 									</c:if>
@@ -67,7 +67,7 @@
 										<span data-bs-toggle="tooltip" data-bs-html="true"
 											class="qwe fw-bold" id="confusiontooltip" style="cursor:default" 
 											data-bs-template='<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner text-dark fw-bold"></div></div>'
-											data-bs-placement="right" title="보통"> <i
+											data-bs-placement="right" title="보통<c:if test="${map.cafeTotalTable-map.cafeCurrentTable ne 0}">(${map.cafeTotalTable}/${map.cafeCurrentTable}석)</c:if>"> <i
 											class="bi bi-people-fill" style="font-size: 1.2rem;"></i> 혼잡도
 										</span>
 									</c:if>
@@ -75,7 +75,7 @@
 										<span data-bs-toggle="tooltip" data-bs-html="true"
 											class="qwe fw-bold" id="confusiontooltip" style="cursor:default" 
 											data-bs-template='<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner text-success fw-bold"></div></div>'
-											data-bs-placement="right" title="쾌적"> <i
+											data-bs-placement="right" title="쾌적<c:if test="${map.cafeTotalTable-map.cafeCurrentTable ne 0}">(${map.cafeTotalTable}/${map.cafeCurrentTable}석)</c:if>"> <i
 											class="bi bi-people-fill" style="font-size: 1.2rem;"></i>혼잡도
 										</span>
 									</c:if>

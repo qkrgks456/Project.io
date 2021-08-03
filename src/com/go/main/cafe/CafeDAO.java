@@ -74,7 +74,7 @@ public class CafeDAO {
 					sql = "INSERT INTO cafeInfo"
 							+ "(cafeKey,ownerNo,cafeName,cafeLocation,cafeAddress,cafePhone,cafeDetail,cafeTime"
 							+ ",parkingCheck,petCheck,childCheck,rooftopCheck,groupCheck,cafeDel,openCheck,conFusion,bHit,cafeNum)"
-							+ "VALUES" + "(?,?,?,?,?,?,?,?,?,?,?,?,?,'N','Y','보통',0,cafe_seq.NEXTVAL)";
+							+ "VALUES" + "(?,?,?,?,?,?,?,?,?,?,?,?,?,'N','N','보통',0,cafe_seq.NEXTVAL)";
 					ps = conn.prepareStatement(sql);
 					ps.setString(1, sessionId);
 					ps.setString(2, dto.getOnnerNo());
@@ -168,8 +168,6 @@ public class CafeDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			resClose();
 		}
 		System.out.println("maparr 있냐 : " + maparr);
 		return dto;
@@ -305,15 +303,13 @@ public class CafeDAO {
 	public boolean cafeExist(String loginId) {
 		boolean check = false;
 		try {
-			String sql = "SELECT cafeKey FROM cafeInfo WHERE cafeDel='N' AND cafeKey=?";
+			String sql = "SELECT cafeKey FROM cafeInfo WHERE openCheck='Y' AND cafeDel='N' AND cafeKey=?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, loginId);
 			rs = ps.executeQuery();
 			check = rs.next();
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			resClose();
 		}
 
 		return check;
@@ -338,17 +334,23 @@ public class CafeDAO {
 		System.out.println(start);
 		System.out.println(end);
 		try {
-			String sql = "SELECT cafeKey,newfilename,cafeName,cafeNum,cafeLocation,cafeDetail,confusion,bHit "
-					+ "FROM (SELECT i.newfilename,c.cafeName,c.cafeNum,c.cafeKey,c.cafeLocation,c.cafeDetail,c.confusion,c.bHit "
-					+ "FROM (SELECT division,newFileName FROM image "
-					+ "WHERE ROWID IN (SELECT MIN(ROWID) FROM image GROUP BY division)) i "
+			String sql ="SELECT b.cafeKey,b.newfilename,b.cafeName,b.cafeNum,b.cafeLocation,"
+					+ "b.cafeDetail,b.confusion,b.bHit,c.cafeTotalTable,c.cafeCurrentTable FROM"
+					+ "(SELECT cafeKey,newfilename,cafeName,cafeNum,cafeLocation,cafeDetail,confusion,bHit FROM"
+					+ "(SELECT i.newfilename,c.cafeName,c.cafeNum,c.cafeKey,c.cafeLocation,c.cafeDetail,c.confusion,c.bHit FROM"
+					+ "(SELECT division,newFileName FROM image WHERE ROWID IN (SELECT MIN(ROWID) FROM image GROUP BY division)) i "
 					+ "LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey WHERE c.cafeDel='N' AND c.openCheck='Y')"
-					+ "ORDER BY cafeNum DESC OFFSET (?) ROWS FETCH FIRST (?) ROWS ONLY";
+					+ "ORDER BY cafeNum DESC OFFSET (?) ROWS FETCH FIRST (?) ROWS ONLY) b "
+					+ "LEFT OUTER JOIN congestion c ON b.cafeKey = c.cafeKey";
+//			String sql = "SELECT cafeKey,newfilename,cafeName,cafeNum,cafeLocation,cafeDetail,confusion,bHit "
+//					+ "FROM (SELECT i.newfilename,c.cafeName,c.cafeNum,c.cafeKey,c.cafeLocation,c.cafeDetail,c.confusion,c.bHit "
+//					+ "FROM (SELECT division,newFileName FROM image "
+//					+ "WHERE ROWID IN (SELECT MIN(ROWID) FROM image GROUP BY division)) i "
+//					+ "LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey WHERE c.cafeDel='N' AND c.openCheck='Y')"
+//					+ "ORDER BY cafeNum DESC OFFSET (?) ROWS FETCH FIRST (?) ROWS ONLY";
 			ps = conn.prepareStatement(sql);
-
 			ps.setInt(1, start);
 			ps.setInt(2, end);
-
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				dto = new CafeDTO();
@@ -359,6 +361,9 @@ public class CafeDAO {
 				dto.setConfusion(rs.getString("confusion"));
 				dto.setNewFileName(rs.getString("newfilename"));
 				dto.setbHit(rs.getInt("bHit"));
+				dto.setCafeTotalTable(rs.getInt("cafeTotalTable"));
+				dto.setCafeCurrentTable(rs.getInt("cafeCurrentTable"));
+				System.out.println("여기");
 				list.add(dto);
 			}
 			int total = totalCount(); // 총 게시글 수 가져옵시다
@@ -430,9 +435,9 @@ public class CafeDAO {
 			ps.setString(1, sessionId);
 			ps.setString(2, cafeKey);
 			rs = ps.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				map.put("goodCheck", false);
-			}else {
+			} else {
 				map.put("goodCheck", true);
 			}
 			// 댓글 갯수
@@ -504,24 +509,24 @@ public class CafeDAO {
 			int cafePages = 1;
 			// 노출할 데이터 갯수
 			int cafePagesPerCnts = 8;
-			while(true) {				
+			while (true) {
 				// 데이터의 시작과 끝
 				int cafeEnds = cafePages * cafePagesPerCnts;
 				int cafeStarts = (cafeEnds - cafePagesPerCnts);
 				sql = "SELECT cafeKey FROM"
-						+"(SELECT cafeKey FROM cafeInfo ORDER BY cafeNum DESC OFFSET ? ROWS FETCH FIRST ? ROWS ONLY)"
-						+"WHERE cafeKey=?";
+						+ "(SELECT cafeKey FROM cafeInfo ORDER BY cafeNum DESC OFFSET ? ROWS FETCH FIRST ? ROWS ONLY)"
+						+ "WHERE cafeKey=?";
 				ps = conn.prepareStatement(sql);
 				ps.setInt(1, cafeStarts);
 				ps.setInt(2, cafeEnds);
 				ps.setString(3, cafeKey);
-				rs= ps.executeQuery();
-				if(rs.next()) {
+				rs = ps.executeQuery();
+				if (rs.next()) {
 					break;
-				}else {
+				} else {
 					cafePages++;
-				}							
-			}			
+				}
+			}
 			System.out.println("총 갯수" + total);
 			System.out.println("토탈 페이지" + totalPages);
 			System.out.println(startPage);
@@ -538,7 +543,7 @@ public class CafeDAO {
 		}
 		return map;
 	}
-
+	// 댓글 총개수
 	private int totalComment(String cafeKey) throws SQLException {
 		String sql = "SELECT COUNT(commentNo) FROM cm WHERE division = ? AND commentDel='N'";
 		ps = conn.prepareStatement(sql);
@@ -550,7 +555,7 @@ public class CafeDAO {
 		}
 		return total;
 	}
-
+	// 카페정보 총 갯수
 	public int totalCount() throws SQLException {
 		String sql = "SELECT COUNT(cafeKey) FROM cafeInfo";
 		ps = conn.prepareStatement(sql);
@@ -561,7 +566,7 @@ public class CafeDAO {
 		}
 		return total;
 	}
-
+	// 조회수
 	public int upHit(String cafeKey) {
 
 		String sql = "UPDATE cafeInfo SET bHit = bHit+1 WHERE cafeKey=?";
@@ -576,7 +581,7 @@ public class CafeDAO {
 		}
 		return success;
 	}
-
+	// 혼잡도 좌석 변경
 	public HashMap<String, Object> confusionTableChange(String sessionId, int cafeTotalTable, int cafeCurrentTable) {
 		int suc = 0;
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -585,14 +590,14 @@ public class CafeDAO {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, sessionId);
 			rs = ps.executeQuery();
-			if(rs.next()) {
+			if (rs.next()) {
 				sql = "UPDATE congestion SET cafeTotalTable = ?,cafeCurrentTable = ? WHERE cafeKey = ?";
 				ps = conn.prepareStatement(sql);
 				ps.setInt(1, cafeTotalTable);
 				ps.setInt(2, cafeCurrentTable);
 				ps.setString(3, sessionId);
-				suc = ps.executeUpdate();		
-			}else {
+				suc = ps.executeUpdate();
+			} else {
 				sql = "INSERT INTO congestion VALUES(?,?,?)";
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, sessionId);
@@ -600,24 +605,152 @@ public class CafeDAO {
 				ps.setInt(3, cafeCurrentTable);
 				suc = ps.executeUpdate();
 			}
-			if(suc>0) {
-				sql = "SELECT * FROM congestion WHERE cafeKey = ?";
+			if (suc > 0) {
+				sql = "SELECT * FROM congestionStandard WHERE cafeKey = ?";
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, sessionId);
 				rs = ps.executeQuery();
-				if(rs.next()) {
-					map.put("cafeTotalTable", rs.getInt("cafeTotalTable"));
-					map.put("cafeCurrentTable", rs.getInt("cafeCurrentTable"));
+				if (rs.next()) {
+					int leisurely = rs.getInt("leisurely");
+					int normal = rs.getInt("normal");
+					int congest = rs.getInt("congest");
+					if (cafeCurrentTable >= normal && cafeCurrentTable <= congest) {
+						sql = "UPDATE cafeInfo SET confusion=? WHERE cafeKey =?";
+						ps = conn.prepareStatement(sql);
+						ps.setString(1, "혼잡");
+						ps.setString(2, sessionId);
+						suc = ps.executeUpdate();
+					} else if (cafeCurrentTable >= leisurely && cafeCurrentTable <= normal) {
+						sql = "UPDATE cafeInfo SET confusion=? WHERE cafeKey =?";
+						ps = conn.prepareStatement(sql);
+						ps.setString(1, "보통");
+						ps.setString(2, sessionId);
+						suc = ps.executeUpdate();
+					} else if (cafeCurrentTable <= leisurely) {
+						sql = "UPDATE cafeInfo SET confusion=? WHERE cafeKey =?";
+						ps = conn.prepareStatement(sql);
+						ps.setString(1, "쾌적");
+						ps.setString(2, sessionId);
+						suc = ps.executeUpdate();
+					}
+				}
+				if (suc > 0) {
+					sql = "SELECT * FROM congestion WHERE cafeKey = ?";
+					ps = conn.prepareStatement(sql);
+					ps.setString(1, sessionId);
+					rs = ps.executeQuery();
+					if (rs.next()) {
+						map.put("cafeTotalTable", rs.getInt("cafeTotalTable"));
+						map.put("cafeCurrentTable", rs.getInt("cafeCurrentTable"));
+					}
 				}
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			resClose();
 		}
-		
-		
+
+		return map;
+	}
+	// 혼잡도 정보 나타나기
+	public HashMap<String, Object> confusionInfo(String sessionId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		try {
+			String sql = "SELECT cafeTotalTable,cafeCurrentTable FROM congestion WHERE cafeKey=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				map.put("cafeTotalTable", rs.getInt("cafeTotalTable"));
+				map.put("cafeCurrentTable", rs.getInt("cafeCurrentTable"));
+			}
+			sql = "SELECT leisurely,normal,congest from congestionStandard WHERE cafeKey=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				map.put("leisurely", rs.getInt("leisurely"));
+				map.put("normal", rs.getInt("normal"));
+				map.put("congest", rs.getInt("congest"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		return map;
+	}
+	// 혼잡도 기준 변경
+	public HashMap<String, Object> standardChange(String sessionId, int leisurely, int normal, int congest) {
+		int suc = 0;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		try {
+			String sql = "SELECT * FROM congestionStandard WHERE cafeKey = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				sql = "UPDATE congestionStandard SET leisurely = ?,normal = ?,congest=? WHERE cafeKey = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, leisurely);
+				ps.setInt(2, normal);
+				ps.setInt(3, congest);
+				ps.setString(4, sessionId);
+				suc = ps.executeUpdate();
+			} else {
+				sql = "INSERT INTO congestionStandard VALUES(?,?,?,?)";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, sessionId);
+				ps.setInt(2, leisurely);
+				ps.setInt(3, normal);
+				ps.setInt(4, congest);
+				suc = ps.executeUpdate();
+			}
+			if (suc > 0) {
+				sql = "SELECT * FROM congestion WHERE cafeKey = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, sessionId);
+				rs = ps.executeQuery();
+				if (rs.next()) {
+					int cafeCurrentTable = rs.getInt("cafeCurrentTable");
+					if (cafeCurrentTable >= normal && cafeCurrentTable <= congest) {
+						sql = "UPDATE cafeInfo SET confusion=? WHERE cafeKey =?";
+						ps = conn.prepareStatement(sql);
+						ps.setString(1, "혼잡");
+						ps.setString(2, sessionId);
+						suc = ps.executeUpdate();
+					} else if (cafeCurrentTable >= leisurely && cafeCurrentTable <= normal) {
+						sql = "UPDATE cafeInfo SET confusion=? WHERE cafeKey =?";
+						ps = conn.prepareStatement(sql);
+						ps.setString(1, "보통");
+						ps.setString(2, sessionId);
+						suc = ps.executeUpdate();
+					} else if (cafeCurrentTable <= leisurely) {
+						sql = "UPDATE cafeInfo SET confusion=? WHERE cafeKey =?";
+						ps = conn.prepareStatement(sql);
+						ps.setString(1, "쾌적");
+						ps.setString(2, sessionId);
+						suc = ps.executeUpdate();
+					}
+				}
+			}
+			if (suc > 0) {
+				sql = "SELECT * FROM congestionStandard WHERE cafeKey = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, sessionId);
+				rs = ps.executeQuery();
+				if (rs.next()) {
+					map.put("leisurely", rs.getInt("leisurely"));
+					map.put("normal", rs.getInt("normal"));
+					map.put("congest", rs.getInt("congest"));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
 		return map;
 	}
 }

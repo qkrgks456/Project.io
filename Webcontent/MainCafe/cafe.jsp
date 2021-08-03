@@ -169,14 +169,26 @@
 
 				<div class="container px-5 mt-4">
 					<div class="row">
-						<div class="col-md-3 d-flex justify-content-center">
-							<div id="good" class="d-inline-flex align-items-center"
-								style="cursor: pointer;">
-								<i id="goodicon" class="bi bi-hand-thumbs-up-fill" title="${map.goodCheck}"
-									style="font-size: 2.0rem;"></i>
-								<p id="goodtext" class="ms-2 mt-3 fw-bold">좋아요(${map.goodCount})</p>
+						<c:if test="${loginId!=''}">
+							<div class="col-md-3 d-flex justify-content-center">
+								<div id="good" class="d-inline-flex align-items-center"
+									style="cursor: pointer;">
+									<i id="goodicon" class="bi bi-hand-thumbs-up-fill"
+										title="${map.goodCheck}" style="font-size: 2.0rem;"></i>
+									<p id="goodtext" class="ms-2 mt-3 fw-bold">좋아요(${map.goodCount})</p>
+								</div>
 							</div>
-						</div>
+						</c:if>
+						<c:if test="${loginId==''}">
+							<div class="col-md-3 d-flex justify-content-center">
+								<div id="goodq" class="d-inline-flex align-items-center"
+									style="cursor: default;">
+									<i id="goodiconq" class="bi bi-hand-thumbs-up-fill"
+										title="${map.goodCheck}" style="font-size: 2.0rem;"></i>
+									<p id="goodtextq" class="ms-2 mt-3 fw-bold">좋아요(${map.goodCount})</p>
+								</div>
+							</div>
+						</c:if>
 						<div class="col-md-3 d-flex justify-content-center">
 							<div id="commenticon" class="d-inline-flex align-items-center"
 								style="cursor: pointer;">
@@ -186,7 +198,8 @@
 							</div>
 						</div>
 						<div class="col-md-3 p-0 d-flex justify-content-center">
-							<div id="commenticon" class="d-inline-flex align-items-center" style="cursor:default" >
+							<div id="commenticon" class="d-inline-flex align-items-center"
+								style="cursor: default">
 								<i id="commenticons" class="bi bi-sunglasses mt-1"
 									style="font-size: 2.2rem;"></i>
 								<p class="ms-2 mt-3 fw-bold">조회수(${map.bHit})</p>
@@ -194,21 +207,24 @@
 						</div>
 						<div class="col-md-3 d-flex justify-content-center">
 							<c:if test="${map.confusion eq '혼잡'}">
-								<div id="commenticon" class="d-inline-flex align-items-center" style="cursor:default" >
+								<div id="commenticon" class="d-inline-flex align-items-center"
+									style="cursor: default">
 									<i id="commenticons" class="bi bi-people-fill mt-1 text-danger"
 										style="font-size: 2.0rem;"></i>
 									<p class="ms-2 mt-3 fw-bold text-danger">혼잡도(혼잡)</p>
 								</div>
 							</c:if>
 							<c:if test="${map.confusion eq '보통'}">
-								<div id="commenticon" class="d-inline-flex align-items-center" style="cursor:default" >
+								<div id="commenticon" class="d-inline-flex align-items-center"
+									style="cursor: default">
 									<i id="commenticons" class="bi bi-people-fill mt-1 text-dark"
 										style="font-size: 2.0rem;"></i>
 									<p class="ms-2 mt-3 fw-bold text-dark">혼잡도(보통)</p>
 								</div>
 							</c:if>
 							<c:if test="${map.confusion eq '쾌적'}">
-								<div id="commenticon" class="d-inline-flex align-items-center" style="cursor:default" >
+								<div id="commenticon" class="d-inline-flex align-items-center"
+									style="cursor: default">
 									<i id="commenticons"
 										class="bi bi-people-fill mt-1 text-success"
 										style="font-size: 2.0rem;"></i>
@@ -293,35 +309,63 @@
 						</div>
 					</div>
 				</div>
-				<h3 class="fw-bold">메뉴</h3>
-				<hr />
-				<!-- 이미지 슬라이드 -->
-				<div class="container px-5 my-2">
-					<table class="table table-hover mt-2">
-						<thead class="">
-							<tr>
-								<th scope="col">상품이미지</th>
-								<th scope="col">상품명</th>
-								<th scope="col">상품설명</th>
-								<th scope="col">가격</th>
-								<th class="text-center" scope="col">상세보기</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr class="">
-								<td><img src="/Project/assets/img/12.jpg" class="rounded"
-									style="width: 80px; height: 80px; object-fit: cover;" /></td>
-								<td class="align-middle">상품명</td>
-								<td class="align-middle">상품설명</td>
-								<td class="align-middle">가격</td>
-								<td class="align-middle">
-									<div class="d-grid gap-2 col-6 mx-auto mt-1">
-										<a class="btn btn-secondary btn-sm">상세보기</a>
-									</div>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+				<div>
+					<h3 class="fw-bold">대표메뉴</h3>
+					<hr />
+					<!-- 이미지 슬라이드 -->
+					<div class="container px-5 my-2">
+						<table class="table table-hover mt-2">
+							<thead class="">
+								<tr>
+									<th scope="col">상품이미지</th>
+									<th scope="col">상품명</th>
+									<th scope="col">상품설명</th>
+									<th scope="col">가격</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="">
+									<td><img src="/Project/assets/img/12.jpg" class="rounded"
+										style="width: 80px; height: 80px; object-fit: cover;" /></td>
+									<td class="align-middle">상품명</td>
+									<td class="align-middle">상품설명</td>
+									<td class="align-middle">가격</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div>
+					<h3 class="fw-bold">판매상품</h3>
+					<hr />
+					<!-- 이미지 슬라이드 -->
+					<div class="container px-5 my-2">
+						<table class="table table-hover mt-2">
+							<thead class="">
+								<tr>
+									<th scope="col">상품이미지</th>
+									<th scope="col">상품명</th>
+									<th scope="col">상품설명</th>
+									<th scope="col">가격</th>
+									<th class="text-center" scope="col">상세보기</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="">
+									<td><img src="/Project/assets/img/12.jpg" class="rounded"
+										style="width: 80px; height: 80px; object-fit: cover;" /></td>
+									<td class="align-middle">상품명</td>
+									<td class="align-middle">상품설명</td>
+									<td class="align-middle">가격</td>
+									<td class="align-middle">
+										<div class="d-grid gap-2 col-6 mx-auto mt-1">
+											<a class="btn btn-secondary btn-sm">상세보기</a>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 				<h3 id="comments" class="fw-bold mt-3">댓글</h3>
 				<hr />
@@ -366,10 +410,11 @@
 								<label for="commentUpdateContent">수정할 댓글을 작성하세요</label>
 								<div class="invalid-feedback">1자 이상 입력해주세요</div>
 							</div>
-							<div class="d-flex justify-content-end mt-2" id="commentUpdateOut">
-								<a class='commentUpdateContentBtn btn btn-secondary btn-sm mx-2' id="commentUpdateContentBtn"
-									title="${commentLists.commentNo}">등록</a> <a
-									class='cmUpdateCancel btn btn-secondary btn-sm'>취소</a>
+							<div class="d-flex justify-content-end mt-2"
+								id="commentUpdateOut">
+								<a class='commentUpdateContentBtn btn btn-secondary btn-sm mx-2'
+									id="commentUpdateContentBtn" title="${commentLists.commentNo}">등록</a>
+								<a class='cmUpdateCancel btn btn-secondary btn-sm'>취소</a>
 							</div>
 							<hr />
 						</div>
@@ -411,84 +456,8 @@
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=15"></script>
-	<script type="text/javascript">
-	$(document).ready(function() {
-		var goodCheckBtn = $('#goodicon').attr("title");
-		console.log($('#goodicon').attr("title"));
-		var cafeKey = $('#cafeCommentBtn').attr("title");	
-		if(goodCheckBtn == 'false'){
-			$('#goodicon').css("font-size", "2.0rem");
-			$('#goodicon').css("color", "#0d6efd");
-			$('#goodtext').addClass("text-primary");
-		}else{
-			$('#goodicon').css("font-size", "2.0rem");
-			$('#goodicon').css("color", "black");
-			$('#goodtext').removeClass("text-primary");
-		}
-		$('#good').mouseup(function() {
-			if (goodCheckBtn == 'true') {			
-				$.ajax({
-					type: "POST",//방식
-					url: "/Project/cafeGood",//주소
-					data: {
-						goodCheckBtn: goodCheckBtn,
-						cafeKey: cafeKey,
-					},
-					dataType: 'JSON',
-					success: function(data) { //성공시
-						
-						console.log(data);
-						goodCheckBtn = 'false';
-						content="";
-						content+=	'<i id="goodicon" class="bi bi-hand-thumbs-up-fill" title="'+goodCheckBtn+'"';
-							content+=	' style="font-size: 2.0rem;"></i>';
-							content+=	'<p id="goodtext" class="ms-2 mt-3 fw-bold">좋아요('+data.cafeGoodCount+')</p>'
-							$('#good').empty();
-							$('#good').append(content);
-							$('#goodicon').css("color", "#0d6efd");
-							$('#goodtext').addClass("text-primary");
-					},
-					error: function(e) { //실패시
-						console.log(e);
-					}			
-				})
-				
-			} else {
-			
-				$.ajax({
-					type: "POST",//방식
-					url: "/Project/cafeGood",//주소
-					data: {
-						goodCheckBtn: goodCheckBtn,
-						cafeKey: cafeKey,
-					},
-					dataType: 'JSON',
-					success: function(data) { //성공시
-						console.log(data);
-						goodCheckBtn = 'true';
-						content="";
-						content+=	'<i id="goodicon" class="bi bi-hand-thumbs-up-fill" title="'+goodCheckBtn+'"';
-							content+=	' style="font-size: 2.0rem;"></i>';
-							content+=	'<p id="goodtext" class="ms-2 mt-3 fw-bold">좋아요('+data.cafeGoodCount+')</p>'
-							$('#good').empty();
-							$('#good').append(content);
-							$('#goodicon').css("color", "black");
-							$('#goodtext').removeClass("text-primary");
-		
-					},
-					error: function(e) { //실패시
-						console.log(e);
-					}			
-				})
-			}
-		})
-	})
-	
-		
-		
-	</script>
 	<!-- cafe.js 추가 -->
-	<script src="/Project/assets/js/cafe.js?var=89"></script>
+	<script src="/Project/assets/js/cafe.js?var=95"></script>
 	<!-- 카카오맵 api 추가 -->
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=96f67dd6c088728e30743d7db32a6789&libraries=services"></script>

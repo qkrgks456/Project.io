@@ -43,7 +43,7 @@
 				<hr />
 				<!-- 내용시작 -->
 				<div class="cont container w-50">
-					<c:if test="${dto.cafeName ne null}">
+					<c:if test="${dto.cafeName ne null && dto.cafeCheck eq true}">
 						<div class="py-3">
 							<div class="col-md-9 mb-3">
 								<label for="cafeName" class="fw-bold">카페이름</label> <input
@@ -239,7 +239,7 @@
 							</div>
 						</div>
 					</c:if>
-					<c:if test="${dto.cafeName eq null}">
+					<c:if test="${dto.cafeName eq null && dto.cafeCheck eq false}">
 					<div class="text-center">
 					<p class="text-muted">등록된 카페정보가 없습니다</p>
 					</div>

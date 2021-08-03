@@ -52,7 +52,7 @@
 				href="/Project/cafeExist?menu=a"
 				style="cursor: pointer;">카페삭제</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/cafeExist?menu=b"
+				href="/Project/confusionInfo"
 				style="cursor: pointer;">혼잡도설정</a>
 		</div>
 	</nav>

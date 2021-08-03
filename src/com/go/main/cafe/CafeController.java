@@ -13,8 +13,9 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-@WebServlet({ "/cafewrite", "/cafeInfoMyPage", "/ownerCheck", "/cafeUpdate", "/cafeInputCheck", "/businessCheck",
-		"/businessChange", "/cafeDel", "/cafeExist", "/cafeList", "/cafeDetail","/confusionInfo","/confusionTableChange" })
+@WebServlet({"/cafewrite", "/cafeInfoMyPage", "/ownerCheck", "/cafeUpdate", "/cafeInputCheck", "/businessCheck",
+		"/businessChange", "/cafeDel", "/cafeExist", "/cafeList", "/cafeDetail","/confusionInfo","/confusionTableChange",
+		"/standardChange"})
 public class CafeController extends HttpServlet {
 	// 안녕
 	private static final long serialVersionUID = 1L;
@@ -30,15 +31,20 @@ public class CafeController extends HttpServlet {
 		boolean check = false;
 		CafeService service = new CafeService(req);
 		switch (addr) {
+		/*
+		 * case "/" : map = service.main(); req.setAttribute("map", map); dis =
+		 * req.getRequestDispatcher("main.jsp"); dis.forward(req, resp); break;
+		 */
 		case "/cafeExist":
 			check = service.cafeExist();
+			System.out.println(check);
 			if (req.getParameter("menu").equals("a")) {
 				req.setAttribute("check", check);
 				dis = req.getRequestDispatcher("myPage/cafeMenu/cafeDrop.jsp");
 				dis.forward(req, resp);
 			} else {
 				req.setAttribute("check", check);
-				dis = req.getRequestDispatcher("myPage/cafeMenu/confusion.jsp");
+				dis = req.getRequestDispatcher("/confusionInfo");
 				dis.forward(req, resp);
 			}
 			break;
@@ -133,6 +139,7 @@ public class CafeController extends HttpServlet {
 		case "/cafeList":
 			System.out.println("카페리스트");
 			map = service.cafeList();
+			System.out.println(map);
 			req.setAttribute("map", map);
 			dis = req.getRequestDispatcher("MainCafe/cafeList.jsp");
 			dis.forward(req, resp);
@@ -145,13 +152,28 @@ public class CafeController extends HttpServlet {
 			dis.forward(req, resp);
 			break;
 		case "/confusionInfo":
+			check = service.cafeExist();
+			/* check = Boolean.parseBoolean(); */
+			System.out.println(check);
 			System.out.println("혼잡도 현재 상태");
+			map = service.confusionInfo();
+			map.put("check", check);
+			req.setAttribute("map", map);
+			dis = req.getRequestDispatcher("myPage/cafeMenu/confusion.jsp");
+			dis.forward(req, resp);
+			
 			break;
 		case "/confusionTableChange":
 			System.out.println("혼잡도 테이블 수정");
 			map = service.confusionTableChange();
 			resp.setContentType("text/html; charset=UTF-8");
 			resp.getWriter().print(new Gson().toJson(map));
+			break;
+		case "/standardChange":
+			System.out.println("혼잡도 기준 수정");
+			map = service.standardChange();
+			resp.setContentType("text/html; charset=UTF-8");
+			resp.getWriter().print(new Gson().toJson(map));			
 			break;
 		}
 	}

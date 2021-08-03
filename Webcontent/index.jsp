@@ -8,7 +8,7 @@
 <!-- 부트스트랩 메타태그111111111111111111111111111111111111111111111111111 -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 부트스트랩 파일 -->
-<link href="/Project/assets/css/bootstrap.css?ver=5" rel="stylesheet">
+<link href="/Project/assets/css/bootstrap.css?ver=8" rel="stylesheet">
 <!-- css cdn -->
 <jsp:include page="/assets/css/csscdn.jsp"></jsp:include>
 <!-- main css 추가 -->
@@ -375,6 +375,6 @@
 	<!-- 스크립트 cdn -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
-	<script src="/Project/assets/js/main.js?var=8"></script>
+	<script src="/Project/assets/js/main.js?var=11"></script>
 </body>
 </html>

@@ -51,7 +51,11 @@ public class CafeService {
 		HttpSession session = req.getSession();
 		String sessionId = (String) session.getAttribute("loginId");
 		dao = new CafeDAO();
-		return dao.cafeInfoMyPage(sessionId);
+		CafeDTO dto = dao.cafeInfoMyPage(sessionId);
+		boolean check = dao.cafeExist(sessionId);
+		dao.resClose();
+		dto.setCafeCheck(check);
+		return dto;
 	}
 
 	public int cafeUpdate() {
@@ -112,7 +116,9 @@ public class CafeService {
 	// 카페존재여부
 	public boolean cafeExist() {
 		dao = new CafeDAO();
-		return dao.cafeExist((String) req.getSession().getAttribute("loginId"));
+		boolean check = dao.cafeExist((String) req.getSession().getAttribute("loginId"));
+		dao.resClose();
+		return check;
 	}
 	// 카페리스트
 	public HashMap<String, Object> cafeList() {
@@ -163,6 +169,28 @@ public class CafeService {
 		int cafeCurrentTable = Integer.parseInt(req.getParameter("cafeCurrentTable"));
 		dao = new CafeDAO();
 		return dao.confusionTableChange(sessionId,cafeTotalTable,cafeCurrentTable);
+	}
+
+	public HashMap<String, Object> confusionInfo() {
+		HttpSession session = req.getSession();
+		String sessionId = (String) session.getAttribute("loginId");
+		dao = new CafeDAO();
+		return dao.confusionInfo(sessionId);
+	}
+
+	public HashMap<String, Object> standardChange() {
+		HttpSession session = req.getSession();
+		String sessionId = (String) session.getAttribute("loginId");
+		int leisurely = Integer.parseInt(req.getParameter("leisurely"));   
+		int normal = Integer.parseInt(req.getParameter("normal"));
+		int congest = Integer.parseInt(req.getParameter("congest"));
+		dao = new CafeDAO();
+		return dao.standardChange(sessionId,leisurely,normal,congest);
+	}
+
+	public HashMap<String, Object> main() {
+		dao = new CafeDAO();
+		return null;
 	}
 
 }
