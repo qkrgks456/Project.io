@@ -205,8 +205,6 @@
 				<hr />
 			</div>
 			<div class="row row-cols-1 row-cols-md-4 g-4">
-			<!-- 참 별일이다 그죠잉 -->
-			<c:if test="${list eq null}"><c:redirect url="/main"></c:redirect></c:if>
 				<c:forEach items="${list}" var="lists">
 					<div class="col">
 						<div class="card showEvent" style="opacity: 0;">

@@ -87,7 +87,7 @@ public class MemberController extends HttpServlet {
 					resp.addCookie(cookie);
 				}
 				session.setAttribute("loginId", memberKey);
-				resp.sendRedirect("/");
+				resp.sendRedirect("/Project");
 				System.out.println("로그인 성공했습니다");
 			} else {
 				req.setAttribute("success", "fail");

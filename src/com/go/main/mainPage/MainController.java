@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.go.main.cafe.CafeDTO;
 
-@WebServlet({"/main"})
+@WebServlet({"/"})
 public class MainController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -26,7 +26,7 @@ public class MainController extends HttpServlet {
 		MainService service = new MainService(req);
 		System.out.println(addr);
 		switch (addr) {
-		case "/main":
+		case "/":
 			System.out.println("안녕");
 			ArrayList<CafeDTO> list = service.mainPage();
 			req.setAttribute("list", list);
