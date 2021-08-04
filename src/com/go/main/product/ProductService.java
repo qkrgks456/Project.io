@@ -9,12 +9,15 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
+import javax.websocket.Session;
 
 public class ProductService {
 	
 	HttpServletRequest req =null;
 	HttpServletResponse resp = null;
+	
 	
 	public Connection conn = null;
 	public ResultSet rs = null;
@@ -35,16 +38,14 @@ public class ProductService {
 	}
 
 
-	public void productinsert() {
-		String productName = req.getParameter("productName");
-		String categoryName = req.getParameter("categoryName");
+	public int productinsert(String sessionId) {	
+		ProductUploadService upload = new ProductUploadService(req);
+		ProductDTO dto = upload.PhotoUpload();
+		ProductDAO dao = new ProductDAO();
 		
-		String explanation = req.getParameter("explanation");
-		String sellCheck = req.getParameter("sellCheck");
+		int suc = dao.productjoin(dto,sessionId);	
 		
-		System.out.println("상품 등록 값 받아오는지 ? : "+productName+" / "+categoryName+" / "+explanation+" / "+sellCheck);
-		
-		
+		return suc;		
 	}
 	
 	

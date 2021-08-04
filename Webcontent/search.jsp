@@ -202,12 +202,10 @@ table {
 		if ($("#searchtype").val() == ("searchdefault")) {
 			alert("카테고리를 선택해 주세요.");
 			$("#searchtype").focus();
-			return false;
 		}
 		if ($("#searchresult").val().length == 0) {
 			alert("검색어를 입력해 주세요.");
-			$("#searchresult").focus();
-			return false;
+			$("#searchresult").focus();	
 		}			
 	});
 	
@@ -216,11 +214,11 @@ table {
 		cl = $("#searchtype option:selected").val();
 		param = $("#searchresult").val();
 		if(cl == "searchcafename"){
-			SetSearch(cl);
+			SetSearch(cl,param);
 			$("#productbox").addClass("visually-hidden");
 			$("#cafebox").removeClass("visually-hidden");	
 		}else if(cl == "searchcafeproduct"){
-			SetSearchTwo(cl);
+			SetSearchTwo(cl,param);
 			$("#cafebox").addClass("visually-hidden");	
 			$("#productbox").removeClass("visually-hidden");
 		}
@@ -228,7 +226,7 @@ table {
 	})
 	
 	$(document).on('change', '#searchtype', function() {
-		param = $("#searchtype option:selected").val(); // title, board_title, reg_id
+		param = $(this).val(); // title, board_title, reg_id
 		
 		if(param=="searchcafename"){
 			SetSelectBox(param);
@@ -308,7 +306,7 @@ table {
 											content += '</td>'
 											content += '<td class="align-middle">'+ item.productName +'</td>'
 											content += '<td class="align-middle">'+ item.price+'</td>'
-											content += '<td class="align-middle"><a href="cafeDetail?cafeKey="'+ item.cafeName+'>상세보기</a></td>'
+											content += '<td class="align-middle"><a href="cafeDetail?cafeKey="'+ item.cafekey+'>'+ item.cafeName+'</a></td>'
 											content += '<td class="align-middle">'+ item.cafeLocation+'</td>'
 											content += '</tr>'
 										})
@@ -324,7 +322,7 @@ table {
 
 	};
 	
-	function SetSearch(cl) {
+	function SetSearch(cl,param) {
 		$.ajax({    type : 'POST',
 					url : '/Project/serachCafeName',
 					data : {
@@ -372,7 +370,7 @@ table {
 				});
 
 	};
-	function SetSearchTwo(cl) {
+	function SetSearchTwo(cl,param) {
 		$.ajax({    type : 'POST',
 					url : '/Project/serachCafeName',
 					data : {

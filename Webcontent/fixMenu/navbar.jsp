@@ -18,7 +18,7 @@
 				<li class="nav-item"><a class="nav-link"
 					href="/Project/cafeList">카페정보</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="/Project/MainProduct/productList.jsp">상품구매</a></li>
+					href="/Project/productList">상품구매</a></li>
 			</ul>
 			<div class="d-flex" id="menu">
 				<a type="button" id="loginbtn"

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-@WebServlet({"/productList","/productinsert"})
+@WebServlet({"/productList","/productinsert","/Project/MainProduct/productList"})
 public class ProductController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -35,19 +35,26 @@ public class ProductController extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		RequestDispatcher dis = null;
 		ProductService service = new ProductService(req, resp);
-		System.out.println(uri);
+		HttpSession session = req.getSession();
+		String sessionId = (String) session.getAttribute("loginId");
 		
+			
 		switch (addr) {
 		case "/productList":
-			System.out.println("상품 리스트 불러오기 요청");
-			
-			
+			System.out.println("상품 리스트 불러오기 요청");			
 			break;
+			
 		case"/productinsert":
 			System.out.println("상품 등록");
-			service.productinsert();
+			int suc = service.productinsert(sessionId);
+			
+			System.out.println("상품등록 성공 여부 : "+suc);
+			req.setAttribute("success", suc);
+			dis = req.getRequestDispatcher("myShopping/sell/productList/productList.jsp");
+			dis.forward(req, resp);
 			break;
 		}
+	
 		
 	}
 }

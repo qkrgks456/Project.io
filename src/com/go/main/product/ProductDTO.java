@@ -12,9 +12,13 @@ public class ProductDTO {
 	private int views;
 	private int productQuantity;
 	private String delCheck;
-	private String sellCheck;
+	private String selCheck;
 	private String kingMenu;
 	private String categoryName;
+	private int fileIdx;
+	private String oriFileName;
+	private String newFileName;
+
 	
 	public int getProductId() {
 		return productId;
@@ -76,12 +80,7 @@ public class ProductDTO {
 	public void setDelCheck(String delCheck) {
 		this.delCheck = delCheck;
 	}
-	public String getSellCheck() {
-		return sellCheck;
-	}
-	public void setSellCheck(String sellCheck) {
-		this.sellCheck = sellCheck;
-	}
+
 	public String getKingMenu() {
 		return kingMenu;
 	}
@@ -93,6 +92,31 @@ public class ProductDTO {
 	}
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
+	}
+	
+	public String getSelCheck() {
+		return selCheck;
+	}
+	public void setSelCheck(String selCheck) {
+		this.selCheck = selCheck;
+	}
+	public int getFileIdx() {
+		return fileIdx;
+	}
+	public void setFileIdx(int fileIdx) {
+		this.fileIdx = fileIdx;
+	}
+	public String getOriFileName() {
+		return oriFileName;
+	}
+	public void setOriFileName(String oriFileName) {
+		this.oriFileName = oriFileName;
+	}
+	public String getNewFileName() {
+		return newFileName;
+	}
+	public void setNewFileName(String newFileName) {
+		this.newFileName = newFileName;
 	}
 	
 	

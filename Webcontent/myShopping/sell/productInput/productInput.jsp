@@ -64,7 +64,6 @@
 		<!-- 상단 메뉴바 -->
 		<!-- 섹션에 아이디가 있다면 -->
 		<c:if test="${sessionScope.loginId ne null}">
-
 			<jsp:include page="/fixMenu/loginnav.jsp"></jsp:include>
 		</c:if>
 		<!-- 섹션에 아이디가 없다면 -->
@@ -89,31 +88,29 @@
 				<div class="container px-4 py-4 my-4 border shadow-lg" id="cont">
 					<h4 class="mb-3 fw-bold">상품 등록</h4>
 					<hr />
-					<form
-						action="/Project/productinsert"
-						method="post" class="needs-validation" novalidate>
-						
+					<form action="/Project/productinsert" method="post"
+						class="needs-validation" enctype="multipart/form-data" novalidate>
+
 
 						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">상품명</h6>
-						<div class="form-floating col-md-9 mb-3">
+						<div class="col-md-9 mb-3">
 							<input type="text" class="nullchecks nullcheck form-control"
-								id="productName" placeholder="상품명"
-								aria-describedby="inputGroupPrepend" required> 
-								<label for="validationTooltip04" class="fw-bold">상품명</label>
+								id="productName" name="productName"
+								aria-describedby="inputGroupPrepend" required>
 							<div class="invalid-feedback">필수 정보입니다</div>
 						</div>
 
 
 						<h6 class="text-muted mt-1 fw-bold" style="text-align: left;">카테고리</h6>
-						<div class="form-floating col-md-9 mb-3">
-							<select class="form-select" id="categoryName">
+						<div class="col-md-9 mb-3">
+							<select class="form-select" id="categoryName" name="categoryName">
 								<option selected disabled value="">필수선택</option>
-								<option value="원두" name="wondu">원두</option>
-								<option value="엠디" name="MD">MD</option>
+								<option value="원두">원두</option>
+								<option value="엠디">MD</option>
 							</select>
 							<div class="invalid-feedback">카테고리를 설정해주세요</div>
 						</div>
-<!-- 
+						<!-- 
 						옵션추가
 						<h6 class="text-muted mt-1 fw-bold" style="text-align: left;">옵션</h6>
 						<table width="400" border="0" cellspacing="0" cellpadding="0">
@@ -148,79 +145,83 @@
  -->
 						<!-- 수량 -->
 						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">수량</h6>
-						<div class="form-floating col-md-9 mb-3">
+						<div class="col-md-9 mb-3">
 							<input type="text" class="nullchecks nullcheck form-control"
-								id="productQuantity" placeholder="수량" required> <label
-								for="validationTooltip04" class="fw-bold">수량</label>
+								id="productQuantity" name="productQuantity" required>
 							<div class="invalid-feedback">필수 정보입니다</div>
 						</div>
 
 
 						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">가격</h6>
-						<div class="form-floating col-md-9 mb-3">
+						<div class="col-md-9 mb-3">
 							<input type="text" class="nullchecks nullcheck form-control"
-								id="Price" placeholder="가격" required> <label
-								for="validationTooltip04" class="fw-bold">가격</label>
+								id="Price" name="Price" required>
 							<div class="invalid-feedback">필수 정보입니다</div>
 						</div>
-						
-						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">제품 설명</h6>
-						<div class="form-floating col-md-9 mb-3">
+
+						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">제품
+							설명</h6>
+						<div class="col-md-9 mb-3">
 							<input type="text" class="nullchecks nullcheck form-control"
-								id="explanation" placeholder="제품 설명란" required> <label
-								for="validationTooltip04" class="fw-bold">제품 설명</label>
+								id="explanation" name="explanation" required>
 							<div class="invalid-feedback">필수 정보입니다</div>
 						</div>
 
 						<br>
-						<div class="mb-3">
-							<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">상품
+						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">상품
 								대표 이미지</h6>
+						<div class="col-md-9 mb-3">						
 							<input class="form-control" type="file" id="formFileMultiple"
-								multiple>
+								name="photo" id="photo">
 						</div>
 
 						<br>
 						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">판매여부</h6>
 						<div class="form-floating col-md-9 mb-3" id="sellCheck">
 							<div class="form-check">
-								<input class="form-check-input" type="radio"
-									name="productsell" value="Y" id="flexRadioDefault1"> <label
+								<input class="form-check-input" type="radio" name="selCheck"
+									value="Y" id="flexRadioDefault1"> <label
 									class="form-check-label" for="flexRadioDefault1"> 판매</label>
 							</div>
 							<div class="form-check">
-								<input class="form-check-input" type="radio"
-									name="productsell" value="N" id="flexRadioDefault2" checked>
-								<label class="form-check-label" for="flexRadioDefault2">
-									미판매 </label>
+								<input class="form-check-input" type="radio" name="selCheck"
+									value="N" id="flexRadioDefault2" checked> <label
+									class="form-check-label" for="flexRadioDefault2"> 미판매 </label>
 							</div>
 						</div>
 
-				<!-- 
-						<div class="form-check mt-4">
-							<input type="checkbox" name="agree" id="agreeupdate" onClick="agreeCheck(this.form)"> 
-								<label class="form-check-label fw-bold" for="agreeupdate">
-								관리자의 심사가 있어야 상품이 최종 승인됩니다. 정보 재확인 바랍니다. <br>이에 동의하십니까?
-								</label>
-								
-							<div class="invalid-feedback">동의해야만 등록이 가능합니다</div>
-							<div class="d-grid gap-3 d-md-flex justify-content-md-end">
-								<div class="invalid-feedback">필수 동의입니다</div>
-
-								<button class="btn btn-dark" type="button" name="checkButton"  disabled >등록</button>
-
-								<button class="btn btn-dark me-md-1" type="button"
-									onclick="location.href='/Project/myShopping/sell/productList/productList.jsp'">취소</button>
+						<div class="d-flex">
+						<div class="form-check mt-3">
+							<div class="form-check ">
+								<input class="form-check-input" type="checkbox" id="agreeupdate"
+									onClick="agreeCheck(this.form)" name="Check"
+									id="flexRadioDefault2">
 							</div>
 						</div>
-						-->
-						
-						<button class="btn btn-dark" type="submit" name="checkButton">등록</button>
-						
-					</form>
+						<label class="form-check-label fw-bold" for="agreeupdate">
+							관리자의 심사가 있어야 상품이 최종 승인됩니다. 정보 재확인 바랍니다. <br/>이에 동의하십니까?
+						</label>
+						</div>
+
+						<div class="invalid-feedback">동의해야만 등록이 가능합니다</div>
+						<div class="d-grid gap-3 d-md-flex justify-content-md-end">
+							<div class="invalid-feedback">필수 동의입니다</div>
+
+							<button class="btn btn-dark" type="submit" name="checkButton"
+								disabled>등록</button>
+
+							<button class="btn btn-dark me-md-1" type="button"
+								onclick="location.href='/Project/myShopping/sell/productList/productList.jsp'">취소</button>
+						</div>
 				</div>
+
+
+				<!-- <button class="btn btn-dark" type="submit" name="checkButton">등록</button> -->
+
+				</form>
 			</div>
 		</div>
+	</div>
 	</div>
 
 
