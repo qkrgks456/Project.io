@@ -37,7 +37,7 @@
 					<p class="fs-5">* 저희사이트에 가입해주셔서 감사합니다 저희사이트에 다양한 서비스를 무료로
 						이용하세요!</p>
 					<p class="fs-5">다양한 재미가 기다리고 있습니다!</p>
-					<a href="/Project/index.jsp" class="btn btn-outline-secondary">메인으로</a>
+					<a href="/Project" class="btn btn-outline-secondary">메인으로</a>
 					<a href="/Project/login/login.jsp" class="btn btn-outline-secondary mx-2">로그인하러가기</a>
 				</div>
 			</div>
