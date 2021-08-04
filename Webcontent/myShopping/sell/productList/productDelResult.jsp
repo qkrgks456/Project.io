@@ -39,6 +39,21 @@
 				<hr />
 				<!-- 사이드 바 메뉴-->
 				<!-- 들어갈 내용 -->
+				
+				
+			<img src="/Project/assets/img/n1.jpg" width="350" height="350" style="margin-left:auto; margin-right:auto; display:block;"/>
+				<h3 style="text-align:center">감사합니다.<br>
+		요청하신 상품의 삭제가 완료되었습니다. <br><br>
+		<a class="btn btn-secondary btn-lg" href="/Project/index.jsp" role="button">메인으로</a></h3>
+		</div>
+				
+				
+				
+				
+				
+				
+				
+				
 			</div>
 		</div>
 	</div>

@@ -9,9 +9,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 부트스트랩 파일 -->
 <link href="/Project/assets/css/bootstrap.css?ver=3" rel="stylesheet">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-	<link rel="stylesheet" href="./10-11.css" />
-	<script type="text/javascript" src="./10-11.js"></script> 
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+	integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="./10-11.css" />
+<script type="text/javascript" src="./10-11.js"></script>
 <!-- css cdn -->
 <jsp:include page="/assets/css/csscdn.jsp"></jsp:include>
 <!-- main css 추가 -->
@@ -51,7 +54,7 @@
 								<th scope="col">#</th>
 								<th scope="col">이미지</th>
 								<th scope="col">상품명</th>
-								<th scope="col">상품설명</th>
+								<th scope="col">수량</th>
 								<th scope="col">가격</th>
 								<th class="text-center" scope="col">상세보기</th>
 							</tr>
@@ -59,43 +62,149 @@
 						<tbody>
 							<tr class="">
 								<th class="align-middle" scope="row">1</th>
-								<td><img src="/Project/assets/img/12.jpg"
+								<td><img src="/Project/assets/img/p3.jpg"
 									class="img-thumbnail"
 									style="width: 80px; height: 80px; object-fit: cover;" /></td>
-								<td class="align-middle">상품명</td>
-								<td class="align-middle">상품코드</td>
-								<td class="align-middle">가격</td>
+								<td class="align-middle">콜롬비아 수프리모</td>
+								<td class="align-middle"><div class="qu">3</div></td>
+								<td class="price align-middle">24000</td>
 								<td>
 									<div class="d-grid gap-2 col-6 mx-auto mt-1">
 										<a class="btn btn-secondary btn-sm">상세보기</a> <a
-											class="btn btn-secondary btn-sm">좋아요취소</a>
+											class="btn btn-secondary btn-sm"
+											onclick="location.href='/Project/myShopping/sell/productList/productDelResult.jsp'">삭제하기</a>
 									</div>
 								</td>
 							</tr>
+							<tr class="">
+								<th class="align-middle" scope="row">2</th>
+								<td><img src="/Project/assets/img/p11.jpg"
+									class="img-thumbnail"
+									style="width: 80px; height: 80px; object-fit: cover;" /></td>
+								<td class="align-middle">브라질 버본 산토스 No.2</td>
+								<td class="align-middle"><div class="qu"> 2</div></td>
+								<td class="price align-middle">19000</td>
+								<td>
+									<div class="d-grid gap-2 col-6 mx-auto mt-1">
+										<a class="btn btn-secondary btn-sm">상세보기</a> <a
+											class="btn btn-secondary btn-sm"
+											onclick="location.href='/Project/myShopping/sell/productList/productDelResult.jsp'">삭제하기</a>
+									</div>
+								</td>
+							</tr>
+
+
+
+
+
+
 						</tbody>
 						<tfoot>
 							<tr>
 								<th>합계</th>
-								<th>수량 : 3</th>
-								<th>가격 : 65000</th>
+								<th id = 'sumAmount'>수량 : 3</th>
+								<th id='sumSumPrice'>가격 : 65000</th>
 								<th colspan="3"></th>
 							</tr>
 						</tfoot>
 					</table>
-					<div class="text-center text-muted">구매한 상품정보가 없습니다</div>
+					
 				</div>
 			</div>
 		</div>
 	</div>
 
 
-<!-- 하단 고정 퀵메뉴 -->
+	<!-- 하단 고정 퀵메뉴 -->
 	<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
 		<jsp:include page="/fixMenu/quickMenu.html"></jsp:include>
 	</c:if>
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->
+	<script type="text/javascript">
+	/* 페이지 시작시 총 수량  */
+	var sum = 0;
+	$('.qu').each(function(i, item) {
+		sum += Number($(this).text());
+	})
+	$('#sumAmount').empty();
+	$('#sumAmount').append('수량 : ' + sum);
+	/* 페이지 시작시 총 가격  */
+	var sumPrice = 0;
+	$('.price').each(function(i, item) {
+		sumPrice += Number($(this).text());
+	})
+	$('#sumSumPrice').empty();
+	$('#sumSumPrice').append('총 가격 : ' + sumPrice);
+	/* 수량증가  */
+	var sumSum = 0;
+	
+	$('.up').click(function() {
+		var sumPrice = 0;
+		var qu = Number($(this).prev('.qu').text());
+		qu = qu + 1;
+		$(this).prev('.qu').empty();
+		$(this).prev('.qu').append(qu);
+		var sumSum = 0;
+		sumSum = qu * Number($(this).parents('td').next().text());		
+		var sum = 0;
+		$('.qu').each(function(i, item) {
+			sum += Number($(this).text());
+		})
+		$('#sumAmount').empty();
+		$('#sumAmount').append('수량 : ' + sum);
+		$(this).parents('td').nextAll('.sumPrice').empty();
+		$(this).parents('td').nextAll('.sumPrice').append(sumSum);
+		$('.sumPrice').each(function(i, item) {		
+			sumPrice += Number($(this).text());
+			console.log(sumPrice);			
+		})
+		$('#sumSumPrice').empty();
+		$('#sumSumPrice').append('총 가격 : ' + sumPrice);
+	})
+	
+	/* 수량 감소 */
+	$('.down').click(function() {
+		var sumPrice = 0;
+		var qu = Number($(this).prevAll('.qu').text());
+		if (qu > 1) {
+			qu = qu - 1;
+			$(this).prevAll('.qu').empty();
+			$(this).prevAll('.qu').append(qu);
+			var sumSum = 0;
+			sumSum = qu * Number($(this).parents('td').next().text());
+			console.log(sumSum);
+			var sum = 0;
+			$('.qu').each(function(i, item) {
+				sum += Number($(this).text());
+			})
+			$('#sumAmount').empty();
+			$('#sumAmount').append('수량 : ' + sum);
+			$(this).parents('td').nextAll('.sumPrice').empty();
+			$(this).parents('td').nextAll('.sumPrice').append(sumSum);
+			$('.sumPrice').each(function(i, item) {		
+				sumPrice += Number($(this).text());
+				console.log(sumPrice);			
+			})
+			$('#sumSumPrice').empty();
+			$('#sumSumPrice').append('총 가격 : ' + sumPrice);
+		}
+	})
+	$('#delProductBtn').click(function(){
+		var delCheckArr = [];
+		$('input[name="delCheck"]:checked').each(function(){
+			delCheckArr.push($(this).val());
+		})
+		console.log(delCheckArr);
+		
+	})
+	
+	
+	
+	
+	
+	</script>
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=2"></script>

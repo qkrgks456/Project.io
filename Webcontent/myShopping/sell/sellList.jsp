@@ -56,39 +56,30 @@
 								<th scope="col">가격</th>
 								<th scope="col">수량</th>
 								<th scope="col">합계</th>
-								<th class= "text-center" scope="col" >상세보기</th>
+								<th class="text-center" scope="col">관리</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr class="">
 								<th class="align-middle" scope="row">
 
+									<div class="form-check align-middle">
+										<input class="form-check-input" type="checkbox" value=""
+											id="flexCheckDefault">
 
-									<div class="check">
-										<input type="checkbox" name="buy" value="260" checked="">
 									</div>
-								<td class="align-middle">브라질 버본 산토스 No.2</td>
+								<td class="align-middle">과테말라 안티구아</td>
 
 								<td class="align-middle">31202</td>
 
-								<td class="align-middle">
-									<div class="subdiv">
-										<div class="basketprice">
-											<input type="hidden" name="p_price" id="p_price1"
-												class="p_price" value="9500">9,500원
-										</div>
-									</div>
-								</td>
+								<td class="align-middle">8900</td>
 
-								<td class="align-middle">2</td>
-								<td class="align-middle">
-									<div class="sum">19,000원</div>
-								</td>
+								<td class="align-middle"><div class="qu">3</div></td>
+								<td class="price align-middle">26700</td>
 								<td>
 									<div class="d-grid gap-2 col-6 mx-auto mt-1">
-										<a class="btn btn-secondary btn-sm">상세보기</a> <a
-											class="btn btn-secondary btn-sm"
-											onclick="javascript:basket.delItem();">삭제하기</a>
+										<a class="btn btn-secondary btn-sm"
+											onclick="location.href='/Project/myShopping/sell/productList/productDelResult.jsp'">삭제하기</a>
 									</div>
 								</td>
 							</tr>
@@ -97,140 +88,113 @@
 						<tr class="">
 							<th class="align-middle" scope="row">
 
+								<div class="form-check align-middle">
+									<input class="form-check-input" type="checkbox" value=""
+										id="flexCheckDefault">
 
-								<div class="check">
-									<input type="checkbox" name="buy" value="260" checked="">
 								</div>
-							<td class="align-middle">브라질 버본 산토스 No.2</td>
+							<td class="align-middle">에티오피아 예가체프 G2</td>
 
-							<td class="align-middle">31202</td>
+							<td class="align-middle">31234</td>
 
-							<td class="align-middle">
-								<div class="subdiv">
-									<div class="basketprice">
-										<input type="hidden" name="p_price" id="p_price1"
-											class="p_price" value="9500">9,500원
-									</div>
-								</div>
-							</td>
+							<td class="align-middle">8000</td>
 
-							<td class="align-middle">2</td>
-							<td class="align-middle">
-								<div class="sum">19,000원</div>
-							</td>
+							<td class="align-middle"><div class="qu">2</div></td>
+							<td class="price align-middle">16000</td>
 							<td>
 								<div class="d-grid gap-2 col-6 mx-auto mt-1">
-									<a class="btn btn-secondary btn-sm">상세보기</a> <a
-										class="btn btn-secondary btn-sm"
-										onclick="javascript:basket.delItem();">삭제하기</a>
+									<a class="btn btn-secondary btn-sm"
+										onclick="location.href='/Project/myShopping/sell/productList/productDelResult.jsp'">삭제하기</a>
 								</div>
-							</td>
-						</tr>
+								</td>
+							</tr>
 						</tbody>
 
 						<tr class="">
 							<th class="align-middle" scope="row">
 
+								<div class="form-check align-middle">
+									<input class="form-check-input" type="checkbox" value=""
+										id="flexCheckDefault">
 
-								<div class="check">
-									<input type="checkbox" name="buy" value="260" checked="">
 								</div>
-							<td class="align-middle">브라질 버본 산토스 No.2</td>
+							<td class="align-middle">에티오피아 시다모 G2</td>
 
-							<td class="align-middle">31202</td>
+							<td class="align-middle">32111</td>
 
-							<td class="align-middle">
-								<div class="subdiv">
-									<div class="basketprice">
-										<input type="hidden" name="p_price" id="p_price1"
-											class="p_price" value="9500">9,500원
-									</div>
-								</div>
-							</td>
+							<td class="align-middle">8300</td>
 
-							<td class="align-middle">2</td>
-							<td class="align-middle">
-								<div class="sum">19,000원</div>
-							</td>
+							<td class="align-middle"><div class="qu">3</div></td>
+							<td class="price align-middle">24900</td>
 							<td>
 								<div class="d-grid gap-2 col-6 mx-auto mt-1">
-									<a class="btn btn-secondary btn-sm">상세보기</a> <a
-										class="btn btn-secondary btn-sm"
-										onclick="javascript:basket.delItem();">삭제하기</a>
-								</div>
-							</td>
-						</tr>
+									<a class="btn btn-secondary btn-sm"
+										onclick="location.href='/Project/myShopping/sell/productList/productDelResult.jsp'">삭제하기</a>
+							</div>
+								</td>
+							</tr>
 						</tbody>
+
 
 						<tr class="">
 							<th class="align-middle" scope="row">
 
+								<div class="form-check align-middle">
+									<input class="form-check-input" type="checkbox" value=""
+										id="flexCheckDefault">
 
-								<div class="check">
-									<input type="checkbox" name="buy" value="260" checked="">
 								</div>
-							<td class="align-middle">브라질 버본 산토스 No.2</td>
+							<td class="align-middle">과테말라 안티구아</td>
 
 							<td class="align-middle">31202</td>
 
-							<td class="align-middle">
-								<div class="subdiv">
-									<div class="basketprice">
-										<input type="hidden" name="p_price" id="p_price1"
-											class="p_price" value="9500">9,500원
-									</div>
-								</div>
-							</td>
+							<td class="align-middle">8900</td>
 
-							<td class="align-middle">2</td>
-							<td class="align-middle">
-								<div class="sum">19,000원</div>
-							</td>
+							<td class="align-middle"><div class="qu">3</div></td>
+							<td class="price align-middle">19000</td>
 							<td>
 								<div class="d-grid gap-2 col-6 mx-auto mt-1">
-									<a class="btn btn-secondary btn-sm">상세보기</a> <a
-										class="btn btn-secondary btn-sm"
-										onclick="javascript:basket.delItem();">삭제하기</a>
+									<a class="btn btn-secondary btn-sm"
+										onclick="location.href='/Project/myShopping/sell/productList/productDelResult.jsp'">삭제하기</a>
 								</div>
 							</td>
 						</tr>
 						</tbody>
-
 						<tr class="">
 							<th class="align-middle" scope="row">
 
+								<div class="form-check align-middle">
+									<input class="form-check-input" type="checkbox" value=""
+										id="flexCheckDefault">
 
-								<div class="check">
-									<input type="checkbox" name="buy" value="260" checked="">
 								</div>
-							<td class="align-middle">브라질 버본 산토스 No.2</td>
+							<td class="align-middle">과테말라 안티구아</td>
 
 							<td class="align-middle">31202</td>
 
-							<td class="align-middle">
-								<div class="subdiv">
-									<div class="basketprice">
-										<input type="hidden" name="p_price" id="p_price1"
-											class="p_price" value="9500">9,500원
-									</div>
-								</div>
-							</td>
+							<td class=" align-middle">8900</td>
 
-							<td class="align-middle">2</td>
-							<td class="align-middle">
-								<div class="sum">19,000원</div>
-							</td>
+							<td class="align-middle"><div class="qu">3</div></td>
+							<td class="price align-middle">19000</td>
 							<td>
 								<div class="d-grid gap-2 col-6 mx-auto mt-1">
-									<a class="btn btn-secondary btn-sm">상세보기</a> <a
-										class="btn btn-secondary btn-sm"
-										onclick="javascript:basket.delItem();">삭제하기</a>
+									<a class="btn btn-secondary btn-sm"
+										onclick="location.href='/Project/myShopping/sell/productList/productDelResult.jsp'">삭제하기</a>
 								</div>
 							</td>
 						</tr>
 						</tbody>
+						<tfoot>
+							<tr>
+								<th>합계</th>
+								<th id='sumAmount'>수량 : 3</th>
+								<th id='sumSumPrice'>총 매출 : 65000</th>
+								<th colspan="3"></th>
+							</tr>
+						</tfoot>
 					</table>
-					합계: 144,700원 <br> 수량: 9 개 ( 임시 -> UI고칠것임)
+					</table>
+
 
 
 				</div>
@@ -245,34 +209,84 @@
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
 	<!-- 스크립트 추가라인  -->
-	<script>
-		//이벤트 리스너 등록
+	<script type="text/javascript">
+		/* 페이지 시작시 총 수량  */
+		var sum = 0;
+		$('.qu').each(function(i, item) {
+			sum += Number($(this).text());
+		})
+		$('#sumAmount').empty();
+		$('#sumAmount').append('수량 : ' + sum);
+		/* 페이지 시작시 총 가격  */
+		var sumPrice = 0;
+		$('.price').each(function(i, item) {
+			sumPrice += Number($(this).text());
+		})
+		$('#sumSumPrice').empty();
+		$('#sumSumPrice').append('총 매출 : ' + sumPrice+'원');
+		/* 수량증가  */
+		var sumSum = 0;
 
-		document.addEventListener('DOMContentLoaded', function() {
-			// "선택 상품 삭제" 버튼 클릭
+		$('.up').click(function() {
+			var sumPrice = 0;
+			var qu = Number($(this).prev('.qu').text());
+			qu = qu + 1;
+			$(this).prev('.qu').empty();
+			$(this).prev('.qu').append(qu);
+			var sumSum = 0;
+			sumSum = qu * Number($(this).parents('td').next().text());
+			var sum = 0;
+			$('.qu').each(function(i, item) {
+				sum += Number($(this).text());
+			})
+			$('#sumAmount').empty();
+			$('#sumAmount').append('수량 : ' + sum);
+			$(this).parents('td').nextAll('.sumPrice').empty();
+			$(this).parents('td').nextAll('.sumPrice').append(sumSum);
+			$('.sumPrice').each(function(i, item) {
+				sumPrice += Number($(this).text());
+				console.log(sumPrice);
+			})
+			$('#sumSumPrice').empty();
+			$('#sumSumPrice').append('총 가격 : ' + sumPrice);
+		})
 
-			document.querySelector('.basketrowcmd a:first-child')
-					.addEventListener('click', function() {
-
-						basket.delCheckedItem();
-
-					});
-			// 장바구니 행 "삭제" 버튼 클릭
-
-			document.querySelectorAll('.basketcmd a').forEach(
-
-			function(item) {
-
-				item.addEventListener('click', function() {
-
-					basket.delItem();
-
-				});
-
+		/* 수량 감소 */
+		$('.down').click(function() {
+			var sumPrice = 0;
+			var qu = Number($(this).prevAll('.qu').text());
+			if (qu > 1) {
+				qu = qu - 1;
+				$(this).prevAll('.qu').empty();
+				$(this).prevAll('.qu').append(qu);
+				var sumSum = 0;
+				sumSum = qu * Number($(this).parents('td').next().text());
+				console.log(sumSum);
+				var sum = 0;
+				$('.qu').each(function(i, item) {
+					sum += Number($(this).text());
+				})
+				$('#sumAmount').empty();
+				$('#sumAmount').append('수량 : ' + sum);
+				$(this).parents('td').nextAll('.sumPrice').empty();
+				$(this).parents('td').nextAll('.sumPrice').append(sumSum);
+				$('.sumPrice').each(function(i, item) {
+					sumPrice += Number($(this).text());
+					console.log(sumPrice);
+				})
+				$('#sumSumPrice').empty();
+				$('#sumSumPrice').append('총 가격 : ' + sumPrice);
 			}
+		})
+		$('#delProductBtn').click(function() {
+			var delCheckArr = [];
+			$('input[name="delCheck"]:checked').each(function() {
+				delCheckArr.push($(this).val());
+			})
+			console.log(delCheckArr);
 
-			);
-			</script>
+		})
+	</script>
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=2"></script>

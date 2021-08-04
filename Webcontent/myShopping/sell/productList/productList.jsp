@@ -39,9 +39,6 @@
 						class="me-2 btn btn-secondary">
 						<i class="bi bi-text-left"></i>
 					</button>
-
-
-
 					<h2 class="fw-bold my-3">상품정보</h2>
 				</div>
 				<div class="container">
@@ -57,63 +54,59 @@
 							</tr>
 						</thead>
 						<tbody>
-						<tr>
-								<th class="align-middle" scope="row"><div class="check">
-											<input type="checkbox" name="buy" value="262" checked=""
-												onclick="javascript:basket.checkItem();">&nbsp;
-										</div></th>
-									<td class="align-middle">콜롬비아 수프리모</td>
-									<td class="align-middle">30142</td>
-								<td class="align-middle">8,000원</td>
-								<td class="align-middle">87개</td>
-								<td>
-									<div class="d-grid gap-2 col-6 mx-auto mt-1">
-										<button class="btn btn-secondary btn-sm" type="button"
-									onclick="location.href='/Project/myShopping/sell/productInput/productInput.jsp'">상세보기</button>
-									<a href="javascript:void(0)" class="btn btn-secondary btn-sm" type="button"
-												onclick="javascript:basket.delItem();">삭제</a>
-									</div>
-								</td>
-							</tr>
+
 							<tr>
-								<th class="align-middle" scope="row"><div class="check">
-											<input type="checkbox" name="buy" value="261" checked=""
-												onclick="javascript:basket.checkItem();">&nbsp;
-										</div></th>
-								<td class="align-middle">써머 주스잔</td>
-									<td class="align-middle">23123</td>
-								<td class="align-middle">18,000원</td>
-								<td class="align-middle">17개</td>
-								<td>
-									<div class="d-grid gap-2 col-6 mx-auto mt-1">
-										<button class="btn btn-secondary btn-sm" type="button"
-									onclick="location.href='/Project/myShopping/sell/productInput/productInput.jsp'">상세보기</button> <a
-											class="btn btn-secondary btn-sm">삭제</a>
+								<th class="align-middle" scope="row">
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value=""
+											id="flexCheckDefault">
+
 									</div>
-								</td>
-							</tr>
-							<tr>
-								<th class="align-middle" scope="row"><div class="check">
-											<input type="checkbox" name="buy" value="262" checked=""
-												onclick="javascript:basket.checkItem();">&nbsp;
-										</div></th>
+								</th>
 								<td class="align-middle">과테말라 안티구아</td>
-									<td class="align-middle">30133</td>
+								<td class="align-middle">30133</td>
 								<td class="align-middle">8,900원</td>
 								<td class="align-middle">53개</td>
 								<td>
 									<div class="d-grid gap-2 col-6 mx-auto mt-1">
 										<button class="btn btn-secondary btn-sm" type="button"
-									onclick="location.href='/Project/myShopping/sell/productInput/productInput.jsp'">상세보기</button> <a
-											class="btn btn-secondary btn-sm">삭제</a>
+											onclick="location.href='/Project/myShopping/sell/productInput/productInput.jsp'">상세보기</button>
+											<a class="btn btn-secondary btn-sm"
+										onclick="location.href='/Project/myShopping/sell/productList/productDelResult.jsp'">삭제하기</a>
+										</div>
+									</div>
+									</div>
+								</td>
+							</tr>
+
+							<tr>
+								<th class="align-middle" scope="row">
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value=""
+											id="flexCheckDefault">
+
+									</div>
+								</th>
+								<td class="align-middle">과테말라 안티구아</td>
+								<td class="align-middle">30133</td>
+								<td class="align-middle">8,900원</td>
+								<td class="align-middle">53개</td>
+								<td>
+									<div class="d-grid gap-2 col-6 mx-auto mt-1">
+										<button class="btn btn-secondary btn-sm" type="button"
+											onclick="location.href='/Project/myShopping/sell/productInput/productInput.jsp'">상세보기</button>
+									<a class="btn btn-secondary btn-sm"
+										onclick="location.href='/Project/myShopping/sell/productList/productDelResult.jsp'">삭제하기</a>
+								
+									</div>
 									</div>
 								</td>
 							</tr>
 						</tbody>
 					</table>
 					<a href="javascript:void(0)" class="btn btn-dark" type="button"
-									onclick="javascript:basket.delCheckedItem();">선택상품삭제</a>
-						
+						onclick="javascript:basket.delCheckedItem();">선택상품삭제</a>
+
 				</div>
 			</div>
 		</div>
@@ -126,7 +119,17 @@
 	//이벤트 리스너 등록
 
 	document.addEventListener('DOMContentLoaded', function() {
-
+		
+		let basket = {
+			    totalCount: 0, 
+			    totalPrice: 0,
+			    //체크한 장바구니 상품 비우기
+			    delCheckedItem: function(){
+			        document.querySelectorAll("input[name=buy]:checked").forEach(function (item) {
+			            item.parentElement.parentElement.parentElement.remove();
+			        });
+			        //AJAX 서버 업데이트 전송
+			        
 		// "선택 상품 삭제" 버튼 클릭
 
 		document.querySelector('.basketrowcmd a:first-child')
@@ -150,6 +153,23 @@
 
 		);
 		
+
+		// 장바구니 행 "삭제" 버튼 클릭
+
+		document.querySelectorAll('.basketcmd a').forEach(
+
+		function(item) {
+
+			item.addEventListener('click', function() {
+
+				basket.delItem();
+
+			});
+
+		}
+
+		);
+
 		delItem : function() {
 
 			event.target.parentElement.parentElement.parentElement.remove();
