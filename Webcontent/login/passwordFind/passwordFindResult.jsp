@@ -44,13 +44,13 @@
 				<div class="container px-3 w-50 border my-4">
 				
 						<h2 class="fw-bold">저장한 비밀번호 확인</h2>
-						
+						<!-- 
 						<p>
 							*본인확인 이메일 주소와 회원가입시 입력한 이메일 주소가 같아야, <br /> 
 							이메일을 통하여 비밀번호를 확인 받을 수 있습니다.
 							
 						</p>
-						
+						-->
 						<hr />
 						<div class="form col-md-9 mb-3 mt-3">
 							<label for="validationTooltip04" class="fw-bold my-1">비밀번호</label>

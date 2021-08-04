@@ -42,27 +42,39 @@
 				<div class="container px-3 w-50 border my-4">
 					<form action="/Project/findIdByEmail  " method="post" class="my-4">
 						<h2 class="fw-bold">본인확인 이메일로 인증</h2>
+							<!-- 
 						<p>
-							* 본인확인 이메일 주소와 입력한 이메일 주소가 같아야,<br /> 이메일을 통하여 아이디를 확인 받을 수
-							있습니다.
+							*본인확인 이메일 주소와 회원가입시 입력한 이메일 주소가 같아야,<br /> 
+							이메일을 통하여 아이디를 확인 받을 수 있습니다.
 						</p>
+						 -->
 						<hr />
 						<div class="form col-md-9 mb-3 mt-3">
 							<label for="validationTooltip04" class="fw-bold my-1">이름</label>
-							<input type="text" class="form-control" id="UserName" name="UserName"
-								placeholder="정확하게 입력해주세요" required>
+							<input type="text" class="form-control" id="UserName"
+								name="UserName" placeholder="정확하게 입력해주세요" required>
 							<div class="invalid-feedback">필수 정보입니다</div>
 						</div>
 						<div class="form col-md-9 mb-3">
 							<label for="validationTooltipUsername" class="fw-bold my-1">이메일</label>
-							<input type="text" class="form-control" id="UserEmail" name="UserEmail"
-								placeholder="정확하게 입력해주세요" required>
-								<!--  아이디 찾기 버튼 --> 
-								<div class="text-center mt-2">
+							<input type="text" class="form-control" id="UserEmail"
+								name="UserEmail" placeholder="정확하게 입력해주세요" required>
+							<!--  아이디 찾기 버튼 -->
+							<div class="text-center mt-2">
 								<input class="btn btn-secondary" type="submit" value="아이디 찾기">
-								</div>
-							<div class="invalid-feedback">필수 정보입니다</div>						
+							</div>
+							<div class="invalid-feedback">필수 정보입니다</div>
 						</div>
+						<c:if test="${idchecksuc eq 'false'}">
+						<div id="redalert"
+							class=" alert alert-danger d-flex align-items-center"
+							role="alert">
+							<svg class="bi flex-shrink-0 me-2" width="24" height="24"
+								role="img" aria-label="Danger:">
+						<use xlink:href="#exclamation-triangle-fill" /></svg>
+							<div>정보를 확인해주세요</div>
+						</div>
+						</c:if>
 					</form>
 				</div>
 			</div>

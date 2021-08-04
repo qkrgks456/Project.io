@@ -12,7 +12,7 @@
 				href="/Project/myPage/myPageMenu/memberDrop.jsp"
 				style="cursor: pointer;">회원탈퇴</a><a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myPage/myPageMenu/passChange.jsp"
+				href="/Project/myPage/myPageMenu/passChangeCheck.jsp"
 				style="cursor: pointer;">비밀번호변경</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
 				href="/Project/cafeAlarmList" style="cursor: pointer;">알림리스트</a> <a

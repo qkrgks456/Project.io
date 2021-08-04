@@ -82,7 +82,7 @@ public class CafeController extends HttpServlet {
 					resp.getWriter().print(new Gson().toJson(map));
 				}
 			} else {
-				resp.sendRedirect("/main");
+				resp.sendRedirect("/Project/");
 			}
 			break;
 		case "/ownerCheck":

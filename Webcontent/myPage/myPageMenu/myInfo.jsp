@@ -55,7 +55,7 @@ footer {
 						class="needs-validation py-3" novalidate>					
 						<div class="form-floating col-md-9 mb-3">
 						<input type="text" class="nullchecks form-control" value="${dto.name}"
-							id="UserName" name="UserName" placeholder="이름" required> <label
+							title="${updateSuc}" id="UserName" name="UserName" placeholder="이름" required> <label
 							for="validationTooltip04" class="fw-bold">이름</label>
 						<div class="invalid-feedback">필수 정보입니다</div>
 					</div>
@@ -96,12 +96,12 @@ footer {
 							<label for="checks" class="fw-bold" id="emailsusin" name="emailsusin" >이메일 수신</label>
 							<div class="form-check form-check-inline mx-3">
 								<label class="form-check-label" for="emailcheckchange1">
-									동의 </label> <input class="form-check-input" type="radio"
+									동의 </label> <input class="form-check-input" type="radio" value="Y"
 									name="emailcheckchange" id="emailcheckchange1"<c:if test="${dto.emailCheck eq 'Y'}">checked</c:if>>
 							</div>
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio"  
-									name="emailcheckchange" id="emailcheckchange2" <c:if test="${dto.emailCheck eq 'N'}">checked</c:if>> <label
+									name="emailcheckchange" id="emailcheckchange2" value="N" <c:if test="${dto.emailCheck eq 'N'}">checked</c:if>> <label
 									class="form-check-label" for="emailcheckchange2"> 거부 </label>
 							</div>
 						</div>
@@ -110,18 +110,19 @@ footer {
 							<div class="form-check form-check-inline mx-3">
 								<label class="form-check-label" for="alertradiochange1">
 									동의 </label> <input class="form-check-input" type="radio"
-									name="alertradiochange" id="alertradiochange1" <c:if test="${dto.congestionCheck eq 'Y'}">checked</c:if>>
+									name="alertradiochange" id="alertradiochange1" value="Y" <c:if test="${dto.congestionCheck eq 'Y'}">checked</c:if>>
 							</div>
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio"
-									name="alertradiochange" id="alertradiochange2" <c:if test="${dto.congestionCheck eq 'N'}">checked</c:if>> <label
-									class="form-check-label" for="alertradiochange2"> 거부 </label>
+									name="alertradiochange" id="alertradiochange2" value="N" <c:if test="${dto.congestionCheck eq 'N'}">checked</c:if>> <label
+									class="form-check-label" for="alertradiochange2" > 거부 </label>
 							</div>
 						</div>
 						<hr />
 						<div class="col text-center">
 							<button id="infochange" class="btn btn-dark" type="submit"  >정보수정</button>
 						</div>
+						
 					</form>
 				</div>
 			</div>
@@ -134,20 +135,17 @@ footer {
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=8"></script>
 	<script type="text/javascript">
-	$(document).ready(function() {
-		$('#infochange').click(function() {
+	console.log($('#UserName').attr('title'));
 			
-			
-			
-			
-		/* 	Swal.fire({
-					title: '정보수정완료',
-					 icon: 'success',
-					 confirmButtonColor: '#000',
-					 confirmButtonText: '확인',
-			}) */
-		})
-	})	
+	if($('#UserName').attr('title')!=""){
+		Swal.fire({
+			title: '정보수정완료',
+			 icon: 'success',
+			 confirmButtonColor: '#000',
+			 confirmButtonText: '확인',
+	})
+	}
+
 	</script>
 </body>
 </html>

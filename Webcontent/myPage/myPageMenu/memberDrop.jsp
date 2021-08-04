@@ -26,7 +26,6 @@
 		<c:if test="${sessionScope.loginId eq null}">
 			<jsp:include page="/fixMenu/navbar.jsp"></jsp:include>
 		</c:if>
-			<form action="/Project/deleteMember  " method="post" class="my-4">
 		
 		<!-- 들어갈 내용 -->
 		<div class="d-flex" style="height: auto; min-height: 100vh;">
@@ -45,7 +44,7 @@
 				<div class="cont container">
 					<!-- 회원탈퇴 폼 -->
 				
-					<form id="exitform" class="py-3">
+					<div id="ss" class="py-3">
 						<p class="fs-4 fw-bold">안내사항</p>
 						<ul class="list-group list-group-flush">
 							<li class="list-group-item">* 사용하고 계신 아이디는 탈퇴할 경우 재사용 및 복구가
@@ -133,10 +132,12 @@
 						</div>
 						<hr />
 						<div class="col text-center">
-							<button id="dropbtn" class="btn btn-dark mx-2" type="submit">탈퇴하기</button>
+						<form action="/Project/deleteMember" method="post" id="delForm">
+							<input id="dropbtn" class="btn btn-dark mx-2" type="button" value="탈퇴하기">
+						</form>
 						</div>
-					</form>
-</form>
+					</div>
+
 				</div>
 			</div>
 		</div>
@@ -147,38 +148,35 @@
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=23"></script>
-	<script type="text/javascript">
 	
-	/*
+<script type="text/javascript">	
+
 	$(document).ready(function() {
 		$('#dropbtn').click(function() {
 			if($('#exitcheck').is(":checked")){
 				Swal.fire({
 					  title: '정말 탈퇴하시겠습니까?',
-					  text: "* 사용하고 계신 아이디는 탈퇴할 경우 재사용 및 복구가 불가능합니다.",
+					  text: "사용하고 계신 아이디는 탈퇴할 경우 재사용 및 복구가 불가능합니다.",
 					  icon: 'warning',
-					  showDenyButton: true,
+					  showCancelButton: true,
 					  confirmButtonColor: '#000',
 					  confirmButtonText: '탈퇴하기',
-					  denyButtonText: '취소'
-					}).then((result) => {	
-						if (result.isConfirmed) {
-					    Swal.fire(
-					    		{title: '탈퇴완료',
-								 icon: 'success',
-								 confirmButtonColor: '#000',
-								 confirmButtonText: '확인',
-					    		}
-					    )
+					  cancelButtonText: '취소'		
+					
+					}).then((result) => {							
+						 if (result.isConfirmed) {
+							 $('#delForm').submit();
 						}
 					})
-			}else{
+			}else{				
 				$('#exitcheck').addClass('is-invalid');
 			}
 			
 		})
 	})
-	*/
+	
 	</script>
 </body>
+
+
 </html>

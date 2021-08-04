@@ -42,14 +42,20 @@
 				<div class="cont container w-50">
 					<!-- 내 정보 수정 폼 -->
 					<!--  구상.. 내정보수정을 입력하면->비밀번호 변경하라는 페이지로 이동해서 수정을 ? -->
-					<form id="myinfoformqs" action="/Project/passwordChange" method="post"
+					<form id="myinfoforms" action="/Project/passwordFind" method="post"
 						class="needs-validation py-3" novalidate>
 						<div class="text-center">
-							<h3 class="fw-bold">비밀번호변경</h3>
+							<h3 class="fw-bold">본인확인</h3>
+						</div>
+						<div class="form-floating col-md-9 mb-3">
+							<input type="text" class="form-control" id="UserIds" name="UserId"
+								placeholder="아이디" value="" required> <label
+								for="validationTooltip02" class="fw-bold">아이디</label>
+							<div class="invalid-feedback">10자 이상 입력해주세요</div>
 						</div>
 						<div class="form-floating col-md-9 mb-3">
 							<input type="password" class="form-control" id="UserPws"
-								name="UserPws" placeholder="비밀번호" value="" required> <label
+								name="UserPw" placeholder="비밀번호" value="" required> <label
 								for="validationTooltip02" class="fw-bold">비밀번호</label>
 							<div class="invalid-feedback">10자 이상 입력해주세요</div>
 						</div>
@@ -61,7 +67,6 @@
 						</div>
 						<div class="text-center">
 							<button class="btn btn-dark" type="submit">확인</button>
-							<!-- 
 							<c:if test="${pwfindsuc eq 'false'}">
 								<div id="redalert"
 									class=" alert alert-danger d-flex align-items-center"
@@ -72,7 +77,6 @@
 									<div>정보를 확인해주세요</div>
 								</div>
 							</c:if>
-							 -->
 						</div>
 					</form>
 				</div>

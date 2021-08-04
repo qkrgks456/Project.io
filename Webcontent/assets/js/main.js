@@ -185,8 +185,7 @@ $(document).ready(function() {
 	$(".nullchecks").on("propertychange change keyup paste input", function() {
 		if ($(this).val().trim() != "") {
 			$(this).attr("class", "form-control is-valid");
-		}else{
-			
+		}else{		
 			$(this).attr("class", "form-control is-invalid");
 		}
 	});
