@@ -31,10 +31,82 @@
 		<!-- 사이드바 불러오기 -->
 			<jsp:include page="/admin/adminSideBar.jsp"></jsp:include>
 			<div class="cont container-fluid mx-5 py-5">
-			<!-- 여기부터 내용 넣으세요 -->
-				관리자페이지
+			<!-- 카페 리스트  -->
+				<div class="cont container-fluid mx-5 py-5">
+				<!-- 회원정보 탭(여닫기) -->
+					<div class="d-flex align-items-center">
+						<button type="button" id="sidebarCollapse"
+							class="me-2 btn btn-secondary">
+							<i class="bi bi-text-left"></i>
+						</button>
+						<h2 class="fw-bold my-3">카페정보</h2>
+					</div>
+					<hr />
+					<!-- 아래 내용 -->
+					<div class="cont container">
+						<form id="adminCageListform" action="/Project/adminCafeSearch" method="post">
+						<!-- 셀렉/text/검색 3개 -->
+						<div class="row mb-1">
+							<!-- 셀렉트 -->
+							<div class="form-group col-2 m-0 p-0">
+								<select class="form-select" name="adminCafeSearchSelect">
+									<option value="memberkey" selected>아이디</option>
+									<option value="email">이메일</option>
+									<option value="cafeNo">카페번호</option>
+									<option value="cafeName">카페이름</option>
+								</select>
+							</div>
+							<!-- 검색/버튼 -->
+							<div class="col-10 m-0 p-0">
+								<!-- 왼쪽으로 당기기 -->
+								<div class="row">
+									<!-- 검색 공간 -->
+									<div class="form-group col-10 mp-0 me-0">
+										<input type="text" class="form-control" id="adminCafeSearch"
+											name="adminCafeSearch" />
+									</div>
+									<!-- 검색 버튼 공간 -->
+									<div class="form-group col-2 p-0 m-0">
+										<button class="btn btn-dark" type="submit">검색</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						</form>
+						
+						<!-- 테이블 출력 공간 -->
+						<div class="row mb-1">
+						<table class="table table-bordered mt-4">
+							<tr>
+								<th class="center">아이디</th>
+								<th class="center">판매자</th>
+								<th class="center">카페이름</th>
+								<th class="center">블라인드 여부</th>
+								<th class="center">상세보기</th>
+							</tr>
+							<!-- 반환되는 값에 따라 데이터 존재x, 존재 표시 -->
+							<c:if test="${empty list}"> <!-- 임시 널값 -->
+							<tr><td colspan = "5">해당 데이터가 존재하지 않습니다.</td></tr>
+							</c:if>
+							
+							<c:if test="${!empty list}">
+							<c:forEach items="${list}" var="adminCafeSearch">
+							<tr>
+							<td class="align-middle">${adminCafeSearch.memberkey}</td>
+							<td class="align-middle">${adminCafeSearch.name}</td>
+							<td class="align-middle">${adminCafeSearch.cafeName}</td>
+							<td class="align-middle">${adminCafeSearch.cafeDel}</td>
+							<td class="align-middle"><button class="btn btn-dark" type="button" onclick="location.href='/Project/adminCafeDetail?memberKey=${adminCafeSearch.memberkey}'">상세보기</button></td>
+							</tr>
+							</c:forEach>
+							</c:if>
+						</table>
+						</div>
+						
+				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>

@@ -14,11 +14,6 @@
 <!-- main css 추가 -->
 <link href="/Project/assets/css/main.css?ver=4" rel="stylesheet">
 <title>카페</title>
-<style>
-	#authority{
-		color:#ff0000;
-	}
-</style>
 </head>
 <body>
 	<div class="wrap p-0 m-0">
@@ -37,68 +32,49 @@
 			<jsp:include page="/admin/adminSideBar.jsp"></jsp:include>
 			<div class="cont container-fluid mx-5 py-5">
 			<!-- 여기부터 내용 넣으세요 -->
-				<!-- 오른쪽내용 -->
-			<div class="cont container-fluid mx-5 py-5">
+				<div class="cont container-fluid mx-5 py-5">
 				<!-- 회원정보 탭(여닫기) -->
 					<div class="d-flex align-items-center">
 						<button type="button" id="sidebarCollapse"
 							class="me-2 btn btn-secondary">
 							<i class="bi bi-text-left"></i>
 						</button>
-						<h2 class="fw-bold my-3">관리자 상세</h2>
+						<h2 class="fw-bold my-3">블랙리스트 추가</h2>
 					</div>
-					<hr />
-					
-					<!-- 아래 내용 -->
-					<!-- 관리자 상세 테이블 -->
-					<div class="cont container">
-					
+					<hr>
+					<!-- 블랙 리스트 id, 이름 -->
+					<form id="adminblackform" action="/Project/adminMemberBlackAdd" method="post"
+						class="needs-validation py-3" novalidate>
 					
 					<div class = "col-md-9 mb-3"><!-- md 미디엄 -->
-					
 					<table class="table table-bordered mt-4">
 						<tr>
-							<th class="center" width="30%">아이디</th>
-							<td class="align-middle" width="70%">${adminDetail.dto.memberkey}</td>
-						</tr>
-						<tr>
+							<th class="center" width="55%">아이디</th>
 							<th class="center">이름</th>
-							<td class="align-middle">${adminDetail.dto.name}</td>
 						</tr>
 						<tr>
-							<th class="center">이메일</th>
-							<td class="align-middle">${adminDetail.dto.email}</td>
+							<td class="align-middle" width="45%">${adminMemberBlack.memberkey}</td>
+							<td class="align-middle">${adminMemberBlack.name}</td>
 						</tr>
-						
-						<tr>
-							<th class="center">주소 </th>
-							<td class="align-middle">${adminDetail.dto.address}</td>
-						</tr>
-						
-						<tr>
-							<th class="center">등급</th>
-							<td class="align-middle">${adminDetail.dto.authority}</td>
-						</tr>
-					
 					</table>
-					<div>
-					<c:if test="${adminDetail.suc eq 1}">
-						<a id="authority">"권한이 없습니다."</a>
-					</c:if>
-
+					<!-- 블랙 사유 텍스트에리어 -->
+					<div class="mb-3">
+	  					<label for="blackreason" class="form-label">사유 작성</label>
+	  					<textarea class="form-control" id="blackRePort" name="blackRePort" rows="6"></textarea>
 					</div>
-					<form id="deleteauthorityForm" action="/Project/authorityDelete" method="post">
-					<div class="form-group">
-						<input class = form-control type="hidden" name = "sessionId" id= "sessionId" value="${sessionScope.loginId}">
-						<input class = form-control type="hidden" name = "memberkey" id= "memberkey" value="${adminDetail.dto.memberkey}">
-						<button id="deleteauthority" class="btn btn-dark" type="submit">권한 삭제</button>
-						<button id="deleteauthority" class="btn btn-dark" type="button" onclick ="location.href='/Project/adminSearch'">리스트로</button>
+					<!-- form 버튼  -->
+					<div class="form-group md-3">
+						<input type="hidden"  class = "form-control" id="blackId" name="blackId" value=${adminMemberBlack.memberkey}>
+						<button id="blackaddsubmit" class="btn btn-dark" type="submit">추가</button>
+						<button id="adminmemberDetail" class="btn btn-dark" type="button" onclick="location.href='adminMemberListDetail?memberkey=${adminMemberBlack.memberkey}'">회원정보로</button>
+						<button id="adminmemberlist" class="btn btn-dark" type="button" onclick="location.href='admin/adminList/adminMemberList/adminMemberList.jsp'">리스트로</button>
 					</div>
+						
+					</div>
+					
 					</form>
 					
 					
-					</div>
-					</div>
 				</div>
 			</div>
 		</div>
@@ -109,21 +85,21 @@
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=6"></script>
-	<script>
-	$.ajax({
-		type:'post',
-		url:'/adminDetail',
-		data:{},
-		dataType:'JSON',
-		success:function(data){
-			console.log("관리자 권한이 있습니다.");
-		},
-		error: function(e){
-			console.log("관리자 권한이 없습니다.);
-		}
+	
+	<!-- blackaddsubmit 버튼이 눌릴시 팝업 -->
+	 <script type="text/javascript">
+	$(document).ready(function() {
+		$('#blackaddsubmit').click(function() {
+			Swal.fire({
+					title: '블랙 리스트 추가완료',
+					 icon: 'success',
+					 confirmButtonColor: '#000',
+					 confirmButtonText: '확인',
+			})
+		})
 		
-		
-	});
-	</script>
+	})	
+	
+	-->
 </body>
 </html>

@@ -99,21 +99,45 @@ public class AdminService {
 		
 		String adminSearchSelect = req.getParameter("adminSearchSelect");
 		String adminSelect  = req.getParameter("adminSelect");
-		
+		if(adminSearchSelect.isEmpty()){
+			adminSearchSelect = (String) req.getAttribute("adminSearchSelect");
+		}
 		System.out.println("관리자 임명 데이터 확인 " +adminSearchSelect +"/"+ adminSelect );
 		list=dao.adminSelect(adminSearchSelect, adminSelect);
 		dao.resClose();
 		return list;
 	}
 
-	public HashMap<String, Object> memberAppoint() {
-		HashMap<String, Object> map=null;
+	public int memberAppoint() {
 		String sessionId = req.getParameter("sessionId");
 		String memberKey = req.getParameter("memberKey");
 		System.out.println("세션값 확인: "+sessionId+"임명할 멤버: "+memberKey);
-		map = dao.memberAppoint(sessionId , memberKey);
+		success = dao.memberAppoint(sessionId , memberKey);
 		dao.resClose();
-		return map;
+		return success;
+	}
+
+	public ArrayList<AdminDTO> adminCafeSearch() {
+		String cafeSearchSelect = req.getParameter("adminCafeSearchSelect");
+		String adminCafeSearch = req.getParameter("adminCafeSearch");
+		System.out.println("어드민에서 카페검색 검색종류 : "+cafeSearchSelect+" / 검색내용: " +adminCafeSearch );
+		list = dao.adminCafeSearch(cafeSearchSelect, adminCafeSearch);
+		dao.resClose();
+		return list;
+	}
+
+	public AdminDTO adminCafeDetail() {
+		String memberKey = req.getParameter("memberKey");
+		System.out.println("상세조회할 카페 회원아이디: " +memberKey);
+		dto = dao.adminCafeDetail(memberKey);
+		dao.resClose();
+		return dto;
+	}
+
+	public void cafeBlind() {
+		String ownerNo = req.getParameter("ownerNo");
+		dao.cafeBlind(ownerNo);
+		
 	}
 
 }

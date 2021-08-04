@@ -104,10 +104,10 @@
 						<tr>
 							<th class="center">블랙리스트 추가자</th>
 							<c:choose>
-								<c:when test="${adminMemberDetail.blackReporter eq null || adminMemberDetail.blackReporter eq ''}">
+								<c:when test="${empty adminMemberDetail.blackReporter}">
 									<td class="align-middle">N</td>
 								</c:when>
-								<c:when test="${adminMemberDetail.blackReporter ne null || adminMemberDetail.blackReporter ne ''}">
+								<c:when test="${!empty adminMemberDetail.blackReporter}">
 									<td class="align-middle">${adminMemberDetail.blackReporter}</td>
 								</c:when>
 							</c:choose>

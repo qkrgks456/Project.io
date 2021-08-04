@@ -45,7 +45,6 @@
 					<div class="cont container">
 					
 					<div class = "col-md-9 mb-3"><!-- md 미디엄 -->
-					<button id="adminSearch" class="btn btn-dark" type=button onclick="location.href='/Project/adminSearch'">관리자 조회</button>
 					<table class="table table-bordered mt-4">
 						<tr>
 							<th class="center" >아이디</th>

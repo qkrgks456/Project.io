@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @WebServlet({"/adminMemberList","/adminMemberListDetail","/adminMemberBlackAddPage","/adminMemberBlackMinus"
-		,"/adminMemberBlackAdd","/adminSearch","/adminDetail","/authorityDelete","/adminSelect","/memberAppoint"})
+		,"/adminMemberBlackAdd","/adminSearch","/adminDetail","/authorityDelete","/adminSelect","/memberAppoint"
+		,"/adminCafeSearch","/adminCafeDetail","/cafeBlind","/cafeBlindMinus"})
 public class AdminController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -116,24 +117,50 @@ public class AdminController extends HttpServlet {
 			System.out.println("어드민에서 권한 삭제");
 			map = service.authorityDelete();
 			System.out.println(map.get("memberkey"));
-			req.setAttribute("authority", map);
-			resp.sendRedirect("/Project/adminDetail?memberkey="+map.get("memberkey")+"&?suc="+map.get("suc"));
+			req.setAttribute("authorityDelete", map);
+			dis = req.getRequestDispatcher("/adminDetail");
+			dis.forward(req,resp);
+			//resp.sendRedirect("/Project/adminDetail?memberkey="+map.get("memberkey")+"&?suc="+map.get("suc"));
+			
 
 			break;
 		case "/adminSelect":
-			System.out.println("어드민에서 관리자 임명");
+			System.out.println("어드민에서 관리자 임명목록");
 			list = service.adminSelect();
 			req.setAttribute("adminSelect", list);
 			dis = req.getRequestDispatcher("admin/adminSelect/adminSelect.jsp");
 			dis.forward(req, resp);
 			break;
+		
 		case "/memberAppoint":
 			System.out.println("일반회원 부관리자 임명");
-			map = service.memberAppoint();
-			req.setAttribute("adminSearchSelect", map.get("adminSearchSelect"));
-			req.setAttribute("adminSelect", map.get("memberkey"));
-			dis = req.getRequestDispatcher("adminSelect");
+			success = service.memberAppoint();
+			req.setAttribute("success", success);
+			dis = req.getRequestDispatcher("admin/adminSelect/adminSelect.jsp");
+			dis.forward(req, resp);
+			break;
+		case "/adminCafeSearch":
+			System.out.println("어드민에서 카페정보 검색");
+			list = service.adminCafeSearch();
+			req.setAttribute("list", list);
+			dis = req.getRequestDispatcher("admin/adminList/adminCafeList/adminCafeList.jsp");
+			dis.forward(req, resp);
+			break;
 			
+		case "/adminCafeDetail":
+			System.out.println("어드민에서 카페 정보 상세");
+			dto = service.adminCafeDetail();
+			req.setAttribute("adminCafeDetail", dto);
+			dis = req.getRequestDispatcher("admin/adminList/adminCafeList/adminCafeDetail.jsp");
+			dis.forward(req, resp);
+			break;
+		case "/cafeBlind":
+			System.out.println("어드민에서 카페 블라인드 추가");
+			service.cafeBlind();
+			break;
+			
+		case "/cafeBlindMinus":
+			System.out.println("어드민에서 카페 블라인드 해제");
 			break;
 		}
 		

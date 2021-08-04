@@ -6,7 +6,7 @@
 		<div class="list-group list-group-flush mt-3">
 			<h4 class="fst-italic ms-3 fw-bold text-decoration-none">관리자</h4>
 			<a class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/admin/adminSelect/adminSearch.jsp"
+				href="/Project/adminSearch"
 				style="cursor: pointer;">관리자조회</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
 				href="/Project/admin/adminSelect/adminSelect.jsp"
@@ -26,10 +26,7 @@
 				style="cursor: pointer;">상품정보</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
 				href="/Project/admin/adminList/adminInputCafeList/adminInputCafeList.jsp"
-				style="cursor: pointer;">등록카페정보</a> <a
-				class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/admin/adminList/adminInputProductList/adminInputProductList.jsp"
-				style="cursor: pointer;">등록상품정보</a>
+				style="cursor: pointer;">등록카페정보</a>
 		</div>
 		<hr />
 		<div class="list-group list-group-flush mt-3">

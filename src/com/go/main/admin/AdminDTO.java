@@ -9,18 +9,57 @@ public class AdminDTO {
 	private String email;
 	private String emailCheck;
 	private String blackReporter;
+	private String location;
 	private String address;
 	private String gender;
 	private String congestionCheck;
 	private String blackReport;
 	private String authority;
+	private String cafeName;
+	private String cafeDel;
+	private String cafeLocation;
+	private int cafeTotalTable;
+	private String blindReason;
+	
+	public String getBlindReason() {
+		return blindReason;
+	}
+	public void setBlindReason(String blindReason) {
+		this.blindReason = blindReason;
+	}
+	public String getCafeLocation() {
+		return cafeLocation;
+	}
+	public void setCafeLocation(String cafeLocation) {
+		this.cafeLocation = cafeLocation;
+	}
+	public int getCafeTotalTable() {
+		return cafeTotalTable;
+	}
+	public void setCafeTotalTable(int cafeTotalTable) {
+		this.cafeTotalTable = cafeTotalTable;
+	}
+	
+	public String getCafeDel() {
+		return cafeDel;
+	}
+	public void setCafeDel(String cafeDel) {
+		this.cafeDel = cafeDel;
+	}
+	public String getCafeName() {
+		return cafeName;
+	}
+	public void setCafeName(String cafeName) {
+		this.cafeName = cafeName;
+	}
+
 	public String getLocation() {
 		return location;
 	}
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	private String location;
+	
 	
 	public String getAddress() {
 		return address;

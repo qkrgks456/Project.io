@@ -28,13 +28,69 @@
 		</c:if>
 		<!-- 사이드바 배치 -->
 		<div class="d-flex" style="height: auto; min-height: 100vh;">
-		<!-- 사이드바 불러오기 -->
+			<!-- 사이드바 불러오기 -->
 			<jsp:include page="/admin/adminSideBar.jsp"></jsp:include>
 			<div class="cont container-fluid mx-5 py-5">
-			<!-- 여기부터 내용 넣으세요 -->
-				관리자페이지
+				<div class="cont container-fluid mx-5 py-5">
+					<!-- 회원정보 탭(여닫기) -->
+					<div class="d-flex align-items-center">
+						<button type="button" id="sidebarCollapse"
+							class="me-2 btn btn-secondary">
+							<i class="bi bi-text-left"></i>
+						</button>
+						<h2 class="fw-bold my-3">카페 상세정보</h2>
+					</div>
+					<hr />
+					<div class="cont container">
+					
+					
+					<div class = "col-md-9 mb-3"><!-- md 미디엄 -->
+					
+					<table class="table table-bordered mt-4">
+						<tr>
+								<th class="center" width="30%">카페이름</th>
+								<td class="align-middle" width="70%">${adminCafeDetail.cafeName}</td>
+							</tr>
+							<tr>
+								<th class="center">판매자</th>
+								<td class="align-middle">${adminCafeDetail.name}</td>
+							</tr>
+							<tr>
+								<th class="center">이메일</th>
+								<td class="align-middle">${adminCafeDetail.email}</td>
+							</tr>
+							<tr>
+								<th class="center">사업자 번호</th>
+								<td class="align-middle">${adminCafeDetail.ownerNo}</td>
+							</tr>
+							<tr>
+								<th class="center">주소</th>
+								<td class="align-middle">${adminCafeDetail.cafeLocation}</td>
+							</tr>
+							<tr>
+								<th class="center">매장좌석</th>
+								<td class="align-middle">${adminCafeDetail.cafeTotalTable}</td>
+							</tr>
+							<tr>
+								<th class="center">블라인드 여부</th>
+								<td class="align-middle">${adminCafeDetail.cafeDel}</td>
+							</tr>
+							<tr>
+								<th class="center">블라인드 사유</th>
+								<c:if test="${empty adminCafeDetail.blindReason}"><td class="align-middle">N</td></c:if>
+								<c:if test="${!empty adminCafeDetail.blindReason}"><td class="align-middle">${adminCafeDetail.blindReason}</td></c:if>
+							</tr>
+					</table>
+					<div>
+						<Button class="btn btn-dark" onclick="location.href='cafeBlind?ownerNo=${adminCafeDetail.ownerNo}'">블라인드</Button>
+						<Button class="btn btn-dark" onclick="location.href='cafeBlindMinus'">블라인드 해제</Button>
+						<Button class="btn btn-dark" onclick="location.href='admin/adminList/adminCafeList/adminCafeList.jsp'">리스트로</Button>
+					</div>
+				</div>
 			</div>
 		</div>
+	</div>
+	</div>
 	</div>
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>
