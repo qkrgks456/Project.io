@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-@WebServlet({"/productList","/productinsert","/Project/MainProduct/productList"})
+@WebServlet({"/productList","/productinsert","/productdetail","/searchproduct"})
 public class ProductController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -42,6 +42,10 @@ public class ProductController extends HttpServlet {
 		switch (addr) {
 		case "/productList":
 			System.out.println("상품 리스트 불러오기 요청");			
+			req.setAttribute("productlistWD", service.productlistWD());
+			req.setAttribute("productlistMD", service.productlistMD());
+			dis = req.getRequestDispatcher("MainProduct/productList.jsp");
+			dis.forward(req, resp);
 			break;
 			
 		case"/productinsert":
@@ -53,6 +57,22 @@ public class ProductController extends HttpServlet {
 			dis = req.getRequestDispatcher("myShopping/sell/productList/productList.jsp");
 			dis.forward(req, resp);
 			break;
+			
+		case"/productdetail":
+			System.out.println("상세보기 요청!");			
+			req.setAttribute("productdetail", service.productdetail());
+			dis = req.getRequestDispatcher("MainProduct/product.jsp");
+			dis.forward(req, resp);
+		break;
+		
+		case "/searchproduct":
+			System.out.println("검색 요청");
+			String prosearchresult = req.getParameter("prosearch");
+			req.setAttribute("search", service.prosearch(prosearchresult));
+			dis = req.getRequestDispatcher("MainProduct/productList.jsp");
+			dis.forward(req, resp);
+			
+		break;
 		}
 	
 		

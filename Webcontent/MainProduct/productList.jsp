@@ -14,6 +14,7 @@
 <!-- main css 추가 -->
 <link href="/Project/assets/css/main.css?ver=25" rel="stylesheet">
 <title>카페</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 	<div class="wrap">
@@ -28,266 +29,100 @@
 		</c:if>
 		<!-- 들어갈 내용 -->
 
-		<div class="container">
+		<div class="container" >
 			<!-- 검색창 -->
-			<div class="row">
+		<!-- 	<div class="row">
 				<div class="d-flex">
-					<p class="fw-bold mt-4 h1">원두</p>
+					
 					<div class="col d-flex justify-content-end mt-4">
-						<form class="d-inline-flex justify-content-end"
-							style="height: 42px;">
+						<form class="d-inline-flex justify-content-end"	style="height: 42px" 
+						action="/Project/searchproduct">
+						
 							<input class="form-control me-1" type="search"
-								placeholder="상품명을 입력해주세요" aria-label="Search">
-							<button class="btn btn-outline-secondary" type="submit">search</button>
+								placeholder="키워드를 입력해주세요" aria-label="Search" name="prosearch" id="prosearch">
+							<button class="btn btn-outline-secondary" type="submit" id="startserach">search</button>
+							
 						</form>
 					</div>
+				</div>			
+			</div> -->
+			
+				<c:forEach items="${search }" var="search">
+				<div class="row row-cols-1 row-cols-md-4 g-4">
+			<form action="/Project/productdetail?productId=${search.productId}" method="post">
+				<div class="col">
+					<div class="card h-100">
+						<img src="/photo/${search.newFileName }" class="card-img-top">
+						<div class="card-body">
+						
+						<input type="hidden" value="${search.productId }" name="wdId" id="wdId">
+						
+							<h5 class="fw-bold">${search.productName }</h5>
+							<p class="target text-muted mt-2">${search.explanation }</p>
+							<div class="d-grid gap-2 col-6 mx-auto">
+								<button type="submit" class="btn btn-outline-secondary">자세히보기</button>
+							</div>
+						</div>
+					</div>
 				</div>
-				<hr />
+			</form>
 			</div>
+			</c:forEach>
+			
+					
 			<!-- 판매창 -->
-			<div class="row row-cols-1 row-cols-md-4 g-4">
+			<div id="searchtbody">
+			<p class="fw-bold mt-2 h1" >원두</p>
+			<hr/> 
+			<div class="row row-cols-1 row-cols-md-4 g-4" id="titleo">
+			<c:forEach items="${productlistWD }" var="WD">
+			<form action="/Project/productdetail?productId=${WD.productId}" method="post">
 				<div class="col">
 					<div class="card h-100">
-						<img src="/Project/assets/img/p1.jpg" class="card-img-top"
-							alt="...">
+						<img src="/photo/${WD.newFileName }" class="card-img-top">
 						<div class="card-body">
-							<h5 class="fw-bold">에티오피아 예가체프 G2</h5>
-							<p class="target text-muted mt-2">꽃 향기 가득 화사한 산미와 부드러운 단맛의
-								달콤함이 매력적인 에티오피아 100% 스페셜티 원두 입니다</p>
+						
+						<input type="hidden" value="${WD.productId }" name="wdId" id="wdId">
+						
+							<h5 class="fw-bold">${WD.productName }</h5>
+							<p class="target text-muted mt-2">${WD.explanation }</p>
 							<div class="d-grid gap-2 col-6 mx-auto">
-								<button type="button"
-									onclick="location.href='/Project/MainProduct/product.jsp'"
-									class="btn btn-outline-secondary">자세히보기</button>
+								<button type="submit" class="btn btn-outline-secondary">자세히보기</button>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col">
-					<div class="card h-100">
-						<img src="/Project/assets/img/p9.jpg" class="card-img-top"
-							alt="...">
-						<div class="card-body">
-							<h5 class="fw-bold">콜롬비아 수프리모</h5>
-							<p class="text-muted mt-2">부드럽고 향이 풍부한, 아침을 깨우기에 적합한 원두로 부드러운
-								맛으로 유명합니다</p>
-							<div class="d-grid gap-2 col-6 mx-auto">
-								<button type="button" onclick="location.href='item/item.jsp'"
-									class="btn btn-outline-secondary">자세히보기</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card h-100">
-						<img src="/Project/assets/img/p3.jpg" class="card-img-top"
-							alt="...">
-						<div class="card-body">
-							<h5 class="fw-bold">케냐 AA</h5>
-							<p class="text-muted mt-2">아프리카 고지대에서 생산된 원두로, 덜 익은 과일의 새콤한
-								맛이 오래도록 여운으로 남는 매력이 있습니다.</p>
-							<div class="d-grid gap-2 col-6 mx-auto">
-								<button type="button" onclick="location.href='item/item.jsp'"
-									class="btn btn-outline-secondary">자세히보기</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card h-100">
-						<img src="/Project/assets/img/p7.jpg" class="card-img-top"
-							alt="...">
-						<div class="card-body">
-							<h5 class="fw-bold">과테말라 안티구아</h5>
-							<p class="text-muted mt-2">커피나무가 화산 폭발에서 나온 질소를 흡수하여 연기가 타는
-								듯한 향을 가진 스모크 커피의 대명사입니다</p>
-							<div class="d-grid gap-2 col-6 mx-auto">
-								<button type="button" onclick="location.href='item/item.jsp'"
-									class="btn btn-outline-secondary">자세히보기</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card h-100">
-						<img src="/Project/assets/img/p5.jpg" class="card-img-top"
-							alt="...">
-						<div class="card-body">
-							<h5 class="fw-bold">코스타리카 따라주</h5>
-							<p class="text-muted mt-2">고산지대의 일교차가 큰 지대에서 자란 원두로 훌륭한 바디감과
-								톡 쏘는듯한 산미와 깔끔한 뒷맛이 특징인 원두입니다</p>
-							<div class="d-grid gap-2 col-6 mx-auto">
-								<button type="button" onclick="location.href='item/item.jsp'"
-									class="btn btn-outline-secondary">자세히보기</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card h-100">
-						<img src="/Project/assets/img/p6.jpg" class="card-img-top"
-							alt="...">
-						<div class="card-body">
-							<h5 class="fw-bold">인도네시아 만델링</h5>
-							<p class="text-muted mt-2">초콜릿 맛과 고소하고 달콤한 향이 나며, 묵직하고 강렬한
-								바디를 가지며 풍부한 향이 납니다</p>
-							<div class="d-grid gap-2 col-6 mx-auto">
-								<button type="button" onclick="location.href='item/item.jsp'"
-									class="btn btn-outline-secondary">자세히보기</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card h-100">
-						<img src="/Project/assets/img/p10.jpg" class="card-img-top"
-							alt="...">
-						<div class="card-body">
-							<h5 class="fw-bold">에티오피아 시다모 G2</h5>
-							<p class="text-muted mt-2">와인 같은 농밀한 산미와 향이 인상적이다. 풍부한 과일의
-								묵직한 향과 산미를 맛볼 수도 있습니다</p>
-							<div class="d-grid gap-2 col-6 mx-auto">
-								<button type="button" onclick="location.href='item/item.jsp'"
-									class="btn btn-outline-secondary">자세히보기</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card h-100">
-						<img src="/Project/assets/img/p11.jpg" class="card-img-top"
-							alt="...">
-						<div class="card-body">
-							<h5 class="fw-bold">브라질 버본 산토스 No.2</h5>
-							<p class="text-muted mt-2">향이 뛰어나고 단맛과 신맛, 쓴맛이 골고루 조화를 이루며
-								식었을 때 신맛이 더욱 강해지는 원두입니다</p>
-							<div class="d-grid gap-2 col-6 mx-auto">
-								<button type="button" onclick="location.href='item/item.jsp'"
-									class="btn btn-outline-secondary">자세히보기</button>
-							</div>
-						</div>
-					</div>
-				</div>
+			</form>			
+			</c:forEach>			
 			</div>
+		<br/>
 			<!-- MD 상품 코너 -->
-			<h1 class="fw-bold mt-2">MD</h1>
+			<h1 class="fw-bold mt-2" >MD</h1>
 			<hr />
-			<div class="row row-cols-1 row-cols-md-4 g-4">
+			<div class="row row-cols-1 row-cols-md-4 g-4" id="titlet">
+			<c:forEach items="${productlistMD }" var="MD">
+			<form action="/Project/productdetail?productId=${MD.productId}" method="post">
 				<div class="col">
 					<div class="card h-100">
-						<img src="/Project/assets/img/m0.jpg" class="card-img-top"
-							alt="...">
+						<img src="/photo/${MD.newFileName }" class="card-img-top">
 						<div class="card-body">
-							<h5 class="fw-bold">빈티지 머그</h5>
-							<p class="text-muted mt-2">기본의 우아한 멋이 있는 심플한 라인입니다. 빈티지한 색감에서
-								고급스러움이 묻어나오는 딥한 컬러의 머그잔입니다</p>
+					<input type="hidden" value="${MD.productId }" name="mdId" id="mdId">
+						
+							<h5 class="fw-bold">${MD.productName }</h5>
+							<p class="text-muted mt-2">${MD.explanation }</p>
 							<div class="d-grid gap-2 col-6 mx-auto">
-								<button type="button" class="btn btn-outline-secondary">자세히보기</button>
+								<button type="submit" class="btn btn-outline-secondary"	>자세히보기</button>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col">
-					<div class="card h-100">
-						<img src="/Project/assets/img/m1.jpg" class="card-img-top"
-							alt="...">
-						<div class="card-body">
-							<h5 class="fw-bold">써머 유리컵</h5>
-							<p class="text-muted mt-2">여름에 빠질 수 없는 투명한 기본 유리컵입니다. 시원한 에이드
-								한잔을 담아 기분전환 해보세요</p>
-							<div class="d-grid gap-2 col-6 mx-auto">
-								<button type="button" class="btn btn-outline-secondary">자세히보기</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card h-100">
-						<img src="/Project/assets/img/m2.jpg" class="card-img-top"
-							alt="...">
-						<div class="card-body">
-							<h5 class="fw-bold">에스프레소잔</h5>
-							<p class="text-muted mt-2">60ml정도의 크기로 기본적인 에스프레소를 여유있게 즐기실 수
-								있는 디자인입니다.</p>
-							<div class="d-grid gap-2 col-6 mx-auto">
-								<button type="button" class="btn btn-outline-secondary">자세히보기</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card h-100">
-						<img src="/Project/assets/img/m3.jpg" class="card-img-top"
-							alt="...">
-						<div class="card-body">
-							<h5 class="fw-bold">머그&소서 세트</h5>
-							<p class="text-muted mt-2">빗방울에서 영감을 받은 머그와 소서 세트입니다. 빵과 커피와
-								함께 즐겨보세요.</p>
-							<div class="d-grid gap-2 col-6 mx-auto">
-								<button type="button" class="btn btn-outline-secondary">자세히보기</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card h-100">
-						<img src="/Project/assets/img/m4.jpg" class="card-img-top"
-							alt="...">
-						<div class="card-body">
-							<h5 class="fw-bold">텀블러</h5>
-							<p class="text-muted mt-2">스테인리스 스틸 텀블러입니다. 보온/보냉 효과가 우수한 이중벽
-								구조 슬라이드형 제품입니다</p>
-							<div class="d-grid gap-2 col-6 mx-auto">
-								<button type="button" class="btn btn-outline-secondary">자세히보기</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card h-100">
-						<img src="/Project/assets/img/m5.jpg" class="card-img-top"
-							alt="...">
-						<div class="card-body">
-							<h5 class="fw-bold">커트러리 세트</h5>
-							<p class="text-muted mt-2">매일 홈카페를 즐길수 있는 브런치 커트러리 세트입니다.
-								집에서도 카페를 즐겨보세요</p>
-							<div class="d-grid gap-2 col-6 mx-auto">
-								<button type="button" class="btn btn-outline-secondary">자세히보기</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card h-100">
-						<img src="/Project/assets/img/m6.jpg" class="card-img-top"
-							alt="...">
-						<div class="card-body">
-							<h5 class="fw-bold">시럽 세트</h5>
-							<p class="text-muted mt-2">집에서도 카페를 즐기세요! 다양하게 즐길 수 있는 시럽을 종합
-								선물세트로 판매합니다</p>
-							<div class="d-grid gap-2 col-6 mx-auto">
-								<button type="button" class="btn btn-outline-secondary">자세히보기</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card h-100">
-						<img src="/Project/assets/img/m7.jpg" class="card-img-top"
-							alt="...">
-						<div class="card-body">
-							<h5 class="fw-bold">써머 주스잔</h5>
-							<p class="text-muted mt-2">더블월 구조의 글라스입니다. 찬음료전용잔으로, 깔끔하고 시원한
-								분위기를 연출하는 상품입니다.</p>
-							<div class="d-grid gap-2 col-6 mx-auto">
-								<button type="button" class="btn btn-outline-secondary">자세히보기</button>
-							</div>
-						</div>
-					</div>
-				</div>
+				</form>
+		</c:forEach>
 			</div>
-
+		
 		</div>
 	</div>
+</div>
 	<!-- 하단 고정 퀵메뉴 -->
 	<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
 		<jsp:include page="/fixMenu/quickMenu.html"></jsp:include>
@@ -299,4 +134,66 @@
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=6"></script>
 </body>
+<script>
+var param = {};
+$("#startsearch").click(function(){
+	param = $("#prosearch").val();
+	if(param != null){
+	$("#titleo").addClass("visually-hidden");
+	$("#titlet").addClass("visually-hidden");
+	}
+};
+
+/* 
+var param = {};
+$("#startsearch").click(function(){
+	param = $(this).val();
+	if(param != null){
+		console.log("파람 값 왜 안나와 : " + param);
+		SetSearch(param);
+		$("#titleo").addClass("visually-hidden");
+		$("#titlet").addClass("visually-hidden");		
+	}	
+})
+
+function SetSearch(param){
+	$.ajax({    type : 'POST',
+		url : '/Project/searchproduct',
+		data : {
+			
+			prosearch : param
+		},
+		dataType : 'JSON',
+		success : function(data) {
+			console.log(data);
+			content = "";
+			$.each(data.list,function(i, item) {
+				console.log(item.newFileName);				
+				content += 	'<div class="col">'
+				content += 	'<div class="card h-100">'
+				content += 	'<img src="/photo/'+item.newFileName+'" class="card-img-top">'
+				content += 	'<div class="card-body">'
+				content += 	'<input type="hidden" value="'+item.productId +'" name="wdId" id="wdId">'
+				content += 	'<h5 class="fw-bold">'+item.productName+'</h5>'
+				content += 	'<p class="target text-muted mt-2">'+WD.explanation+'</p>'
+				content += 		'<div class="d-grid gap-2 col-6 mx-auto">'
+				content += 			'<button type="submit" class="btn btn-outline-secondary">자세히보기</button>'
+				content += 		'</div>'
+				content += 	'</div>'
+				content += '</div>'
+				content += '</div>'				
+
+			})
+			console.log(content); 
+			$("#searchtbody").empty();
+			$("#searchtbody").append(content);
+			
+			},
+			error : function(e) {
+			console.log(e);
+			}
+	});
+};
+
+ */</script>
 </html>

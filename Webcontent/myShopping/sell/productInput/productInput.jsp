@@ -91,7 +91,6 @@
 					<form action="/Project/productinsert" method="post"
 						class="needs-validation" enctype="multipart/form-data" novalidate>
 
-
 						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">상품명</h6>
 						<div class="col-md-9 mb-3">
 							<input type="text" class="nullchecks nullcheck form-control"
@@ -110,39 +109,7 @@
 							</select>
 							<div class="invalid-feedback">카테고리를 설정해주세요</div>
 						</div>
-						<!-- 
-						옵션추가
-						<h6 class="text-muted mt-1 fw-bold" style="text-align: left;">옵션</h6>
-						<table width="400" border="0" cellspacing="0" cellpadding="0">
-							<tr>
-								<td colspan="2" align="left">
-									<table width="100%" border="0" cellpadding="0" cellspacing="0">
-										<tr>
-											<div class="text-secondary">
-												<td colspan="5" height="25" align="left"><input
-													class="btn btn-secondary btn-sm  type="
-													button" onClick="insRow()" value="추가"> *버튼으로 옵션을
-													추가해주세요
-											</td></div>
-											
-										</tr>
-										<tr>
-											<td height="25">
-												<table id="addTable" width="400" cellspacing="0"
-													cellpadding="0" border="0">
-												</table>
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-						</table>
-						<table width="400" border="0" cellspacing="0" cellpadding="0">
-							<tr>
-								<td height="10"></td>
-							</tr>
-						</table>
- -->
+					
 						<!-- 수량 -->
 						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">수량</h6>
 						<div class="col-md-9 mb-3">
@@ -213,16 +180,12 @@
 							<button class="btn btn-dark me-md-1" type="button"
 								onclick="location.href='/Project/myShopping/sell/productList/productList.jsp'">취소</button>
 						</div>
-				</div>
-
-
-				<!-- <button class="btn btn-dark" type="submit" name="checkButton">등록</button> -->
-
 				</form>
+				</div>
 			</div>
 		</div>
 	</div>
-	</div>
+
 
 
 
@@ -236,21 +199,9 @@
 			else
 				frm.checkButton.disabled = true
 		}
-		$(document)
-				.ready(
-						function() {
-							$('#확인')
-									.click(
-											function() {
-												var result = confirm('최종 등록 신청 하시겠습니까?');
-												if (result) {
-													//yes
-													location.href = '/Project/myShopping/sell/productList/productUpdateResult.jsp';
-												} else {
-													location.href = '/Project/index.jsp';
-												}
-											});
-						});
+		
+		
+	
 	</script>
 
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>

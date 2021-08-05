@@ -156,7 +156,7 @@ table {
 								<th scope="col">이미지</th>
 								<th scope="col">상품 이름</th>
 								<th scope="col">가격</th>
-								<th scope="col">카페 이름</th>
+								<th scope="col">해당 카페</th>
 								<th scope="col">카페 지역</th>
 							</tr>
 

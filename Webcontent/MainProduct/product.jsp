@@ -28,24 +28,23 @@
 			<jsp:include page="/fixMenu/navbar.jsp"></jsp:include>
 		</c:if>
 		<!-- 들어갈 내용 -->
-
 		<div class="container px-4 my-4">
-			<h2 class="fw-bold">원두 > 에티오피아 예가체프 G2</h2>
+
+			<h2 class="fw-bold">상품 -> ${productdetail.productName }</h2>
 			<hr />
 			<div class="card mb-3" style="max-width: 1250px;">
 				<div class="row g-0">
 					<div class="col-md-4">
-						<img src="/Project/assets/img/p1.jpg"
+						<img src="/photo/${productdetail.newFileName }"
 							class="img-fluid rounded-start" alt="...">
 					</div>
 					<div class="col-md-8">
 						<div class="card-body">
 							<br>
-							<h3 class="bold">에티오피아 예가체프 G2</h3>
+							<h3 class="bold">${productdetail.productName }</h3>
 							<br>
 							<p class="text-muted mt-2">
-								부드러우면서 짙은 꽃향기, 목넘김 이후에 남는 아련한 향, 부드러운 바디, 달콤한 신맛 등<br>
-								예가체프를 최고의 커피라 부르는 이유는 많습니다
+								${productdetail.explanation }
 							</p>
 							<p class="text-muted bold">(200g 기준 판매)</p>
 
@@ -65,7 +64,7 @@
 								<!-- 가격  -->
 								<br>
 								<h5 class="text-muted mt-2 fw-bold" style="text-align: left;">가격</h5>
-								<h3>8,000원</h3>
+								<h3>${productdetail.price}원</h3>
 								<h3>
 									<fmt:formatNumber value="${vo.Price}" pattern="###,###" />
 								</h3>
@@ -101,6 +100,7 @@
 					</div>
 				</div>
 			</div>
+
 		</div>
 		<!-- 상세 페이지 -->
 		<hr/>
@@ -121,7 +121,6 @@
 			<br> 일반적으로 과실의 상쾌한 신맛과 초콜릿의 달콤함,<br> 그리고 와인에 비유되는 향미와 깊은 맛을
 			가졌습니다.<br> '카페 로스터리' 에서 최고의 예가체프를 즐겨 보세요<br>
 		</p>
-	</div>
 	</div>
 
 	<!-- 댓글(카페상세 댓글 복붙) -->
@@ -158,7 +157,7 @@
 			</p>
 		</div>
 	</div>
-	</div>
+
 	<!-- 하단 고정 퀵메뉴 -->
 	<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
 		<jsp:include page="/fixMenu/quickMenu.html"></jsp:include>
