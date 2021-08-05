@@ -238,4 +238,9 @@ public class CafeService {
 		return dao.realTimeAlarm(sessionId);
 	}
 
+	public ArrayList <CafeDTO> inputCafeInfo() {
+		dao = new CafeDAO();
+		return dao.inputCafeInfo();
+	}
+
 }

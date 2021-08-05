@@ -271,15 +271,15 @@
 									<c:forEach items="${map.sellProductList}"
 										var="sellProductLists">
 										<tr class="">
-											<td><img src="/photo/${sellProductList.newFileName}"
+											<td><img src="/photo/${sellProductLists.newFileName}"
 												class="rounded"
 												style="width: 80px; height: 80px; object-fit: cover;" /></td>
-											<td class="align-middle">${sellProductList.productName}</td>
-											<td class="align-middle">${sellProductList.explanation}</td>
-											<td class="align-middle">${sellProductList.price}</td>
+											<td class="align-middle">${sellProductLists.productName}</td>
+											<td class="align-middle">${sellProductLists.explanation}</td>
+											<td class="align-middle">${sellProductLists.price}</td>
 											<td class="align-middle">
 												<div class="d-grid gap-2 col-6 mx-auto mt-1">
-													<a href="${sellProductList.productId}"
+													<a href="${sellProductLists.productId}"
 														class="btn btn-secondary btn-sm">상세보기</a>
 												</div>
 											</td>
@@ -313,7 +313,7 @@
 								${commentLists.cm_content}
 								<c:if test="${loginId ne commentLists.memberKey}">
 									<a class="float-end btn btn-secondary btn-sm"
-										href="/Project/report/report.jsp?commentNo=${commentLists.commentNo}&memberKey=${commentLists.memberKey}&commentContent=${commentLists.cm_content}">신고</a>
+										href="/Project/report/report.jsp?commentNo=${commentLists.commentNo}&memberKey=${commentLists.memberKey}&commentContent=${commentLists.cm_content}&cafeKey=${map.cafeKey}">신고</a>
 								</c:if>
 								<c:if test="${loginId eq commentLists.memberKey}">
 									<a id="commentDelBtn"

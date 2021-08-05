@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.go.main.cafe.CafeDTO;
 import com.google.gson.Gson;
@@ -28,22 +29,33 @@ public class GoodController extends HttpServlet {
 		int suc = 0;
 		RequestDispatcher dis = null;
 		boolean check = false;
+		// 세션 아이디 가져오기
+		HttpSession session = req.getSession();
+		String sessionId = (String) session.getAttribute("loginId");
 		GoodService service = new GoodService(req);
 		switch (addr) {
 		case "/cafeGood":
 			System.out.println("카페좋아요");
-			int cafeGoodCount = service.cafeGood();
-			map = new HashMap<String, Object>();
-			map.put("cafeGoodCount", cafeGoodCount);
-			resp.setContentType("text/html; charset=UTF-8");
-			resp.getWriter().print(new Gson().toJson(map));
+			if (sessionId != null) {
+				int cafeGoodCount = service.cafeGood();
+				map = new HashMap<String, Object>();
+				map.put("cafeGoodCount", cafeGoodCount);
+				resp.setContentType("text/html; charset=UTF-8");
+				resp.getWriter().print(new Gson().toJson(map));
+			} else {
+				resp.sendRedirect("/Project/");
+			}
 			break;
 		case "/cafeGoodList":
 			System.out.println("카페좋아요리스트");
-			ArrayList<CafeDTO> cafeGoodList = service.cafeGoodList();
-			req.setAttribute("cafeGoodList", cafeGoodList);
-			dis = req.getRequestDispatcher("myPage/myPageMenu/goodCafe.jsp");
-			dis.forward(req, resp);
+			if (sessionId != null) {
+				ArrayList<CafeDTO> cafeGoodList = service.cafeGoodList();
+				req.setAttribute("cafeGoodList", cafeGoodList);
+				dis = req.getRequestDispatcher("myPage/myPageMenu/goodCafe.jsp");
+				dis.forward(req, resp);
+			} else {
+				resp.sendRedirect("/Project/");
+			}
 			break;
 		}
 

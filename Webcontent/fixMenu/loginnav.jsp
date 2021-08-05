@@ -60,7 +60,7 @@
 timerId = setInterval(function(){
 	realTimeAlarm();
 	console.log('안녕');
-}, 3000);
+}, 2000);
 function realTimeAlarm(){
 	$.ajax({
 		type: "POST",//방식

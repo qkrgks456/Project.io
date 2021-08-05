@@ -93,26 +93,6 @@ public class CommentDAO {
 		return page;
 	}
 
-	public HashMap<String, Object> cafeCommentList(String cafeKey, HashMap<String, Object> map) {
-		ArrayList<CommentDTO> list = new ArrayList<CommentDTO>();
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, cafeKey);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				dto = new CommentDTO();
-				dto.setCommentNo(rs.getString("commentNo"));
-				dto.setMemberKey(rs.getString("memberKey"));
-				dto.setCm_content(rs.getString("cm_content"));
-				list.add(dto);
-			}
-			map.put("list", list);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return map;
-	}
-
 	public HashMap<String, Object> cafeCommentList(String cafeKey, int page) {
 		ArrayList<CommentDTO> list = new ArrayList<CommentDTO>();
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -289,14 +269,15 @@ public class CommentDAO {
 		return page;
 	}
 
-	public int cafeCommentReport(String reportReason, String commentNo, String sessionId) {
+	public int cafeCommentReport(String reportReason, String commentNo, String sessionId, String cafeKey) {
 		try {
 			sql = "INSERT INTO cmReport(reportCmNo,commentNo,reportReason,cmReporter,division) "
-					+ "VALUES(cmReport_seq.NEXTVAL,?,?,?,'카페')";
+					+ "VALUES(cmReport_seq.NEXTVAL,?,?,?,?)";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, Integer.parseInt(commentNo));
 			ps.setString(2, reportReason);
 			ps.setString(3, sessionId);
+			ps.setString(4, cafeKey);
 			suc = ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

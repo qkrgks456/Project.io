@@ -14,9 +14,10 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-@WebServlet({"/cafewrite", "/cafeInfoMyPage", "/ownerCheck", "/cafeUpdate", "/cafeInputCheck", "/businessCheck",
+@WebServlet({ "/cafewrite", "/cafeInfoMyPage", "/ownerCheck", "/cafeUpdate", "/cafeInputCheck", "/businessCheck",
 		"/businessChange", "/cafeDel", "/cafeExist", "/cafeList", "/cafeDetail", "/confusionInfo",
-		"/confusionTableChange", "/standardChange", "/cafeAlarmList", "/cafeAlarmDel", "/realTimeAlarm" })
+		"/confusionTableChange", "/standardChange", "/cafeAlarmList", "/cafeAlarmDel", "/realTimeAlarm",
+		"/inputCafeInfo" })
 public class CafeController extends HttpServlet {
 	// 안녕
 	private static final long serialVersionUID = 1L;
@@ -171,16 +172,16 @@ public class CafeController extends HttpServlet {
 		case "/cafeList":
 			System.out.println("카페리스트");
 			map = service.cafeList();
-			req.setAttribute("map", map);		
+			req.setAttribute("map", map);
 			dis = req.getRequestDispatcher("MainCafe/cafeList.jsp");
 			dis.forward(req, resp);
 			break;
 		case "/cafeDetail":
 			System.out.println("카페 상세");
-				map = service.cafeDetail();
-				req.setAttribute("map", map);
-				dis = req.getRequestDispatcher("MainCafe/cafe.jsp");
-				dis.forward(req, resp);			
+			map = service.cafeDetail();
+			req.setAttribute("map", map);
+			dis = req.getRequestDispatcher("MainCafe/cafe.jsp");
+			dis.forward(req, resp);
 			break;
 		case "/confusionInfo":
 			if (sessionId != null) {
@@ -241,8 +242,8 @@ public class CafeController extends HttpServlet {
 			}
 
 			break;
+		// 실시간 알람
 		case "/realTimeAlarm":
-			System.out.println("실시간 알람");
 			if (sessionId != null) {
 				check = service.realTimeAlarm();
 				map = new HashMap<String, Object>();
@@ -252,7 +253,16 @@ public class CafeController extends HttpServlet {
 			} else {
 				resp.sendRedirect("/Project/");
 			}
-
+			break;
+		case "/inputCafeInfo":
+			if (sessionId != null) {
+				ArrayList <CafeDTO> inputCafeList = service.inputCafeInfo();
+				req.setAttribute("inputCafeList", inputCafeList);
+				dis = req.getRequestDispatcher("admin/adminList/adminInputCafeList/adminInputCafeList.jsp");
+				dis.forward(req, resp);			
+			} else {
+				resp.sendRedirect("/Project/");
+			}
 			break;
 		}
 	}

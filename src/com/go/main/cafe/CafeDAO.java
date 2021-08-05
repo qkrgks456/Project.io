@@ -354,7 +354,7 @@ public class CafeDAO {
 			ps.setInt(2, end);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				dto = new CafeDTO();
+			dto = new CafeDTO();
 				dto.setCafeKey(rs.getString("cafeKey"));
 				dto.setCafeName(rs.getString("cafeName"));
 				dto.setCafeLocation(rs.getString("cafeLocation"));
@@ -366,6 +366,11 @@ public class CafeDAO {
 				dto.setCafeCurrentTable(rs.getInt("cafeCurrentTable"));
 				list.add(dto);
 			}
+			
+			
+			
+			
+			
 			int total = totalCount(); // 총 게시글 수 가져옵시다
 			// 총 게시글 수에 나올 페이지수 나눠서 짝수면 나눠주고 홀수면 +1
 			int totalPages = total % pagePerCnt == 0 ? total / pagePerCnt : (total / pagePerCnt) + 1;
@@ -525,10 +530,6 @@ public class CafeDAO {
 					cafePages++;
 				}
 			}
-			System.out.println("총 갯수" + total);
-			System.out.println("토탈 페이지" + totalPages);
-			System.out.println(startPage);
-			System.out.println(endPage);
 			map.put("cafePages", cafePages);
 			map.put("commentList", commentList);
 			map.put("totalPage", totalPages);
@@ -609,6 +610,7 @@ public class CafeDAO {
 			ps.setString(1, cafeKey);
 			rs = ps.executeQuery();
 			while (rs.next()) {
+				dto = new CafeDTO();
 				dto.setProductId(rs.getInt("productId"));
 				dto.setProductName(rs.getString("productName"));
 				dto.setPrice(rs.getInt("price"));
@@ -990,5 +992,26 @@ public class CafeDAO {
 			resClose();
 		}
 		return check;
+	}
+
+	public ArrayList <CafeDTO> inputCafeInfo() {
+		ArrayList <CafeDTO> inputCafeList = new ArrayList<CafeDTO>();
+	    try {
+	    	String sql = "SELECT cafeKey,cafeName,cafePhone FROM cafeInfo WHERE openCheck = 'N'";
+	    	ps = conn.prepareStatement(sql);
+	    	rs = ps.executeQuery();
+	    	while(rs.next()) {
+	    		dto = new CafeDTO();
+	    		dto.setCafeKey(rs.getString("cafeKey"));
+	    		dto.setCafeName(rs.getString("cafeName"));
+	    		dto.setCafePhone(rs.getString("cafePhone"));
+	    		inputCafeList.add(dto);
+	    	}
+	    }catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return inputCafeList;
 	}
 }

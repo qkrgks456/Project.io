@@ -98,6 +98,7 @@ Calendar cal = Calendar.getInstance();
 						<textarea class="form-control" id="exampleFormControlInput1"
 							style="resize: none;" readonly>${param.commentContent}</textarea>
 					</div>
+					<input class="visually-hidden form-check-input" type="text" value="${param.cafeKey}" name="cafeKey">
 					<div class="col-md-9 mb-4">
 						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">신고
 							날짜</h6>

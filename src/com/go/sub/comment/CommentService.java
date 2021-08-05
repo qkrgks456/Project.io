@@ -81,9 +81,10 @@ public class CommentService {
 		String sessionId = (String) session.getAttribute("loginId");
 		String reportReason = req.getParameter("reportReason");
 		String commentNo = req.getParameter("commentNo");
+		String cafeKey = req.getParameter("cafeKey");
 		System.out.println(commentNo);
 		dao = new CommentDAO();
-		return dao.cafeCommentReport(reportReason,commentNo,sessionId);
+		return dao.cafeCommentReport(reportReason,commentNo,sessionId,cafeKey);
 	}
 
 }

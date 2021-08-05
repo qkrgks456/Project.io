@@ -28,11 +28,35 @@
 		</c:if>
 		<!-- 사이드바 배치 -->
 		<div class="d-flex" style="height: auto; min-height: 100vh;">
-		<!-- 사이드바 불러오기 -->
+			<!-- 사이드바 불러오기 -->
 			<jsp:include page="/admin/adminSideBar.jsp"></jsp:include>
 			<div class="cont container-fluid mx-5 py-5">
-			<!-- 여기부터 내용 넣으세요 -->
-				관리자페이지
+				<!-- 여기부터 내용 넣으세요 -->
+				<table class="table table-hover mt-2">
+					<thead class="table-light">
+						<tr>
+							<th scope="col">아이디</th>
+							<th scope="col">카페명</th>
+							<th scope="col">카페번호</th>
+							<th class="text-center" scope="col">상세보기</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach items="inputCafeList" var="inputCafeLists">
+							<tr class="">
+								<td class="align-middle"></td>
+								<td class="align-middle"></td>
+								<td class="align-middle"></td>
+								<td>
+									<div class="d-grid gap-2 col-6 mx-auto">
+										<a class="btn btn-secondary btn-sm"
+											href="/Project/cafeDetail?cafeKey=&pageCheck=goodCafe">상세보기</a>
+									</div>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	</div>

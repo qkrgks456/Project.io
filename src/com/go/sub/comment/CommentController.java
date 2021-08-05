@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-@WebServlet({ "/cafeCommentInput", "/cafeCommentDel", "/cafeCommentUpdate", "/cafeCommentList","/cafeCommentReport" })
+@WebServlet({ "/cafeCommentInput", "/cafeCommentDel", "/cafeCommentUpdate", "/cafeCommentList", "/cafeCommentReport" })
 public class CommentController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -35,51 +35,71 @@ public class CommentController extends HttpServlet {
 		switch (addr) {
 		case "/cafeCommentInput":
 			System.out.println("카페댓글등록");
-			map = service.cafeCommentInput();
-			if (map != null) {
-				map.put("sessionId", sessionId);
-				resp.setContentType("text/html; charset=UTF-8");
-				resp.getWriter().print(new Gson().toJson(map));
+			if (sessionId != null) {
+				map = service.cafeCommentInput();
+				if (map != null) {
+					map.put("sessionId", sessionId);
+					resp.setContentType("text/html; charset=UTF-8");
+					resp.getWriter().print(new Gson().toJson(map));
+				}
+			} else {
+				resp.sendRedirect("/Project/");
 			}
 			break;
 		case "/cafeCommentDel":
 			System.out.println("카페댓글 삭제");
-			map = service.cafeCommentDel();
-			if (map != null) {
-				map.put("sessionId", sessionId);
-				resp.setContentType("text/html; charset=UTF-8");
-				resp.getWriter().print(new Gson().toJson(map));
+			if (sessionId != null) {
+				map = service.cafeCommentDel();
+				if (map != null) {
+					map.put("sessionId", sessionId);
+					resp.setContentType("text/html; charset=UTF-8");
+					resp.getWriter().print(new Gson().toJson(map));
+				}
+			} else {
+				resp.sendRedirect("/Project/");
 			}
 			break;
 		case "/cafeCommentList":
 			System.out.println("카페댓글리스트");
-			map = service.cafeCommentList();
-			System.out.println(map);
-			if (map != null) {
-				map.put("sessionId", sessionId);
-				resp.setContentType("text/html; charset=UTF-8");
-				resp.getWriter().print(new Gson().toJson(map));
+			if (sessionId != null) {
+				map = service.cafeCommentList();
+				System.out.println(map);
+				if (map != null) {
+					map.put("sessionId", sessionId);
+					resp.setContentType("text/html; charset=UTF-8");
+					resp.getWriter().print(new Gson().toJson(map));
+				}
+			} else {
+				resp.sendRedirect("/Project/");
 			}
 			break;
 
 		case "/cafeCommentUpdate":
 			System.out.println("카페댓글수정");
-			map = service.cafeCommentUpdate();
-			if (map != null) {
-				map.put("sessionId", sessionId);
-				resp.setContentType("text/html; charset=UTF-8");
-				resp.getWriter().print(new Gson().toJson(map));
+			if (sessionId != null) {
+				map = service.cafeCommentUpdate();
+				if (map != null) {
+					map.put("sessionId", sessionId);
+					resp.setContentType("text/html; charset=UTF-8");
+					resp.getWriter().print(new Gson().toJson(map));
+				}
+			} else {
+				resp.sendRedirect("/Project/");
 			}
 			break;
 		case "/cafeCommentReport":
 			System.out.println("댓글 신고");
-			suc = service.cafeCommentReport();
-			if(suc>0) {
-				resp.sendRedirect("/Project/report/reportResult.jsp");
-			}else {
-				req.setAttribute("check", check);
-				dis = req.getRequestDispatcher("report/report.jsp");
-				dis.forward(req, resp);
+			if (sessionId != null) {
+				suc = service.cafeCommentReport();
+				if (suc > 0) {
+					resp.sendRedirect("/Project/report/reportResult.jsp");
+				} else {
+					req.setAttribute("check", check);
+					dis = req.getRequestDispatcher("report/report.jsp");
+					dis.forward(req, resp);
+				}
+			} else {
+				resp.sendRedirect("/Project/");
 			}
 			break;
 		}
