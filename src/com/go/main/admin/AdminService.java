@@ -127,17 +127,30 @@ public class AdminService {
 	}
 
 	public AdminDTO adminCafeDetail() {
-		String memberKey = req.getParameter("memberKey");
-		System.out.println("상세조회할 카페 회원아이디: " +memberKey);
-		dto = dao.adminCafeDetail(memberKey);
+		String cafeKey = req.getParameter("cafeKey");
+		if(cafeKey.equals(null)) {
+			
+		}
+		System.out.println("상세조회할 카페 키: " +cafeKey);
+		dto = dao.adminCafeDetail(cafeKey);
 		dao.resClose();
 		return dto;
 	}
 
-	public void cafeBlind() {
+	public AdminDTO cafeBlind() {
 		String ownerNo = req.getParameter("ownerNo");
-		dao.cafeBlind(ownerNo);
-		
+		dto = dao.cafeBlind(ownerNo);
+		dao.resClose();
+		return dto;
+	}
+
+	public HashMap<String, Object> cafeBlindAdd() {
+		HashMap<String, Object> map=null;
+		String cafeBlindRePort = req.getParameter("cafeBlindRePort");
+		String cafeBlindId = req.getParameter("cafeBlindId");
+		map = dao.cafeBlindAdd(cafeBlindRePort,cafeBlindId);
+		dao.resClose();
+		return map;
 	}
 
 }

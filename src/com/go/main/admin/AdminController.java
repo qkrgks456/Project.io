@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 @WebServlet({"/adminMemberList","/adminMemberListDetail","/adminMemberBlackAddPage","/adminMemberBlackMinus"
 		,"/adminMemberBlackAdd","/adminSearch","/adminDetail","/authorityDelete","/adminSelect","/memberAppoint"
-		,"/adminCafeSearch","/adminCafeDetail","/cafeBlind","/cafeBlindMinus"})
+		,"/adminCafeSearch","/adminCafeDetail","/cafeBlind","/cafeBlindAdd","/cafeBlindMinus"})
 public class AdminController extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -155,8 +155,20 @@ public class AdminController extends HttpServlet {
 			dis.forward(req, resp);
 			break;
 		case "/cafeBlind":
+			System.out.println("어드민에서 카페 블라인드 추가 페이지");
+			dto = service.cafeBlind();
+			req.setAttribute("cafeBlind", dto);
+			dis = req.getRequestDispatcher("admin/adminList/adminCafeList/adminCafeBlind.jsp");
+			dis.forward(req, resp);
+			break;
+		case "/cafeBlindAdd":
 			System.out.println("어드민에서 카페 블라인드 추가");
-			service.cafeBlind();
+			map = service.cafeBlindAdd();
+			System.out.println("컨트롤러 되돌아오는값 확인: " +success);
+			req.setAttribute("cafeKey", map.get("cafeKey"));
+			req.setAttribute("success", map.get("success"));
+			dis=req.getRequestDispatcher("/adminCafeDetail");
+			dis.forward(req, resp);
 			break;
 			
 		case "/cafeBlindMinus":

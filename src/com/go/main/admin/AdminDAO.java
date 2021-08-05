@@ -406,16 +406,16 @@ public class AdminDAO {
 		list = new ArrayList<AdminDTO>();
 		switch(cafeSearchSelect) {
 		case "memberkey":
-			sql = "SELECT u.memberkey, u.name, c.cafeName, c.cafeDel FROM users u Inner JOIN ownerUser ou ON u.memberkey = ou.memberkey LEFT OUTER JOIN  cafeInfo c ON ou.ownerNo=c.ownerNo WHERE u.memberkey LIKE ? AND ou.ownerNo is not null";
+			sql = "SELECT u.memberkey, u.name, c.cafeName, c.cafeDel, c.cafekey FROM users u Inner JOIN ownerUser ou ON u.memberkey = ou.memberkey LEFT OUTER JOIN  cafeInfo c ON ou.ownerNo=c.ownerNo WHERE u.memberkey LIKE ? AND ou.ownerNo is not null";
 			break;
 		case "email":
-			sql = "SELECT u.memberkey, u.name, c.cafeName, c.cafeDel FROM users u Inner JOIN ownerUser ou ON u.memberkey = ou.memberkey LEFT OUTER JOIN  cafeInfo c ON ou.ownerNo=c.ownerNo WHERE u.email LIKE ? AND ou.ownerNo is not null";
+			sql = "SELECT u.memberkey, u.name, c.cafeName, c.cafeDel, c.cafekey FROM users u Inner JOIN ownerUser ou ON u.memberkey = ou.memberkey LEFT OUTER JOIN  cafeInfo c ON ou.ownerNo=c.ownerNo WHERE u.email LIKE ? AND ou.ownerNo is not null";
 			break;
 		case "cafeName":
-			sql = "SELECT u.memberkey, u.name, c.cafeName, c.cafeDel FROM users u Inner JOIN ownerUser ou ON u.memberkey = ou.memberkey LEFT OUTER JOIN  cafeInfo c ON ou.ownerNo=c.ownerNo WHERE c.cafeName LIKE ? AND ou.ownerNo is not null";
+			sql = "SELECT u.memberkey, u.name, c.cafeName, c.cafeDel, c.cafekey FROM users u Inner JOIN ownerUser ou ON u.memberkey = ou.memberkey LEFT OUTER JOIN  cafeInfo c ON ou.ownerNo=c.ownerNo WHERE c.cafeName LIKE ? AND ou.ownerNo is not null";
 			break;
 		case "cafeNo":
-			sql = "SELECT u.memberkey, u.name, c.cafeName, c.cafeDel FROM users u Inner JOIN ownerUser ou ON u.memberkey = ou.memberkey LEFT OUTER JOIN  cafeInfo c ON ou.ownerNo=c.ownerNo WHERE c.cafeNo LIKE ? AND ou.ownerNo is not null";
+			sql = "SELECT u.memberkey, u.name, c.cafeName, c.cafeDel, c.cafekey FROM users u Inner JOIN ownerUser ou ON u.memberkey = ou.memberkey LEFT OUTER JOIN  cafeInfo c ON ou.ownerNo=c.ownerNo WHERE c.cafeNo LIKE ? AND ou.ownerNo is not null";
 			break;
 		}
 		try {
@@ -430,7 +430,8 @@ public class AdminDAO {
 				dto.setName(rs.getString("name"));
 				dto.setCafeName(rs.getString("cafeName"));
 				dto.setCafeDel(rs.getString("cafeDel"));
-				System.out.println("리스트에 저장되는 값: " +dto.getMemberkey()+"/"+dto.getName() +"/"+ dto.getCafeName()+"/"+ dto.getCafeDel());
+				dto.setCafeKey(rs.getString("cafeKey"));
+				System.out.println("리스트에 저장되는 값: " +dto.getMemberkey()+"/"+dto.getName() +"/"+ dto.getCafeName()+"/"+ dto.getCafeDel()+"/"+dto.getCafeKey());
 				list.add(dto);
 			}
 			
@@ -443,16 +444,15 @@ public class AdminDAO {
 		return list;
 	}
 
-	public AdminDTO adminCafeDetail(String memberKey) {
-		System.out.println("상세조회할 카페 dao 연결 확인: " + memberKey);
-		sql="SELECT u.name, u.email, c.cafeName, c.ownerNo, c.cafeLocation, c.cafeDel, cg.cafeTotalTable, cb.blindReason FROM users u"+
-		" INNER JOIN ownerUser ou ON u.memberkey = ou.memberkey"+
-		" LEFT OUTER JOIN  cafeInfo c ON ou.ownerNo=c.ownerNo"+ 
-		" LEFT OUTER JOIN congestion cg ON c.cafeKey = cg.cafeKey"+
-		" LEFT OUTER JOIN cafeBlind cb ON c.cafeKey = cb.cafeKey WHERE u.memberkey = ? ";
+	public AdminDTO adminCafeDetail(String cafeKey) {
+		System.out.println("상세조회할 카페 dao 연결 확인: " + cafeKey);
+		sql="SELECT u.name, u.email, c.cafeName, c.ownerNo, c.cafeLocation, c.cafeDel, cg.cafeTotalTable, c.blindReason FROM users u" 
+				+ " INNER JOIN ownerUser ou ON u.memberkey = ou.memberkey" 
+				+ " LEFT OUTER JOIN cafeInfo c ON ou.ownerNo=c.ownerNo" 
+				+ " LEFT OUTER JOIN congestion cg ON c.cafeKey = cg.cafeKey  WHERE c.cafeKey = ? ";
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setString(1, memberKey);
+			ps.setString(1, cafeKey);
 			rs= ps.executeQuery();
 			if(rs.next()) {
 				System.out.println("카페 상세조회 성공");
@@ -476,10 +476,45 @@ public class AdminDAO {
 		return dto;
 	}
 
-	public void cafeBlind(String ownerNo) {
+	public AdminDTO cafeBlind(String ownerNo) {
 		System.out.println("블라인드 추가할 사업자 키 dao 연결확인: "+ownerNo);
-		sql="";
+		sql="SELECT c.cafeKey, c.cafeName, ou.memberkey from cafeInfo c left OUTER JOIN ownerUser ou ON c.ownerNo = ou.ownerNo  where c.ownerNo = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, ownerNo);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				dto = new AdminDTO();
+				dto.setCafeKey(rs.getString("cafeKey"));
+				dto.setCafeName(rs.getString("cafeName"));
+				dto.setMemberkey(rs.getString("memberkey"));
+				System.out.println("받아온 카페값 확인 : "+dto.getCafeKey()+"/"+dto.getCafeName()+"/"+dto.getMemberkey());
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
 		
+		return dto;
+	}
+
+	public HashMap<String, Object> cafeBlindAdd(String cafeBlindRePort, String cafeBlindId) {
+		System.out.println("블라인드 카페 DAO연결 확인: "+cafeBlindId +"사유: " +cafeBlindRePort);
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		sql="update cafeinfo set cafeDel='Y', blindReason= ? where cafekey= ? ";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, cafeBlindRePort);
+			ps.setString(2, cafeBlindId);
+			success = ps.executeUpdate();
+			System.out.println("블라인드 등록완료");
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		map.put("cafeKey", cafeBlindId);
+		map.put("success", success);
+		return map;
 	}
 
 

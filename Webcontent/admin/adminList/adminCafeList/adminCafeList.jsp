@@ -96,7 +96,7 @@
 							<td class="align-middle">${adminCafeSearch.name}</td>
 							<td class="align-middle">${adminCafeSearch.cafeName}</td>
 							<td class="align-middle">${adminCafeSearch.cafeDel}</td>
-							<td class="align-middle"><button class="btn btn-dark" type="button" onclick="location.href='/Project/adminCafeDetail?memberKey=${adminCafeSearch.memberkey}'">상세보기</button></td>
+							<td class="align-middle"><button class="btn btn-dark" type="button" onclick="location.href='/Project/adminCafeDetail?cafeKey=${adminCafeSearch.cafeKey}'">상세보기</button></td>
 							</tr>
 							</c:forEach>
 							</c:if>

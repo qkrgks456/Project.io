@@ -39,35 +39,35 @@
 							class="me-2 btn btn-secondary">
 							<i class="bi bi-text-left"></i>
 						</button>
-						<h2 class="fw-bold my-3">블랙리스트 추가</h2>
+						<h2 class="fw-bold my-3">카페 블라인드 추가</h2>
 					</div>
 					<hr>
 					<!-- 블랙 리스트 id, 이름 -->
-					<form id="adminblackform" action="/Project/adminMemberBlackAdd" method="post"
+					<form id="cafeBlindform" action="/Project/cafeBlindAdd" method="post"
 						class="needs-validation py-3" novalidate>
 					
 					<div class = "col-md-9 mb-3"><!-- md 미디엄 -->
 					<table class="table table-bordered mt-4">
 						<tr>
-							<th class="center" width="55%">아이디</th>
-							<th class="center">이름</th>
+							<th class="center" width="55%">카페번호</th>
+							<th class="center">카페이름</th>
 						</tr>
 						<tr>
-							<td class="align-middle" width="45%">${adminMemberBlack.memberkey}</td>
-							<td class="align-middle">${adminMemberBlack.name}</td>
+							<td class="align-middle" width="45%">${cafeBlind.cafeKey}</td>
+							<td class="align-middle">${cafeBlind.cafeName}</td>
 						</tr>
 					</table>
 					<!-- 블랙 사유 텍스트에리어 -->
 					<div class="mb-3">
-	  					<label for="blackreason" class="form-label">사유 작성</label>
-	  					<textarea class="form-control" id="blackRePort" name="blackRePort" rows="6"></textarea>
+	  					<label for="cafeBlindreason" class="form-label">사유 작성</label>
+	  					<textarea class="form-control" id="cafeBlindRePort" name="cafeBlindRePort" rows="6"></textarea>
 					</div>
 					<!-- form 버튼  -->
 					<div class="form-group md-3">
-						<input type="hidden"  class = "form-control" id="blackId" name="blackId" value=${adminMemberBlack.memberkey}>
-						<button id="blackaddsubmit" class="btn btn-dark" type="submit">추가</button>
-						<button id="adminmemberDetail" class="btn btn-dark" type="button" onclick="location.href='adminMemberListDetail?memberkey=${adminMemberBlack.memberkey}'">회원정보로</button>
-						<button id="adminmemberlist" class="btn btn-dark" type="button" onclick="location.href='admin/adminList/adminMemberList/adminMemberList.jsp'">리스트로</button>
+						<input type="hidden"  class = "form-control" id="cafeBlindId" name="cafeBlindId" value=${cafeBlind.cafeKey}>
+						<button id="cafeBlindSubmit" class="btn btn-dark" type="submit">추가</button>
+						<button id="adminCafeDetail" class="btn btn-dark" type="button" onclick="location.href='adminCafeDetail?cafeKey=${cafeBlind.cafeKey}'">카페 상세 정보로</button>
+						<button id="adminCafeList" class="btn btn-dark" type="button" onclick="location.href='admin/adminList/adminCafeList/adminCafeList.jsp'">리스트로</button>
 					</div>
 						
 					</div>

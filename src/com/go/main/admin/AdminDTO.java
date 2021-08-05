@@ -20,6 +20,14 @@ public class AdminDTO {
 	private String cafeLocation;
 	private int cafeTotalTable;
 	private String blindReason;
+	private String cafeKey;
+	
+	public String getCafeKey() {
+		return cafeKey;
+	}
+	public void setCafeKey(String cafeKey) {
+		this.cafeKey = cafeKey;
+	}
 	
 	public String getBlindReason() {
 		return blindReason;
