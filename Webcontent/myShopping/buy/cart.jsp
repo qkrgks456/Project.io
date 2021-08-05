@@ -52,7 +52,7 @@
 								<th scope="col">수량</th>
 								<th scope="col">가격</th>								
 								<th class="text-center" scope="col">상세보기</th>
-								<div class="visually-hidden" scope="col"></div>
+								<div class scope="col"></div>
 							</tr>
 						</thead>
 						<tbody>
@@ -116,6 +116,7 @@
 								<th>주문</th>
 								<th id='sumAmount'>수량 : 3</th>
 								<th id='sumSumPrice' >총합계 : 65000</th>
+								
 								<th colspan="3"></th>
 							</tr>
 						</tfoot>
@@ -142,14 +143,14 @@
 			sum += Number($(this).text());
 		})
 		$('#sumAmount').empty();
-		$('#sumAmount').append('수량 : ' + sum);
+		$('#sumAmount').append('수량 : ' + sum+'개');
 		/* 페이지 시작시 총 가격  */
 		var sumPrice = 0;
 		$('.price').each(function(i, item) {
 			sumPrice += Number($(this).text());
 		})
 		$('#sumSumPrice').empty();
-		$('#sumSumPrice').append('총 가격 : ' + sumPrice);
+		$('#sumSumPrice').append('총 가격 : ' + sumPrice.toLocaleString()+'원');
 
 		/* 수량증가  */
 		var sumSum = 0;
@@ -167,7 +168,7 @@
 				sum += Number($(this).text());
 			})
 			$('#sumAmount').empty();
-			$('#sumAmount').append('수량 : ' + sum);
+			$('#sumAmount').append('수량 : ' + sum+'개');
 			$(this).parents('td').nextAll('.sumPrice').empty();
 			$(this).parents('td').nextAll('.sumPrice').append(sumSum);
 			$('.sumPrice').each(function(i, item) {		
@@ -175,7 +176,7 @@
 				console.log(sumPrice);			
 			})
 			$('#sumSumPrice').empty();
-			$('#sumSumPrice').append('총 가격 : ' + sumPrice);
+			$('#sumSumPrice').append('총 가격 : ' + sumPrice.toLocaleString()+'원');
 		})
 		
 		/* 수량 감소 */
@@ -194,7 +195,7 @@
 					sum += Number($(this).text());
 				})
 				$('#sumAmount').empty();
-				$('#sumAmount').append('수량 : ' + sum);
+				$('#sumAmount').append('수량 : ' + sum+'개');
 				$(this).parents('td').nextAll('.sumPrice').empty();
 				$(this).parents('td').nextAll('.sumPrice').append(sumSum);
 				$('.sumPrice').each(function(i, item) {		
@@ -202,7 +203,7 @@
 					console.log(sumPrice);			
 				})
 				$('#sumSumPrice').empty();
-				$('#sumSumPrice').append('총 가격 : ' + sumPrice);
+				$('#sumSumPrice').append('총 가격 : ' +sumPrice.toLocaleString()+'원');
 			}
 		})
 		$('#delProductBtn').click(function(){

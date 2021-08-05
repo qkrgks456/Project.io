@@ -74,8 +74,8 @@
 
 								<td class="align-middle">8900</td>
 
-								<td class="align-middle"><div class="qu">3</div></td>
-								<td class="price align-middle">26700</td>
+								<td class="align-middle"><div class="qu">502</div></td>
+								<td class="price align-middle">4467800</td>
 								<td>
 									<div class="d-grid gap-2 col-6 mx-auto mt-1">
 										<a class="btn btn-secondary btn-sm"
@@ -99,15 +99,15 @@
 
 							<td class="align-middle">8000</td>
 
-							<td class="align-middle"><div class="qu">2</div></td>
-							<td class="price align-middle">16000</td>
+							<td class="align-middle"><div class="qu">783</div></td>
+							<td class="price align-middle">6264000</td>
 							<td>
 								<div class="d-grid gap-2 col-6 mx-auto mt-1">
 									<a class="btn btn-secondary btn-sm"
 										onclick="location.href='/Project/myShopping/sell/productList/productDelResult.jsp'">삭제하기</a>
 								</div>
-								</td>
-							</tr>
+							</td>
+						</tr>
 						</tbody>
 
 						<tr class="">
@@ -116,7 +116,6 @@
 								<div class="form-check align-middle">
 									<input class="form-check-input" type="checkbox" value=""
 										id="flexCheckDefault">
-
 								</div>
 							<td class="align-middle">에티오피아 시다모 G2</td>
 
@@ -124,34 +123,8 @@
 
 							<td class="align-middle">8300</td>
 
-							<td class="align-middle"><div class="qu">3</div></td>
-							<td class="price align-middle">24900</td>
-							<td>
-								<div class="d-grid gap-2 col-6 mx-auto mt-1">
-									<a class="btn btn-secondary btn-sm"
-										onclick="location.href='/Project/myShopping/sell/productList/productDelResult.jsp'">삭제하기</a>
-							</div>
-								</td>
-							</tr>
-						</tbody>
-
-
-						<tr class="">
-							<th class="align-middle" scope="row">
-
-								<div class="form-check align-middle">
-									<input class="form-check-input" type="checkbox" value=""
-										id="flexCheckDefault">
-
-								</div>
-							<td class="align-middle">과테말라 안티구아</td>
-
-							<td class="align-middle">31202</td>
-
-							<td class="align-middle">8900</td>
-
-							<td class="align-middle"><div class="qu">3</div></td>
-							<td class="price align-middle">19000</td>
+							<td class="align-middle"><div class="qu">458</div></td>
+							<td class="price align-middle">3801400</td>
 							<td>
 								<div class="d-grid gap-2 col-6 mx-auto mt-1">
 									<a class="btn btn-secondary btn-sm"
@@ -168,14 +141,38 @@
 										id="flexCheckDefault">
 
 								</div>
-							<td class="align-middle">과테말라 안티구아</td>
+							<td class="align-middle">써머 주스잔</td>
 
-							<td class="align-middle">31202</td>
+							<td class="align-middle">21207</td>
 
-							<td class=" align-middle">8900</td>
+							<td class="align-middle">18000</td>
 
-							<td class="align-middle"><div class="qu">3</div></td>
-							<td class="price align-middle">19000</td>
+							<td class="align-middle"><div class="qu">213</div></td>
+							<td class="price align-middle">3834000</td>
+							<td>
+								<div class="d-grid gap-2 col-6 mx-auto mt-1">
+									<a class="btn btn-secondary btn-sm"
+										onclick="location.href='/Project/myShopping/sell/productList/productDelResult.jsp'">삭제하기</a>
+								</div>
+							</td>
+						</tr>
+						</tbody>
+						<tr class="">
+							<th class="align-middle" scope="row">
+
+								<div class="form-check align-middle">
+									<input class="form-check-input" type="checkbox" value=""
+										id="flexCheckDefault">
+
+								</div>
+							<td class="align-middle">시럽 세트</td>
+
+							<td class="align-middle">21214</td>
+
+							<td class=" align-middle">32000</td>
+
+							<td class="align-middle"><div class="qu">63</div></td>
+							<td class="price align-middle">2016000</td>
 							<td>
 								<div class="d-grid gap-2 col-6 mx-auto mt-1">
 									<a class="btn btn-secondary btn-sm"
@@ -194,9 +191,11 @@
 						</tfoot>
 					</table>
 					</table>
-
-
-
+					<div class="d-grid gap-2 d-md-block">
+						<button class="btn btn-dark" type="button"
+							onclick="location.href='/Project/myShopping/sell/productList/productDelResult.jsp'">선택내역
+							삭제</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -216,14 +215,14 @@
 			sum += Number($(this).text());
 		})
 		$('#sumAmount').empty();
-		$('#sumAmount').append('수량 : ' + sum);
+		$('#sumAmount').append('수량 : ' + sum.toLocaleString() +'개');
 		/* 페이지 시작시 총 가격  */
 		var sumPrice = 0;
 		$('.price').each(function(i, item) {
 			sumPrice += Number($(this).text());
 		})
 		$('#sumSumPrice').empty();
-		$('#sumSumPrice').append('총 매출 : ' + sumPrice+'원');
+		$('#sumSumPrice').append('총 매출 : ' +sumPrice.toLocaleString()+'원');
 		/* 수량증가  */
 		var sumSum = 0;
 		$('.up').click(function() {
@@ -239,7 +238,7 @@
 				sum += Number($(this).text());
 			})
 			$('#sumAmount').empty();
-			$('#sumAmount').append('수량 : ' + sum);
+			$('#sumAmount').append('수량 : ' + sum.toLocaleString()+'개');
 			$(this).parents('td').nextAll('.sumPrice').empty();
 			$(this).parents('td').nextAll('.sumPrice').append(sumSum);
 			$('.sumPrice').each(function(i, item) {
@@ -247,7 +246,7 @@
 				console.log(sumPrice);
 			})
 			$('#sumSumPrice').empty();
-			$('#sumSumPrice').append('총 가격 : ' + sumPrice);
+			$('#sumSumPrice').append('총 가격 : ' +sumPrice.toLocaleString()+'원');
 		})
 
 		/* 수량 감소 */
@@ -264,11 +263,10 @@
 				var sum = 0;
 				$('.qu').each(function(i, item) {
 					sum += Number($(this).text());
-					
-					
+
 				})
 				$('#sumAmount').empty();
-				$('#sumAmount').append('수량 : ' + sum);
+				$('#sumAmount').append('수량 : ' + sum.toLocaleString()+'개');
 				$(this).parents('td').nextAll('.sumPrice').empty();
 				$(this).parents('td').nextAll('.sumPrice').append(sumSum);
 				$('.sumPrice').each(function(i, item) {
@@ -276,7 +274,7 @@
 					console.log(sumPrice);
 				})
 				$('#sumSumPrice').empty();
-				$('#sumSumPrice').append('총 가격 : ' + sumPrice);
+				$('#sumSumPrice').append('총 가격 : ' +sumPrice.toLocaleString()+'원');
 			}
 		})
 		$('#delProductBtn').click(function() {
