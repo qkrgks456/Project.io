@@ -103,121 +103,19 @@
 				<hr />
 			</div>
 			<div class="row row-cols-1 row-cols-md-4 g-4">
-				<div class="col">
-					<div class="card mx-3 border">
-						<a href="/Project/cafe/cafe.jsp"> <img src="assets/img/12.jpg"
-							class="card-img-top" alt="...">
-						</a>
-						<div class="card-body">
-							<h5 class="card-title fw-bold">껠끄쇼즈</h5>
-							<div>
-								<p class="card-text target">텍스트 기준은 3줄로 더 늘어나게 되면 ...으로 표시되게
-									됩니다 이런 효과주는게 간지가 나잖아요 그래서 만약에 더 쓰게 되면 점점점으로 나타나게 될겁니다</p>
-							</div>
-						</div>
-						<div class="card-footer">
-							<div class="text-center">
-								<span data-bs-toggle="tooltip" data-bs-html="true"
-									data-bs-placement="right" title="쾌적"> <i
-									class="bi bi-people-fill" style="font-size: 1.2rem;"></i> 혼잡도
-								</span>
-							</div>
-							<div class="text-center">
-								<a href="/Project/MainCafe/cafe.jsp"
-									class="btn btn-outline-dark my-2">자세히 보기</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card mx-3 border">
-						<a href="/Project/cafe/cafes.jsp"> <img
-							src="assets/img/55.jpg" class="card-img-top" alt="...">
-						</a>
-						<div class="card-body">
-							<h5 class="card-title fw-bold">카페제목</h5>
-							<p class="card-text target">진짜 아무렇게 나 써보도록 합시다</p>
-						</div>
-						<div class="card-footer">
-							<div class="text-center">
-								<span class="" data-bs-toggle="tooltip" data-bs-html="true"
-									data-bs-placement="right" title="쾌적"> <i
-									class="bi bi-people-fill" style="font-size: 1.2rem;"></i> 혼잡도
-								</span>
-							</div>
-							<div class="text-center">
-								<a href="/Project/MainCafe/cafe.jsp"
-									class="btn btn-outline-dark my-2">자세히 보기</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card mx-3 border">
-						<a href="/Project/cafe/cafes.jsp"> <img
-							src="assets/img/22.jpg" class="card-img-top" alt="...">
-						</a>
-						<div class="card-body">
-							<h5 class="card-title fw-bold">카페제목</h5>
-							<p class="card-text target">카페내용</p>
-						</div>
-						<div class="card-footer">
-							<div class="text-center">
-								<span class="" data-bs-toggle="tooltip" data-bs-html="true"
-									data-bs-placement="right" title="쾌적"> <i
-									class="bi bi-people-fill" style="font-size: 1.2rem;"></i> 혼잡도
-								</span>
-							</div>
-							<div class="text-center">
-								<a href="/Project/cafe/cafe.jsp"
-									class="btn btn-outline-dark my-2">자세히 보기</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card mx-3 border">
-						<a href="/Project/cafe/cafes.jsp"> <img
-							src="assets/img/32.jpg" class="card-img-top" alt="...">
-						</a>
-						<div class="card-body">
-							<h5 class="card-title fw-bold">카페제목</h5>
-							<p class="card-text target">카페내용</p>
-						</div>
-						<div class="card-footer">
-							<div class="text-center">
-								<span class="" data-bs-toggle="tooltip" data-bs-html="true"
-									data-bs-placement="right" title="쾌적"> <i
-									class="bi bi-people-fill" style="font-size: 1.2rem;"></i> 혼잡도
-								</span>
-							</div>
-							<div class="text-center">
-								<a href="/Project/cafe/cafe.jsp"
-									class="btn btn-outline-dark my-2">자세히 보기</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- 두번째 행 카페리스트 -->
-			<div class="pt-4">
-				<h2 class="fw-bold">사람들이 좋아하는 카페 어떤가요?</h2>
-				<hr />
-			</div>
-			<div class="row row-cols-1 row-cols-md-4 g-4">
-				<c:forEach items="${list}" var="lists">
+				<c:forEach items="${map.bHitList}" var="bHitlists">
 					<div class="col">
 						<div class="card showEvent" style="opacity: 0;">
-							<a href="/Project/cafeDetail?cafeKey=${lists.cafeKey}"> <img
-								src="/photo/${lists.newFileName}" class="card-img-top" alt="...">
+							<a href="/Project/cafeDetail?cafeKey=${bHitlists.cafeKey}&pageCheck=index"> <img
+								src="/photo/${bHitlists.newFileName}" class="card-img-top" alt="...">
 							</a>
 							<div class="card-body">
-								<h5 class="card-title fw-bold">${lists.cafeName}
-									(${lists.cafeLocation})</h5>
-								<p class="text-muted target lh-base">${lists.cafeDetail}</p>
+								<h5 class="card-title fw-bold">${bHitlists.cafeName}
+									(${bHitlists.cafeLocation})</h5>
+								<p class="text-muted target lh-base">${bHitlists.cafeDetail}</p>
 
 								<div class="text-center">
-									<c:if test="${lists.confusion eq '혼잡'}">
+									<c:if test="${bHitlists.confusion eq '혼잡'}">
 										<span data-bs-toggle="tooltip" data-bs-html="true"
 											class="qwe fw-bold" id="confusiontooltip"
 											style="cursor: default"
@@ -228,7 +126,7 @@
 											혼잡도
 										</span>
 									</c:if>
-									<c:if test="${lists.confusion eq '보통'}">
+									<c:if test="${bHitlists.confusion eq '보통'}">
 										<span data-bs-toggle="tooltip" data-bs-html="true"
 											class="qwe fw-bold" id="confusiontooltip"
 											style="cursor: default"
@@ -239,7 +137,74 @@
 											혼잡도
 										</span>
 									</c:if>
-									<c:if test="${lists.confusion eq '쾌적'}">
+									<c:if test="${bHitlists.confusion eq '쾌적'}">
+										<span data-bs-toggle="tooltip" data-bs-html="true"
+											class="qwe fw-bold" id="confusiontooltip"
+											style="cursor: default"
+											data-bs-template='<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner text-success fw-bold"></div></div>'
+											data-bs-placement="right"
+											title="쾌적">
+											<i class="bi bi-people-fill" style="font-size: 1.2rem;"></i>혼잡도
+										</span>
+									</c:if>
+								</div>
+								<div class="text-center">
+									<span class="fw-bold" style="cursor: default"> <i
+										class="bi bi-sunglasses mt-1" style="font-size: 1.3rem;"></i>
+										조회수(${bHitlists.bHit})
+									</span>
+								</div>
+								<hr />
+								<div class="text-center">
+									<a href="/Project/cafeDetail?cafeKey=${bHitlists.cafeKey}&pageCheck=index"
+										class="btn btn-outline-dark my-2">자세히 보기</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</c:forEach>
+			</div>
+			<!-- 두번째 행 카페리스트 -->
+			<div class="pt-4">
+				<h2 class="fw-bold">사람들이 좋아하는 카페 어떤가요?</h2>
+				<hr />
+			</div>
+			<div class="row row-cols-1 row-cols-md-4 g-4">
+				<c:forEach items="${map.goodList}" var="goodlists">
+					<div class="col">
+						<div class="card showEvent" style="opacity: 0;">
+							<a href="/Project/cafeDetail?cafeKey=${goodlists.cafeKey}&pageCheck=index"> <img
+								src="/photo/${goodlists.newFileName}" class="card-img-top" alt="...">
+							</a>
+							<div class="card-body">
+								<h5 class="card-title fw-bold">${goodlists.cafeName}
+									(${goodlists.cafeLocation})</h5>
+								<p class="text-muted target lh-base">${goodlists.cafeDetail}</p>
+
+								<div class="text-center">
+									<c:if test="${goodlists.confusion eq '혼잡'}">
+										<span data-bs-toggle="tooltip" data-bs-html="true"
+											class="qwe fw-bold" id="confusiontooltip"
+											style="cursor: default"
+											data-bs-template='<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner text-danger fw-bold"></div></div>'
+											data-bs-placement="right"
+											title="혼잡">
+											<i class="bi bi-people-fill" style="font-size: 1.2rem;"></i>
+											혼잡도
+										</span>
+									</c:if>
+									<c:if test="${goodlists.confusion eq '보통'}">
+										<span data-bs-toggle="tooltip" data-bs-html="true"
+											class="qwe fw-bold" id="confusiontooltip"
+											style="cursor: default"
+											data-bs-template='<div class="tooltip" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner text-dark fw-bold"></div></div>'
+											data-bs-placement="right"
+											title="보통">
+											<i class="bi bi-people-fill" style="font-size: 1.2rem;"></i>
+											혼잡도
+										</span>
+									</c:if>
+									<c:if test="${goodlists.confusion eq '쾌적'}">
 										<span data-bs-toggle="tooltip" data-bs-html="true"
 											class="qwe fw-bold" id="confusiontooltip"
 											style="cursor: default"
@@ -253,12 +218,12 @@
 								<div class="text-center">
 									<span class="fw-bold" style="cursor: default"> <i
 										class="bi bi-hand-thumbs-up-fill" style="font-size: 1.3rem;"></i>
-										좋아요(${lists.goodCount})
+										좋아요(${goodlists.goodCount})
 									</span>
 								</div>
 								<hr />
 								<div class="text-center">
-									<a href="/Project/cafeDetail?cafeKey=${lists.cafeKey}"
+									<a href="/Project/cafeDetail?cafeKey=${goodlists.cafeKey}&pageCheck=index"
 										class="btn btn-outline-dark my-2">자세히 보기</a>
 								</div>
 							</div>
@@ -269,7 +234,7 @@
 		</div>
 	</div>
 	<!-- 하단 고정 퀵메뉴 -->
-	<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
+	<c:if test="${map.check eq true}">
 		<jsp:include page="fixMenu/quickMenu.html"></jsp:include>
 	</c:if>
 	<!-- 하단 정보 -->

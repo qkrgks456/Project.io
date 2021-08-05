@@ -124,15 +124,20 @@ public class CafeService {
 
 	// 카페리스트
 	public HashMap<String, Object> cafeList() {
+		HttpSession session = req.getSession();
+		String sessionId = (String) session.getAttribute("loginId");
 		dao = new CafeDAO();
 		String page = req.getParameter("page");
-		System.out.println("page : " + page);
 		if (page == null) {
 			page = "1";
 		}
-		return dao.cafeList(Integer.parseInt(page));
+		HashMap<String, Object> map = dao.cafeList(Integer.parseInt(page));
+		boolean check = dao.cafeInputCheck(sessionId);
+		map.put("check", check);
+		dao.resClose();
+		return map;
 	}
-
+	// 카페 상세
 	public HashMap<String, Object> cafeDetail() {
 		HttpSession session = req.getSession();
 		String sessionId = (String) session.getAttribute("loginId");
@@ -161,10 +166,12 @@ public class CafeService {
 			e.printStackTrace();
 		}
 		resultMap = dao.productList(map, cafeKey);
+		boolean check = dao.cafeInputCheck(sessionId);
+		resultMap.put("check", check);
 		dao.resClose();
 		return resultMap;
 	}
-
+	// 혼잡도 변경
 	public HashMap<String, Object> confusionTableChange() {
 		HttpSession session = req.getSession();
 		String sessionId = (String) session.getAttribute("loginId");
@@ -173,7 +180,7 @@ public class CafeService {
 		dao = new CafeDAO();
 		return dao.confusionTableChange(sessionId, cafeTotalTable, cafeCurrentTable);
 	}
-
+    // 혼잡도 확인
 	public HashMap<String, Object> confusionInfo() {
 		HttpSession session = req.getSession();
 		String sessionId = (String) session.getAttribute("loginId");
@@ -223,7 +230,7 @@ public class CafeService {
 		dao = new CafeDAO();
 		return null;
 	}
-
+	// 실시간 알림
 	public boolean realTimeAlarm() {
 		HttpSession session = req.getSession();
 		String sessionId = (String) session.getAttribute("loginId");

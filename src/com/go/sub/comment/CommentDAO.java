@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -35,6 +34,7 @@ public class CommentDAO {
 
 	// 자원정리
 	public void resClose() {
+		System.out.println("닫힘");
 		try {
 			if (rs != null && !rs.isClosed()) {
 				rs.close();
@@ -287,5 +287,22 @@ public class CommentDAO {
 		}
 		
 		return page;
+	}
+
+	public int cafeCommentReport(String reportReason, String commentNo, String sessionId) {
+		try {
+			sql = "INSERT INTO cmReport(reportCmNo,commentNo,reportReason,cmReporter,division) "
+					+ "VALUES(cmReport_seq.NEXTVAL,?,?,?,'카페')";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, Integer.parseInt(commentNo));
+			ps.setString(2, reportReason);
+			ps.setString(3, sessionId);
+			suc = ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		return suc;
 	}
 }

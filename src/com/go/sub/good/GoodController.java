@@ -1,6 +1,7 @@
 package com.go.sub.good;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
@@ -10,9 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.go.main.cafe.CafeDTO;
 import com.google.gson.Gson;
 
-@WebServlet({"/cafeGood"})
+@WebServlet({ "/cafeGood", "/cafeGoodList" })
 public class GoodController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -27,15 +29,24 @@ public class GoodController extends HttpServlet {
 		RequestDispatcher dis = null;
 		boolean check = false;
 		GoodService service = new GoodService(req);
-		switch(addr) {
+		switch (addr) {
 		case "/cafeGood":
+			System.out.println("카페좋아요");
 			int cafeGoodCount = service.cafeGood();
 			map = new HashMap<String, Object>();
 			map.put("cafeGoodCount", cafeGoodCount);
 			resp.setContentType("text/html; charset=UTF-8");
 			resp.getWriter().print(new Gson().toJson(map));
 			break;
+		case "/cafeGoodList":
+			System.out.println("카페좋아요리스트");
+			ArrayList<CafeDTO> cafeGoodList = service.cafeGoodList();
+			req.setAttribute("cafeGoodList", cafeGoodList);
+			dis = req.getRequestDispatcher("myPage/myPageMenu/goodCafe.jsp");
+			dis.forward(req, resp);
+			break;
 		}
+
 	}
 
 	@Override

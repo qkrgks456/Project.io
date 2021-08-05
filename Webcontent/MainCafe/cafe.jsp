@@ -33,10 +33,20 @@
 				<div class="d-flex">
 					<p class="fw-bold mt-4 h1" id="cafename">${map.cafeName}</p>
 					<div class="col d-flex justify-content-end mt-4">
-						<div class="d-inline-flex justify-content-end"
+						<div class="d-inline-flex justify-content-end mt-2"
 							style="height: 42px;">
-							<button class="btn btn-secondary"
-								onclick="location.href='/Project/cafeList?page=${map.cafePages}'">리스트</button>
+							<c:if test="${param.pageCheck eq 'index'}">
+								<button class="btn btn-outline-dark btn-sm"
+									onclick="location.href='/Project/'">이전으로</button>
+							</c:if>
+							<c:if test="${param.pageCheck eq 'cafeList'}">
+								<button class="btn btn-outline-dark btn-sm"
+									onclick="location.href='/Project/cafeList?page=${map.cafePages}'">이전으로</button>
+							</c:if>
+							<c:if test="${param.pageCheck eq 'goodCafe'}">
+								<button class="btn btn-outline-dark btn-sm"
+									onclick="location.href='/Project/cafeGoodList'">이전으로</button>
+							</c:if>
 						</div>
 					</div>
 				</div>
@@ -214,30 +224,31 @@
 				<div>
 					<h3 class="fw-bold">메뉴</h3>
 					<hr />
-					
+
 					<div class="container px-5 my-2">
 						<c:if test="${map.productList[0].productName ne null}">
-						<table class="table table-hover mt-2">
-							<thead class="">
-								<tr>
-									<th scope="col">상품이미지</th>
-									<th scope="col">상품명</th>
-									<th scope="col">상품설명</th>
-									<th scope="col">가격</th>
-								</tr>
-							</thead>
-							<tbody>
-							<c:forEach items="${map.productList}" var="productLists">
-								<tr class="">
-									<td><img src="/photo/${productLists.newFileName}" class="rounded"
-										style="width: 80px; height: 80px; object-fit: cover;" /></td>
-									<td class="align-middle">${productLists.productName}</td>
-									<td class="align-middle">${productLists.explanation}</td>
-									<td class="align-middle">${productLists.price}</td>
-								</tr>
-							</c:forEach>
-							</tbody>
-						</table>
+							<table class="table table-hover mt-2">
+								<thead class="">
+									<tr>
+										<th scope="col">상품이미지</th>
+										<th scope="col">상품명</th>
+										<th scope="col">상품설명</th>
+										<th scope="col">가격</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${map.productList}" var="productLists">
+										<tr class="">
+											<td><img src="/photo/${productLists.newFileName}"
+												class="rounded"
+												style="width: 80px; height: 80px; object-fit: cover;" /></td>
+											<td class="align-middle">${productLists.productName}</td>
+											<td class="align-middle">${productLists.explanation}</td>
+											<td class="align-middle">${productLists.price}</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
 						</c:if>
 					</div>
 				</div>
@@ -245,34 +256,37 @@
 					<h3 class="fw-bold">판매상품</h3>
 					<hr />
 					<div class="container px-5 my-2">
-					<c:if test="${map.sellProductList[0].productName ne null}">
-						<table class="table table-hover mt-2">
-							<thead class="">
-								<tr>
-									<th scope="col">상품이미지</th>
-									<th scope="col">상품명</th>
-									<th scope="col">상품설명</th>
-									<th scope="col">가격</th>
-									<th class="text-center" scope="col">상세보기</th>
-								</tr>
-							</thead>
-							<tbody>
-							<c:forEach items="${map.sellProductList}" var="sellProductLists">
-								<tr class="">
-									<td><img src="/photo/${sellProductList.newFileName}" class="rounded"
-										style="width: 80px; height: 80px; object-fit: cover;" /></td>
-									<td class="align-middle">${sellProductList.productName}</td>
-									<td class="align-middle">${sellProductList.explanation}</td>
-									<td class="align-middle">${sellProductList.price}</td>
-									<td class="align-middle">
-										<div class="d-grid gap-2 col-6 mx-auto mt-1">
-											<a href="${sellProductList.productId}"class="btn btn-secondary btn-sm">상세보기</a>
-										</div>
-									</td>
-								</tr>
-							</c:forEach>
-							</tbody>
-						</table>
+						<c:if test="${map.sellProductList[0].productName ne null}">
+							<table class="table table-hover mt-2">
+								<thead class="">
+									<tr>
+										<th scope="col">상품이미지</th>
+										<th scope="col">상품명</th>
+										<th scope="col">상품설명</th>
+										<th scope="col">가격</th>
+										<th class="text-center" scope="col">상세보기</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${map.sellProductList}"
+										var="sellProductLists">
+										<tr class="">
+											<td><img src="/photo/${sellProductList.newFileName}"
+												class="rounded"
+												style="width: 80px; height: 80px; object-fit: cover;" /></td>
+											<td class="align-middle">${sellProductList.productName}</td>
+											<td class="align-middle">${sellProductList.explanation}</td>
+											<td class="align-middle">${sellProductList.price}</td>
+											<td class="align-middle">
+												<div class="d-grid gap-2 col-6 mx-auto mt-1">
+													<a href="${sellProductList.productId}"
+														class="btn btn-secondary btn-sm">상세보기</a>
+												</div>
+											</td>
+										</tr>
+									</c:forEach>
+								</tbody>
+							</table>
 						</c:if>
 					</div>
 				</div>
@@ -299,11 +313,11 @@
 								${commentLists.cm_content}
 								<c:if test="${loginId ne commentLists.memberKey}">
 									<a class="float-end btn btn-secondary btn-sm"
-										href="/Project/report/report.jsp?commentNo=${commentLists.commentNo}">신고</a>
+										href="/Project/report/report.jsp?commentNo=${commentLists.commentNo}&memberKey=${commentLists.memberKey}&commentContent=${commentLists.cm_content}">신고</a>
 								</c:if>
 								<c:if test="${loginId eq commentLists.memberKey}">
 									<a id="commentDelBtn"
-										class='commentDelBtn mx-2 float-end btn btn-secondary btn-sm'
+										class='commentDelBtn ms-2 float-end btn btn-secondary btn-sm'
 										title="${commentLists.commentNo}">삭제</a>
 									<a class='commentUpdateBtn float-end btn btn-secondary btn-sm'>수정</a>
 								</c:if>
@@ -356,7 +370,7 @@
 		</div>
 	</div>
 	<!-- 하단 고정 퀵메뉴 -->
-	<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
+	<c:if test="${map.check eq true}">
 		<jsp:include page="/fixMenu/quickMenu.html"></jsp:include>
 	</c:if>
 	<!-- 하단 정보 -->

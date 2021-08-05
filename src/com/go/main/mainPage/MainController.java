@@ -1,7 +1,7 @@
 package com.go.main.mainPage;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,8 +9,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import com.go.main.cafe.CafeDTO;
+import com.go.main.cafe.CafeDAO;
+
 
 @WebServlet({"/"})
 public class MainController extends HttpServlet {
@@ -22,14 +24,20 @@ public class MainController extends HttpServlet {
 		String uri = req.getRequestURI();
 		String ctx = req.getContextPath();
 		String addr = uri.substring(ctx.length());
-		RequestDispatcher dis = null;
-		MainService service = new MainService(req);
-		System.out.println(addr);
+		HttpSession session = req.getSession();
+		String sessionId = (String) session.getAttribute("loginId");
+		RequestDispatcher dis = null;		
+		boolean check = false;
 		switch (addr) {
 		case "/":
+			CafeDAO cafeDao = new CafeDAO();
+			check =cafeDao.cafeInputCheck(sessionId);
+			cafeDao.resClose();
+			MainDAO dao = new MainDAO();
 			System.out.println("안녕");
-			ArrayList<CafeDTO> list = service.mainPage();
-			req.setAttribute("list", list);
+			HashMap<String, Object> map = dao.mainPage(sessionId);
+			map.put("check", check);
+			req.setAttribute("map", map);
 			dis = req.getRequestDispatcher("index.jsp");
 			dis.forward(req, resp);
 			break;

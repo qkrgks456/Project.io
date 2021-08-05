@@ -3,10 +3,14 @@ package com.go.sub.good;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import com.go.main.cafe.CafeDTO;
 
 public class GoodDAO {
 
@@ -29,6 +33,7 @@ public class GoodDAO {
 
 	// 자원정리
 	public void resClose() {
+		System.out.println("닫힘");
 		try {
 			if (rs != null && !rs.isClosed()) {
 				rs.close();
@@ -91,5 +96,37 @@ public class GoodDAO {
 			resClose();
 		}
 		return cafeGoodCount;
+	}
+
+	public ArrayList<CafeDTO> cafeGoodList(String sessionId) {
+		ArrayList<CafeDTO> cafeGoodList = new ArrayList<CafeDTO>();
+		CafeDTO dto = null;
+		try {
+			String sql = "SELECT newfilename,cafeName,cafeKey,cafeDetail,cafeAddress,g.likeNo "
+					+ "FROM(SELECT i.newfilename,c.cafeName,c.cafeKey,c.cafeDetail,c.cafeAddress "
+					+ "FROM (SELECT division,newFileName FROM image WHERE ROWID IN "
+					+ "(SELECT MIN(ROWID) FROM image GROUP BY division)) i "
+					+ "LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey "
+					+ "WHERE c.cafeDel='N' AND c.openCheck='Y')c "
+					+ "LEFT OUTER JOIN good g ON c.cafeKey=g.division "
+					+ "WHERE g.memberKey=? ORDER BY g.likeNo";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				dto = new CafeDTO();
+				dto.setNewFileName(rs.getString("newfilename"));
+				dto.setCafeName(rs.getString("cafeName"));
+				dto.setCafeKey(rs.getString("cafeKey"));
+				dto.setCafeDetail(rs.getString("cafeDetail"));
+				dto.setCafeAddress(rs.getString("cafeAddress"));
+				cafeGoodList.add(dto);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return cafeGoodList;
 	}
 }

@@ -17,7 +17,7 @@
 				class="ps-4 fw-bold list-group-item list-group-item-action"
 				href="/Project/cafeAlarmList" style="cursor: pointer;">알림리스트</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myPage/myPageMenu/goodCafe.jsp"
+				href="/Project/cafeGoodList"
 				style="cursor: pointer;">좋아요카페</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
 				href="/Project/myPage/myPageMenu/goodProduct.jsp"

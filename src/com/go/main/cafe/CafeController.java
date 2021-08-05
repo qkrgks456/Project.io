@@ -49,7 +49,7 @@ public class CafeController extends HttpServlet {
 					dis.forward(req, resp);
 				}
 			} else {
-				resp.sendRedirect("/Project/main");
+				resp.sendRedirect("/Project/");
 			}
 
 			break;
@@ -61,7 +61,7 @@ public class CafeController extends HttpServlet {
 				dis = req.getRequestDispatcher("myPage/cafeMenu/cafeInput/cafeInput.jsp");
 				dis.forward(req, resp);
 			} else {
-				resp.sendRedirect("/main");
+				resp.sendRedirect("/Project/");
 			}
 			break;
 		case "/cafewrite":
@@ -95,7 +95,7 @@ public class CafeController extends HttpServlet {
 				resp.setContentType("text/html; charset=UTF-8");
 				resp.getWriter().print(new Gson().toJson(map));
 			} else {
-				resp.sendRedirect("/main");
+				resp.sendRedirect("/Project/");
 			}
 			break;
 
@@ -108,7 +108,7 @@ public class CafeController extends HttpServlet {
 				dis = req.getRequestDispatcher("myPage/cafeMenu/cafeUpdate/cafeInfo.jsp");
 				dis.forward(req, resp);
 			} else {
-				resp.sendRedirect("/main");
+				resp.sendRedirect("/Project/");
 			}
 			break;
 		case "/cafeUpdate":
@@ -123,7 +123,7 @@ public class CafeController extends HttpServlet {
 					resp.getWriter().print(new Gson().toJson(map));
 				}
 			} else {
-				resp.sendRedirect("/main");
+				resp.sendRedirect("/Project/");
 			}
 			break;
 
@@ -143,7 +143,7 @@ public class CafeController extends HttpServlet {
 					dis.forward(req, resp);
 				}
 			} else {
-				resp.sendRedirect("/main");
+				resp.sendRedirect("/Project/");
 			}
 			break;
 
@@ -164,15 +164,14 @@ public class CafeController extends HttpServlet {
 					resp.getWriter().print(new Gson().toJson(map));
 				}
 			} else {
-				resp.sendRedirect("/main");
+				resp.sendRedirect("/Project/");
 			}
 			break;
 
 		case "/cafeList":
 			System.out.println("카페리스트");
 			map = service.cafeList();
-			System.out.println(map);
-			req.setAttribute("map", map);
+			req.setAttribute("map", map);		
 			dis = req.getRequestDispatcher("MainCafe/cafeList.jsp");
 			dis.forward(req, resp);
 			break;
@@ -195,7 +194,7 @@ public class CafeController extends HttpServlet {
 				dis = req.getRequestDispatcher("myPage/cafeMenu/confusion.jsp");
 				dis.forward(req, resp);
 			} else {
-				resp.sendRedirect("/main");
+				resp.sendRedirect("/Project/");
 			}
 			break;
 		case "/confusionTableChange":
@@ -205,7 +204,7 @@ public class CafeController extends HttpServlet {
 				resp.setContentType("text/html; charset=UTF-8");
 				resp.getWriter().print(new Gson().toJson(map));
 			} else {
-				resp.sendRedirect("/main");
+				resp.sendRedirect("/Project/");
 			}
 			break;
 		case "/standardChange":
@@ -215,7 +214,7 @@ public class CafeController extends HttpServlet {
 				resp.setContentType("text/html; charset=UTF-8");
 				resp.getWriter().print(new Gson().toJson(map));
 			} else {
-				resp.sendRedirect("/main");
+				resp.sendRedirect("/Project/");
 			}
 			break;
 		case "/cafeAlarmList":
@@ -226,7 +225,7 @@ public class CafeController extends HttpServlet {
 				dis = req.getRequestDispatcher("myPage/myPageMenu/alerm.jsp");
 				dis.forward(req, resp);
 			} else {
-				resp.sendRedirect("/main");
+				resp.sendRedirect("/Project/");
 			}
 			break;
 		case "/cafeAlarmDel":
@@ -238,7 +237,7 @@ public class CafeController extends HttpServlet {
 				resp.setContentType("text/html; charset=UTF-8");
 				resp.getWriter().print(new Gson().toJson(map));
 			} else {
-				resp.sendRedirect("/main");
+				resp.sendRedirect("/Project/");
 			}
 
 			break;
@@ -251,7 +250,7 @@ public class CafeController extends HttpServlet {
 				resp.setContentType("text/html; charset=UTF-8");
 				resp.getWriter().print(new Gson().toJson(map));
 			} else {
-				resp.sendRedirect("/main");
+				resp.sendRedirect("/Project/");
 			}
 
 			break;

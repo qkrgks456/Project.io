@@ -32,6 +32,7 @@ public class CafeDAO {
 
 	// 자원정리
 	public void resClose() {
+		System.out.println("닫힘");
 		try {
 			if (rs != null && !rs.isClosed()) {
 				rs.close();
@@ -385,9 +386,7 @@ public class CafeDAO {
 			System.out.println("토탈 페이지" + totalPages);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			resClose();
-		}
+		} 
 		return map;
 	}
 

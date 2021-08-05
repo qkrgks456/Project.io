@@ -76,4 +76,14 @@ public class CommentService {
 		return resultMap;
 	}
 
+	public int cafeCommentReport() {
+		HttpSession session = req.getSession();
+		String sessionId = (String) session.getAttribute("loginId");
+		String reportReason = req.getParameter("reportReason");
+		String commentNo = req.getParameter("commentNo");
+		System.out.println(commentNo);
+		dao = new CommentDAO();
+		return dao.cafeCommentReport(reportReason,commentNo,sessionId);
+	}
+
 }

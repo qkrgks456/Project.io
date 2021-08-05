@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -33,6 +34,7 @@ public class MainDAO {
 
 	// 자원정리
 	public void resClose() {
+		System.out.println("닫힘");
 		try {
 			if (rs != null && !rs.isClosed()) {
 				rs.close();
@@ -48,9 +50,12 @@ public class MainDAO {
 		}
 	}
 
-	public ArrayList<CafeDTO> mainPage() {
-		ArrayList<CafeDTO> list = new ArrayList<CafeDTO>();
-		
+	public HashMap<String, Object> mainPage(String sessionId) {
+		ArrayList<CafeDTO> goodList = new ArrayList<CafeDTO>();
+		ArrayList<CafeDTO> bHitList = new ArrayList<CafeDTO>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		CafeDTO dto = new CafeDTO();
+		String location = null;
 		try {		
 			// 상위 좋아요 4개 데이터
 			String sql = "SELECT s.cafeKey,s.newfilename,s.cafeName,s.cafeNum,s.cafeLocation,s.cafeDetail,s.confusion,s.bHit,g.co "
@@ -62,7 +67,7 @@ public class MainDAO {
 			ps = conn.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				CafeDTO dto = new CafeDTO();
+				dto = new CafeDTO();
 				dto.setCafeKey(rs.getString("cafeKey"));
 				dto.setCafeName(rs.getString("cafeName"));
 				dto.setCafeLocation(rs.getString("cafeLocation"));
@@ -71,16 +76,95 @@ public class MainDAO {
 				dto.setNewFileName(rs.getString("newfilename"));				
 				dto.setbHit(rs.getInt("bHit"));
 				dto.setGoodCount(rs.getInt("co"));
-				list.add(dto);
+				goodList.add(dto);
+			}
+			if(sessionId == null) {
+				sql = "SELECT cafeKey,newfilename,cafeName,cafeNum,cafeLocation,cafeDetail,confusion,bHit "
+						+ "FROM (SELECT i.newfilename,c.cafeName,c.cafeNum,c.cafeKey,c.cafeLocation"
+						+ ",c.cafeDetail,c.confusion,c.bHit FROM "
+						+ "(SELECT division,newFileName FROM image WHERE ROWID IN "
+						+ "(SELECT MIN(ROWID) FROM image GROUP BY division)) i "
+						+ "LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey "
+						+ "WHERE c.cafeDel='N' AND c.openCheck='Y') "
+						+ "ORDER BY bHit DESC OFFSET 0 ROWS FETCH FIRST 4 ROWS ONLY";	
+				ps = conn.prepareStatement(sql);
+				rs = ps.executeQuery();
+				while(rs.next()) {
+					dto = new CafeDTO();
+					dto.setCafeKey(rs.getString("cafeKey"));
+					dto.setCafeName(rs.getString("cafeName"));
+					dto.setCafeLocation(rs.getString("cafeLocation"));
+					dto.setCafeDetail(rs.getString("cafeDetail"));
+					dto.setConfusion(rs.getString("confusion"));
+					dto.setNewFileName(rs.getString("newfilename"));				
+					dto.setbHit(rs.getInt("bHit"));	
+					bHitList.add(dto);
+				}
+			}else {
+				sql ="SELECT location FROM users WHERE memberKey=?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, sessionId);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					location = rs.getString("location");
+				}
+				System.out.println(location);
+				sql = "SELECT cafeKey,newfilename,cafeName,cafeNum,cafeLocation,cafeDetail,confusion,bHit "
+						+ "FROM (SELECT i.newfilename,c.cafeName,c.cafeNum,c.cafeKey,c.cafeLocation"
+						+ ",c.cafeDetail,c.confusion,c.bHit FROM "
+						+ "(SELECT division,newFileName FROM image WHERE ROWID IN "
+						+ "(SELECT MIN(ROWID) FROM image GROUP BY division)) i "
+						+ "LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey "
+						+ "WHERE c.cafeDel='N' AND c.openCheck='Y' AND c.cafeLocation=?) "
+						+ "ORDER BY bHit DESC OFFSET 0 ROWS FETCH FIRST 4 ROWS ONLY";	
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, location);
+				rs = ps.executeQuery();
+				while(rs.next()) {
+					dto = new CafeDTO();
+					dto.setCafeKey(rs.getString("cafeKey"));
+					dto.setCafeName(rs.getString("cafeName"));
+					dto.setCafeLocation(rs.getString("cafeLocation"));
+					dto.setCafeDetail(rs.getString("cafeDetail"));
+					dto.setConfusion(rs.getString("confusion"));
+					dto.setNewFileName(rs.getString("newfilename"));				
+					dto.setbHit(rs.getInt("bHit"));	
+					bHitList.add(dto);
+				}
+				
+				if(bHitList.size()<4) {
+					sql = "SELECT cafeKey,newfilename,cafeName,cafeNum,cafeLocation,cafeDetail,confusion,bHit "
+							+ "FROM (SELECT i.newfilename,c.cafeName,c.cafeNum,c.cafeKey,c.cafeLocation"
+							+ ",c.cafeDetail,c.confusion,c.bHit FROM "
+							+ "(SELECT division,newFileName FROM image WHERE ROWID IN "
+							+ "(SELECT MIN(ROWID) FROM image GROUP BY division)) i "
+							+ "LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey "
+							+ "WHERE c.cafeDel='N' AND c.openCheck='Y') "
+							+ "ORDER BY bHit DESC OFFSET 0 ROWS FETCH FIRST 4 ROWS ONLY";	
+					ps = conn.prepareStatement(sql);
+					rs = ps.executeQuery();
+					while(rs.next()) {
+						dto = new CafeDTO();
+						dto.setCafeKey(rs.getString("cafeKey"));
+						dto.setCafeName(rs.getString("cafeName"));
+						dto.setCafeLocation(rs.getString("cafeLocation"));
+						dto.setCafeDetail(rs.getString("cafeDetail"));
+						dto.setConfusion(rs.getString("confusion"));
+						dto.setNewFileName(rs.getString("newfilename"));				
+						dto.setbHit(rs.getInt("bHit"));	
+						bHitList.add(dto);
+					}
+				}			
 			}			
+			System.out.println(bHitList);
+			map.put("goodList", goodList);
+			map.put("bHitList", bHitList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			resClose();
 		}
-		
-		
-		return list;
+		return map;
 	}
 	
 	

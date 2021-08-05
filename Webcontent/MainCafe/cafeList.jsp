@@ -47,7 +47,7 @@
 				<c:forEach items="${map.list}" var="map" varStatus="status">
 					<div class="col">
 						<div class="card showEvent" style="opacity:0;">
-							<a href="/Project/cafeDetail?cafeKey=${map.cafeKey}"> <img
+							<a href="/Project/cafeDetail?cafeKey=${map.cafeKey}&pageCheck=cafeList"> <img
 								src="/photo/${map.newFileName}" class="card-img-top" alt="...">
 							</a>
 							<div class="card-body">
@@ -87,7 +87,7 @@
 								</div>
 								<hr/>
 								<div class="text-center">
-									<a href="/Project/cafeDetail?cafeKey=${map.cafeKey}"
+									<a href="/Project/cafeDetail?cafeKey=${map.cafeKey}&pageCheck=cafeList"
 										class="btn btn-outline-dark my-2">자세히 보기</a>
 								</div>
 							</div>
@@ -126,7 +126,7 @@
 		</div>
 	</div>
 	<!-- 하단 고정 퀵메뉴 -->
-	<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
+	<c:if test="${map.check eq true}">
 		<jsp:include page="/fixMenu/quickMenu.html"></jsp:include>
 	</c:if>
 	<!-- 하단 정보 -->

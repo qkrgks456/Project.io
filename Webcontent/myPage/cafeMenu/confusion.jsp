@@ -41,7 +41,6 @@
 				<hr />
 				<c:if test="${map.check eq true}">
 					<div class="cont container d-flex justify-content-evenly py-3">
-
 						<!-- 좌석수정 -->
 						<div id="myinfoform"
 							class="needs-validation py-3 col-md-6 border-end">
