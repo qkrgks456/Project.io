@@ -58,14 +58,10 @@
 		</div>
 	</div>
 	<!-- 하단 정보 -->
-	<jsp:include page="/fixMenu/footer.html"></jsp:include>
+	<jsp:include page="/fixMenu/footer.jsp"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=4"></script>
-	<!-- 하단 고정 퀵메뉴 -->
-	<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
-		<jsp:include page="/fixMenu/quickMenu.html"></jsp:include>
-	</c:if>
 </body>
 </html>

@@ -116,7 +116,7 @@ Calendar cal = Calendar.getInstance();
 		</div>
 	</div>
 	<!-- 하단 정보 -->
-	<jsp:include page="/fixMenu/footer.html"></jsp:include>
+	<jsp:include page="/fixMenu/footer.jsp"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<script type="text/javascript">

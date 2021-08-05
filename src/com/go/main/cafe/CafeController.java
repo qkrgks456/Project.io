@@ -172,6 +172,7 @@ public class CafeController extends HttpServlet {
 		case "/cafeList":
 			System.out.println("카페리스트");
 			map = service.cafeList();
+			System.out.println(map);
 			req.setAttribute("map", map);
 			dis = req.getRequestDispatcher("MainCafe/cafeList.jsp");
 			dis.forward(req, resp);

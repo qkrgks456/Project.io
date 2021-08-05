@@ -248,7 +248,7 @@ public class CafeDAO {
 	public boolean cafeInputCheck(String loginId) {
 		boolean check = false;
 		try {
-			String sql = "SELECT cafeKey FROM cafeInfo WHERE (cafeDel='N' OR cafeDel='Y') AND cafeKey=?";
+			String sql = "SELECT cafeKey FROM cafeInfo WHERE cafeDel='N' AND cafeKey=?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, loginId);
 			rs = ps.executeQuery();

@@ -203,10 +203,10 @@
 
 	<!-- 하단 고정 퀵메뉴 -->
 	<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
-		<jsp:include page="/fixMenu/quickMenu.html"></jsp:include>
+		<jsp:include page="/fixMenu/quickMenu.jsp"></jsp:include>
 	</c:if>
 	<!-- 하단 정보 -->
-	<jsp:include page="/fixMenu/footer.html"></jsp:include>
+	<jsp:include page="/fixMenu/footer.jsp"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<script type="text/javascript">
 		/* 페이지 시작시 총 수량  */
