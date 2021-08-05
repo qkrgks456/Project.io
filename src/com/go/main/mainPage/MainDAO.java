@@ -133,6 +133,7 @@ public class MainDAO {
 				}
 				
 				if(bHitList.size()<4) {
+					bHitList.clear();
 					sql = "SELECT cafeKey,newfilename,cafeName,cafeNum,cafeLocation,cafeDetail,confusion,bHit "
 							+ "FROM (SELECT i.newfilename,c.cafeName,c.cafeNum,c.cafeKey,c.cafeLocation"
 							+ ",c.cafeDetail,c.confusion,c.bHit FROM "
