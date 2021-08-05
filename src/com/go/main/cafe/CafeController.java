@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 @WebServlet({ "/cafewrite", "/cafeInfoMyPage", "/ownerCheck", "/cafeUpdate", "/cafeInputCheck", "/businessCheck",
 		"/businessChange", "/cafeDel", "/cafeExist", "/cafeList", "/cafeDetail", "/confusionInfo",
 		"/confusionTableChange", "/standardChange", "/cafeAlarmList", "/cafeAlarmDel", "/realTimeAlarm",
-		"/inputCafeInfo" })
+		"/inputCafeInfo","/cafeInputDelCheck" })
 public class CafeController extends HttpServlet {
 	// 안녕
 	private static final long serialVersionUID = 1L;
@@ -62,6 +62,17 @@ public class CafeController extends HttpServlet {
 				dis = req.getRequestDispatcher("myPage/cafeMenu/cafeInput/cafeInput.jsp");
 				dis.forward(req, resp);
 			} else {
+				resp.sendRedirect("/Project/");
+			}
+			break;
+			
+		case "/cafeInputDelCheck":
+			if (sessionId != null) {
+			check = service.cafeInputDelCheck();
+			req.setAttribute("check", check);
+			dis = req.getRequestDispatcher("myPage/cafeMenu/cafeInput/cafeInput.jsp");
+			dis.forward(req, resp);
+			}else {
 				resp.sendRedirect("/Project/");
 			}
 			break;

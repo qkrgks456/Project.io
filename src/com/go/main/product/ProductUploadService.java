@@ -19,7 +19,7 @@ public class ProductUploadService {
 	public ProductDTO PhotoUpload() {
 		// 프로젝트 내 업로드 폴더 경로 얻기
 		String uploadImgPath = req.getSession().getServletContext().getRealPath("uploadImg");
-		String uploadImgPath2 = uploadImgPath.substring(0, uploadImgPath.indexOf("\\.metadata") + 1);
+		String uploadImgPath2 = uploadImgPath.substring(0, uploadImgPath.indexOf("\\Project") + 1);
 		System.out.println(uploadImgPath2);
 		String uploadPath = uploadImgPath2 + "Project\\WebContent\\uploadImg";
 		

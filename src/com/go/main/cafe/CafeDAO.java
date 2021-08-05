@@ -262,6 +262,27 @@ public class CafeDAO {
 		return check;
 
 	}
+	
+	public boolean cafeInputDelCheck(String loginId) {
+		boolean check = false;
+		System.out.println("loginId");
+		System.out.println();
+		try {
+			String sql = "SELECT cafeKey FROM cafeInfo WHERE cafeKey=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, loginId);
+			rs = ps.executeQuery();
+			check = rs.next();
+			System.out.println(check);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		System.out.println(check);
+		return check;
+
+	}
 
 	public boolean businessCheck(String businessUserId, String businessUserPw, String businessNumber) {
 		boolean check = false;

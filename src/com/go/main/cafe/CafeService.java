@@ -28,6 +28,7 @@ public class CafeService {
 		// 파일
 		upload = new CafeUploadService(req);
 		dto = upload.PhotoUpload(); // 사진 업로드
+
 		System.out.println("파일과 파라미터값 dto 잘 받았냐 : " + dto);
 		HttpSession session = req.getSession();
 		String sessionId = (String) session.getAttribute("loginId");
@@ -37,6 +38,7 @@ public class CafeService {
 		if (suc == 0) {
 			upload.failPhoto(dto);
 		}
+
 		return suc;
 	}
 
@@ -93,6 +95,11 @@ public class CafeService {
 		return dao.cafeInputCheck((String) req.getSession().getAttribute("loginId"));
 	}
 
+	public boolean cafeInputDelCheck() {
+		dao = new CafeDAO();
+		return dao.cafeInputDelCheck((String) req.getSession().getAttribute("loginId"));
+	}
+
 	public boolean businessCheck() {
 		dao = new CafeDAO();
 		String businessUserId = req.getParameter("businessUserId");
@@ -137,6 +144,7 @@ public class CafeService {
 		dao.resClose();
 		return map;
 	}
+
 	// 카페 상세
 	public HashMap<String, Object> cafeDetail() {
 		HttpSession session = req.getSession();
@@ -171,6 +179,7 @@ public class CafeService {
 		dao.resClose();
 		return resultMap;
 	}
+
 	// 혼잡도 변경
 	public HashMap<String, Object> confusionTableChange() {
 		HttpSession session = req.getSession();
@@ -180,7 +189,8 @@ public class CafeService {
 		dao = new CafeDAO();
 		return dao.confusionTableChange(sessionId, cafeTotalTable, cafeCurrentTable);
 	}
-    // 혼잡도 확인
+
+	// 혼잡도 확인
 	public HashMap<String, Object> confusionInfo() {
 		HttpSession session = req.getSession();
 		String sessionId = (String) session.getAttribute("loginId");
@@ -197,7 +207,6 @@ public class CafeService {
 		dao = new CafeDAO();
 		return dao.standardChange(sessionId, leisurely, normal, congest);
 	}
-
 
 	public ArrayList<CafeDTO> cafeAlarmList() {
 		HttpSession session = req.getSession();
@@ -225,11 +234,12 @@ public class CafeService {
 		dao.resClose();
 		return cafeAlarmList;
 	}
-	
+
 	public HashMap<String, Object> main() {
 		dao = new CafeDAO();
 		return null;
 	}
+
 	// 실시간 알림
 	public boolean realTimeAlarm() {
 		HttpSession session = req.getSession();
@@ -238,7 +248,7 @@ public class CafeService {
 		return dao.realTimeAlarm(sessionId);
 	}
 
-	public ArrayList <CafeDTO> inputCafeInfo() {
+	public ArrayList<CafeDTO> inputCafeInfo() {
 		dao = new CafeDAO();
 		return dao.inputCafeInfo();
 	}
