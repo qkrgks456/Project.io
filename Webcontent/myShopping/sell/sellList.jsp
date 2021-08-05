@@ -226,7 +226,6 @@
 		$('#sumSumPrice').append('총 매출 : ' + sumPrice+'원');
 		/* 수량증가  */
 		var sumSum = 0;
-
 		$('.up').click(function() {
 			var sumPrice = 0;
 			var qu = Number($(this).prev('.qu').text());
@@ -265,6 +264,8 @@
 				var sum = 0;
 				$('.qu').each(function(i, item) {
 					sum += Number($(this).text());
+					
+					
 				})
 				$('#sumAmount').empty();
 				$('#sumAmount').append('수량 : ' + sum);

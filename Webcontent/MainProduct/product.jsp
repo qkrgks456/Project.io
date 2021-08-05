@@ -45,12 +45,13 @@
 							<br>
 							<p class="text-muted mt-2">
 								부드러우면서 짙은 꽃향기, 목넘김 이후에 남는 아련한 향, 부드러운 바디, 달콤한 신맛 등<br>
-								예가체프를 최고의 커피라 부르는 이유는 많습니다</p>
+								예가체프를 최고의 커피라 부르는 이유는 많습니다
+							</p>
 							<p class="text-muted bold">(200g 기준 판매)</p>
-							
+
 
 							<!-- 수량선택 셀렉트바  -->
-							<br>
+							<br> <br>
 							<h5 class="text-muted mt-2 fw-bold" style="text-align: left;">수량</h5>
 							<form name="form1" method="post"
 								action="/Project/myShopping/buy/cart.jsp">
@@ -59,7 +60,7 @@
 									<c:forEach begin="1" end="10" var="i">
 										<option value="${i }">${i}</option>
 									</c:forEach>
-								</select>&nbsp;개 <br>
+								</select>&nbsp;개 <br> <br>
 
 								<!-- 가격  -->
 								<br>
@@ -68,62 +69,59 @@
 								<h3>
 									<fmt:formatNumber value="${vo.Price}" pattern="###,###" />
 								</h3>
-
-
+								<br>
 								<!-- 구매/장바구니 버튼 -->
-								<br><br><br><br>
-								
 								<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 									<button type="submit"
 										onclick="location.href='/Project/myShopping/buy/cart.jsp'"
 										class="btn btn-success btn-lg " value="장바구니에 담기">장바구니</button>
+									&nbsp;&nbsp;&nbsp;
+									<button type="button"
+										onclick="location.href='/Project/MainProduct/productResult.jsp'"
+										class="btn btn-secondary btn-lg" style="float: right;">구매하기</button>
 							</form>
-							</div>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<button type="button"
-								onclick="location.href='/Project/MainProduct/productResult.jsp'"
-								class="btn btn-secondary btn-lg" style="float: right;">구매하기</button>
-						</div></div>
-					</div>
-					<!-- 좋아요 댓글 -->
-					<div class="d-grid gap-1 d-md-block">
-						<div id="good" class="d-inline-flex align-items-center">
-							<i id="goodicon" class="bi bi-hand-thumbs-up-fill"
-								style="font-size: 2.0rem;"></i>
-							<p class="ms-2 mt-3 fw-bold">좋아요(10)</p>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<div id="commenticon" class="d-inline-flex align-items-center">
-								<i id="commenticons" class="bi bi-chat-square-text-fill mt-1"
-									style="font-size: 2.0rem;"></i>
-								<p class="ms-2 mt-3 fw-bold">댓글(11)</p>
+							<!-- 좋아요 댓글 -->
+							<div class="position-absolute bottom-0 start-0">
+								&nbsp;
+								<div id="good" class="d-inline-flex align-items-left">
+									<i id="goodicon" class="bi bi-hand-thumbs-up-fill"
+										style="font-size: 2.0rem;"></i> &nbsp;
+									<p class=" ms-2 mt-3 fw-bold">좋아요(10)</p>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<div id="commenticon" class="d-inline-flex align-items-center">
+										<i id="commenticons" class="bi bi-chat-square-text-fill mt-1"
+											style="font-size: 2.0rem;"></i>
+										<p class="ms-2 mt-3 fw-bold">댓글(11)</p>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-
 			</div>
-
-			<!-- 상세 페이지 -->
-			<hr />
-			<br> <br> <img src="/Project/assets/img/p3.jpg" width="350"
-				height="250"
-				style="margin-left: auto; margin-right: auto; display: block;" />
-
-			<p class="ms-1 mt-1 bold" style="text-align: center;">
-				향 ●●●●○<br> 산도●●●●●<br> 단맛●●●○○<br> 쓴맛●●●○○<br>
-				바디감●●●●○<br>
-			</p>
-
-			<br>
-			<p class="text-muted mt-2" style="text-align: center">
-				에티오피아 남부 시다모 현안의 예가체프 지역 고지대에서 재배하는 커피입니다.<br> 에티오피아 커피 중 가장
-				세련된 커피라 평가받고있으며,<br> 예가체프의 향기는 제대로 맡아본 사람이 아니면 도저히 상상만으로 떠올릴 수
-				없을 정도라고 합니다.<br> 향 때문에 유명해진 것이라고도 말할 수 있죠.<br> 부드러우면서 짙은
-				꽃향기, 목넘김 이후에 남는 아련한 향, 부드러운 바디감, 달콤한 신맛 등 예가체프를 최고의 커피라 부르는 이유는
-				많습니다.<br> <br> 일반적으로 과실의 상쾌한 신맛과 초콜릿의 달콤함,<br> 그리고
-				와인에 비유되는 향미와 깊은 맛을 가졌습니다.<br> '카페 로스터리' 에서 최고의 예가체프를 즐겨 보세요<br>
-			</p>
 		</div>
+		<!-- 상세 페이지 -->
+		<hr/>
+		<img src="/Project/assets/img/p3.jpg" width="350" height="250"
+			style="margin-left: auto; margin-right: auto; display: block;" />
+
+		<p class="ms-1 mt-1 bold" style="text-align: center;">
+			향 ●●●●○<br> 산도●●●●●<br> 단맛●●●○○<br> 쓴맛●●●○○<br>
+			바디감●●●●○<br>
+		</p>
+
+		<br>
+		<p class="text-muted mt-2" style="text-align: center">
+			에티오피아 남부 시다모 현안의 예가체프 지역 고지대에서 재배하는 커피입니다.<br> 에티오피아 커피 중 가장 세련된
+			커피라 평가받고있으며,<br> 예가체프의 향기는 제대로 맡아본 사람이 아니면 도저히 상상만으로 떠올릴 수 없을
+			정도라고 합니다.<br> 향 때문에 유명해진 것이라고도 말할 수 있죠.<br> 부드러우면서 짙은 꽃향기,
+			목넘김 이후에 남는 아련한 향, 부드러운 바디감, 달콤한 신맛 등 예가체프를 최고의 커피라 부르는 이유는 많습니다.<br>
+			<br> 일반적으로 과실의 상쾌한 신맛과 초콜릿의 달콤함,<br> 그리고 와인에 비유되는 향미와 깊은 맛을
+			가졌습니다.<br> '카페 로스터리' 에서 최고의 예가체프를 즐겨 보세요<br>
+		</p>
+	</div>
 	</div>
 
 	<!-- 댓글(카페상세 댓글 복붙) -->
