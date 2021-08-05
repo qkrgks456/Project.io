@@ -42,6 +42,7 @@
 				<div class="cont container">
 					<table class="table table-hover mt-2">
 						<thead class="table-light">
+							
 							<tr>
 								<th scope="col">경로</th>
 								<th scope="col">댓글내용</th>
@@ -50,9 +51,11 @@
 								<th scope="col">처리한관리자</th>
 								<th class="text-center" scope="col">상세보기</th>
 							</tr>
+							
 						</thead>
 						<tbody>
-							<tr class="">
+							<!-- <tr class="">
+							   
 								<td class="align-middle">상품명 or 카페명</td>
 								<td class="align-middle">댓글내용</td>
 								<td class="align-middle">신고사유</td>
@@ -63,7 +66,23 @@
 										<a class="btn btn-secondary btn-sm">상세보기</a>
 									</div>
 								</td>
-							</tr>
+							</tr> -->
+							
+							<c:forEach items="${commentReport}" var="list">
+
+
+								<tr>
+									<td class="align-middle">${list.cafeName}</td>
+									<td class="align-middle">${list.cm_content}</td>
+								<%-- 	<td class="align-middle">${list.reportReason}</td>
+									<td class="align-middle">${list.processStatus}</td>
+									<td class="align-middle">${list.authority}</td> --%>
+					
+								
+									
+								</tr>
+
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>

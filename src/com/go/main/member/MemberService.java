@@ -1,13 +1,16 @@
 package com.go.main.member;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.go.main.cafe.CafeDAO;
+
 
 public class MemberService {
 
 	MemberDAO dao = new MemberDAO();
 	boolean result;
+	ArrayList<MemberDTO> list=null;
+	MemberDTO dto = new MemberDTO();
 
 	// 로그인 서비스
 	public boolean login(MemberDTO dto) {
@@ -72,4 +75,19 @@ public class MemberService {
 		
 		return dao.passwordChange(dto);
 	}
+
+	public ArrayList<MemberDTO> cafeMypageCommetList(String sessionId) {
+		
+		list = dao.cafeMypageCommetList(sessionId);
+		dao.resClose();
+		return list;
+	}
+
+	public ArrayList<MemberDTO> commentReport(String sessionId) {
+		
+		list = dao.commentReport(sessionId);
+		dao.resClose();
+		return list;
+	}
+	
 }

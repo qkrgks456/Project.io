@@ -27,13 +27,13 @@
 		<div class="list-group list-group-flush mt-3">
 			<h4 class="fst-italic ms-3 fw-bold text-decoration-none">댓글</h4>
 			<a class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myPage/commentMenu/cafeComment.jsp"
+				href="/Project/cafeMypageCommetList"
 				style="cursor: pointer;">카페댓글</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
 				href="/Project/myPage/commentMenu/productComment.jsp"
 				style="cursor: pointer;">상품댓글</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myPage/commentMenu/reportComment.jsp"
+				href="/Project/commentReport"
 				style="cursor: pointer;">신고한댓글</a>
 		</div>
 

@@ -27,10 +27,12 @@
 			<jsp:include page="/fixMenu/navbar.jsp"></jsp:include>
 		</c:if>
 		<!-- 들어갈 내용 -->
+
 		<div class="d-flex" style="height: auto; min-height: 100vh;">
 			<jsp:include page="../myPagesideBar.jsp"></jsp:include>
 			<!-- 오른쪽 시작 -->
 			<div class="cont container-fluid mx-5 py-5">
+
 				<div class="d-flex align-items-center">
 					<button type="button" id="sidebarCollapse"
 						class="me-2 btn btn-secondary">
@@ -39,6 +41,7 @@
 					<h2 class="fw-bold my-3">카페댓글</h2>
 				</div>
 				<!-- 내용시작 -->
+
 				<div class="cont container">
 					<table class="table table-hover mt-2">
 						<thead class="table-light">
@@ -49,21 +52,37 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="">
-								<td class="align-middle">카페명</td>
-								<td class="align-middle">댓글내용</td>
-								<td>
-									<div class="d-grid gap-2 col-6 mx-auto mt-1">
-										<a class="btn btn-secondary btn-sm">상세보기</a> <a
-											class="btn btn-secondary btn-sm">댓글삭제</a>
-									</div>
-								</td>
-							</tr>
+
+							<%-- 	<c:if test="${empty cafeMypageCommetList}">
+								<tr>
+									<td colspan="6">조회된 데이터가 없습니다.</td>
+								</tr>
+							</c:if> --%>
+
+
+							<c:forEach items="${cafeMypageCommetList}" var="list">
+
+
+								<tr>
+									<td class="align-middle">${list.cafeName}</td>
+									<td class="align-middle">${list.cm_content}</td>
+
+									<td><button id="adminDetail" class="btn btn-dark"
+											type="button" onclick="location.href='/Project/cafeDetail?cafeKey=${list.division}'">상세보기</button></td>
+								</tr>
+
+							</c:forEach>
+
 						</tbody>
+
+
+
 					</table>
 				</div>
+
 			</div>
 		</div>
+
 	</div>
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.html"></jsp:include>

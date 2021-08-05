@@ -2,6 +2,7 @@ package com.go.main.member;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.go.main.admin.AdminDTO;
+import com.go.main.admin.AdminService;
 import com.go.main.member.MemberDTO;
 import com.go.main.member.MemberService;
 import com.google.gson.Gson;
@@ -22,7 +25,7 @@ import sun.awt.RepaintArea;
 import sun.print.resources.serviceui_es;
 
 @WebServlet({ "/login", "/logout", "/signup", "/signupcheck", "/findIdByEmail", "/findIdByEmailPw", "/memberupdate",
-		"/deleteMember", "/myInfo", "/passwordFind","/passwordChange"})
+		"/deleteMember", "/myInfo", "/passwordFind","/passwordChange", "/cafeMypageCommetList" , "/commentReport"})
 public class MemberController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -56,6 +59,17 @@ public class MemberController extends HttpServlet {
 		MemberService service = new MemberService();
 		Cookie cookie = null;
 		String sessionId = (String) session.getAttribute("loginId");
+		
+		ArrayList<MemberDTO> list = null;
+
+		//HashMap<String, Object> map = new HashMap<String, Object>();
+		
+
+		
+		
+		
+		
+		
 		switch (subAddr) {
 		
 		// 로그인 로직(테스트)
@@ -326,8 +340,33 @@ public class MemberController extends HttpServlet {
 			}
 	
 			break;
+			
+		
+		case "/cafeMypageCommetList":
+			System.out.println("내정보에있는 댓글리스트를 보여줍니다.");
+			
+			list = service.cafeMypageCommetList(sessionId);
+			System.out.println("list"+list);
+			req.setAttribute("cafeMypageCommetList", list);
+			dis = req.getRequestDispatcher("myPage/commentMenu/cafeComment.jsp");
+			dis.forward(req, resp);
+			break;
+			
+		case "/commentReport":
+			System.out.println("내정보에있는 댓글신고리스트를 보여줍니다.");
+			
+			list = service.cafeMypageCommetList(sessionId);
+			System.out.println("list"+list);
+			req.setAttribute("commentReport", list);
+			dis = req.getRequestDispatcher("myPage/commentMenu/reportComment.jsp");
+			dis.forward(req, resp);
+			break;
+			
 		}
-
+			
+	
+		
+	
 	}
 
 	@Override

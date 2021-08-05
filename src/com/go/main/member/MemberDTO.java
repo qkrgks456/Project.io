@@ -13,6 +13,29 @@ public class MemberDTO {
 	private String authority; //9
 	private String location; //10 
 	private String address;
+	private String division;   
+	
+	
+	public String getDivision() {
+		return division;
+	}
+	public void setDivision(String division) {
+		this.division = division;
+	}
+	public String getCafeName() {
+		return cafeName;
+	}
+	public void setCafeName(String cafeName) {
+		this.cafeName = cafeName;
+	}
+	public String getCm_content() {
+		return cm_content;
+	}
+	public void setCm_content(String cm_content) {
+		this.cm_content = cm_content;
+	}
+	private String cafeName;
+	private String cm_content;
 	public String getMemberKey() {
 		return memberKey;
 	}
@@ -79,6 +102,7 @@ public class MemberDTO {
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
 	
 	
 	

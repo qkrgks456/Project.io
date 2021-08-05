@@ -4,14 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.go.main.member.MemberDTO;
 
+import com.go.main.member.MemberDTO;
+import com.go.sub.comment.CommentDTO;
+import com.go.main.cafe.CafeDTO;
 public class MemberDAO {
 
 	Connection conn = null;
@@ -20,6 +23,9 @@ public class MemberDAO {
 	boolean result = false;
 	String sql = null;
 	MemberDTO dto = null;
+	CafeDTO CafeDTO=null;
+	CommentDTO CommentDTO=null;
+	ArrayList<MemberDTO> list = null;
 
 	public MemberDAO() {
 		try {
@@ -273,4 +279,71 @@ public class MemberDAO {
 		}
 		return dto;
 	}
+
+
+	public  ArrayList<MemberDTO> cafeMypageCommetList(String sessionId) {
+		System.out.println("내정보 카페댓글 조회 ");
+		sql = "select cm.division,cm.memberKey,cm.cm_content,c.cafeName"
+				+ " FROM(SELECT division,memberKey,cm_content "
+				+ "FROM cm WHERE memberKey=? ORDER BY commentNo)cm "
+				+ "LEFT OUTER JOIN cafeInfo c ON cm.division=c.cafeKey";
+	
+		ArrayList<MemberDTO> list = new ArrayList<MemberDTO>();
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			System.out.println("세션아이디"+sessionId);
+
+			rs = ps.executeQuery();
+			while (rs.next()) {
+			   dto =new MemberDTO();
+				dto.setDivision(rs.getString("division"));
+				dto.setCm_content(rs.getString("cm_content"));
+				dto.setCafeName(rs.getString("cafeName"));
+				list.add(dto);
+				
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return list;
+	
+		}
+	
+	
+	public  ArrayList<MemberDTO> commentReport(String sessionId) {
+		System.out.println("내정보 신고댓글 조회 ");
+		sql = "select cm.division,cm.memberKey,cm.cm_content,c.cafeName"
+				+ " FROM(SELECT division,memberKey,cm_content "
+				+ "FROM cm WHERE memberKey=? ORDER BY commentNo)cm "
+				+ "LEFT OUTER JOIN cafeInfo c ON cm.division=c.cafeKey";
+	
+		ArrayList<MemberDTO> list = new ArrayList<MemberDTO>();
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			System.out.println("세션아이디"+sessionId);
+
+			rs = ps.executeQuery();
+			while (rs.next()) {
+			   dto =new MemberDTO();
+			   
+				dto.setCafeName(rs.getString("cafeName"));
+				dto.setCm_content(rs.getString("cm_content"));	
+				//dto.setReportReason(rs.getString("reportReason"));
+				//dto.setProcessStatus(rs.getString("processStatus"));
+				dto.setAuthority(rs.getString("authority"));
+				list.add(dto);
+				
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return list;
+	
+		}
+	
+	
 }
