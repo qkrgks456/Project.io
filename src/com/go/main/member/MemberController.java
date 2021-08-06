@@ -25,7 +25,7 @@ import sun.awt.RepaintArea;
 import sun.print.resources.serviceui_es;
 
 @WebServlet({ "/login", "/logout", "/signup", "/signupcheck", "/findIdByEmail", "/findIdByEmailPw", "/memberupdate",
-		"/deleteMember", "/myInfo", "/passwordFind","/passwordChange", "/cafeMypageCommetList" , "/commentReport"})
+		"/deleteMember", "/myInfo", "/passwordFind","/passwordChange", "/cafeMypageCommetList" , "/commentReport","/productCommentList"})
 public class MemberController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -87,7 +87,7 @@ public class MemberController extends HttpServlet {
 			dto.setPw(pw);					//dto에  패스워드 값을 적용 
 			// 서비스 일 전달
 			// result = service.login(dto); ?
-			boolean suc2 = service.login(dto);   // boolean형 suc2는 서비스에 있는 logindto에 보냄
+			boolean suc2 = service.login(dto);   // boolean형 suc2는 서비스에 있는 logindto에 보냄			
 			if (suc2) {												//만약 suc2
 				if (idCheck != null) {								//만약 아이디체크가 널이아니라면
 					cookie = new Cookie("memberKey", memberKey);	//새로운쿠키에 멤버키에 멤버키를 받아온다.
@@ -99,9 +99,12 @@ public class MemberController extends HttpServlet {
 					cookie.setPath("/");							//쿠키의 경로
 					cookie.setMaxAge(0);							//쿠키의시간
 					resp.addCookie(cookie);							//resp에 쿠키를 추가 
-				}
+				}	
+				String authority = service.getAuthority(memberKey);
+				System.out.println(authority);
+				session.setAttribute("authority", authority);
 				session.setAttribute("loginId", memberKey);			//IF가 성공하면 세션에있는 멤버키를 로그인상태로 적용
-				resp.sendRedirect("/Project");						//응답을 메인으로 보내준다
+				resp.sendRedirect("/Project/");						//응답을 메인으로 보내준다
 				System.out.println("로그인 성공했습니다");				//IDE콘솔에 출력 
 			} else {												///만약 실패하면
 				req.setAttribute("success", "fail");				
@@ -114,7 +117,7 @@ public class MemberController extends HttpServlet {
 		// 로그아웃 로직
 		case "/logout":										//로그아웃로직 실행
 			session.removeAttribute("loginId");				// 세션에 있는 접속된아이디의 속성을 제거합니다.
-			resp.sendRedirect("index.jsp");					//응답을 INDEX로 보내줍니다.
+			resp.sendRedirect("/Project/");					//응답을 INDEX로 보내줍니다.
 			break;											//멈춤
 		
 		//회원가입 로직 
@@ -327,7 +330,7 @@ public class MemberController extends HttpServlet {
 			//비밀번호 변경 로직 
 		case"/passwordChange":
 			System.out.println("비밀번호를 수정합니다.");
-			pw = req.getParameter("UserPws"); 
+			pw = req.getParameter("UserPw");
 			System.out.println(pw);
 			System.out.println(sessionId);
 			dto.setPw(pw);
@@ -341,7 +344,7 @@ public class MemberController extends HttpServlet {
 	
 			break;
 			
-		
+		//내 정보 댓글리스트 
 		case "/cafeMypageCommetList":
 			System.out.println("내정보에있는 댓글리스트를 보여줍니다.");
 			
@@ -352,21 +355,32 @@ public class MemberController extends HttpServlet {
 			dis.forward(req, resp);
 			break;
 			
+			
+			//신고댓글리스트
 		case "/commentReport":
 			System.out.println("내정보에있는 댓글신고리스트를 보여줍니다.");
 			
-			list = service.cafeMypageCommetList(sessionId);
+			list = service.commentReport(sessionId);
 			System.out.println("list"+list);
 			req.setAttribute("commentReport", list);
 			dis = req.getRequestDispatcher("myPage/commentMenu/reportComment.jsp");
 			dis.forward(req, resp);
 			break;
 			
-		}
+			//상품댓글리스트
+		case "/productCommentList":
+			System.out.println("내정보에있는 상품댓글리스트를 보여줍니다.");
+			list = service.productCommentList(sessionId);
+			System.out.println("list"+list);
+			req.setAttribute("productCommentList", list);
+			dis = req.getRequestDispatcher("myPage/commentMenu/productComment.jsp");
+			dis.forward(req, resp);
+			break;
 			
-	
+			
+		}
 		
-	
+		
 	}
 
 	@Override

@@ -83,5 +83,6 @@
 		<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 		<!-- main js 추가 -->
 		<script src="/Project/assets/js/main.js?var=3"></script>
+	
 </body>
 </html>

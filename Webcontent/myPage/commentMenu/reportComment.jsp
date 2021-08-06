@@ -72,11 +72,11 @@
 
 
 								<tr>
-									<td class="align-middle">${list.cafeName}</td>
+									<td class="align-middle">${list.memberKey}</td>
 									<td class="align-middle">${list.cm_content}</td>
-								<%-- 	<td class="align-middle">${list.reportReason}</td>
+								  <td class="align-middle">${list.reportReason}</td>
 									<td class="align-middle">${list.processStatus}</td>
-									<td class="align-middle">${list.authority}</td> --%>
+									<td class="align-middle">${list.managers}</td>
 					
 								
 									

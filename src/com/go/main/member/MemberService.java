@@ -90,4 +90,16 @@ public class MemberService {
 		return list;
 	}
 	
+	public ArrayList<MemberDTO> productCommentList(String sessionId) {
+		
+		list = dao.commentReport(sessionId);
+		dao.resClose();
+		return list;
+	}
+
+	public String getAuthority(String memberKey) {
+
+		return dao.getAuthority(memberKey);
+	}
+	
 }

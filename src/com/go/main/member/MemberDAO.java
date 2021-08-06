@@ -55,8 +55,6 @@ public class MemberDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			resClose();
 		}
 		return result;
 	}
@@ -279,14 +277,14 @@ public class MemberDAO {
 		}
 		return dto;
 	}
-
+	
 
 	public  ArrayList<MemberDTO> cafeMypageCommetList(String sessionId) {
 		System.out.println("내정보 카페댓글 조회 ");
 		sql = "select cm.division,cm.memberKey,cm.cm_content,c.cafeName"
 				+ " FROM(SELECT division,memberKey,cm_content "
-				+ "FROM cm WHERE memberKey=? ORDER BY commentNo)cm "
-				+ "LEFT OUTER JOIN cafeInfo c ON cm.division=c.cafeKey";
+				+ "FROM cm WHERE memberKey=? and commentDel='N' ORDER BY commentNo)cm "
+				+ "LEFT OUTER JOIN cafeInfo c ON cm.division=c.cafeKey WHERE c.cafeDel='N'";
 	
 		ArrayList<MemberDTO> list = new ArrayList<MemberDTO>();
 		try {
@@ -311,14 +309,15 @@ public class MemberDAO {
 	
 		}
 	
-	
+	//내정보 신고댓글리스트 
 	public  ArrayList<MemberDTO> commentReport(String sessionId) {
 		System.out.println("내정보 신고댓글 조회 ");
-		sql = "select cm.division,cm.memberKey,cm.cm_content,c.cafeName"
-				+ " FROM(SELECT division,memberKey,cm_content "
-				+ "FROM cm WHERE memberKey=? ORDER BY commentNo)cm "
-				+ "LEFT OUTER JOIN cafeInfo c ON cm.division=c.cafeKey";
 	
+		sql = "SELECT c.reportreason,c.processstatus,c.managers,c.reportcmno,m.cm_content,m.memberkey"
+				+"from cmreport c" 
+				+"left outer join cm m on c.commentno = m.commentno"
+				+"left outer join cafeinfo i on m.memberkey=i.cafekey";
+
 		ArrayList<MemberDTO> list = new ArrayList<MemberDTO>();
 		try {
 			ps = conn.prepareStatement(sql);
@@ -329,11 +328,45 @@ public class MemberDAO {
 			while (rs.next()) {
 			   dto =new MemberDTO();
 			   
-				dto.setCafeName(rs.getString("cafeName"));
-				dto.setCm_content(rs.getString("cm_content"));	
+			  
+			   	dto.setMemberKey(rs.getString("memberkey"));  //카페명 
+				dto.setCm_content(rs.getString("cm_content"));	 //댓글내용 
+				dto.setReportReason(rs.getString("reportreason")); //신고사유
+				dto.setProcessStatus(rs.getString("processstatus")); //처리유무 
+				dto.setManagers(rs.getString("managers")); //처리한관계자 
+				list.add(dto);
+			
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return list;
+	
+		}
+	
+	
+	//내정보 상품 댓글리스트 
+	public  ArrayList<MemberDTO> productCommentList(String sessionId) {
+		System.out.println("내정보 상품댓글 조회 ");
+		sql = "select  p.productname, m.cm_content from product p, cm m ";
+				
+		ArrayList<MemberDTO> list = new ArrayList<MemberDTO>();
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			System.out.println("세션아이디"+sessionId);
+
+			rs = ps.executeQuery();
+			while (rs.next()) {
+			   dto =new MemberDTO();
+			   	
+			   dto.setSetProductname(rs.getString("productname"));
+				dto.setCm_content(rs.getString("cm_content"));
+			
 				//dto.setReportReason(rs.getString("reportReason"));
 				//dto.setProcessStatus(rs.getString("processStatus"));
-				dto.setAuthority(rs.getString("authority"));
+				//dto.setAuthority(rs.getString("authority"));
 				list.add(dto);
 				
 			}
@@ -344,6 +377,25 @@ public class MemberDAO {
 		return list;
 	
 		}
+
+
+	public String getAuthority(String memberKey) {
+		String authority = null;
+		try {
+			sql = "SELECT authority FROM users WHERE memberKey=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, memberKey);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				authority = rs.getString("authority");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		return authority;
+	}
 	
 	
 }

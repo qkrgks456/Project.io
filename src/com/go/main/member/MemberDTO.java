@@ -14,7 +14,10 @@ public class MemberDTO {
 	private String location; //10 
 	private String address;
 	private String division;   
-	
+	private String reportReason;
+	private String processStatus;
+	private String managers;
+	private String Productname;
 	
 	public String getDivision() {
 		return division;
@@ -102,7 +105,30 @@ public class MemberDTO {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
+	public String getReportReason() {
+		return reportReason;
+	}
+	public void setReportReason(String reportReason) {
+		this.reportReason = reportReason;
+	}
+	public String getProcessStatus() {
+		return processStatus;
+	}
+	public void setProcessStatus(String processStatus) {
+		this.processStatus = processStatus;
+	}
+	public String getManagers() {
+		return managers;
+	}
+	public void setManagers(String managers) {
+		this.managers = managers;
+	}
+	public String getSetProductname() {
+		return Productname;
+	}
+	public void setSetProductname(String setProductname) {
+		this.Productname = setProductname;
+	}
 	
 	
 	
