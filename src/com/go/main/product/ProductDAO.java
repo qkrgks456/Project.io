@@ -62,7 +62,7 @@ public class ProductDAO {
 			ps.setString(2, dto.getProductName());
 			ps.setInt(3, dto.getPrice());
 			ps.setString(4, dto.getExplanation());
-			ps.setInt(5, dto.getProductQuantity());
+			ps.setString(5, dto.getProductQuantity());
 			ps.setString(6, dto.getSelCheck());
 			ps.setString(7, dto.getCategoryName());
 			ps.executeUpdate();
@@ -228,12 +228,32 @@ public class ProductDAO {
 			suc = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
-			resClose();
 		}
 		return suc;
 	}
 	
-	
+	public ArrayList<ProductDTO> cartlist() {
+		String sql = "SELECT p.productname,p.productquantity,p.price,i.newfilename from product p left outer join image i on i.division=p.productid";
+		ArrayList<ProductDTO> cartlist = null;
+		ProductDTO dto = null;
 
-}
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, "");
+			rs = ps.executeQuery();
+			cartlist = new ArrayList<ProductDTO>();
+			while (rs.next()) {
+				dto = new ProductDTO();
+				dto.setProductName(rs.getString("productname"));
+				dto.setProductQuantity(rs.getString("productquantity"));
+				dto.setPrice(rs.getInt("price"));
+				dto.setNewFileName(rs.getString("newfilename"));		
+				cartlist.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+
+		return cartlist;
+	}
+	}

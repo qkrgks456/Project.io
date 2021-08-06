@@ -1,6 +1,7 @@
 package com.go.main.product;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -75,11 +76,11 @@ public class ProductController extends HttpServlet {
 		break;
 		
 		case "/cartinsert":
-			
 			System.out.println("카트 넣기 성공");
-			suc = service.cartinsert(sessionId);
-		
-			System.out.println("성공 했나요? @:" + suc);
+			ArrayList<ProductDTO> cartlist = service.cartinsert(sessionId);	
+			req.setAttribute("cartlist",cartlist);
+			dis = req.getRequestDispatcher("myShopping/buy/cart.jsp");
+			dis.forward(req, resp);
 			break;
 		}
 	
