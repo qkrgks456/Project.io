@@ -30,7 +30,7 @@
 				href="/Project/cafeMypageCommetList"
 				style="cursor: pointer;">카페댓글</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myPage/commentMenu/productComment.jsp"
+				href="/Project/productCommentList"
 				style="cursor: pointer;">상품댓글</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
 				href="/Project/commentReport"

@@ -72,43 +72,8 @@ public class SearchDAO {
 		}finally {
 			resClose();
 		}
-		return namelist;
-	
-		
-	}
-	/*
-	public ArrayList<SearchDTO> namelistpic(String sresult) {
-		ArrayList<SearchDTO> namelistpic = null;
-		SearchDTO dto = null;		
-		String sql=
-				"SELECT fileidx, division, newFilename, cafename "
-				+"FROM (SELECT fileidx ,division ,newFilename ,cafename "
-				+"FROM cafeinfo c LEFT OUTER JOIN product p ON c.cafekey=p.cafekey left outer join image i on c.cafekey = i.division ORDER BY ROWNUM)"    
-				+"WHERE cafename like ? AND ROWNUM = 1";				
-		namelistpic = new ArrayList<SearchDTO>();
-		dto = new SearchDTO();
-		try {
-			ps=conn.prepareStatement(sql);
-			ps.setString(1,"%"+sresult+'%');
-			rs = ps.executeQuery();	
-			if(rs.next()) {
-				dto.setFileIdx(rs.getInt("fileidx"));
-				dto.setDivision(rs.getString("division"));
-				dto.setNewFileName(rs.getString("newFileName"));
-				dto.setCafeName(rs.getString("cafename"));					
-				namelistpic.add(dto);
-			} 			
-	
-			}
-			catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			resClose();
-		}			
-		return namelistpic;		
-	}
-	*/
-	
+		return namelist;	
+	}	
 	public ArrayList<SearchDTO> productlist(String sresult) {
 		//String sql = "SELECT p.productname, p.price, c.cafeName, c.cafeLocation FROM cafeinfo c LEFT OUTER JOIN product p ON c.cafekey=p.cafekey WHERE p.productname LIKE ?";
 		String sql = "SELECT p.productname, p.price, c.cafeName, c.cafeLocation,i.newfilename FROM cafeinfo c LEFT OUTER JOIN product p ON c.cafekey=p.cafekey LEFT OUTER JOIN image i ON p.productid=i.division WHERE p.productname LIKE ?";

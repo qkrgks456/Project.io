@@ -17,7 +17,7 @@
 <title>카페</title>
 </head>
 <body>
-	<div class="wrap">
+	<div class="wrap p-0 m-0">
 		<!-- 상단 메뉴바 -->
 		<!-- 섹션에 아이디가 있다면 -->
 		<c:if test="${sessionScope.loginId ne null}">
@@ -29,22 +29,21 @@
 		</c:if>
 		<!-- 들어갈 내용 -->
 		<div class="container px-4 my-4">
-
-			<h2 class="fw-bold">상품 -> ${productdetail.productName }</h2>
+			<h2 class="fw-bold">상품 -> ${productdetail.productName}</h2>
 			<hr />
 			<div class="card mb-3" style="max-width: 1250px;">
 				<div class="row g-0">
 					<div class="col-md-4">
-						<img src="/photo/${productdetail.newFileName }"
+						<img src="/photo/${productdetail.newFileName}"
 							class="img-fluid rounded-start" alt="...">
 					</div>
 					<div class="col-md-8">
 						<div class="card-body">
 							<br>
-							<h3 class="bold">${productdetail.productName }</h3>
+							<h3 class="bold">${productdetail.productName}</h3>
 							<br>
 							<p class="text-muted mt-2">
-								${productdetail.explanation }
+								${productdetail.explanation}
 							</p>
 							<p class="text-muted bold">(200g 기준 판매)</p>
 
@@ -53,31 +52,33 @@
 							<br> <br>
 							<h5 class="text-muted mt-2 fw-bold" style="text-align: left;">수량</h5>
 							<form name="form1" method="post"
-								action="/Project/myShopping/buy/cart.jsp">
-								<input type="hidden" name="productId" value="${vo.productId}">
+								action="/Project/cartinsert">
+								<input type="hidden" name="productId" value="">
 								<select name="quantity">
-									<c:forEach begin="1" end="10" var="i">
-										<option value="${i }">${i}</option>
-									</c:forEach>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
 								</select>&nbsp;개 <br> <br>
-
+								<input type="hidden" name="productn" value="${productdetail.productId }">
 								<!-- 가격  -->
 								<br>
 								<h5 class="text-muted mt-2 fw-bold" style="text-align: left;">가격</h5>
 								<h3>${productdetail.price}원</h3>
 								<h3>
-									<fmt:formatNumber value="${vo.Price}" pattern="###,###" />
 								</h3>
 								<br>
 								<!-- 구매/장바구니 버튼 -->
 								<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 									<button type="submit"
-										onclick="location.href='/Project/myShopping/buy/cart.jsp'"
+										
 										class="btn btn-success btn-lg " value="장바구니에 담기">장바구니</button>
 									&nbsp;&nbsp;&nbsp;
 									<button type="button"
 										onclick="location.href='/Project/MainProduct/productResult.jsp'"
 										class="btn btn-secondary btn-lg" style="float: right;">구매하기</button>
+								</div>
 							</form>
 							<!-- 좋아요 댓글 -->
 							<div class="position-absolute bottom-0 start-0">
@@ -100,64 +101,67 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
-		<!-- 상세 페이지 -->
-		<hr/>
-		<img src="/Project/assets/img/p3.jpg" width="350" height="250"
-			style="margin-left: auto; margin-right: auto; display: block;" />
 
-		<p class="ms-1 mt-1 bold" style="text-align: center;">
-			향 ●●●●○<br> 산도●●●●●<br> 단맛●●●○○<br> 쓴맛●●●○○<br>
-			바디감●●●●○<br>
-		</p>
-
-		<br>
-		<p class="text-muted mt-2" style="text-align: center">
-			에티오피아 남부 시다모 현안의 예가체프 지역 고지대에서 재배하는 커피입니다.<br> 에티오피아 커피 중 가장 세련된
-			커피라 평가받고있으며,<br> 예가체프의 향기는 제대로 맡아본 사람이 아니면 도저히 상상만으로 떠올릴 수 없을
-			정도라고 합니다.<br> 향 때문에 유명해진 것이라고도 말할 수 있죠.<br> 부드러우면서 짙은 꽃향기,
-			목넘김 이후에 남는 아련한 향, 부드러운 바디감, 달콤한 신맛 등 예가체프를 최고의 커피라 부르는 이유는 많습니다.<br>
-			<br> 일반적으로 과실의 상쾌한 신맛과 초콜릿의 달콤함,<br> 그리고 와인에 비유되는 향미와 깊은 맛을
-			가졌습니다.<br> '카페 로스터리' 에서 최고의 예가체프를 즐겨 보세요<br>
-		</p>
-	</div>
+	
 
 	<!-- 댓글(카페상세 댓글 복붙) -->
 	<div class="container px-4 my-4">
 		<h3 id="comments" class="fw-bold mt-3">댓글</h3>
-		<hr />
-		<div class="d-flex align-items-center">
-			<div class="form-floating flex-grow-1 px-2">
-				<textarea class="form-control" placeholder="Leave a comment here"
-					id="floatingTextarea2" style="height: 100px"></textarea>
-				<label for="floatingTextarea2">qkrgks456님, 이곳에 댓글을 작성하세요</label>
-			</div>
-			<a class="btn btn-secondary btn-sm">등록</a>
-		</div>
-		<div class="container px-5 py-4 my-4">
-			<p class="fw-bold">qkrgks789</p>
-			<p class="lh-sm">
-				이쪽에 댓글 내용이 들어갈겁니다 <a class="float-end btn btn-secondary btn-sm"
-					onclick="location.href='/Project/report/report.jsp'">신고</a> <a
-					class="mx-2 float-end btn btn-secondary btn-sm">삭제</a> <a
-					class="float-end btn btn-secondary btn-sm">수정</a>
-			</p>
-			<hr />
-			<p class="fw-bold">qkrgks456</p>
-			<p class="lh-sm">
-				이쪽에 댓글 내용이 들어갈겁니다<a class="float-end btn btn-secondary btn-sm"
-					onclick="location.href='/Project/report/report.jsp'">신고</a>
-			</p>
-			<hr />
-			<p class="fw-bold">qkrgks123</p>
-			<p class="lh-sm">
-				이쪽에 댓글 내용이 들어갈겁니다<a class="float-end btn btn-secondary btn-sm"
-					onclick="location.href='/Project/report/report.jsp'">신고</a>
-			</p>
-		</div>
+				<hr />
+				<c:if test="${loginId!=''}">
+					<div class="d-flex align-items-center">
+						<div class="form-floating flex-grow-1 px-2">
+							<textarea class="form-control" placeholder="Leave a comment here"
+								name="commentContent" id="commentContent"
+								style="height: 100px; resize: none;"></textarea>
+							<div class="invalid-feedback">1자 이상 입력해주세요</div>
+							<label for="commentContent">${loginId}님, 이곳에 댓글을 작성하세요</label>
+						</div>
+						<a id="cafeCommentBtn" class="btn btn-secondary btn-sm"
+							title="${map.cafeKey}">등록</a>
+					</div>
+				</c:if>
+				<div id="commentLists" class="container px-5 py-4 my-4">
+					<c:forEach items="${map.commentList}" var="commentLists">
+						<div class="updateCheck">
+							<p class="fw-bold">${commentLists.memberKey}</p>
+							<p class="lh-sm">
+								${commentLists.cm_content}
+								<c:if test="${loginId ne commentLists.memberKey}">
+									<a class="float-end btn btn-secondary btn-sm"
+										href="/Project/report/report.jsp?commentNo=${commentLists.commentNo}&memberKey=${commentLists.memberKey}&commentContent=${commentLists.cm_content}&cafeKey=${map.cafeKey}">신고</a>
+								</c:if>
+								<c:if test="${loginId eq commentLists.memberKey}">
+									<a id="commentDelBtn"
+										class='commentDelBtn ms-2 float-end btn btn-secondary btn-sm'
+										title="${commentLists.commentNo}">삭제</a>
+									<a class='commentUpdateBtn float-end btn btn-secondary btn-sm'>수정</a>
+								</c:if>
+							</p>
+							<hr />
+						</div>
+						<div class="updateForm visually-hidden" id="updateForm">
+							<p class="fw-bold">${commentLists.memberKey}</p>
+							<div class="form-floating flex-grow-1 px-2">
+								<textarea class="commentUpdateContent form-control"
+									placeholder="Leave a comment here" name="commentUpdateContent"
+									id="commentUpdateContent" style="height: 100px; resize: none;">${commentLists.cm_content} </textarea>
+								<label for="commentUpdateContent">수정할 댓글을 작성하세요</label>
+								<div class="invalid-feedback">1자 이상 입력해주세요</div>
+							</div>
+							<div class="d-flex justify-content-end mt-2"
+								id="commentUpdateOut">
+								<a class='commentUpdateContentBtn btn btn-secondary btn-sm mx-2'
+									id="commentUpdateContentBtn" title="${commentLists.commentNo}">등록</a>
+								<a class='cmUpdateCancel btn btn-secondary btn-sm'>취소</a>
+							</div>
+							<hr />
+						</div>
+					</c:forEach>
+				</div>
 	</div>
-
+</div>
 	<!-- 하단 고정 퀵메뉴 -->
 	<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
 		<jsp:include page="/fixMenu/quickMenu.jsp"></jsp:include>
@@ -168,6 +172,69 @@
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=6">
+	$('#productcmtbtn').click(function() {
+		console.log("안녕");
+			var commentContent = $('#commentcontents').val();
+			if (commentContent.trim() != "") {
+				$('#commentContent').removeClass('is-invalid');			
+				$.ajax({
+					type: "POST",//방식
+					url: "/Project/productiptcomment",//주소
+					data: {
+						commentContent: commentContent						
+					},
+					dataType: 'JSON',
+					success: function(data) { //성공시
+						commentList(data);
+					},
+					error: function(e) { //실패시
+						console.log(e);
+					}
+				});
+			} else {
+				$('#commentContent').addClass('is-invalid');
+			}
+		})
+		/* 댓글 리스트 메서드 */
+	function commentList(data) {
+		console.log(data);
+		var content = "";
+		var sessionId = data.sessionId;
+		$.each(data.list, function(i, item) {
+			var check = sessionId == item.memberKey;
+			content += "<div class='updateCheck'>"
+			content += "<p class='fw-bold'>" + item.memberKey + "</p>";
+			content += "<p class='lh-sm'>";
+			content += item.cm_content;
+			if (!check) {
+				content += "<a href='/Project/report/report.jsp' class='float-end btn btn-secondary btn-sm'>신고</a>";
+			} else {
+				content += "<a class='commentDelBtn mx-2 float-end btn btn-secondary btn-sm' title='" + item.commentNo + "'>삭제</a>";
+				content += "<a class='commentUpdateBtn float-end btn btn-secondary btn-sm'>수정</a>";
+			}
+			content += "</p>";
+			content += "<hr/>";
+			content += "</div>";
+			content += "<div class='updateForm visually-hidden'>"
+			content += "<p class='fw-bold'>" + item.memberKey + "</p>"
+			content += "<div class='form-floating flex-grow-1 px-2'>"
+			content += "<textarea class='commentUpdateContent form-control' placeholder='Leave a comment here'"
+			content += "name='commentUpdateContent' id='commentUpdateContent' style='height: 100px'>" + item.cm_content + "</textarea>"
+			content += "<div class='invalid-feedback'>1자 이상 입력해주세요</div>"
+			content += "<label for='commentUpdateContent'>수정할 댓글을 작성하세요</label>"
+			content += "</div>"
+			content += "<div class='d-flex justify-content-end mt-2' id='commentUpdateOut'>"
+			content += "<a id='commentUpdateContentBtn' class='commentUpdateContentBtn btn btn-secondary btn-sm mx-2' title='" + item.commentNo + "'>등록</a>"
+			content += "<a class='cmUpdateCancel btn btn-secondary btn-sm'>취소</a>"
+			content += "</div>"
+			content += "<hr />"
+			content += "</div>"
+		});
+		$('#commentLists').empty();
+		$('#commentLists').append(content);
+	}	
+		
+		
 		
 	</script>
 </body>

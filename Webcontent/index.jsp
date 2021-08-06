@@ -16,6 +16,7 @@
 <title>카페</title>
 </head>
 <body>
+
 	<!-- 상단 메뉴바 -->
 	<!-- 세션에 아이디가 있다면 -->
 	<c:if test="${sessionScope.loginId ne null}">
@@ -64,6 +65,7 @@
 				<span class="visually-hidden">Next</span>
 			</button>
 		</div>
+		${sessionScope.authority}
 		<!-- 들어갈 내용 -->
 		<div class="container px-3">
 			<div class="container my-3">

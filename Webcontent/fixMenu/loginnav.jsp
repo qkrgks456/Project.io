@@ -20,7 +20,8 @@
 					href="/Project/cafeList">카페정보</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="/Project/productList">상품구매</a></li>
-				<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
+				
+				<c:if test="${sessionScope.authority ne '일반'}">
 					<li class="nav-item"><a class="nav-link"
 						href="/Project/adminSearch">관리자</a></li>
 				</c:if>

@@ -48,28 +48,29 @@
 							<h3 class="fw-bold">본인확인</h3>
 						</div>
 						<div class="form-floating col-md-9 mb-3">
-							<input type="text" class="form-control" id="UserIds" name="UserId"
-								placeholder="아이디" value="" required> <label
+							<input type="text" class="nullchecks form-control" id="UserIds"
+								name="UserId" placeholder="아이디" value="" required> <label
 								for="validationTooltip02" class="fw-bold">아이디</label>
-							<div class="invalid-feedback">10자 이상 입력해주세요</div>
+							<div class="invalid-feedback">필수 정보 입니다</div>
 						</div>
 						<div class="form-floating col-md-9 mb-3">
-							<input type="password" class="form-control" id="UserPws"
-								name="UserPw" placeholder="비밀번호" value="" required> <label
-								for="validationTooltip02" class="fw-bold">비밀번호</label>
-							<div class="invalid-feedback">10자 이상 입력해주세요</div>
+							<input type="password" class="nullchecks form-control"
+								id="UserPws" name="UserPw" placeholder="비밀번호" value="" required>
+							<label for="validationTooltip02" class="fw-bold">비밀번호</label>
+							<div class="invalid-feedback">필수 정보 입니다</div>
 						</div>
 						<div class="form-floating col-md-9 mb-3">
 							<input type="password" class="form-control" id="UserPwchs"
-								name="UserPwchs" placeholder="비밀번호확인" value="" required>
+								name="UserPwch" placeholder="비밀번호확인" value="" required>
 							<label for="validationTooltip02" class="fw-bold">비밀번호확인</label>
 							<div class="invalid-feedback">동일한지 확인해주세요</div>
 						</div>
 						<div class="text-center">
-							<button class="btn btn-dark" type="submit">확인</button>
+							<input id="infochangecheck" class="btn btn-dark" type="button"
+								value="확인">
 							<c:if test="${pwfindsuc eq 'false'}">
 								<div id="redalert"
-									class=" alert alert-danger d-flex align-items-center"
+									class="mt-2 alert alert-danger d-flex align-items-center"
 									role="alert">
 									<svg class="bi flex-shrink-0 me-2" width="24" height="24"
 										role="img" aria-label="Danger:">
@@ -89,5 +90,44 @@
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=8"></script>
+	<script type="text/javascript">
+		$('#infochangecheck').click(function() {  //button id값 infochangecheck에 .clcik(기능)을 넣어준다
+			console.log($('#UserIds').val().trim()); // val().=value() 의 줄임말
+			if($('#UserIds').val().trim()==""){ //userIds의 값을 가져온다 . ""(공백)이면 . trim (잘라준다)
+				console.log("dk"); //콘솔에 dk을 출력 
+				$('#UserIds').attr('class','nullchecks form-control is-invalid');
+				//userIds에 클래스 속성에 nullchecks form-control is-invalid 을 추가해준다.
+			}
+			if($('#UserPws').val().trim()==""){ //UserPws의 val=값에 "" 이면 트림 
+				
+				$('#UserPws').attr('class','nullchecks form-control is-invalid');
+			//UserPws 클래스 속성에 nullchecks form-control is-invalid 를 추가해준다.
+			}	if($('#UserPwchs').val().trim()==""){
+				//UserPwchs에 value=값이 "" 이면 트림 
+				$('#UserPwchs').attr('class','form-control is-invalid');
+				//UserPwchs의 클래스속성에 form-control is-invalid 를 추가해준다.
+			}
+			
+							if ($('#UserIds').attr('class') == 'form-control is-valid'
+									// 만약 UserIds의  클래스 속성에 form-control is-valid 이라면! 
+									&& $('#UserPws').attr('class') == 'form-control is-valid'
+									//&& 그리고 UserPws의 클래스속성이  form-control is-valid 이고
+									&& $('#UserPwchs').attr('class') == 'form-control is-valid') {
+								// &&= 그리고 UserPwchs의 클래스 속성에 form-control is-valid 이다 .
+								console.log("안녕"); 
+								//콘솔에 안녕을 찍어준다.
+								$(this).attr('type', 'submit');
+								//inforchange 요소에 type 속성을 추가하고 속성의 값은 submit으로 적용합니다.		
+							}
+						})
+
+		$("#UserPwchs").on("propertychange change keyup paste input",function() {
+					if ($("#UserPws").val() == $(this).val()) {
+						$(this).attr("class", "form-control is-valid");
+					} else {
+						$(this).attr("class", "form-control is-invalid");
+					}
+				});
+	</script>
 </body>
 </html>

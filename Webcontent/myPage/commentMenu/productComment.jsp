@@ -49,7 +49,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="">
+						
+							<!-- <tr class="">
 								<td class="align-middle">상품명</td>
 								<td class="align-middle">댓글내용</td>
 								<td>
@@ -58,7 +59,23 @@
 											class="btn btn-secondary btn-sm">댓글삭제</a>
 									</div>
 								</td>
-							</tr>
+							</tr> -->
+						
+							<c:forEach items="${productCommentList}" var="list">
+
+
+								<tr>
+									<td class="align-middle">${list.productname}</td>
+									<td class="align-middle">${list.cm_content}</td>
+								<%-- 	<td class="align-middle">${list.reportReason}</td>
+									<td class="align-middle">${list.processStatus}</td>
+									<td class="align-middle">${list.authority}</td> --%>
+					
+								
+									
+								</tr>
+
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>

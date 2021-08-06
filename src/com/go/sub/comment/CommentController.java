@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-@WebServlet({ "/cafeCommentInput", "/cafeCommentDel", "/cafeCommentUpdate", "/cafeCommentList", "/cafeCommentReport" })
+@WebServlet({ "/cafeCommentInput", "/cafeCommentDel", "/cafeCommentUpdate", "/cafeCommentList", "/cafeCommentReport","/productiptcomment"})
 public class CommentController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -102,8 +102,19 @@ public class CommentController extends HttpServlet {
 				resp.sendRedirect("/Project/");
 			}
 			break;
+			
+		case "/productiptcomment":
+			System.out.println("상품 댓글 작성 요청");
+			String procmt = req.getParameter("commentContent");
+			
+			map = service.productcmtinput(procmt,sessionId);
+			if(map != null) {
+				map.put("sessionId",sessionId);
+				resp.setContentType("text/html; charset=UTF-8");
+				resp.getWriter().print(new Gson().toJson(map));
+			}
+			break;
 		}
-
 	}
 
 	@Override

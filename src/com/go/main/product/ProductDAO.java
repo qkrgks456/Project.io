@@ -14,11 +14,15 @@ import javax.sql.DataSource;
 
 public class ProductDAO {
 
+	HttpServletRequest req = null;
+	HttpServletResponse resp=null;
 	Connection conn = null;
 	PreparedStatement ps = null;
 	ResultSet rs = null;
 
 	public ProductDAO(HttpServletRequest req, HttpServletResponse resp) {// 커넥션 생성
+		this.req = req;
+		this.resp=resp;
 		try {
 			Context ctx = new InitialContext();// 1. Context 가져오기
 			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Oracle");// 2. name 으로 Resource 가져와 DataSource 로
@@ -58,7 +62,7 @@ public class ProductDAO {
 			ps.setString(2, dto.getProductName());
 			ps.setInt(3, dto.getPrice());
 			ps.setString(4, dto.getExplanation());
-			ps.setInt(5, dto.getProductQuantity());
+			ps.setString(5, dto.getProductQuantity());
 			ps.setString(6, dto.getSelCheck());
 			ps.setString(7, dto.getCategoryName());
 			ps.executeUpdate();
@@ -209,6 +213,47 @@ public class ProductDAO {
 		return prosearch;
 	}
 
+	public int cartinsert(String sessionId) {
+		String qty = req.getParameter("quantity");
+		String pid = req.getParameter("productn");
+		int suc=0;
+		
+		String sql="insert into cart(memberkey,productid,amount) values(?, ?, ?)";
 	
+		try {
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			ps.setString(2, pid);
+			ps.setString(3, qty);
+			suc = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return suc;
+	}
+	
+	public ArrayList<ProductDTO> cartlist() {
+		String sql = "SELECT p.productname,p.productquantity,p.price,i.newfilename from product p left outer join image i on i.division=p.productid";
+		ArrayList<ProductDTO> cartlist = null;
+		ProductDTO dto = null;
 
-}
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, "");
+			rs = ps.executeQuery();
+			cartlist = new ArrayList<ProductDTO>();
+			while (rs.next()) {
+				dto = new ProductDTO();
+				dto.setProductName(rs.getString("productname"));
+				dto.setProductQuantity(rs.getString("productquantity"));
+				dto.setPrice(rs.getInt("price"));
+				dto.setNewFileName(rs.getString("newfilename"));		
+				cartlist.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+
+		return cartlist;
+	}
+	}

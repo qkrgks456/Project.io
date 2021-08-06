@@ -72,6 +72,10 @@
 	<jsp:include page="/fixMenu/footer.jsp"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
+	<script type="text/javascript">
+	$('#sasd').click(function() {
+	})
+	</script>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=6"></script>
 </body>

@@ -87,4 +87,18 @@ public class CommentService {
 		return dao.cafeCommentReport(reportReason,commentNo,sessionId,cafeKey);
 	}
 
+	public HashMap<String, Object> productcmtinput(String procmt, String sessionId) {
+		String pId = req.getParameter("productn");
+		dao = new CommentDAO();
+		int page = 1;
+	
+			page = dao.productcminput(pId,procmt,sessionId);	
+		
+			if (page!=0) {
+				resultMap = dao.cafeCommentList(pId,page);
+			}
+			dao.resClose();
+			return resultMap;
+	}
+
 }

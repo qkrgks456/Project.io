@@ -95,7 +95,20 @@
 						<button id="deleteauthority" class="btn btn-dark" type="button" onclick ="location.href='/Project/adminSearch'">리스트로</button>
 					</div>
 					</form>
+					<c:if test="${adminDetail.delcheck eq 'true'}">
+					<script type="text/javascript">
+					Swal.fire(
+							{
+								title: '삭제완료',
+								icon: 'success',
+								confirmButtonColor: '#000',
+								confirmButtonText: '확인',
+							}
+						)
+						
 					
+					</script>
+					</c:if>
 					
 					</div>
 					</div>

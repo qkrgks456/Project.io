@@ -15,9 +15,8 @@
 <link href="/Project/assets/css/main.css?ver=9" rel="stylesheet">
 <title>카페</title>
 <style type="text/css">
-
 footer {
-	margin-top : 80px;
+	margin-top: 80px;
 	height: 80px;
 	position: relative;
 	transform: translateY(-100%);
@@ -50,79 +49,102 @@ footer {
 				</div>
 				<hr />
 				<div class="cont container w-50">
-					<!-- 내 정보 수정 폼 -->			
-					<form id="myinfoform" action="/Project/memberupdate" method="post" 
-						class="needs-validation py-3" novalidate>					
+					<!-- 내 정보 수정 폼 -->
+					<form id="myinfoform" action="/Project/memberupdate" method="post"
+						class="needs-validation py-3" novalidate>
 						<div class="form-floating col-md-9 mb-3">
-						<input type="text" class="nullchecks form-control" value="${dto.name}"
-							title="${updateSuc}" id="UserName" name="UserName" placeholder="이름" required> <label
-							for="validationTooltip04" class="fw-bold">이름</label>
-						<div class="invalid-feedback">필수 정보입니다</div>
-					</div>
-						
+							<input type="text" class="nullchecks form-control"
+								value="${dto.name}" title="${updateSuc}" id="UserName"
+								name="UserName" placeholder="이름" required> <label
+								for="validationTooltip04" class="fw-bold">이름</label>
+							<div class="invalid-feedback">필수 정보입니다</div>
+						</div>
+
 						<div class="form-floating col-md-9 mb-3">
-							<input type="text" class="nullchecks form-control" id="UserEmail" name="UserEmail"
-								placeholder="이메일" value="${dto.email}"
+							<input type="text" class="nullchecks form-control" id="UserEmail"
+								name="UserEmail" placeholder="이메일" value="${dto.email}"
 								aria-describedby="validationTooltipUsernamePrepend" required>
 							<label for="validationTooltipUsername" class="fw-bold">이메일</label>
 							<div class="invalid-feedback">필수 정보입니다</div>
 						</div>
 						<div class="form-floating col-md-9 mb-3">
-							<input type="text" class="nullchecks form-control" id="UserAddress" name="UserAddress" value="${dto.address}"
+							<input type="text" class="nullchecks form-control"
+								id="UserAddress" name="UserAddress" value="${dto.address}"
 								placeholder="주소" required> <label
 								for="validationTooltip03" class="fw-bold">주소</label>
 							<div class="invalid-feedback">필수 정보입니다</div>
 						</div>
-						
+
 						<div class="col-md-9 mb-3">
-						<h6 class="fw-bold " >지역구선택 (해당지역 카페를 추천해드립니다)</h6>
-						<select class="form-select" name="select" >
-							<option value="도봉구" <c:if test="${dto.location eq '도봉구'}">selected</c:if>>도봉구</option>
-							<option value="강북구" <c:if test="${dto.location eq '강북구'}">selected</c:if>>강북구</option>
-							<option value="노원구" <c:if test="${dto.location eq '노원구'}">selected</c:if>>노원구</option>
-							<option value="중랑구" <c:if test="${dto.location eq '중랑구'}">selected</c:if>>중랑구</option>
-							<option value="성북구" <c:if test="${dto.location eq '성북구'}">selected</c:if>>성북구</option>
-							<option value="종로구" <c:if test="${dto.location eq '종로구'}">selected</c:if>>종로구</option>
-							<option value="중구" <c:if test="${dto.location eq '중구'}">selected</c:if>>중구</option>
-							<option value="용산구" <c:if test="${dto.location eq '용산구'}">selected</c:if>>용산구</option>
-							<option value="서대문구" <c:if test="${dto.location eq '서대문구'}">selected</c:if>>서대문구</option>
-							<option value="마포구" <c:if test="${dto.location eq '마포구'}">selected</c:if>>마포구</option>
-							<option value="영등포구" <c:if test="${dto.location eq '영등포구'}">selected</c:if>>영등포구</option>
-							<option value="강남구" <c:if test="${dto.location eq '강남구'}">selected</c:if>>강남구</option>
-							<option value="강동구" <c:if test="${dto.location eq '강동구'}">selected</c:if>>강동구</option>
-						</select>
-					</div>
+							<h6 class="fw-bold ">지역구선택 (해당지역 카페를 추천해드립니다)</h6>
+							<select class="form-select" name="select">
+								<option value="도봉구"
+									<c:if test="${dto.location eq '도봉구'}">selected</c:if>>도봉구</option>
+								<option value="강북구"
+									<c:if test="${dto.location eq '강북구'}">selected</c:if>>강북구</option>
+								<option value="노원구"
+									<c:if test="${dto.location eq '노원구'}">selected</c:if>>노원구</option>
+								<option value="중랑구"
+									<c:if test="${dto.location eq '중랑구'}">selected</c:if>>중랑구</option>
+								<option value="성북구"
+									<c:if test="${dto.location eq '성북구'}">selected</c:if>>성북구</option>
+								<option value="종로구"
+									<c:if test="${dto.location eq '종로구'}">selected</c:if>>종로구</option>
+								<option value="중구"
+									<c:if test="${dto.location eq '중구'}">selected</c:if>>중구</option>
+								<option value="용산구"
+									<c:if test="${dto.location eq '용산구'}">selected</c:if>>용산구</option>
+								<option value="서대문구"
+									<c:if test="${dto.location eq '서대문구'}">selected</c:if>>서대문구</option>
+								<option value="마포구"
+									<c:if test="${dto.location eq '마포구'}">selected</c:if>>마포구</option>
+								<option value="영등포구"
+									<c:if test="${dto.location eq '영등포구'}">selected</c:if>>영등포구</option>
+								<option value="강남구"
+									<c:if test="${dto.location eq '강남구'}">selected</c:if>>강남구</option>
+								<option value="강동구"
+									<c:if test="${dto.location eq '강동구'}">selected</c:if>>강동구</option>
+							</select>
+						</div>
 						<div class="col-md-9 mb-3">
-							<label for="checks" class="fw-bold" id="emailsusin" name="emailsusin" >이메일 수신</label>
+							<label for="checks" class="fw-bold" id="emailsusin"
+								name="emailsusin">이메일 수신</label>
 							<div class="form-check form-check-inline mx-3">
 								<label class="form-check-label" for="emailcheckchange1">
 									동의 </label> <input class="form-check-input" type="radio" value="Y"
-									name="emailcheckchange" id="emailcheckchange1"<c:if test="${dto.emailCheck eq 'Y'}">checked</c:if>>
+									name="emailcheckchange" id="emailcheckchange1"
+									<c:if test="${dto.emailCheck eq 'Y'}">checked</c:if>>
 							</div>
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio"  
-									name="emailcheckchange" id="emailcheckchange2" value="N" <c:if test="${dto.emailCheck eq 'N'}">checked</c:if>> <label
+								<input class="form-check-input" type="radio"
+									name="emailcheckchange" id="emailcheckchange2" value="N"
+									<c:if test="${dto.emailCheck eq 'N'}">checked</c:if>> <label
 									class="form-check-label" for="emailcheckchange2"> 거부 </label>
 							</div>
 						</div>
 						<div class="col-md-9 mb-3">
-							<label for="checks" class="fw-bold" id ="congestionCheck" name="congestionCheck" >혼잡도 알림 여부</label>
+							<label for="checks" class="fw-bold" id="congestionCheck"
+								name="congestionCheck">혼잡도 알림 여부</label>
 							<div class="form-check form-check-inline mx-3">
 								<label class="form-check-label" for="alertradiochange1">
 									동의 </label> <input class="form-check-input" type="radio"
-									name="alertradiochange" id="alertradiochange1" value="Y" <c:if test="${dto.congestionCheck eq 'Y'}">checked</c:if>>
+									name="alertradiochange" id="alertradiochange1" value="Y"
+									<c:if test="${dto.congestionCheck eq 'Y'}">checked</c:if>>
 							</div>
 							<div class="form-check form-check-inline">
 								<input class="form-check-input" type="radio"
-									name="alertradiochange" id="alertradiochange2" value="N" <c:if test="${dto.congestionCheck eq 'N'}">checked</c:if>> <label
-									class="form-check-label" for="alertradiochange2" > 거부 </label>
+									name="alertradiochange" id="alertradiochange2" value="N"
+									<c:if test="${dto.congestionCheck eq 'N'}">checked</c:if>>
+								<label class="form-check-label" for="alertradiochange2">
+									거부 </label>
 							</div>
 						</div>
 						<hr />
 						<div class="col text-center">
-							<button id="infochange" class="btn btn-dark" type="submit"  >정보수정</button>
+							<input id="infochange" class="btn btn-dark" type="button"
+								value="정보수정">
 						</div>
-						
+
 					</form>
 				</div>
 			</div>
@@ -135,17 +157,25 @@ footer {
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=8"></script>
 	<script type="text/javascript">
-	console.log($('#UserName').attr('title'));
-			
-	if($('#UserName').attr('title')!=""){
-		Swal.fire({
-			title: '정보수정완료',
-			 icon: 'success',
-			 confirmButtonColor: '#000',
-			 confirmButtonText: '확인',
-	})
-	}
-
+		$('#infochange').click(function() {
+							if ($('#UserName').attr('class') != 'form-control is-invalid'
+									&& $('#UserEmail').attr('class') != 'form-control is-invalid'
+									&& $('#UserAddress').attr('class') != 'form-control is-invalid') {
+								//UserName 요소의 class 속성의 값을 가져온다.
+								console.log("안녕");
+								$(this).attr('type', 'submit');
+								//inforchange 요소에 type 속성을 추가하고 속성의 값은 submit으로 적용합니다.		
+							}
+						})
+		if ($('#UserName').attr('title') != "") {
+			//만약 userName 요소의 title 속성을 추가 
+			Swal.fire({
+				title : '정보수정완료',
+				icon : 'success',
+				confirmButtonColor : '#000',
+				confirmButtonText : '확인',
+			})
+		}
 	</script>
 </body>
 </html>

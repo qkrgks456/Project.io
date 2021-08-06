@@ -38,10 +38,11 @@ public class AdminDAO {
 	}
 
 	public ArrayList<AdminDTO> adminMemberinfoSearch(String adminMember, String adminSearchSelect) {
-		ArrayList<AdminDTO> list=null;
+		list = new ArrayList<AdminDTO>();
 		System.out.println("dao까지 연결확인: " + adminSearchSelect + "/" + adminMember);
+		System.out.println("dd");
 		switch(adminSearchSelect) {
-		case "memberkey":
+		case "memberKey":
 			sql = "SELECT u.memberKey , u.name , bb.statuscheck, ou.ownerno, u.deletecheck FROM users u LEFT OUTER JOIN blackList bb ON u.memberKey = bb.memberKey LEFT OUTER JOIN ownerUser ou ON u.memberKey=ou.memberKey WHERE u.memberkey LIKE ?";
 			break;
 		case "name":
@@ -51,18 +52,16 @@ public class AdminDAO {
 			sql = "SELECT u.memberKey , u.name , bb.statuscheck, ou.ownerno, u.deletecheck FROM users u LEFT OUTER JOIN blackList bb ON u.memberKey = bb.memberKey LEFT OUTER JOIN ownerUser ou ON u.memberKey=ou.memberKey WHERE u.email LIKE ?";
 			break;
 		}
-		
+		System.out.println(sql);
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, "%" + adminMember + "%");
 			rs = ps.executeQuery();
 
 			/* 값이 있다면 */
-			if (rs.next()) {
+			while(rs.next()) {
 				success = 1;
-
 				dto = new AdminDTO();
-				list = new ArrayList<AdminDTO>();
 				dto.setMemberkey(rs.getString("memberKey"));
 				dto.setName(rs.getString("name"));
 				dto.setBlackStatus(rs.getString("statuscheck"));
@@ -208,10 +207,7 @@ public class AdminDAO {
 
 	public HashMap<String, Object> adminDetail(String memberkey, String sessionId) {
 		System.out.println("어드민에서 관리자 상세보기 DAO연결:" +memberkey+"/로그인한 관리자: " + sessionId );
-
 		HashMap<String,Object> map = new HashMap<String,Object>();
-		//임시 관리자 아이디
-		//String sessionId2 = "sunwoolee1";
 		sql = "SELECT memberKey,name,email,address,authority FROM users WHERE memberKey = ?";
 		try {
 			ps=conn.prepareStatement(sql);
@@ -515,6 +511,153 @@ public class AdminDAO {
 		map.put("cafeKey", cafeBlindId);
 		map.put("success", success);
 		return map;
+	}
+
+	public HashMap<String, Object> cafeBlindMinus(String ownerNo) {
+		System.out.println("블라인드 해제 dao까지 연결확인: "+ownerNo);
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		sql="UPDATE cafeInfo SET cafeDel='N', blindReason='' where ownerNo = ? ";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, ownerNo);
+			success = ps.executeUpdate();
+			System.out.println("삭제 성공: " +success);
+			
+			sql="SELECT cafeKey FROM cafeInfo WHERE ownerNo = ? ";
+			ps =conn.prepareStatement(sql);
+			ps.setString(1, ownerNo);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				dto = new AdminDTO();
+				dto.setCafeKey(rs.getString("cafeKey"));
+				System.out.println("카페 키: "+dto.getCafeKey());
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		map.put("success", success);
+		map.put("cafeKey", dto.getCafeKey());
+		return map;
+	}
+
+	public ArrayList<AdminDTO> adminProductList(String productSearchSelect, String productSearch) {
+		System.out.println("상품정보 조회: "+productSearchSelect +"에서 "+productSearch+" 검색");
+		list = new ArrayList<AdminDTO>();
+		switch(productSearchSelect){
+		case "ProductName":
+			sql="select c.cafeName, p.productName, p.regDate, p.delCheck, p.productId, c.cafeKey from cafeInfo c "
+					+ " left outer join product p ON c.cafeKey = p.cafeKey WHERE p.productName LIKE ? AND productId is not null";
+			break;
+		case "memberKey":
+			sql="select c.cafeName, p.productName, p.regDate, p.delCheck, p.productId, c.cafeKey from cafeInfo c "
+					+ " left outer join product p ON c.cafeKey = p.cafeKey" 
+					+ " left outer join ownerUser ou ON c.ownerNo = ou.ownerNo" 
+					+ " left outer join users u ON ou.memberKey = u.memberKey where u.memberkey LIKE ? AND productId is not null ";
+			break;
+		case "email":
+			sql="select c.cafeName, p.productName, p.regDate, p.delCheck, p.productId, c.cafeKey from cafeInfo c "
+					+ " left outer join product p ON c.cafeKey = p.cafeKey" 
+					+ " left outer join ownerUser ou ON c.ownerNo = ou.ownerNo" 
+					+ " left outer join users u ON ou.memberKey = u.memberKey where u.email LIKE ? AND productId is not null";
+			break;
+		}
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, "%" + productSearch + "%");
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				dto = new AdminDTO();
+				dto.setCafeName(rs.getString("cafeName"));
+				dto.setProductName(rs.getString("productName"));
+				dto.setReg_date(rs.getDate("regDate"));
+				dto.setProductDel(rs.getString("delCheck"));
+				dto.setProductId(rs.getString("productId"));
+				dto.setCafeKey(rs.getString("cafeKey"));
+				list.add(dto);
+			}
+			
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	public AdminDTO adminProductDetail(String productId) {
+		System.out.println("상품 상세보기 dao까지 연결 확인: " +productId);
+		sql="SELECT c.cafeName, p.productName, u.name, p.price, p.explanation, p.delCheck, p.pBlindReason from cafeInfo c " + 
+				"left outer join product p ON c.cafeKey = p.cafeKey " + 
+				"left outer join owneruser ou ON c.ownerNo = ou.ownerNo " + 
+				"left outer join users u ON ou.memberKey = u.memberKey WHERE productId = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, productId);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				dto = new AdminDTO();
+				dto.setCafeName(rs.getString("cafeName"));
+				dto.setProductName(rs.getString("productName"));
+				dto.setName(rs.getString("name"));
+				dto.setProductPrice(rs.getInt("price"));
+				dto.setExplanation(rs.getString("explanation"));
+				dto.setProductDel(rs.getString("delCheck"));
+				dto.setpBlindReason(rs.getString("pBlindReason"));
+				dto.setProductId(productId);
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+
+		return dto;
+	}
+
+	public HashMap<String, Object> adminProductBlindAdd(String productBlindId, String productBlindRePort) {
+		System.out.println("블라인드 추가값 dao까지 연결 확인: " +productBlindId+"/"+productBlindRePort);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		success = 0;
+		sql = "UPDATE product set delCheck='Y',pBlindReason =? WHERE productId = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1,productBlindRePort);
+			ps.setString(2, productBlindId);
+			success = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		map.put("success", success);
+		map.put("productId", productBlindId);
+		return map;
+	}
+
+	public HashMap<String, Object> adminProductBlindMinus(String productBlindId) {
+		System.out.println("블라인드 해제할 값 dao까지 연결 확인: " +productBlindId);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		success = 0;
+		sql = "UPDATE product set delCheck='N',pBlindReason ='' WHERE productId = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			
+			ps.setString(1, productBlindId);
+			success = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		map.put("success", success);
+		map.put("productId", productBlindId);
+		return map;
+		
+	}
+
+	public HashMap<String, Object> productBlindMinus(String productBlindId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

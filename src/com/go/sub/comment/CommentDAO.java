@@ -286,4 +286,48 @@ public class CommentDAO {
 		}
 		return suc;
 	}
+
+	public int productcminput(String pId, String procmt, String sessionId) {
+		int commentNo = 0;
+		int page = 1;
+		try {
+			sql = "INSERT INTO cm (commentNo,commentDel,memberKey,division,cm_content) VALUES(cm_seq.NEXTVAL,'N',?,?,?)";
+			ps = conn.prepareStatement(sql, new String[] { "commentNo" });
+			ps.setString(1, sessionId);
+			ps.setString(2, pId);
+			ps.setString(3, procmt);
+			ps.executeUpdate();
+			rs = ps.getGeneratedKeys();
+			if (rs.next()) {
+				commentNo = rs.getInt(1);
+			}
+			while (true) {
+				// 노출할 데이터 갯수
+				int pagePerCnt = 8;
+				// 데이터의 시작과 끝
+				int end = page * pagePerCnt;
+				int start = (end - pagePerCnt) + 1;
+				sql = "SELECT commentNo,cm_content,memberKey FROM "
+						+ "(SELECT ROW_NUMBER() OVER(ORDER BY commentNo) AS rnum,commentNo,cm_content,memberKey FROM cm WHERE division=? AND commentDel='N')"
+						+ "WHERE (rnum BETWEEN ? AND ?) AND commentNo=?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, pId);
+				ps.setInt(2, start);
+				ps.setInt(3, end);
+				ps.setInt(4, commentNo);
+				rs = ps.executeQuery();
+				if (rs.next()) {
+					break;
+				} else {
+					page++;
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return page;
+	
+	}
 }

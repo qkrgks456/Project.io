@@ -82,8 +82,8 @@
 							</tr>
 					</table>
 					<div>
-						<Button class="btn btn-dark" onclick="location.href='cafeBlind?ownerNo=${adminCafeDetail.ownerNo}'">블라인드</Button>
-						<Button class="btn btn-dark" onclick="location.href='cafeBlindMinus'">블라인드 해제</Button>
+						<Button class="btn btn-dark" onclick="location.href='cafeBlind?ownerNo=${adminCafeDetail.ownerNo}'">블라인드 추가</Button>
+						<Button class="btn btn-dark" onclick="location.href='cafeBlindMinus?ownerNo=${adminCafeDetail.ownerNo}'">블라인드 해제</Button>
 						<Button class="btn btn-dark" onclick="location.href='admin/adminList/adminCafeList/adminCafeList.jsp'">리스트로</Button>
 					</div>
 				</div>

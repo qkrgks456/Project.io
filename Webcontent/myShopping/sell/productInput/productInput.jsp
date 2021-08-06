@@ -99,11 +99,11 @@
 							<div class="invalid-feedback">필수 정보입니다</div>
 						</div>
 
-
+						<!-- 카테고리 -->
 						<h6 class="text-muted mt-1 fw-bold" style="text-align: left;">카테고리</h6>
 						<div class="col-md-9 mb-3">
 							<select class="form-select" id="categoryName" name="categoryName">
-								<option selected disabled value="">필수선택</option>
+								<option selected disabled >필수선택</option>
 								<option value="원두">원두</option>
 								<option value="엠디">MD</option>
 							</select>
@@ -113,7 +113,7 @@
 						<!-- 수량 -->
 						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">수량</h6>
 						<div class="col-md-9 mb-3">
-							<input type="text" class="nullchecks nullcheck form-control"
+							<input type="text" class="form-control"
 								id="productQuantity" name="productQuantity" required>
 							<div class="invalid-feedback">필수 정보입니다</div>
 						</div>
@@ -121,7 +121,7 @@
 
 						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">가격</h6>
 						<div class="col-md-9 mb-3">
-							<input type="text" class="nullchecks nullcheck form-control"
+							<input type="text" class="form-control"
 								id="Price" name="Price" required>
 							<div class="invalid-feedback">필수 정보입니다</div>
 						</div>
@@ -161,7 +161,7 @@
 						<div class="form-check mt-3">
 							<div class="form-check ">
 								<input class="form-check-input" type="checkbox" id="agreeupdate"
-									onClick="agreeCheck(this.form)" name="Check"
+									onClick="agreeCheck(this.form);" name="Check"
 									id="flexRadioDefault2">
 							</div>
 						</div>
@@ -174,8 +174,8 @@
 						<div class="d-grid gap-3 d-md-flex justify-content-md-end">
 							<div class="invalid-feedback">필수 동의입니다</div>
 
-							<button class="btn btn-dark" type="submit" name="checkButton"
-								disabled>등록</button>
+							<input class="btn btn-dark" type="button" name="checkButton"
+								onclick="check()" id="chkbtn" value="등록" disabled>
 
 							<button class="btn btn-dark me-md-1" type="button"
 								onclick="location.href='/Project/myShopping/sell/productList/productList.jsp'">취소</button>
@@ -199,14 +199,70 @@
 			else
 				frm.checkButton.disabled = true
 		}
+		var overChk = false;
 		
-		
+		function check(){
+			console.log("시작");
+			var $proname= $("input[name='productName']");
+			var $catename = $("select[name='categoryName']");
+			var $proqty = $("input[name='productQuantity']");
+			var $proprice = $("input[name='Price']");
+			var $proex = $("input[name='explanation']");
+			var $proselc = $("input[name='selCheck']");			
+			
+			console.log("값 확인용 : "+$catename.val());
+			
+				if ($proname.val().trim()=="") {
+					Swal.fire({
+						title: '상품 이름을 입력해주세요',
+						 icon: 'error',
+						 confirmButtonColor: '#000',
+						 confirmButtonText: '확인',
+				})
+					$proname.focus();
+				}else if($catename.val()==null){
+					Swal.fire({
+						title: '카테고리를 선택해주세요',
+						 icon: 'error',
+						 confirmButtonColor: '#000',
+						 confirmButtonText: '확인',
+				})
+					$catename.focus();					
+				}else if($proqty.val().trim()=="" ||isNaN($proqty.val())) {
+					Swal.fire({
+						title: '수량(숫자)를 입력해주세요.',
+						 icon: 'error',
+						 confirmButtonColor: '#000',
+						 confirmButtonText: '확인',
+				})
+					$proqty.focus();
+				}else if($proprice.val().trim()=="" ||isNaN($proprice.val())) {
+					Swal.fire({
+						title: '가격(숫자)를 입력해주세요.',
+						 icon: 'error',
+						 confirmButtonColor: '#000',
+						 confirmButtonText: '확인',
+				})
+					$proprice.focus();
+				}else if($proex.val().trim()==""){
+					Swal.fire({
+						title: '설명을 입력해주세요',
+						 icon: 'error',
+						 confirmButtonColor: '#000',
+						 confirmButtonText: '확인',
+				})
+					$proex.focus();
+				}else{
+					console.log("성공")
+					$("#chkbtn").attr("type", "submit");			
+			}
+		}
 	
 	</script>
 
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=4"></script>
-
+	
 </body>
 </html>

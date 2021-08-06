@@ -50,83 +50,60 @@
 								<th scope="col">이미지</th>
 								<th scope="col">상품명</th>
 								<th scope="col">수량</th>
-								<th scope="col">가격</th>								
+								<th scope="col">가격</th>
 								<th class="text-center" scope="col">상세보기</th>
 								<div class scope="col"></div>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="">
-								<th class="align-middle" scope="row"><div
-										class="form-check">
-										<input class="form-check-input" type="checkbox" value="s"
-											id="flexCheckDefault" name="delCheck">
-									</div></th>
-								<td><img src="/Project/assets/img/m6.jpg"
-									class="img-thumbnail"
-									style="width: 80px; height: 80px; object-fit: cover;" /></td>
-								<td class="align-middle">시럽 세트</td>
-								<td class="align-middle">
-									<div class='d-flex'>
-										<div class="qu me-2">1</div>
-										<i id="up" class="up bi bi-arrow-up-square-fill"
-											style="font-size: 1.2rem;"> </i><i id="down"
-											class="down bi bi-arrow-down-square"
-											style="font-size: 1.2rem;"></i>
-									</div>
-								</td>
-								<td class="price align-middle">32000</td>								
-								<td>
-									<div class="d-grid gap-2 col-6 mx-auto mt-4">
-										<a class="btn btn-secondary btn-sm">상세보기</a>
-									</div>
-								</td>
-								<td class="visually-hidden sumPrice align-middle">32000</td>
-							</tr>
-							<tr class="">
-								<th class="align-middle" scope="row"><div
-										class="form-check">
-										<input class="form-check-input" type="checkbox" value="d"
-											id="flexCheckDefault" name="delCheck">
-									</div></th>
-								<td><img src="/Project/assets/img/12.jpg"
-									class="img-thumbnail"
-									style="width: 80px; height: 80px; object-fit: cover;" /></td>
-								<td class="align-middle">상품명</td>
-								<td class="align-middle">
-									<div class='d-flex'>
-										<div class="qu me-2">1</div>
-										<i id="up" class="up bi bi-arrow-up-square-fill"
-											style="font-size: 1.2rem;"> </i><i id="down"
-											class="down bi bi-arrow-down-square"
-											style="font-size: 1.2rem;"></i>
-									</div>
-								</td>
-								<td class="price align-middle">30000</td>							
-								<td>
-									<div class="d-grid gap-2 col-6 mx-auto mt-4">
-										<a class="btn btn-secondary btn-sm">상세보기</a>
-									</div>
-								</td>
-								<td class="visually-hidden sumPrice align-middle">30000</td>
-							</tr>
+							<c:forEach items="${cartlist}" var="cartlists">
+								<tr class="">
+									<th class="align-middle" scope="row"><div
+											class="form-check">
+											<input class="form-check-input" type="checkbox" value="s"
+												id="flexCheckDefault" name="delCheck">
+										</div></th>
+									<td><img src="/Project/assets/img/m6.jpg"
+										class="img-thumbnail"
+										style="width: 80px; height: 80px; object-fit: cover;" /></td>
+									<td class="align-middle">${cartlists.productName}</td>
+									<td class="align-middle">
+										<div class='d-flex'>
+											<div class="qu me-2">${cartlists.productQuantity}</div>
+											<i id="up" class="up bi bi-arrow-up-square-fill"
+												style="font-size: 1.2rem;"> </i><i id="down"
+												class="down bi bi-arrow-down-square"
+												style="font-size: 1.2rem;"></i>
+										</div>
+									</td>
+									<td class="price align-middle">${cartlists.Price}</td>
+									<td>
+										<div class="d-grid gap-2 col-6 mx-auto mt-4">
+											<a class="btn btn-secondary btn-sm">상세보기</a>
+										</div>
+									</td>
+									<td class="visually-hidden sumPrice align-middle">${cartlists.Price}</td>
+								</tr>
+							</c:forEach>
+
 						</tbody>
 						<tfoot>
 							<tr>
 								<th>주문</th>
 								<th id='sumAmount'>수량 : 3</th>
-								<th id='sumSumPrice' >총합계 : 65000</th>
-								
+								<th id='sumSumPrice'>총합계 : 65000</th>
+
 								<th colspan="3"></th>
 							</tr>
 						</tfoot>
 					</table>
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-						<button class="btn btn-dark sm-sm-2" type="button" id="delProductBtn">선택상품
-							삭제</button>
+						<button class="btn btn-dark sm-sm-2" type="button"
+							id="delProductBtn">선택상품 삭제</button>
 						<button type="button"
-								onclick="location.href='/Project/MainProduct/productResult.jsp'"
-								class="btn btn-dark btn-sm" style="float: right;">선택상품 주문하기</button>
+							onclick="location.href='/Project/MainProduct/productResult.jsp'"
+							class="btn btn-dark btn-sm" style="float: right;">선택상품
+							주문하기</button>
 					</div>
 				</div>
 			</div>
@@ -143,81 +120,83 @@
 			sum += Number($(this).text());
 		})
 		$('#sumAmount').empty();
-		$('#sumAmount').append('수량 : ' + sum+'개');
+		$('#sumAmount').append('수량 : ' + sum + '개');
 		/* 페이지 시작시 총 가격  */
 		var sumPrice = 0;
 		$('.price').each(function(i, item) {
 			sumPrice += Number($(this).text());
 		})
 		$('#sumSumPrice').empty();
-		$('#sumSumPrice').append('총 가격 : ' + sumPrice.toLocaleString()+'원');
+		$('#sumSumPrice').append('총 가격 : ' + sumPrice.toLocaleString() + '원');
 
 		/* 수량증가  */
 		var sumSum = 0;
-		
-		$('.up').click(function() {
-			var sumPrice = 0;
-			var qu = Number($(this).prev('.qu').text());
-			qu = qu + 1;
-			$(this).prev('.qu').empty();
-			$(this).prev('.qu').append(qu);
-			var sumSum = 0;
-			sumSum = qu * Number($(this).parents('td').next().text());		
-			var sum = 0;
-			$('.qu').each(function(i, item) {
-				sum += Number($(this).text());
-			})
-			$('#sumAmount').empty();
-			$('#sumAmount').append('수량 : ' + sum+'개');
-			$(this).parents('td').nextAll('.sumPrice').empty();
-			$(this).parents('td').nextAll('.sumPrice').append(sumSum);
-			$('.sumPrice').each(function(i, item) {		
-				sumPrice += Number($(this).text());
-				console.log(sumPrice);			
-			})
-			$('#sumSumPrice').empty();
-			$('#sumSumPrice').append('총 가격 : ' + sumPrice.toLocaleString()+'원');
-		})
-		
+
+		$('.up').click(
+				function() {
+					var sumPrice = 0;
+					var qu = Number($(this).prev('.qu').text());
+					qu = qu + 1;
+					$(this).prev('.qu').empty();
+					$(this).prev('.qu').append(qu);
+					var sumSum = 0;
+					sumSum = qu * Number($(this).parents('td').next().text());
+					var sum = 0;
+					$('.qu').each(function(i, item) {
+						sum += Number($(this).text());
+					})
+					$('#sumAmount').empty();
+					$('#sumAmount').append('수량 : ' + sum + '개');
+					$(this).parents('td').nextAll('.sumPrice').empty();
+					$(this).parents('td').nextAll('.sumPrice').append(sumSum);
+					$('.sumPrice').each(function(i, item) {
+						sumPrice += Number($(this).text());
+						console.log(sumPrice);
+					})
+					$('#sumSumPrice').empty();
+					$('#sumSumPrice').append(
+							'총 가격 : ' + sumPrice.toLocaleString() + '원');
+				})
+
 		/* 수량 감소 */
-		$('.down').click(function() {
-			var sumPrice = 0;
-			var qu = Number($(this).prevAll('.qu').text());
-			if (qu > 1) {
-				qu = qu - 1;
-				$(this).prevAll('.qu').empty();
-				$(this).prevAll('.qu').append(qu);
-				var sumSum = 0;
-				sumSum = qu * Number($(this).parents('td').next().text());
-				console.log(sumSum);
-				var sum = 0;
-				$('.qu').each(function(i, item) {
-					sum += Number($(this).text());
+		$('.down').click(
+				function() {
+					var sumPrice = 0;
+					var qu = Number($(this).prevAll('.qu').text());
+					if (qu > 1) {
+						qu = qu - 1;
+						$(this).prevAll('.qu').empty();
+						$(this).prevAll('.qu').append(qu);
+						var sumSum = 0;
+						sumSum = qu
+								* Number($(this).parents('td').next().text());
+						console.log(sumSum);
+						var sum = 0;
+						$('.qu').each(function(i, item) {
+							sum += Number($(this).text());
+						})
+						$('#sumAmount').empty();
+						$('#sumAmount').append('수량 : ' + sum + '개');
+						$(this).parents('td').nextAll('.sumPrice').empty();
+						$(this).parents('td').nextAll('.sumPrice').append(
+								sumSum);
+						$('.sumPrice').each(function(i, item) {
+							sumPrice += Number($(this).text());
+							console.log(sumPrice);
+						})
+						$('#sumSumPrice').empty();
+						$('#sumSumPrice').append(
+								'총 가격 : ' + sumPrice.toLocaleString() + '원');
+					}
 				})
-				$('#sumAmount').empty();
-				$('#sumAmount').append('수량 : ' + sum+'개');
-				$(this).parents('td').nextAll('.sumPrice').empty();
-				$(this).parents('td').nextAll('.sumPrice').append(sumSum);
-				$('.sumPrice').each(function(i, item) {		
-					sumPrice += Number($(this).text());
-					console.log(sumPrice);			
-				})
-				$('#sumSumPrice').empty();
-				$('#sumSumPrice').append('총 가격 : ' +sumPrice.toLocaleString()+'원');
-			}
-		})
-		$('#delProductBtn').click(function(){
+		$('#delProductBtn').click(function() {
 			var delCheckArr = [];
-			$('input[name="delCheck"]:checked').each(function(){
+			$('input[name="delCheck"]:checked').each(function() {
 				delCheckArr.push($(this).val());
 			})
 			console.log(delCheckArr);
-			
+
 		})
-		
-		
-		
-		
 	</script>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=5"></script>

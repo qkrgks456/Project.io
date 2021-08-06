@@ -10,7 +10,7 @@ public class ProductDTO {
 	private String explanation;
 	private int regDate;
 	private int views;
-	private int productQuantity;
+	private String productQuantity;
 	private String delCheck;
 	private String selCheck;
 	private String kingMenu;
@@ -18,6 +18,7 @@ public class ProductDTO {
 	private int fileIdx;
 	private String oriFileName;
 	private String newFileName;
+	private String amount;
 
 	
 	public int getProductId() {
@@ -68,12 +69,8 @@ public class ProductDTO {
 	public void setViews(int views) {
 		this.views = views;
 	}
-	public int getProductQuantity() {
-		return productQuantity;
-	}
-	public void setProductQuantity(int productQuantity) {
-		this.productQuantity = productQuantity;
-	}
+
+	
 	public String getDelCheck() {
 		return delCheck;
 	}
@@ -118,10 +115,25 @@ public class ProductDTO {
 	public void setNewFileName(String newFileName) {
 		this.newFileName = newFileName;
 	}
+	public String getAmount() {
+		return amount;
+	}
+	public void setAmount(String amount) {
+		this.amount = amount;
+	}
+	public String getProductQuantity() {
+		return productQuantity;
+	}
+	public void setProductQuantity(String productQuantity) {
+		this.productQuantity = productQuantity;
+	}
+
+	
+		
+	}
 	
 	
 	
 	
 	
 	
-}

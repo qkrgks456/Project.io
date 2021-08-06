@@ -59,7 +59,6 @@
 								</tr>
 							</c:if> --%>
 
-
 							<c:forEach items="${cafeMypageCommetList}" var="list">
 
 
