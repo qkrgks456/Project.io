@@ -92,6 +92,28 @@ public class ProductService {
 		return prosearch;
 		
 	}
+
+
+	public int cartinsert(String sessionId) {
+		ProductDAO dao = new ProductDAO(req, resp);
+		int suc = dao.cartinsert(sessionId);
+		return suc;
+	}
+	
+	public <CartDTO> ArrayList<CartDTO> cartlist() {
+		CartDAO dao = new CartDAO(req, resp);
+		ArrayList<CartDTO> cartlist = dao.cartlist();
+		System.out.println("장바구니 불러오기 :" +  cartlist.size());		
+		return cartlist;		
+	}
+
+	
+		
+		
+		
+	}
+	
+	
 	
 	
 }

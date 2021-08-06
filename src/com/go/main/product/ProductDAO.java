@@ -14,11 +14,15 @@ import javax.sql.DataSource;
 
 public class ProductDAO {
 
+	HttpServletRequest req = null;
+	HttpServletResponse resp=null;
 	Connection conn = null;
 	PreparedStatement ps = null;
 	ResultSet rs = null;
 
 	public ProductDAO(HttpServletRequest req, HttpServletResponse resp) {// 커넥션 생성
+		this.req = req;
+		this.resp=resp;
 		try {
 			Context ctx = new InitialContext();// 1. Context 가져오기
 			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Oracle");// 2. name 으로 Resource 가져와 DataSource 로
@@ -209,6 +213,27 @@ public class ProductDAO {
 		return prosearch;
 	}
 
+	public int cartinsert(String sessionId) {
+		String qty = req.getParameter("quantity");
+		String pid = req.getParameter("productn");
+		int suc=0;
+		
+		String sql="insert into cart(memberkey,productid,amount) values(?, ?, ?)";
+	
+		try {
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			ps.setString(2, pid);
+			ps.setString(3, qty);
+			suc = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return suc;
+	}
+	
 	
 
 }

@@ -18,6 +18,7 @@ public class ProductDTO {
 	private int fileIdx;
 	private String oriFileName;
 	private String newFileName;
+	private String amount;
 
 	
 	public int getProductId() {
@@ -117,6 +118,12 @@ public class ProductDTO {
 	}
 	public void setNewFileName(String newFileName) {
 		this.newFileName = newFileName;
+	}
+	public String getAmount() {
+		return amount;
+	}
+	public void setAmount(String amount) {
+		this.amount = amount;
 	}
 	
 	

@@ -87,10 +87,10 @@
 
 									</div>
 								</th>
-								<td class="align-middle">과테말라 안티구아</td>
-								<td class="align-middle">30133</td>
-								<td class="align-middle">8,900원</td>
-								<td class="align-middle">53개</td>
+								<td class="align-middle">에티오피아 예가체프 G2</td>
+								<td class="align-middle">30323</td>
+								<td class="align-middle">8,000원</td>
+								<td class="align-middle">82개</td>
 								<td>
 									<div class="d-grid gap-2 col-6 mx-auto mt-1">
 										<button class="btn btn-secondary btn-sm" type="button"
@@ -115,68 +115,7 @@
 	<jsp:include page="/fixMenu/footer.jsp"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<script>
-	<script>
-	//이벤트 리스너 등록
-
-	document.addEventListener('DOMContentLoaded', function() {
-		
-		let basket = {
-			    totalCount: 0, 
-			    totalPrice: 0,
-			    //체크한 장바구니 상품 비우기
-			    delCheckedItem: function(){
-			        document.querySelectorAll("input[name=buy]:checked").forEach(function (item) {
-			            item.parentElement.parentElement.parentElement.remove();
-			        });
-			        //AJAX 서버 업데이트 전송
-			        
-		// "선택 상품 삭제" 버튼 클릭
-
-		document.querySelector('.basketrowcmd a:first-child')
-				.addEventListener('click', function() {
-
-					basket.delCheckedItem();
-
-				});
-
-		document.querySelectorAll('.basketcmd a').forEach(
-
-		function(item) {
-
-			item.addEventListener('click', function() {
-
-				basket.delItem();
-
-			});
-
-		}
-
-		);
-		
-
-		// 장바구니 행 "삭제" 버튼 클릭
-
-		document.querySelectorAll('.basketcmd a').forEach(
-
-		function(item) {
-
-			item.addEventListener('click', function() {
-
-				basket.delItem();
-
-			});
-
-		}
-
-		);
-
-		delItem : function() {
-
-			event.target.parentElement.parentElement.parentElement.remove();
-
-		}
-
-	}
+	
 	</script>
 
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>

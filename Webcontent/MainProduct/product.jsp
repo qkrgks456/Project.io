@@ -30,21 +30,21 @@
 		<!-- 들어갈 내용 -->
 		<div class="container px-4 my-4">
 
-			<h2 class="fw-bold">상품 -> ${productdetail.productName }</h2>
+			<h2 class="fw-bold">상품 -> ${productdetail.productName}</h2>
 			<hr />
 			<div class="card mb-3" style="max-width: 1250px;">
 				<div class="row g-0">
 					<div class="col-md-4">
-						<img src="/photo/${productdetail.newFileName }"
+						<img src="/photo/${productdetail.newFileName}"
 							class="img-fluid rounded-start" alt="...">
 					</div>
 					<div class="col-md-8">
 						<div class="card-body">
 							<br>
-							<h3 class="bold">${productdetail.productName }</h3>
+							<h3 class="bold">${productdetail.productName}</h3>
 							<br>
 							<p class="text-muted mt-2">
-								${productdetail.explanation }
+								${productdetail.explanation}
 							</p>
 							<p class="text-muted bold">(200g 기준 판매)</p>
 
@@ -53,26 +53,28 @@
 							<br> <br>
 							<h5 class="text-muted mt-2 fw-bold" style="text-align: left;">수량</h5>
 							<form name="form1" method="post"
-								action="/Project/myShopping/buy/cart.jsp">
-								<input type="hidden" name="productId" value="${vo.productId}">
+								action="/Project/cartinsert">
+								<input type="hidden" name="productId" value="">
 								<select name="quantity">
-									<c:forEach begin="1" end="10" var="i">
-										<option value="${i }">${i}</option>
-									</c:forEach>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
 								</select>&nbsp;개 <br> <br>
-
+								<input type="hidden" name="productn" value="">
 								<!-- 가격  -->
 								<br>
 								<h5 class="text-muted mt-2 fw-bold" style="text-align: left;">가격</h5>
 								<h3>${productdetail.price}원</h3>
 								<h3>
-									<fmt:formatNumber value="${vo.Price}" pattern="###,###" />
+									<fmt:formatNumber value="" pattern="###,###" />
 								</h3>
 								<br>
 								<!-- 구매/장바구니 버튼 -->
 								<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 									<button type="submit"
-										onclick="location.href='/Project/myShopping/buy/cart.jsp'"
+										
 										class="btn btn-success btn-lg " value="장바구니에 담기">장바구니</button>
 									&nbsp;&nbsp;&nbsp;
 									<button type="button"

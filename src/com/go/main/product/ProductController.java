@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-@WebServlet({"/productList","/productinsert","/productdetail","/searchproduct"})
+@WebServlet({"/productList","/productinsert","/productdetail","/searchproduct","/cartinsert"})
 public class ProductController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -73,6 +73,14 @@ public class ProductController extends HttpServlet {
 			dis.forward(req, resp);
 			
 		break;
+		
+		case "/cartinsert":
+			
+			System.out.println("카트 넣기 성공");
+			suc = service.cartinsert(sessionId);
+		
+			System.out.println("성공 했나요? @:" + suc);
+			break;
 		}
 	
 		
