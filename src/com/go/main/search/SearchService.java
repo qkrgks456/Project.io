@@ -21,21 +21,10 @@ public class SearchService {
 	HttpServletRequest req =null;
 	HttpServletResponse resp = null;;
 	
-	public Connection conn = null;
-	public ResultSet rs = null;
-	public PreparedStatement ps = null;
-	
 	public SearchService(HttpServletRequest req,HttpServletResponse resp){
 		this.req = req;
 		this.resp = resp;
-		
-		try {
-			Context ctx = new InitialContext();
-			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Oracle");
-			conn = ds.getConnection();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}		
+	
 	}
 	
 
@@ -80,15 +69,6 @@ public class SearchService {
 		}
 	}
 
-	
-	/*
-	public ArrayList<SearchDTO> namelistpic(String sresult) {
-		SearchDAO dao = new SearchDAO(req, resp);
-		ArrayList<SearchDTO> namelistpic = dao.namelistpic(sresult);
-		System.out.println("찾은 카페 갯수2 : " + namelistpic.size());
-		return namelistpic;	
-	}
-*/
 	public void Alist() {		
 		SearchDAO dao = new SearchDAO(req, resp);
 		ArrayList<SearchDTO> Alist = dao.Alist();
