@@ -53,6 +53,8 @@ public class SearchService {
 				resp.getWriter().println(gson.toJson(map));
 			} catch (IOException e) {
 				e.printStackTrace();
+			}finally {
+				dao.resClose();
 			}
 		}
 		
@@ -72,6 +74,8 @@ public class SearchService {
 				resp.getWriter().println(gson.toJson(map));
 			} catch (IOException e) {
 				e.printStackTrace();
+			}finally {
+				dao.resClose();
 			}
 		}
 	}
@@ -98,6 +102,8 @@ public class SearchService {
 				resp.getWriter().println(gson.toJson(map));
 			} catch (IOException e) {
 				e.printStackTrace();
+			}finally {
+				dao.resClose();
 			}
 			
 			}
@@ -117,6 +123,8 @@ public class SearchService {
 				resp.getWriter().println(gson.toJson(map));
 			} catch (Exception e) {
 				e.printStackTrace();
+			}finally {
+				dao.resClose();
 			}
 		}
 }

@@ -209,6 +209,11 @@ table {
 		}			
 	});
 	
+	$("#searchresult").on('keypress',function(e) {
+		if (e.keyCode == 13) {
+			$('#sbtn').click();
+		}
+	})	
 	
 	$(document).on('click', '#sbtn', function() {
 		cl = $("#searchtype option:selected").val();

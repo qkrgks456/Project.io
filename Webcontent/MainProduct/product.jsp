@@ -138,23 +138,11 @@
 		<div class="container px-5 py-4 my-4">
 			<p class="fw-bold">qkrgks789</p>
 			<p class="lh-sm">
-				이쪽에 댓글 내용이 들어갈겁니다 <a class="float-end btn btn-secondary btn-sm"
-					onclick="location.href='/Project/report/report.jsp'">신고</a> <a
-					class="mx-2 float-end btn btn-secondary btn-sm">삭제</a> <a
-					class="float-end btn btn-secondary btn-sm">수정</a>
+				이쪽에 댓글 내용이 들어갈겁니다 <a class="float-end btn btn-secondary btn-sm" onclick="location.href='/Project/report/report.jsp'">신고</a> 
+				<a class="mx-2 float-end btn btn-secondary btn-sm">삭제</a> 
+				<a class="float-end btn btn-secondary btn-sm">수정</a>
 			</p>
-			<hr />
-			<p class="fw-bold">qkrgks456</p>
-			<p class="lh-sm">
-				이쪽에 댓글 내용이 들어갈겁니다<a class="float-end btn btn-secondary btn-sm"
-					onclick="location.href='/Project/report/report.jsp'">신고</a>
-			</p>
-			<hr />
-			<p class="fw-bold">qkrgks123</p>
-			<p class="lh-sm">
-				이쪽에 댓글 내용이 들어갈겁니다<a class="float-end btn btn-secondary btn-sm"
-					onclick="location.href='/Project/report/report.jsp'">신고</a>
-			</p>
+			<hr />		
 		</div>
 	</div>
 

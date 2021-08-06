@@ -52,7 +52,7 @@
 			<form action="/Project/productdetail?productId=${search.productId}" method="post">
 				<div class="col">
 					<div class="card h-100">
-						<img src="/photo/${search.newFileName }" class="card-img-top">
+						<a href=""><img src="/photo/${search.newFileName }" class="card-img-top"></a>
 						<div class="card-body">
 						
 						<input type="hidden" value="${search.productId }" name="wdId" id="wdId">
@@ -79,7 +79,7 @@
 			<form action="/Project/productdetail?productId=${WD.productId}" method="post">
 				<div class="col">
 					<div class="card h-100">
-						<img src="/photo/${WD.newFileName }" class="card-img-top">
+					<a href="/Project/productdetail?productId=${WD.productId}">	<img src="/photo/${WD.newFileName }" class="card-img-top"> </a>
 						<div class="card-body">
 						
 						<input type="hidden" value="${WD.productId }" name="wdId" id="wdId">
@@ -101,12 +101,12 @@
 			<hr />
 			<div class="row row-cols-1 row-cols-md-4 g-4" id="titlet">
 			<c:forEach items="${productlistMD }" var="MD">
+					<input type="hidden" value="${MD.productId }" name="mdId" id="mdId">
 			<form action="/Project/productdetail?productId=${MD.productId}" method="post">
 				<div class="col">
 					<div class="card h-100">
-						<img src="/photo/${MD.newFileName }" class="card-img-top">
+					<a href="/Project/productdetail?productId=${MD.productId}">	<img src="/photo/${MD.newFileName }" class="card-img-top"> </a>
 						<div class="card-body">
-					<input type="hidden" value="${MD.productId }" name="mdId" id="mdId">
 						
 							<h5 class="fw-bold">${MD.productName }</h5>
 							<p class="text-muted mt-2">${MD.explanation }</p>
