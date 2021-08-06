@@ -25,7 +25,7 @@
 				href="/Project/admin/adminList/adminProductList/adminProductList.jsp"
 				style="cursor: pointer;">상품정보</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/admin/adminList/adminInputCafeList/adminInputCafeList.jsp"
+				href="/Project/inputCafeInfo"
 				style="cursor: pointer;">등록카페정보</a>
 		</div>
 		<hr />

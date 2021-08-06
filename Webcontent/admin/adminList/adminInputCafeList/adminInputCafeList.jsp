@@ -31,6 +31,14 @@
 			<!-- 사이드바 불러오기 -->
 			<jsp:include page="/admin/adminSideBar.jsp"></jsp:include>
 			<div class="cont container-fluid mx-5 py-5">
+				<div class="d-flex align-items-center">
+					<button type="button" id="sidebarCollapse"
+						class="me-2 btn btn-secondary">
+						<i class="bi bi-text-left"></i>
+					</button>
+					<h2 class="fw-bold my-3">등록카페정보</h2>
+				</div>
+				<hr />
 				<!-- 여기부터 내용 넣으세요 -->
 				<table class="table table-hover mt-2">
 					<thead class="table-light">
@@ -42,15 +50,15 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="inputCafeList" var="inputCafeLists">
+						<c:forEach items="${inputCafeList}" var="inputCafeLists">
 							<tr class="">
-								<td class="align-middle"></td>
-								<td class="align-middle"></td>
-								<td class="align-middle"></td>
+								<td class="align-middle">${inputCafeLists.cafeKey}</td>
+								<td class="align-middle">${inputCafeLists.cafeName}</td>
+								<td class="align-middle">${inputCafeLists.cafePhone}</td>
 								<td>
 									<div class="d-grid gap-2 col-6 mx-auto">
 										<a class="btn btn-secondary btn-sm"
-											href="/Project/cafeDetail?cafeKey=&pageCheck=goodCafe">상세보기</a>
+											href="/Project/inputcafeDetail?cafeKey=${inputCafeLists.cafeKey}">상세보기</a>
 									</div>
 								</td>
 							</tr>

@@ -297,6 +297,7 @@ table {
 					dataType : 'JSON',
 					success : function(data) {
 						console.log(data);
+						console.log(data.AlistT[0].cafeKey);
 						content = "";
 						$.each(data.AlistT,function(i, item) {
 											console.log(item.newFileName);
@@ -306,7 +307,7 @@ table {
 											content += '</td>'
 											content += '<td class="align-middle">'+ item.productName +'</td>'
 											content += '<td class="align-middle">'+ item.price+'</td>'
-											content += '<td class="align-middle"><a href="cafeDetail?cafeKey="'+ item.cafekey+'>'+ item.cafeName+'</a></td>'
+											content += '<td class="align-middle"><a href="cafeDetail?cafeKey='+ item.cafeKey+'">'+ item.cafeName+'</a></td>'
 											content += '<td class="align-middle">'+ item.cafeLocation+'</td>'
 											content += '</tr>'
 										})

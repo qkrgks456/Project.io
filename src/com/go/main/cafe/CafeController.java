@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 @WebServlet({ "/cafewrite", "/cafeInfoMyPage", "/ownerCheck", "/cafeUpdate", "/cafeInputCheck", "/businessCheck",
 		"/businessChange", "/cafeDel", "/cafeExist", "/cafeList", "/cafeDetail", "/confusionInfo",
 		"/confusionTableChange", "/standardChange", "/cafeAlarmList", "/cafeAlarmDel", "/realTimeAlarm",
-		"/inputCafeInfo","/cafeInputDelCheck" })
+		"/inputCafeInfo","/cafeInputDelCheck","/inputcafeDetail","/inputCafeOpen" })
 public class CafeController extends HttpServlet {
 	// 안녕
 	private static final long serialVersionUID = 1L;
@@ -266,6 +266,7 @@ public class CafeController extends HttpServlet {
 				resp.sendRedirect("/Project/");
 			}
 			break;
+			// 등록 카페 정보
 		case "/inputCafeInfo":
 			if (sessionId != null) {
 				ArrayList <CafeDTO> inputCafeList = service.inputCafeInfo();
@@ -275,6 +276,33 @@ public class CafeController extends HttpServlet {
 			} else {
 				resp.sendRedirect("/Project/");
 			}
+			break;
+		case "/inputcafeDetail":
+			System.out.println("등록 카페 상세");
+			if (sessionId != null) {
+				map = service.inputcafeDetail();
+				req.setAttribute("map", map);
+				dis = req.getRequestDispatcher("admin/adminList/adminInputCafeList/adminInputCafeDetail.jsp");
+				dis.forward(req, resp);					
+			}else {
+				resp.sendRedirect("/Project/");
+			}
+			
+			break;
+		case "/inputCafeOpen":
+			if (sessionId != null) {
+				suc = service.inputCafeOpen();
+				if(suc>0) {
+					req.setAttribute("suc", suc);
+					dis = req.getRequestDispatcher("/inputCafeInfo");
+					dis.forward(req, resp);	
+				}
+			}else {
+				resp.sendRedirect("/Project/");
+			}
+			
+			
+			
 			break;
 		}
 	}

@@ -75,7 +75,7 @@ public class CafeDAO {
 					sql = "INSERT INTO cafeInfo"
 							+ "(cafeKey,ownerNo,cafeName,cafeLocation,cafeAddress,cafePhone,cafeDetail,cafeTime"
 							+ ",parkingCheck,petCheck,childCheck,rooftopCheck,groupCheck,cafeDel,openCheck,conFusion,bHit,cafeNum)"
-							+ "VALUES" + "(?,?,?,?,?,?,?,?,?,?,?,?,?,'N','Y','보통',0,cafe_seq.NEXTVAL)";
+							+ "VALUES" + "(?,?,?,?,?,?,?,?,?,?,?,?,?,'N','N','보통',0,cafe_seq.NEXTVAL)";
 					ps = conn.prepareStatement(sql);
 					ps.setString(1, sessionId);
 					ps.setString(2, dto.getOnnerNo());
@@ -1034,5 +1034,64 @@ public class CafeDAO {
 			resClose();
 		}
 		return inputCafeList;
+	}
+
+	public HashMap<String, Object> inputcafeDetail(String cafeKey) {
+		ArrayList<String> imageList = new ArrayList<String>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		try {
+			String sql = "SELECT cafeKey,ownerNo,cafeName,cafeLocation,cafeAddress,cafePhone,cafeDetail,cafeTime FROM cafeInfo WHERE cafeKey=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, cafeKey);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				map.put("cafeKey",rs.getString("cafeKey"));
+				map.put("ownerNo",rs.getString("ownerNo"));
+				map.put("cafeName",rs.getString("cafeName"));
+				map.put("cafeLocation",rs.getString("cafeLocation"));
+				map.put("cafeAddress",rs.getString("cafeAddress"));
+				map.put("cafePhone",rs.getString("cafePhone"));
+				map.put("cafeDetail",rs.getString("cafeDetail"));
+				map.put("cafeTime",rs.getString("cafeTime"));
+			}
+			sql = "SELECT newFileName FROM image WHERE division=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, cafeKey);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				imageList.add(rs.getString("newFileName"));
+			}
+			map.put("imageList", imageList);
+			sql = "SELECT newFileName FROM image WHERE division=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, (String)map.get("ownerNo"));
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				map.put("ownerNoImage", rs.getString("newFileName"));
+			}		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		
+		
+		
+		return map;
+	}
+
+	public int inputCafeOpen(String cafeKey) {
+		int suc = 0;
+		try {
+			String sql = "UPDATE cafeInfo SET openCheck='Y' WHERE cafeKey=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, cafeKey);
+			suc = ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		return suc;
 	}
 }

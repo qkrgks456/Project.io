@@ -235,11 +235,6 @@ public class CafeService {
 		return cafeAlarmList;
 	}
 
-	public HashMap<String, Object> main() {
-		dao = new CafeDAO();
-		return null;
-	}
-
 	// 실시간 알림
 	public boolean realTimeAlarm() {
 		HttpSession session = req.getSession();
@@ -251,6 +246,19 @@ public class CafeService {
 	public ArrayList<CafeDTO> inputCafeInfo() {
 		dao = new CafeDAO();
 		return dao.inputCafeInfo();
+	}
+
+	public HashMap<String, Object> inputcafeDetail() {
+		String cafeKey = req.getParameter("cafeKey");
+		dao = new CafeDAO();
+		return dao.inputcafeDetail(cafeKey);
+	}
+
+	public int inputCafeOpen() {
+		String cafeKey = req.getParameter("cafeKey");
+		System.out.println(cafeKey);
+		dao = new CafeDAO();
+		return dao.inputCafeOpen(cafeKey);
 	}
 
 }
