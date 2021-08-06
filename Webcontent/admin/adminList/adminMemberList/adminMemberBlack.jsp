@@ -90,6 +90,7 @@
 	 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#blackaddsubmit').click(function() {
+			if()
 			Swal.fire({
 					title: '블랙 리스트 추가완료',
 					 icon: 'success',

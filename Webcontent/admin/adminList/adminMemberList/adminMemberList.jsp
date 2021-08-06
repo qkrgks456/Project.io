@@ -57,7 +57,7 @@
 							<div class="form-group col-2 m-0 p-0">
 								<select class="form-select" name="adminSearchSelect">
 									<option value="name"  selected>이름</option>
-									<option value="memberkey">아이디</option>
+									<option value="memberKey">아이디</option>
 									<option value="email">이메일</option>
 								</select>
 							</div>

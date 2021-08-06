@@ -128,10 +128,12 @@ public class AdminService {
 
 	public AdminDTO adminCafeDetail() {
 		String cafeKey = req.getParameter("cafeKey");
-		if(cafeKey.equals(null)) {
-			
+		success =0;
+		if(req.getParameter("success")!=null) {
+			success = Integer.parseInt(req.getParameter("success"));
 		}
 		System.out.println("상세조회할 카페 키: " +cafeKey);
+		System.out.println("추가 성공 여부: "+success);
 		dto = dao.adminCafeDetail(cafeKey);
 		dao.resClose();
 		return dto;
@@ -149,6 +151,61 @@ public class AdminService {
 		String cafeBlindRePort = req.getParameter("cafeBlindRePort");
 		String cafeBlindId = req.getParameter("cafeBlindId");
 		map = dao.cafeBlindAdd(cafeBlindRePort,cafeBlindId);
+		dao.resClose();
+		return map;
+	}
+
+	public HashMap<String, Object> cafeBlindMinus() {
+		HashMap<String, Object> map=null;
+		String ownerNo = req.getParameter("ownerNo");
+		map=dao.cafeBlindMinus(ownerNo);
+		dao.resClose();
+		return map;
+	}
+
+	public ArrayList<AdminDTO> adminProductList() {
+		String ProductSearchSelect = req.getParameter("ProductSearchSelect");
+		String productSearch = req.getParameter("productSearch");
+		System.out.println("검색할 상품정보: " +ProductSearchSelect+"/"+productSearch);
+		list=dao.adminProductList(ProductSearchSelect,productSearch);
+		dao.resClose();
+		return list;
+	}
+
+	public AdminDTO adminProductDetail() {
+		String productId= req.getParameter("productId");
+		System.out.println("상세조회할 상품ID: " +productId);
+		success = 0;
+		if(req.getParameter("success")!=null) {
+			success = Integer.parseInt(req.getParameter("success"));
+		}
+		dto = dao.adminProductDetail(productId);
+		dao.resClose();
+		return dto;
+		
+	}
+
+	public HashMap<String, Object> productBlindAdd() {
+		HashMap<String, Object> map = null;
+		
+		return map;
+	}
+
+	public HashMap<String, Object> adminProductBlindAdd() {
+		HashMap<String, Object> map=null;
+		String productBlindId = req.getParameter("productBlindId");
+		String productBlindRePort = req.getParameter("productBlindRePort");
+		System.out.println("블라인드 추가할 아이디: "+productBlindId+ "블라인드 사유: "+productBlindRePort);
+		map = dao.adminProductBlindAdd(productBlindId,productBlindRePort);
+		dao.resClose();
+		return map;
+	}
+
+	public HashMap<String, Object> productBlindMinus() {
+		HashMap<String, Object> map=null;
+		String productBlindId = req.getParameter("productBlindId");
+		System.out.println("블라인드 해제할 아이디: "+productBlindId);
+		map = dao.productBlindMinus(productBlindId);
 		dao.resClose();
 		return map;
 	}

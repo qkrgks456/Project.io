@@ -1,5 +1,7 @@
 package com.go.main.admin;
 
+import java.sql.Date;
+
 public class AdminDTO {
 	private String memberkey;
 	private String name;
@@ -7,6 +9,7 @@ public class AdminDTO {
 	private String ownerNo;
 	private String deleteCheck;
 	private String email;
+	
 	private String emailCheck;
 	private String blackReporter;
 	private String location;
@@ -21,6 +24,58 @@ public class AdminDTO {
 	private int cafeTotalTable;
 	private String blindReason;
 	private String cafeKey;
+	private String productName;
+	private Date reg_date;
+	private String productDel;
+	private String productId;
+	private int productPrice;
+	private String explanation;
+	private String pBlindReason;
+	
+	
+	public String getpBlindReason() {
+		return pBlindReason;
+	}
+	public void setpBlindReason(String pBlindReason) {
+		pBlindReason = pBlindReason;
+	}
+
+	public String getExplanation() {
+		return explanation;
+	}
+	public void setExplanation(String explanation) {
+		this.explanation = explanation;
+	}
+	public int getProductPrice() {
+		return productPrice;
+	}
+	public void setProductPrice(int productPrice) {
+		this.productPrice = productPrice;
+	}
+	public String getProductId() {
+		return productId;
+	}
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+	public String getProductDel() {
+		return productDel;
+	}
+	public void setProductDel(String productDel) {
+		this.productDel = productDel;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public Date getReg_date() {
+		return reg_date;
+	}
+	public void setReg_date(Date reg_date) {
+		this.reg_date = reg_date;
+	}
 	
 	public String getCafeKey() {
 		return cafeKey;
