@@ -19,11 +19,15 @@ public class CafeUploadService {
 	}
 
 	public CafeDTO PhotoUpload() {
+		String uploadImgPath2 = null;
 		// 프로젝트 내 업로드 폴더 경로 얻기
 		String uploadImgPath = req.getSession().getServletContext().getRealPath("uploadImg");
 		System.out.println(uploadImgPath);
-		String uploadImgPath2 = uploadImgPath.substring(0, uploadImgPath.indexOf("\\Project") + 1);
-		System.out.println("풀 주소"+uploadImgPath2);
+		if(uploadImgPath.contains(".metadata")) {
+			uploadImgPath2 = uploadImgPath.substring(0, uploadImgPath.indexOf("\\.metadata") + 1);
+		}else {
+			uploadImgPath2 = uploadImgPath.substring(0, uploadImgPath.indexOf("\\Project") + 1);
+		}
 		String uploadPath = uploadImgPath2 + "Project\\WebContent\\uploadImg";
 		System.out.println("줄인 주소"+uploadPath);
 		int s = 0;
