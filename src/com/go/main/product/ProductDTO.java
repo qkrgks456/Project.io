@@ -10,7 +10,7 @@ public class ProductDTO {
 	private String explanation;
 	private int regDate;
 	private int views;
-	private String productQuantity;
+	private int productQuantity;
 	private String delCheck;
 	private String selCheck;
 	private String kingMenu;
@@ -121,10 +121,10 @@ public class ProductDTO {
 	public void setAmount(String amount) {
 		this.amount = amount;
 	}
-	public String getProductQuantity() {
+	public int getProductQuantity() {
 		return productQuantity;
 	}
-	public void setProductQuantity(String productQuantity) {
+	public void setProductQuantity(int productQuantity) {
 		this.productQuantity = productQuantity;
 	}
 
