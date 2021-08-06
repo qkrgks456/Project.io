@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="s" uri="http://java.sun.com/jsp/jstl/sql" %>
 <!-- 상단 메뉴바 -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient">
 	<div class="container-fluid">
@@ -34,7 +35,7 @@
 						<i id="cart" class="bi bi-cart-fill"
 							style="font-size: 1.8rem; color: white"></i> <span
 							id="cartalertnum"
-							class="border border-dark position-absolute top-0 mx-3 badge bg-white text-dark rounded-pill mt-2">0</span>
+							class="border border-dark position-absolute top-0 mx-3 badge bg-white text-dark rounded-pill mt-2"></span>
 					</div>
 					<!-- 혼잡도 알림 -->
 					<div class="d-flex mx-3 position-relative" id="navalert" onclick="location.href='/Project/cafeAlarmList'">
@@ -89,4 +90,20 @@ function realTimeAlarm(){
 		}				
 	})
 } */
+
+$.ajax({
+	type: "POST",//방식
+	url: "/Project/cartCount",//주소
+	data: {
+	},
+	dataType: 'JSON',
+	success: function(data) { //성공시
+		console.log(data.cartCount);
+		$('#cartalertnum').text(data.cartCount);
+				
+	},
+	error: function(e) { //실패시
+		console.log(e);
+	}				
+})
 </script>

@@ -167,6 +167,25 @@ public class MainDAO {
 		}
 		return map;
 	}
+
+	public int cartCount(String sessionId) {
+		String sql = "SELECT COUNT(cartId) FROM cart WHERE memberKey=?";
+		int cartCount = 0;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				cartCount = rs.getInt(1);
+			}		
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		
+		return cartCount;
+	}
 	
 	
 }

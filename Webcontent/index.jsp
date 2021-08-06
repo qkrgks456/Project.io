@@ -65,7 +65,6 @@
 				<span class="visually-hidden">Next</span>
 			</button>
 		</div>
-		${sessionScope.authority}
 		<!-- 들어갈 내용 -->
 		<div class="container px-3">
 			<div class="container my-3">
@@ -244,8 +243,7 @@
 	<!-- 스크립트 cdn -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<script type="text/javascript">
-	$('.showEvent').animate({opacity: "1"}, 500);
-	
+	$('.showEvent').animate({opacity: "1"}, 500);	
 	</script>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=11"></script>
