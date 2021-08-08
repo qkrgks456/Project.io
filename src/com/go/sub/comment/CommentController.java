@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-@WebServlet({ "/cafeCommentInput", "/cafeCommentDel", "/cafeCommentUpdate", "/cafeCommentList", "/cafeCommentReport","/productiptcomment"})
+@WebServlet({ "/cafeCommentInput", "/cafeCommentDel", "/cafeCommentUpdate", "/cafeCommentList", "/cafeCommentReport","/productiptcomment","/productcommentlist"})
 public class CommentController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -105,17 +105,43 @@ public class CommentController extends HttpServlet {
 			
 		case "/productiptcomment":
 			System.out.println("상품 댓글 작성 요청");
-			String procmt = req.getParameter("commentContent");
+			String commentContent = req.getParameter("commentContent");
+			String productn = req.getParameter("productn");
+			System.out.println(commentContent);
+			System.out.println(productn);
+		
+			if (sessionId != null) {
+				map = service.productcmtinput(commentContent,sessionId,productn);
+				if (map != null) {
+					map.put("sessionId", sessionId);
+					resp.setContentType("text/html; charset=UTF-8");
+					resp.getWriter().print(new Gson().toJson(map));
+				}
+			} else {
+				resp.sendRedirect("/Project/");
+			}
 			
-			map = service.productcmtinput(procmt,sessionId);
-			if(map != null) {
-				map.put("sessionId",sessionId);
-				resp.setContentType("text/html; charset=UTF-8");
-				resp.getWriter().print(new Gson().toJson(map));
+			break;
+			
+		case "/productcommentlist":
+			System.out.println("상품댓글리스트");
+			if (sessionId != null) {
+				map = service.productcommentlist();
+				System.out.println(map);
+				if (map != null) {
+					map.put("sessionId", sessionId);
+					resp.setContentType("text/html; charset=UTF-8");
+					resp.getWriter().print(new Gson().toJson(map));
+				}
+			} else {
+				resp.sendRedirect("/Project/");
 			}
 			break;
 		}
+		
+		
 	}
+	
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

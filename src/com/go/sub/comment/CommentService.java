@@ -87,18 +87,29 @@ public class CommentService {
 		return dao.cafeCommentReport(reportReason,commentNo,sessionId,cafeKey);
 	}
 
-	public HashMap<String, Object> productcmtinput(String procmt, String sessionId) {
-		String pId = req.getParameter("productn");
+	public HashMap<String,Object> productcmtinput(String commentContent, String sessionId, String productn) {
 		dao = new CommentDAO();
-		int page = 1;
-	
-			page = dao.productcminput(pId,procmt,sessionId);	
 		
+		System.out.println("pid 찍힘? : " +productn);
+		
+		int page = 1;	
+			page = dao.productcminput(productn,commentContent,sessionId);	
 			if (page!=0) {
-				resultMap = dao.cafeCommentList(pId,page);
+				resultMap = dao.productcommentlist(productn,page);
 			}
 			dao.resClose();
+			
 			return resultMap;
+	}
+
+	public HashMap<String, Object> productcommentlist() {
+		String productn = req.getParameter("productn");
+		String page = req.getParameter("page");
+		if(page == null) {
+			page= "1";
+		}
+		dao = new CommentDAO();	
+		return dao.productcommentlist(productn,Integer.parseInt(page));
 	}
 
 }

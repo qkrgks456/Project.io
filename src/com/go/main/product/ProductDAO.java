@@ -5,12 +5,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+
+import com.go.main.cafe.CafeDTO;
+import com.go.main.search.SearchDTO;
 
 public class ProductDAO {
 
@@ -62,7 +66,7 @@ public class ProductDAO {
 			ps.setString(2, dto.getProductName());
 			ps.setInt(3, dto.getPrice());
 			ps.setString(4, dto.getExplanation());
-			ps.setString(5, dto.getProductQuantity());
+			ps.setInt(5, dto.getProductQuantity());
 			ps.setString(6, dto.getSelCheck());
 			ps.setString(7, dto.getCategoryName());
 			ps.executeUpdate();
@@ -80,6 +84,8 @@ public class ProductDAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
+		}finally {
+			resClose();
 		}
 
 		return suc;
@@ -138,28 +144,71 @@ public class ProductDAO {
 		return productlistMD;
 	}
 	
-	public ProductDTO productdetail(String wdId) {
+	public HashMap<String, Object> productdetail(String wdId, int page, String sessionId) {
+		ArrayList<ProductDTO> commentList = new ArrayList<ProductDTO>();
 		ProductDTO dto = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		
 		String sql = "SELECT p.productname,p.explanation,p.productid,p.categoryname,i.newfilename,p.price from product p left outer join image i on i.division=p.productid WHERE p.productid=?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, wdId);
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				dto = new ProductDTO();
-				dto.setProductName(rs.getString("productName"));
-				dto.setExplanation(rs.getString("explanation"));
-				dto.setProductId(rs.getInt("productid"));
-				dto.setCategoryName(rs.getString("categoryname"));
-				dto.setPrice(rs.getInt("Price"));
-				dto.setNewFileName(rs.getString("newFileName"));
+				/*
+				 * dto = new ProductDTO(); 
+				 * dto.setProductName(rs.getString("productName"));
+				 * dto.setExplanation(rs.getString("explanation"));
+				 * dto.setProductId(rs.getInt("productid"));
+				 * dto.setCategoryName(rs.getString("categoryname"));
+				 * dto.setPrice(rs.getInt("Price"));
+				 * dto.setNewFileName(rs.getString("newFileName"));
+				 */
+				
+				map.put("productName", rs.getString("productName"));
+				map.put("explanation", rs.getString("explanation"));
+				map.put("productid", rs.getString("productid"));
+				map.put("categoryname", rs.getString("categoryname"));
+				map.put("price", rs.getString("Price"));
+				map.put("newFileName", rs.getString("newFileName"));
 			}
+			int pageLength = 5;
+			// 블럭 인덱스
+			int currentBlock = page % pageLength == 0 ? page / pageLength : (page / pageLength) + 1;
+			// 시작페이지
+			int startPage = (currentBlock - 1) * pageLength + 1;
+			// 끝페이지
+			int endPage = startPage + pageLength - 1;
+			System.out.println("시작 페이지 : " + startPage + " / 끝 페이지 : " + endPage);
+			// 노출할 데이터 갯수
+			int pagePerCnt = 8;
+			int end = page * pagePerCnt;
+			int start = (end - pagePerCnt) + 1;
+			// 댓글 가져오기
+			sql = "SELECT commentNo,cm_content,memberKey FROM "
+					+ "(SELECT ROW_NUMBER() OVER(ORDER BY commentNo) AS rnum,commentNo,cm_content,memberKey FROM cm WHERE division=? AND commentDel='N')"
+					+ "WHERE rnum BETWEEN ? AND ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, wdId);
+			ps.setInt(2, start);
+			ps.setInt(3, end);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				
+				dto = new ProductDTO();
+				dto.setCommentNo(rs.getString("commentNo"));
+				dto.setCm_content(rs.getString("cm_content"));
+				dto.setMemberKey(rs.getString("memberKey"));
+				commentList.add(dto);
+
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			resClose();
-		}
-		return dto;
+		} 
+		
+		return map;
 	}
 
 	public ProductDTO productdetailT(String mdId) {
@@ -245,14 +294,14 @@ public class ProductDAO {
 			while (rs.next()) {
 				dto = new ProductDTO();
 				dto.setProductName(rs.getString("productname"));
-				dto.setProductQuantity(rs.getString("productquantity"));
+				dto.setProductQuantity(rs.getInt("productquantity"));
 				dto.setPrice(rs.getInt("price"));
 				dto.setNewFileName(rs.getString("newfilename"));		
 				cartlist.add(dto);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
+		}
 
 		return cartlist;
 	}

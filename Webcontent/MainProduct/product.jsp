@@ -15,6 +15,7 @@
 <!-- main css 추가 -->
 <link href="/Project/assets/css/main.css?ver=10" rel="stylesheet">
 <title>카페</title>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 	<div class="wrap p-0 m-0">
@@ -29,21 +30,21 @@
 		</c:if>
 		<!-- 들어갈 내용 -->
 		<div class="container px-4 my-4">
-			<h2 class="fw-bold">상품 -> ${productdetail.productName}</h2>
+			<h2 class="fw-bold">상품 -> ${map.productName}</h2>
 			<hr />
 			<div class="card mb-3" style="max-width: 1250px;">
 				<div class="row g-0">
 					<div class="col-md-4">
-						<img src="/photo/${productdetail.newFileName}"
+						<img src="/photo/${map.newFileName}"
 							class="img-fluid rounded-start" alt="...">
 					</div>
 					<div class="col-md-8">
 						<div class="card-body">
 							<br>
-							<h3 class="bold">${productdetail.productName}</h3>
+							<h3 class="bold">${map.productName}</h3>
 							<br>
 							<p class="text-muted mt-2">
-								${productdetail.explanation}
+								${map.explanation}
 							</p>
 							<p class="text-muted bold">(200g 기준 판매)</p>
 
@@ -61,11 +62,11 @@
 									<option value="4">4</option>
 									<option value="5">5</option>
 								</select>&nbsp;개 <br> <br>
-								<input type="hidden" name="productn" value="${productdetail.productId }">
+								<input type="hidden" name="productn" id="productn" value="${map.productid }">
 								<!-- 가격  -->
 								<br>
 								<h5 class="text-muted mt-2 fw-bold" style="text-align: left;">가격</h5>
-								<h3>${productdetail.price}원</h3>
+								<h3>${map.price}원</h3>
 								<h3>
 								</h3>
 								<br>
@@ -86,14 +87,14 @@
 								<div id="good" class="d-inline-flex align-items-left">
 									<i id="goodicon" class="bi bi-hand-thumbs-up-fill"
 										style="font-size: 2.0rem;"></i> &nbsp;
-									<p class=" ms-2 mt-3 fw-bold">좋아요(10)</p>
+									<p class=" ms-2 mt-3 fw-bold">좋아요</p>
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									<div id="commenticon" class="d-inline-flex align-items-center">
 										<i id="commenticons" class="bi bi-chat-square-text-fill mt-1"
 											style="font-size: 2.0rem;"></i>
-										<p class="ms-2 mt-3 fw-bold">댓글(11)</p>
+										<p class="ms-2 mt-3 fw-bold">댓글</p>
 									</div>
 								</div>
 							</div>
@@ -109,19 +110,32 @@
 	<div class="container px-4 my-4">
 		<h3 id="comments" class="fw-bold mt-3">댓글</h3>
 				<hr />
-				<c:if test="${loginId!=''}">
+				<c:if test="${loginId==null}">
 					<div class="d-flex align-items-center">
 						<div class="form-floating flex-grow-1 px-2">
 							<textarea class="form-control" placeholder="Leave a comment here"
 								name="commentContent" id="commentContent"
 								style="height: 100px; resize: none;"></textarea>
-							<div class="invalid-feedback">1자 이상 입력해주세요</div>
-							<label for="commentContent">${loginId}님, 이곳에 댓글을 작성하세요</label>
+							<div class="invalid-feedback">1자 이상 입력해주세요.</div>
+							<label for="commentContent">로그인 후 이용해주세요.</label>
 						</div>
-						<a id="cafeCommentBtn" class="btn btn-secondary btn-sm"
-							title="${map.cafeKey}">등록</a>
+						
 					</div>
 				</c:if>
+				
+				<c:if test="${loginId != null}">
+					<div class="d-flex align-items-center">
+						<div class="form-floating flex-grow-1 px-2">
+							<textarea class="form-control" placeholder="Leave a comment here"
+								name="commentContent" id="commentContent"
+								style="height: 100px; resize: none;"></textarea>
+							<div class="invalid-feedback">1자 이상 입력해주세요.</div>
+							<label for="commentContent">${loginId}님, 이곳에 댓글을 작성하세요</label>
+						</div>
+						<input type="button" id="proCommentBtn" class="btn btn-secondary btn-sm" value="등록">
+					</div>
+				</c:if>
+				
 				<div id="commentLists" class="container px-5 py-4 my-4">
 					<c:forEach items="${map.commentList}" var="commentLists">
 						<div class="updateCheck">
@@ -160,6 +174,30 @@
 						</div>
 					</c:forEach>
 				</div>
+				
+				<ul id="paginations" class="pagination justify-content-center">
+					<c:if test="${map.startPage ne 1}">
+						<li class="page-item"><a class="page-link pageNum"
+							title="${map.startPage-1} ${map.cafeKey}" role="button"
+							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+						</a></li>
+					</c:if>
+					<c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
+						<c:if test="${i ne map.currPage}">
+							<li class="page-item"><a role="button"
+								class="page-link pageNum" title="${i} ${map.cafeKey}">${i}</a></li>
+						</c:if>
+						<c:if test="${i eq map.currPage}">
+							<li class="page-item active"><a class="page-link">${i}</a></li>
+						</c:if>
+					</c:forEach>
+					<c:if test="${map.totalPage ne map.endPage}">
+						<li class="page-item"><a class="page-link pageNum"
+							role="button" title="${map.endPage+1} ${map.cafeKey}"
+							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+						</a></li>
+					</c:if>
+				</ul>
 	</div>
 </div>
 	<!-- 하단 고정 퀵메뉴 -->
@@ -172,16 +210,21 @@
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=6">
-	$('#productcmtbtn').click(function() {
-		console.log("안녕");
-			var commentContent = $('#commentcontents').val();
+	
+	</script>
+	<script type="text/javascript">
+	$(document).on('click', '#proCommentBtn', function() {
+		var commentContent = $('#commentContent').val();
+		var productn = $('#productn').val();
+			console.log(commentContent);
 			if (commentContent.trim() != "") {
 				$('#commentContent').removeClass('is-invalid');			
 				$.ajax({
-					type: "POST",//방식
-					url: "/Project/productiptcomment",//주소
+					type: 'POST',//방식
+					url: '/Project/productiptcomment',//주소
 					data: {
-						commentContent: commentContent						
+						commentContent: commentContent,
+						productn : productn 
 					},
 					dataType: 'JSON',
 					success: function(data) { //성공시
@@ -193,13 +236,15 @@
 				});
 			} else {
 				$('#commentContent').addClass('is-invalid');
-			}
+			}			
+			
 		})
-		/* 댓글 리스트 메서드 */
-	function commentList(data) {
+		
+		function commentList(data) {
 		console.log(data);
 		var content = "";
 		var sessionId = data.sessionId;
+
 		$.each(data.list, function(i, item) {
 			var check = sessionId == item.memberKey;
 			content += "<div class='updateCheck'>"
@@ -232,10 +277,63 @@
 		});
 		$('#commentLists').empty();
 		$('#commentLists').append(content);
-	}	
+
+		content = "";
+		content += "<i id='commenticons' class='bi bi-chat-square-text-fill mt-1' style='font-size: 2.0rem;'></i>"
+		content += "<p  class='ms-2 mt-3 fw-bold'>댓글(" + data.commentCount + ")</p>"
+		$('#commenticon').empty();
+		$('#commenticon').append(content);
 		
+		content = "";
+		content += '<ul id="paginations1" class="pagination justify-content-center">'
+		if (data.startPage != 1) {
+			content += '<li class="page-item"><a class="page-link pageNum"'
+			content += 'title="' + (data.startPage - 1) +" "+data.productn+'" role="button"'
+			content += 'aria-label="Previous"> <span aria-hidden="true">&laquo;</span>'
+			content += '</a></li>'
+		}
+		for (var i = data.startPage; i <= data.endPage; i++) {
+			console.log(data.currPage)
+			if (data.currPage != i) {
+				content += '<li class="page-item"><a role="button" class="page-link pageNum"'
+				content += ' title="' + i + " " + data.productn + '">' + i + '</a></li>'
+			} else {
+				content += '<li class="page-item active"><a class="page-link">' + i + '</a></li>'
+			}
+		}
+		if (data.totalPage != data.endPage) {
+			content += '<li class="page-item"><a class="page-link pageNum" role="button"'
+			content += 'title="' + (data.endPage + 1)+" "+data.productn+'" aria-label="Next">'
+			content += '<span aria-hidden="true">&raquo;</span>'
+			content += '</a></li>'
+		}
+		content += '</ul>'
+		$('#paginations').empty();
+		$('#paginations').prepend(content);
 		
-		
+	}
+	$('#paginations').on('click', '.pageNum', function() {
+		var pageAndCafeKey = $(this).attr('title');
+		var pageArr = pageAndCafeKey.split(' ');
+		var page = pageArr[0];
+		var cafeKey = pageArr[1];
+		$.ajax({
+			type: "POST",//방식
+			url: "/Project/productcommentlist",//주소
+			data: {
+				page: page,
+				cafeKey: cafeKey,
+			},
+			dataType: 'JSON',
+			success: function(data) { //성공시
+				commentList(data);
+			},
+			error: function(e) { //실패시
+				console.log(e);
+			}
+		});
+	})
+
 	</script>
 </body>
 </html>

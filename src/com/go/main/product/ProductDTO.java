@@ -19,6 +19,9 @@ public class ProductDTO {
 	private String oriFileName;
 	private String newFileName;
 	private String amount;
+	private String commentNo;
+	private String memberKey;
+	private String cm_content;
 
 	
 	public int getProductId() {
@@ -126,6 +129,24 @@ public class ProductDTO {
 	}
 	public void setProductQuantity(int productQuantity) {
 		this.productQuantity = productQuantity;
+	}
+	public String getCommentNo() {
+		return commentNo;
+	}
+	public void setCommentNo(String commentNo) {
+		this.commentNo = commentNo;
+	}
+	public String getMemberKey() {
+		return memberKey;
+	}
+	public void setMemberKey(String memberKey) {
+		this.memberKey = memberKey;
+	}
+	public String getCm_content() {
+		return cm_content;
+	}
+	public void setCm_content(String cm_content) {
+		this.cm_content = cm_content;
 	}
 
 	

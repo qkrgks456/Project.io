@@ -2,6 +2,7 @@ package com.go.main.product;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -45,6 +46,7 @@ public class ProductController extends HttpServlet {
 			System.out.println("상품 리스트 불러오기 요청");			
 			req.setAttribute("productlistWD", service.productlistWD());
 			req.setAttribute("productlistMD", service.productlistMD());
+			
 			dis = req.getRequestDispatcher("MainProduct/productList.jsp");
 			dis.forward(req, resp);
 			break;
@@ -60,8 +62,9 @@ public class ProductController extends HttpServlet {
 			break;
 			
 		case"/productdetail":
-			System.out.println("상세보기 요청!");			
-			req.setAttribute("productdetail", service.productdetail());
+			System.out.println("상세보기 요청!");
+			HashMap<String, Object> map = service.productdetail();
+			req.setAttribute("map", map);
 			dis = req.getRequestDispatcher("MainProduct/product.jsp");
 			dis.forward(req, resp);
 		break;

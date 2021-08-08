@@ -287,17 +287,18 @@ public class CommentDAO {
 		return suc;
 	}
 
-	public int productcminput(String pId, String procmt, String sessionId) {
+	public int productcminput(String productn, String commentContent, String sessionId) {
 		int commentNo = 0;
 		int page = 1;
 		try {
 			sql = "INSERT INTO cm (commentNo,commentDel,memberKey,division,cm_content) VALUES(cm_seq.NEXTVAL,'N',?,?,?)";
 			ps = conn.prepareStatement(sql, new String[] { "commentNo" });
 			ps.setString(1, sessionId);
-			ps.setString(2, pId);
-			ps.setString(3, procmt);
+			ps.setString(2, productn);
+			ps.setString(3, commentContent);
 			ps.executeUpdate();
-			rs = ps.getGeneratedKeys();
+		rs = ps.getGeneratedKeys();
+		
 			if (rs.next()) {
 				commentNo = rs.getInt(1);
 			}
@@ -311,7 +312,7 @@ public class CommentDAO {
 						+ "(SELECT ROW_NUMBER() OVER(ORDER BY commentNo) AS rnum,commentNo,cm_content,memberKey FROM cm WHERE division=? AND commentDel='N')"
 						+ "WHERE (rnum BETWEEN ? AND ?) AND commentNo=?";
 				ps = conn.prepareStatement(sql);
-				ps.setString(1, pId);
+				ps.setString(1, productn);
 				ps.setInt(2, start);
 				ps.setInt(3, end);
 				ps.setInt(4, commentNo);
@@ -329,5 +330,74 @@ public class CommentDAO {
 
 		return page;
 	
+	}
+
+	public HashMap<String, Object> productcommentlist(String productn, int page) {
+		ArrayList<CommentDTO> list = new ArrayList<CommentDTO>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		try {
+			sql = "SELECT commentNo,cm_content,memberKey FROM "
+					+ "(SELECT ROW_NUMBER() OVER(ORDER BY commentNo) AS rnum,commentNo,cm_content,memberKey FROM cm WHERE division=? AND commentDel='N')"
+					+ "WHERE rnum BETWEEN ? AND ?";
+			// 한블럭당 페이지 갯수
+			int pageLength = 5;
+			// 블럭 인덱스
+			int currentBlock = page % pageLength == 0 ? page / pageLength : (page / pageLength) + 1;
+			// 시작페이지
+			int startPage = (currentBlock - 1) * pageLength + 1;
+			// 끝페이지
+			int endPage = startPage + pageLength - 1;
+			System.out.println("시작 페이지 : " + startPage + " / 끝 페이지 : " + endPage);
+			// 노출할 데이터 갯수
+			int pagePerCnt = 8;
+			int end = page * pagePerCnt;
+			int start = (end - pagePerCnt) + 1;
+			System.out.println("시작" + start);
+			System.out.println("끝" + end);
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, productn);
+			ps.setInt(2, start);
+			ps.setInt(3, end);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				dto = new CommentDTO();
+				dto.setCommentNo(rs.getString("commentNo"));
+				dto.setMemberKey(rs.getString("memberKey"));
+				dto.setCm_content(rs.getString("cm_content"));
+				list.add(dto);
+			}
+			int total = totalComment(productn); // 총 댓글 수 가져옵시다
+			// 총 게시글 수에 나올 페이지수 나눠서 짝수면 나눠주고 홀수면 +1
+			int totalPages = total % pagePerCnt == 0 ? total / pagePerCnt : (total / pagePerCnt) + 1;
+			if (totalPages == 0) {
+				totalPages = 1;
+			}
+			// 끝지점을 맨 마지막 페이지로 지정
+			if (endPage > totalPages) {
+				endPage = totalPages;
+			}
+			sql = "SELECT COUNT(commentNo) FROM cm WHERE commentDel='N' AND division=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, productn);
+			rs = ps.executeQuery();
+			if (rs.next()) {
+				map.put("commentCount", rs.getInt(1));
+			}
+
+			System.out.println(list);
+			map.put("list", list);
+			map.put("totalPage", totalPages);
+			map.put("currPage", page);
+			map.put("pageLength", pageLength);
+			map.put("startPage", startPage);
+			map.put("endPage", endPage);
+			map.put("cafeKey", productn);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		return map;
 	}
 }

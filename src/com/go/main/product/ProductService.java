@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -27,13 +28,6 @@ public class ProductService {
 		this.req = req;
 		this.resp = resp;
 
-		try {
-			Context ctx = new InitialContext();
-			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Oracle");
-			conn = ds.getConnection();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	public int productinsert(String sessionId) {
@@ -60,21 +54,37 @@ public class ProductService {
 		return productlistMD;
 	}
 
-	public ProductDTO productdetail() {
+	public HashMap<String, Object> productdetail() {
+		HttpSession session = req.getSession();
+		String sessionId = (String) session.getAttribute("loginId");
+		HashMap<String, Object> map = null;
+		HashMap<String, Object> resultMap = null;
 		ProductDTO dto = new ProductDTO();
 		ProductDAO dao = new ProductDAO(req, resp);
 		String wdId = req.getParameter("wdId");
 		String mdId = req.getParameter("mdId");
 		System.out.println("wdid값 찍히나 확인 : " + wdId);
 		System.out.println("mdid값 찍히나 확인 : " + mdId);
-
-		if (wdId != null) {
-			dto = dao.productdetail(wdId);
-		} else if (mdId != null) {
-			dto = dao.productdetailT(mdId);
+		String page = req.getParameter("page");
+		System.out.println("page : " + page);		
+		if (page == null) {
+			page = "1";
 		}
-
-		return dto;
+		if (wdId != null) {
+			
+			resultMap = dao.productdetail(wdId,Integer.parseInt(page), sessionId);
+		
+			
+		} else if (mdId != null) {
+			
+			
+			//resultMap = dao.productdetailT(mdId,Integer.parseInt(page), sessionId);
+			
+		}
+		
+		dao.resClose();
+		
+		return resultMap;
 	}
 
 	public ArrayList<ProductDTO> prosearch(String prosearchresult) {
