@@ -19,7 +19,21 @@ public class MemberDTO {
 	private String managers;
 	private String Productname;
 	private String Cmreporter;
-	
+	private String cmProductname;
+	private int productId;
+
+	public String getProductname() {
+		return Productname;
+	}
+	public void setProductname(String productname) {
+		this.Productname = productname;
+	}
+	public String getCmProductname() {
+		return cmProductname;
+	}
+	public void setCmProductname(String cmProductname) {
+		this.cmProductname = cmProductname;
+	}
 	public String getDivision() {
 		return division;
 	}
@@ -136,7 +150,13 @@ public class MemberDTO {
 	public void setCmreporter(String cmreporter) {
 		Cmreporter = cmreporter;
 	}
-	
+	public int getProductId() {
+		return productId;
+	}
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
+
 
 	
 	

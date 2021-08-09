@@ -92,7 +92,7 @@ public class MemberService {
 	
 	public ArrayList<MemberDTO> productCommentList(String sessionId) {
 		
-		list = dao.commentReport(sessionId);
+		list = dao.productCommentList(sessionId);
 		dao.resClose();
 		return list;
 	}

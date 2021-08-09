@@ -49,30 +49,12 @@
 							</tr>
 						</thead>
 						<tbody>
-						
-							<!-- <tr class="">
-								<td class="align-middle">상품명</td>
-								<td class="align-middle">댓글내용</td>
-								<td>
-									<div class="d-grid gap-2 col-6 mx-auto mt-1">
-										<a class="btn btn-secondary btn-sm">상세보기</a> <a
-											class="btn btn-secondary btn-sm">댓글삭제</a>
-									</div>
-								</td>
-							</tr> -->
-						
 							<c:forEach items="${productCommentList}" var="list">
-
-
 								<tr>
-									<td class="align-middle">${list.productName}</td>
+									<td class="align-middle">${list.cmProductname}</td>
 									<td class="align-middle">${list.cm_content}</td>
-								<%-- 	<td class="align-middle">${list.reportReason}</td>
-									<td class="align-middle">${list.processStatus}</td>
-									<td class="align-middle">${list.authority}</td> --%>
-					
-								
-									
+									<td class="align-middle"><button class="btn btn-dark"
+											onclick="location.href='/Project/productdetail?productId=${list.productId}'">상세보기</button></td>
 								</tr>
 
 							</c:forEach>

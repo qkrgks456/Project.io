@@ -344,28 +344,33 @@ public class MemberDAO {
 	// 내정보 상품 댓글리스트
 	public ArrayList<MemberDTO> productCommentList(String sessionId) {
 		System.out.println("내정보 상품댓글 조회 ");
-		sql = "select p.productName, c.cm_content from product p "
-				+ "left outer join cm c ON c.memberKey = p.cafeKey where memberkey = ?";
+		System.out.println("세션아이디" + sessionId);
+		list = new ArrayList<MemberDTO>();
+		sql = "select p.productName, c.cm_content,p.productId from "
+				+ "product p left outer join cm c ON c.division = p.productId "
+				+ "where c.memberKey = ? AND c.commentDel='N'";
 
 		ArrayList<MemberDTO> list = new ArrayList<MemberDTO>();
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, sessionId);
-			System.out.println("세션아이디" + sessionId);
-
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				dto = new MemberDTO();
-
-				dto.setDivision(rs.getString("productName"));
-				dto.setCm_content(rs.getString("cm_content"));
-				list.add(dto);
-
+			dto = new MemberDTO();
+			dto.setCmProductname(rs.getString("productName"));
+			dto.setCm_content(rs.getString("cm_content"));
+			dto.setProductId(rs.getInt("productId"));
+			list.add(dto);
 			}
+		
 		} catch (SQLException e) {
-
+			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			resClose();
 		}
+			
+		
 		return list;
 
 	}
