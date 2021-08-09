@@ -55,19 +55,18 @@
 							<form name="form1" method="post"
 								action="/Project/cartinsert">
 								<input type="hidden" name="productId" value="">
-								<select name="quantity">
+								<select name="quantity" id="quantity">
 									<option value="1">1</option>
 									<option value="2">2</option>
 									<option value="3">3</option>
 									<option value="4">4</option>
 									<option value="5">5</option>
 								</select>&nbsp;개 <br> <br>
-
-								<input type="hidden" name="productn" value="${param.productId}">
+								<input type="hidden" name="productn"  id="productn" value="${param.productId}">
 								<!-- 가격  -->
 								<br>
 								<h5 class="text-muted mt-2 fw-bold" style="text-align: left;">가격</h5>
-								<h3>${map.price}</h3>
+								<input type="text" name="prc" id="prc" value="${map.price}">
 
 								<h3>
 								</h3>
@@ -75,12 +74,9 @@
 								<!-- 구매/장바구니 버튼 -->
 								<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 									<button type="submit"
-										
 										class="btn btn-success btn-lg " value="장바구니에 담기">장바구니</button>
 									&nbsp;&nbsp;&nbsp;
-									<button type="button"
-										onclick="location.href='/Project/MainProduct/productResult.jsp'"
-										class="btn btn-secondary btn-lg" style="float: right;">구매하기</button>
+									<input type="button" id="purchasebtn"  class="btn btn-secondary btn-lg" style="float: right;" value="구매하기">
 								</div>
 							</form>
 							<!-- 좋아요 댓글 -->
@@ -395,7 +391,34 @@
 			$(this).parent().prev().children('.commentUpdateContent').addClass('is-invalid');
 		}
 	})
-
+	
+	$(document).on('click', '#purchasebtn', function() {
+		var prc = $('#prc').val();
+		var pid = $('#productn').val();
+		var qty = $('#quantity').val();
+					console.log(prc);
+					console.log(pid);
+					console.log(qty);
+					
+				$.ajax({
+					type: 'POST',//방식
+					url: '/Project/purchaseInsert',//주소
+					data: {
+						prc: prc,
+						productn : pid,
+						quantity: qty
+					},
+					dataType: 'JSON',
+					success: function(data) { //성공시
+						console.log("성공");
+					},
+					error: function(e) { //실패시
+						console.log(e);
+					}		
+			});
+	});
+		
+				
 	</script>
 </body>
 </html>

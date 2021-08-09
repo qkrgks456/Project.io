@@ -440,27 +440,56 @@ public class ProductDAO {
 		}
 		return suc;
 	}
+	
 
 	//구매내역 배열 가져오기
-	public ArrayList<ProductDTO>  purchaseInsert(String sessionId) {
-	
-			String qty = req.getParameter("quantity");
-			String pid = req.getParameter("productn");
-			System.out.println(pid);
-			int suc = 0;
-
-			String sql = "insert into cart(memberkey,productid,amount,cartId) values(?, ?, ?,cart_seq.NEXTVAL)";
-			try {
-				ps = conn.prepareStatement(sql);
-				ps.setString(1, sessionId);
-				ps.setString(2, pid);
-				ps.setString(3, qty);
-				suc = ps.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+	public HashMap<String, Object> purchaseInsert(String sessionId, String pid, String qty, String prc) {
+		HashMap<String, Object> map =new HashMap<String, Object>();
+		int suc1 = 0;
+		String sql = "INSERT INTO purchase(orderNo,memberkey,productid,buyamount,buyprice) values(pur_seq.NEXTVAL,?, ?, ?, ?)";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			ps.setString(2, pid);
+			ps.setString(3, qty);
+			ps.setString(4, prc);
+			suc1 = ps.executeUpdate();
+			map.put("suc", suc1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
+		return map;
+	
 
-		return null;
 	}
+
+	// 구매내역 리스트에 뿌리기
+
+	public ArrayList<ProductDTO> purchaseList(String sessionId) {
+		String sql = "SELECT p.productname,p.productId,p.productquantity,p.price, i.newfilename from product p left outer join image i on i.division=p.productid";
+		ArrayList<ProductDTO> purchaseList = null;
+		ProductDTO dto = null;
+		try {
+			purchaseList = new ArrayList<ProductDTO>();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				dto = new ProductDTO();
+				dto.setNewFileName(rs.getString("newfilename"));
+				dto.setProductName(rs.getString("productname"));
+				dto.setProductQuantity(rs.getInt("productquantity"));
+				dto.setPrice(rs.getInt("price"));
+				// dto.setProductId(rs.getInt("productId"));
+				purchaseList.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		return purchaseList;
+	}
+
 }

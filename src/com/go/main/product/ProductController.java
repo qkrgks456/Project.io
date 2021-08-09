@@ -14,7 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-@WebServlet({ "/productList", "/productinsert", "/productdetail", "/searchproduct", "/cartinsert", "/cartList","/myProductList","/productListDel", "/purchaseInsert" })
+@WebServlet({ "/productList", "/productinsert", "/productdetail", "/searchproduct", "/cartinsert", "/cartList",
+		"/myProductList", "/productListDel", "/purchaseInsert", "/purchaseList" })
 public class ProductController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -97,8 +98,8 @@ public class ProductController extends HttpServlet {
 			
 		case "/sellListDel":
 			System.out.println("판매리스트 삭제");
-			
 			break;
+			
 		case "/myProductList":
 			System.out.println("내 등록 상품정보");
 			map = service.myProductList(sessionId);
@@ -117,17 +118,31 @@ public class ProductController extends HttpServlet {
 		
 			
 		case "/purchaseInsert":
-			System.out.println("구매내역에 넣기 성공");
-			ArrayList<ProductDTO> purchaseInsert = service.purchaseInsert(sessionId);
-			req.setAttribute("purchaseInsert", purchaseInsert);
-			dis = req.getRequestDispatcher("myShopping/buy/cart.jsp");
-			dis.forward(req, resp);
+			System.out.println("구매내역에 넣기 ");
+		
+			if (sessionId != null) {
+				map = service.purchaseInsert(sessionId);
+				if (map != null) {
+					map.put("sessionId", sessionId);
+					resp.setContentType("text/html; charset=UTF-8");
+					resp.getWriter().print(new Gson().toJson(map));
+				}
+			} else {
+				resp.sendRedirect("/Project/");
+			}
 			break;
 			
-
-		}
-
 		
+		case"/purchaseList":
+			System.out.println("구매내역 뿌리기");
+			HashMap<String, Object> map = service.purchaseList();
+			req.setAttribute("map", map);
+			System.out.println(map);
+			dis = req.getRequestDispatcher("MainProduct/product.jsp");
+			dis.forward(req, resp);
+		break;
+		
+
 		
 	}
 }

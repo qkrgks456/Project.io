@@ -23,6 +23,9 @@ public class ProductDTO {
 	private String memberKey;
 	private String cm_content;
     private String memberkey;
+	private String buyPrice;
+	private String buyAmount;
+	private String orderNo;
 	
 	public int getProductId() {
 		return productId;
@@ -153,6 +156,24 @@ public class ProductDTO {
 	}
 	public void setPrice(int price) {
 		this.price = price;
+	}
+	public String getBuyPrice() {
+		return buyPrice;
+	}
+	public void setBuyPrice(String buyPrice) {
+		this.buyPrice = buyPrice;
+	}
+	public String getBuyAmount() {
+		return buyAmount;
+	}
+	public void setBuyAmount(String buyAmount) {
+		this.buyAmount = buyAmount;
+	}
+	public String getOrderNo() {
+		return orderNo;
+	}
+	public void setOrderNo(String orderNo) {
+		this.orderNo = orderNo;
 	}
 }
 

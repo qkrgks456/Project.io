@@ -122,13 +122,36 @@ public class ProductService {
 		return map;
 	}
 
-	public ArrayList<ProductDTO> purchaseInsert(String sessionId) {
+	public HashMap<String, Object> purchaseInsert(String sessionId) {
 		ProductDAO dao = new ProductDAO(req, resp);
-		ArrayList<ProductDTO> purchaseInsert = dao.purchaseInsert(sessionId);
-		System.out.println("구매내역 불러오기 :" + purchaseInsert.size());
-		return purchaseInsert;
+
+		String pid = req.getParameter("productn");
+		String qty = req.getParameter("quantity");
+		String prc = req.getParameter("prc");
+
+		System.out.println("잘 들어왔는지 확인 :  " + pid + " / " + qty + " / " + prc)  ;
+		
+		 HashMap<String, Object> map = dao.purchaseInsert(sessionId,pid,qty,prc);
+		 dao.resClose();
+		 
+		return map;		
+	}
+
+
+
+	public HashMap<String, Object> purchaseList(String sessionId) {
+		ProductDAO dao = new ProductDAO(req, resp);
+		ArrayList<ProductDTO> purchaseList = dao.purchaseList(sessionId);
+		System.out.println("구매내역 불러오기 :" + purchaseList.size());
+		dao.resClose();
+		return 	purchaseList(sessionId);
 		
 	}
+
+		
+		
+		
+	
 
 	
 	
