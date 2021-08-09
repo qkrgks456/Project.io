@@ -12,12 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-@WebServlet({"/productList","/productinsert","/productdetail","/searchproduct","/cartinsert"})
+@WebServlet({ "/productList", "/productinsert", "/productdetail", "/searchproduct", "/cartinsert", "/cartList" })
 public class ProductController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,23 +37,22 @@ public class ProductController extends HttpServlet {
 		ProductService service = new ProductService(req, resp);
 		HttpSession session = req.getSession();
 		String sessionId = (String) session.getAttribute("loginId");
-		
-			
+
 		switch (addr) {
 		case "/productList":
-			System.out.println("상품 리스트 불러오기 요청");			
+			System.out.println("상품 리스트 불러오기 요청");
 			req.setAttribute("productlistWD", service.productlistWD());
 			req.setAttribute("productlistMD", service.productlistMD());
 			
 			dis = req.getRequestDispatcher("MainProduct/productList.jsp");
 			dis.forward(req, resp);
 			break;
-			
-		case"/productinsert":
+
+		case "/productinsert":
 			System.out.println("상품 등록");
 			int suc = service.productinsert(sessionId);
-			
-			System.out.println("상품등록 성공 여부 : "+suc);
+
+			System.out.println("상품등록 성공 여부 : " + suc);
 			req.setAttribute("success", suc);
 			dis = req.getRequestDispatcher("myShopping/sell/productList/productList.jsp");
 			dis.forward(req, resp);
@@ -69,16 +66,34 @@ public class ProductController extends HttpServlet {
 			dis.forward(req, resp);
 		break;
 		
-			
+
+		case "/searchproduct":
+			System.out.println("검색 요청");
+			String prosearchresult = req.getParameter("prosearch");
+			req.setAttribute("search", service.prosearch(prosearchresult));
+			dis = req.getRequestDispatcher("MainProduct/productList.jsp");
+			dis.forward(req, resp);
+
+			break;
+
 		case "/cartinsert":
 			System.out.println("카트 넣기 성공");
-			ArrayList<ProductDTO> cartlist = service.cartinsert(sessionId);	
-			req.setAttribute("cartlist",cartlist);
+			ArrayList<ProductDTO> cartlist = service.cartinsert(sessionId);
+			req.setAttribute("cartlist", cartlist);
 			dis = req.getRequestDispatcher("myShopping/buy/cart.jsp");
 			dis.forward(req, resp);
 			break;
+
+		case "/cartList":
+			System.out.println("카트리스트 성공");
+			cartlist = service.cartlist(sessionId);
+			req.setAttribute("cartlist", cartlist);
+			dis = req.getRequestDispatcher("myShopping/buy/cart.jsp");
+			dis.forward(req, resp);
+
+			break;
+
 		}
-	
-		
+
 	}
 }

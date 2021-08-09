@@ -22,7 +22,7 @@ public class ProductDTO {
 	private String commentNo;
 	private String memberKey;
 	private String cm_content;
-
+    private String memberkey;
 	
 	public int getProductId() {
 		return productId;
@@ -148,10 +148,19 @@ public class ProductDTO {
 	public void setCm_content(String cm_content) {
 		this.cm_content = cm_content;
 	}
+	public String getmemberkey() {
+		return memberkey;
+	}
+	public void setmemberkey(String memberkey) {
+		this.memberkey = memberkey;
+	}
+}
+
+
 
 	
 		
-	}
+	
 	
 	
 	

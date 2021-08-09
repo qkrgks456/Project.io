@@ -101,17 +101,24 @@ public class ProductService {
 		ProductDAO dao = new ProductDAO(req, resp);
 		int suc = dao.cartinsert(sessionId);
 		if (suc > 0) {
-			cartlist = dao.cartlist();
+			cartlist = dao.cartlist(sessionId);
 		}
 		dao.resClose();
 		return cartlist;
 	}
 
-	public ArrayList<ProductDTO> cartlist() {
+	public ArrayList<ProductDTO> cartlist (String sessionId) {
 		ProductDAO dao = new ProductDAO(req, resp);
-		ArrayList<ProductDTO> cartlist = dao.cartlist();
+		ArrayList<ProductDTO> cartlist = dao.cartlist(sessionId);
 		System.out.println("장바구니 불러오기 :" + cartlist.size());
 		return cartlist;
 	}
 
+	
+	
+	
+	
+	
+	
+	
 }

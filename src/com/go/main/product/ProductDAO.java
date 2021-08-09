@@ -19,14 +19,14 @@ import com.go.main.search.SearchDTO;
 public class ProductDAO {
 
 	HttpServletRequest req = null;
-	HttpServletResponse resp=null;
+	HttpServletResponse resp = null;
 	Connection conn = null;
 	PreparedStatement ps = null;
 	ResultSet rs = null;
 
 	public ProductDAO(HttpServletRequest req, HttpServletResponse resp) {// 커넥션 생성
 		this.req = req;
-		this.resp=resp;
+		this.resp = resp;
 		try {
 			Context ctx = new InitialContext();// 1. Context 가져오기
 			DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Oracle");// 2. name 으로 Resource 가져와 DataSource 로
@@ -80,6 +80,7 @@ public class ProductDAO {
 				ps.setString(2, dto.getOriFileName());
 				ps.setString(3, dto.getNewFileName());
 				ps.executeUpdate();
+
 			}
 
 		} catch (SQLException e) {
@@ -87,7 +88,6 @@ public class ProductDAO {
 		}finally {
 			resClose();
 		}
-
 		return suc;
 	}
 
@@ -328,37 +328,38 @@ public class ProductDAO {
 		String sql = "select p.productname,p.explanation,p.productid,i.newfilename from product p left outer join image i on i.division=p.productid WHERE productname LIKE ?";
 		ArrayList<ProductDTO> prosearch = null;
 		ProductDTO dto = null;
-		
+
 		try {
 			prosearch = new ArrayList<ProductDTO>();
-			ps=conn.prepareStatement(sql);
-			ps.setString(1, "%"+prosearchresult+"%");
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, "%" + prosearchresult + "%");
 			rs = ps.executeQuery();
-			while(rs.next()) {
-			dto = new ProductDTO();
-			dto.setProductName(rs.getString("productName"));
-			dto.setExplanation(rs.getString("explanation"));
-			dto.setProductId(rs.getInt("productid"));
-			dto.setNewFileName(rs.getString("newFileName"));
-			prosearch.add(dto);
-			}			
+			while (rs.next()) {
+				dto = new ProductDTO();
+				dto.setProductName(rs.getString("productName"));
+				dto.setExplanation(rs.getString("explanation"));
+				dto.setProductId(rs.getInt("productid"));
+				dto.setNewFileName(rs.getString("newFileName"));
+				prosearch.add(dto);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			resClose();
-		}		
+		}
 		return prosearch;
 	}
 
+//카트에 넣기
 	public int cartinsert(String sessionId) {
 		String qty = req.getParameter("quantity");
 		String pid = req.getParameter("productn");
-		int suc=0;
-		
-		String sql="insert into cart(memberkey,productid,amount) values(?, ?, ?)";
-	
+		System.out.println(pid);
+		int suc = 0;
+
+		String sql = "insert into cart(memberkey,productid,amount,cartId) values(?, ?, ?,cart_seq.NEXTVAL)";
 		try {
-			ps=conn.prepareStatement(sql);
+			ps = conn.prepareStatement(sql);
 			ps.setString(1, sessionId);
 			ps.setString(2, pid);
 			ps.setString(3, qty);
@@ -368,29 +369,36 @@ public class ProductDAO {
 		}
 		return suc;
 	}
+
+//장바구니 리스트에 뿌리기
 	
-	public ArrayList<ProductDTO> cartlist() {
-		String sql = "SELECT p.productname,p.productquantity,p.price,i.newfilename from product p left outer join image i on i.division=p.productid";
+	public ArrayList<ProductDTO> cartlist(String sessionId) {
+		String sql = "SELECT p.productId, p.productname, p.price, p.productquantity, i.newfilename from "
+				+ "(SELECT p.productId, p.productname, p.price, p.productquantity "
+				+ "from users u, product p, cart c where c.memberkey=? and u.memberKey=c.memberKey and p.productId=c.productId "
+				+ "order by p.productId) p left outer join image i on i.division=p.productid";
 		ArrayList<ProductDTO> cartlist = null;
 		ProductDTO dto = null;
-
 		try {
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, "");
-			rs = ps.executeQuery();
 			cartlist = new ArrayList<ProductDTO>();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			rs = ps.executeQuery();
 			while (rs.next()) {
 				dto = new ProductDTO();
+				dto.setAmount(rs.getString("productquantity"));
 				dto.setProductName(rs.getString("productname"));
 				dto.setProductQuantity(rs.getInt("productquantity"));
 				dto.setPrice(rs.getInt("price"));
-				dto.setNewFileName(rs.getString("newfilename"));		
+				dto.setNewFileName(rs.getString("newfilename"));
+				dto.setProductId(rs.getInt("productId"));
 				cartlist.add(dto);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			resClose();
 		}
-
 		return cartlist;
 	}
-	}
+}

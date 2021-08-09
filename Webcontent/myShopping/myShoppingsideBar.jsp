@@ -8,7 +8,7 @@
 			<a class="ps-4 fw-bold list-group-item list-group-item-action"
 				href="/Project/myShopping/buy/buyList.jsp" style="cursor: pointer;">구매내역</a><a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myShopping/buy/cart.jsp" style="cursor: pointer;">장바구니</a>
+				href="/Project/cartList" style="cursor: pointer;">장바구니</a>
 		</div>
 		<hr />
 		<div class="list-group list-group-flush mt-3">

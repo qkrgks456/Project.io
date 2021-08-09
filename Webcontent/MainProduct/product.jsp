@@ -30,7 +30,11 @@
 		</c:if>
 		<!-- 들어갈 내용 -->
 		<div class="container px-4 my-4">
+<<<<<<< Updated upstream
 			<h2 class="fw-bold">상품 -> ${map.productName}</h2>
+=======
+			<h2 class="fw-bold">상품 ->우설 ${productdetail.productName}</h2>
+>>>>>>> Stashed changes
 			<hr />
 			<div class="card mb-3" style="max-width: 1250px;">
 				<div class="row g-0">
@@ -62,11 +66,19 @@
 									<option value="4">4</option>
 									<option value="5">5</option>
 								</select>&nbsp;개 <br> <br>
+<<<<<<< Updated upstream
 								<input type="hidden" name="productn" id="productn" value="${map.productid }">
 								<!-- 가격  -->
 								<br>
 								<h5 class="text-muted mt-2 fw-bold" style="text-align: left;">가격</h5>
 								<h3>${map.price}원</h3>
+=======
+								<input type="hidden" name="productn" value="${param.productId}">
+								<!-- 가격  -->
+								<br>
+								<h5 class="text-muted mt-2 fw-bold" style="text-align: left;">가격</h5>
+								<h3>${productdetail.price}10000원</h3>
+>>>>>>> Stashed changes
 								<h3>
 								</h3>
 								<br>

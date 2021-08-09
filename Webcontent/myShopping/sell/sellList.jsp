@@ -291,7 +291,7 @@
 				console.log(delCheckArr);		
 			})
 			
-			$.ajax({
+	 $.ajax({
 			      type  : "POST",
 			      url    : "<c:url value='#컨트롤러값'>",
 			      data: {
@@ -306,10 +306,10 @@
 			   });
 			} 
 					})
+		 
 	</script>
-
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=2"></script>
 </body>
-</html>
+</html></c:
