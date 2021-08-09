@@ -22,6 +22,7 @@ public class AdminDAO {
 	ArrayList<AdminDTO> list = null;
 	String sql = "";
 	int success = 0;
+	boolean result=false;
 
 	public AdminDAO() {
 
@@ -380,11 +381,9 @@ public class AdminDAO {
 				if(success>0) {
 				System.out.println(memberKey + "일반 회원 -> 부관리자");
 				}
-				success=0;
-			}
-			else if(!rs.next()) {
 				success=1;
 			}
+			
 			
 			
 		}
@@ -606,6 +605,8 @@ public class AdminDAO {
 				dto.setProductDel(rs.getString("delCheck"));
 				dto.setpBlindReason(rs.getString("pBlindReason"));
 				dto.setProductId(productId);
+				System.out.println("가져올 디테일값 출력: "+dto.getCafeName()+"/"+ dto.getProductName()+"/"+ dto.getName()+"/"+ dto.getProductPrice()+"/"+ 
+						dto.getExplanation()+"/"+ dto.getProductDel()+"/"+ dto.getpBlindReason());
 			}
 		} catch (SQLException e) {
 			
@@ -616,10 +617,10 @@ public class AdminDAO {
 	}
 
 	public HashMap<String, Object> adminProductBlindAdd(String productBlindId, String productBlindRePort) {
-		System.out.println("블라인드 추가값 dao까지 연결 확인: " +productBlindId+"/"+productBlindRePort);
+		System.out.println("블라인드 추가값 dao까지 연결 확인: " +"/"+productBlindId+"/"+productBlindRePort);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		success = 0;
-		sql = "UPDATE product set delCheck='Y',pBlindReason =? WHERE productId = ?";
+		sql = "UPDATE product set delCheck='Y',pBlindReason = ? WHERE productId = ?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1,productBlindRePort);
@@ -655,10 +656,191 @@ public class AdminDAO {
 		
 	}
 
-	public HashMap<String, Object> productBlindMinus(String productBlindId) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<AdminDTO> adminCommentSearch(String adminCommentSearchSelect, String adminCommentSearch) {
+		System.out.println("댓글 조회 dao연결 확인: "+adminCommentSearchSelect+"에서 "+adminCommentSearch+"검색");
+		list = new ArrayList<AdminDTO>();
+		switch(adminCommentSearchSelect){
+		case "memberKey":
+			sql = "SELECT u.memberKey, u.name, u.email, c.cm_content, c.commentNo FROM users u "
+					+ "LEFT OUTER JOIN cm c ON u.memberKey =c.memberKey WHERE u.memberKey LIKE ? AND cm_content is not null";
+			break;
+		case "eamil":
+			sql = "SELECT u.memberKey, u.name, u.email, c.cm_content, c.commentNo FROM users u "
+					+ "LEFT OUTER JOIN cm c ON u.memberKey =c.memberKey WHERE u.email LIKE ? AND cm_content is not null";
+			break;
+		case "comment":
+			sql = "SELECT u.memberKey, u.name, u.email, c.cm_content, c.commentNo FROM users u "
+					+ "LEFT OUTER JOIN cm c ON u.memberKey =c.memberKey WHERE c.cm_content LIKE ? AND cm_content is not null";
+			break;
+		}
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1,"%"+adminCommentSearch+"%");
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				dto = new AdminDTO();
+				dto.setMemberkey(rs.getString("memberKey"));
+				dto.setName(rs.getString("name"));
+				dto.setEmail(rs.getString("email"));
+				dto.setCm_content(rs.getString("cm_content"));
+				dto.setCommentNo(rs.getString("commentNo"));
+				System.out.println("dto에 저장 확인 "+dto.getMemberkey()+"/"+dto.getName()+"/"+dto.getEmail()+"/"+dto.getCm_content()+"/"+dto.getCommentNo());
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return list;
+		
 	}
+
+	public AdminDTO adminCommentDetail(String commentNo) {
+		System.out.println("댓글 상세보기 dao연결 확인: "+commentNo);
+		sql = "SELECT u.memberKey, u.name, u.email, u.location, u.gender, c.cm_content FROM users u LEFT OUTER JOIN cm c ON u.memberKey = c.memberKey WHERE c.commentNo = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, commentNo);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				dto = new AdminDTO();
+				dto.setMemberkey(rs.getString("memberkey"));
+				dto.setName(rs.getString("name"));
+				dto.setEmail(rs.getString("email"));
+				dto.setLocation(rs.getString("location"));
+				dto.setGender(rs.getString("gender"));
+				dto.setCm_content(rs.getString("cm_content"));
+				System.out.println("dto에 저장 확인: "+dto.getMemberkey()+"/"+dto.getName()+"/"+dto.getEmail()+"/"+dto.getLocation()+"/"+dto.getGender()+"/"+dto.getCm_content());
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+
+	public ArrayList<AdminDTO> adminReportCommentSearch(String adminReportCommentSearchSelect,
+			String adminReportCommentSearch) {
+		System.out.println("신고댓글 상세보기 dao연결 확인: "+adminReportCommentSearchSelect+"에서 "+ 
+				adminReportCommentSearch+"검색");
+		list = new ArrayList<AdminDTO>();
+		switch(adminReportCommentSearchSelect) {
+		case "memberKey":
+			sql="select cr.cmReporter, c.memberkey , cr.processStatus,c.cm_content, cr.reportCmNo from cmReport cr right outer join cm c ON cr.commentNo = c.commentNo " + 
+					"    left outer join users u ON c.memberKey = u.memberKey  WHERE c.memberKey || cr.cmReporter LIKE ? AND cr.cmReporter is not null";
+			break;
+		case "email":
+			sql="select cr.cmReporter, c.memberkey , cr.processStatus,c.cm_content, cr.reportCmNo from cmReport cr right outer join cm c ON cr.commentNo = c.commentNo " + 
+					"					   left outer join users u ON c.memberKey = u.memberKey  WHERE u.email LIKE ? AND cr.cmReporter is not null";
+			break;
+		case "reportCM":
+			sql="select cr.cmReporter, c.memberkey , cr.processStatus,c.cm_content, cr.reportCmNo from cmReport cr right outer join cm c ON cr.commentNo = c.commentNo " + 
+					"					    left outer join users u ON c.memberKey = u.memberKey  WHERE c.cm_content LIKE ?  AND cr.cmReporter is not null";
+			break;
+		}
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1,"%"+adminReportCommentSearch+"%");
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				dto = new AdminDTO();
+				dto.setCmReporter(rs.getString("cmReporter"));
+				dto.setMemberkey(rs.getString("memberkey"));
+				dto.setCmProcessStatus(rs.getString("processStatus"));
+				dto.setCm_content(rs.getString("cm_content"));
+				dto.setReportCmNo(rs.getString("reportCmNo"));
+				System.out.println("dto에 저장되는 값 확인: "+dto.getCmReporter()+"/"+dto.getMemberkey()+"/"+dto.getCmProcessStatus()+"/"+dto.getCm_content()+"/"+dto.getReportCmNo());
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	public AdminDTO adminReportCommentDetail(String reportCmNo) {
+		System.out.println("신고댓글 상세조회 dao연결 확인: "+reportCmNo);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		sql = "select c.memberkey ,u.name, u.email, u.location,u.gender, cr.processStatus,c.cm_content,cr.reportReason, cr.reportCmNo,cr.managers from cmReport cr right outer join cm c ON cr.commentNo = c.commentNo \r\n" + 
+				"					    left outer join users u ON c.memberKey = u.memberKey  WHERE cr.reportCmNo = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, reportCmNo);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				dto = new AdminDTO();
+				dto.setMemberkey(rs.getString("memberkey"));
+				dto.setName(rs.getString("name"));
+				dto.setEmail(rs.getString("email"));
+				dto.setLocation(rs.getString("location"));
+				dto.setGender(rs.getString("gender"));
+				dto.setCmProcessStatus(rs.getString("processStatus"));
+				dto.setCm_content(rs.getString("cm_content"));
+				dto.setReportReason(rs.getString("reportReason"));
+				dto.setReportCmNo(rs.getString("reportCmNo"));
+				dto.setManagers(rs.getString("managers"));
+				System.out.println("dto에 저장되는 값 확인: "+dto.getMemberkey()+"/"+dto.getName()+"/"+dto.getEmail()+"/"+
+						dto.getLocation()+"/"+dto.getGender()+"/"+dto.getCmProcessStatus()+"/"+dto.getCm_content()+
+						"/"+dto.getReportReason()+"/"+dto.getReportCmNo());
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return dto;
+	}
+
+	public AdminDTO adminReportCommentform(String reportCmNo) {
+		System.out.println("신고댓글 처리 form dao까지 확인"+ reportCmNo);
+		sql = "SELECT cr.cmReporter, c.memberKey, cr.reportReason, cr.reportCmNo FROM cmReport cr right outer join cm c ON cr.commentNo = c.commentNo  WHERE cr.reportCmNo = ?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, reportCmNo);
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				dto = new AdminDTO();
+				dto.setCmReporter(rs.getString("cmReporter"));
+				dto.setMemberkey(rs.getString("memberKey"));
+				dto.setReportReason(rs.getString("reportReason"));
+				dto.setReportCmNo(rs.getString("reportCmNo"));
+				System.out.println("dto에 저장되는 값 확인: "+dto.getCmReporter()+"/"+dto.getMemberkey()+"/"+dto.getReportReason()+"/"+dto.getReportCmNo());
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
+	public HashMap<String, Object> adminReportCmProcess(String reportCmNo, String adminReportCmReason, String sessionId) {
+		System.out.println("신고댓글 처리 dao까지 연결 확인: "+reportCmNo+"/"+adminReportCmReason+"/"+sessionId);
+		success = 0;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		sql = "UPDATE cmReport set cmReportDispose = ?, processStatus = 'Y',managers=? where reportcmno=?";
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, adminReportCmReason);
+			ps.setString(2, sessionId);
+			ps.setString(3, reportCmNo);
+			success = ps.executeUpdate();
+			System.out.println("dao에서 성공여부: "+success);
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		map.put("success", success);
+		map.put("reportCmNo", reportCmNo);
+		map.put("sessionId", sessionId);
+		
+		return map;
+	}
+
+	
 
 
 }

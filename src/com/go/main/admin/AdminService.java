@@ -185,11 +185,6 @@ public class AdminService {
 		
 	}
 
-	public HashMap<String, Object> productBlindAdd() {
-		HashMap<String, Object> map = null;
-		
-		return map;
-	}
 
 	public HashMap<String, Object> adminProductBlindAdd() {
 		HashMap<String, Object> map=null;
@@ -201,13 +196,68 @@ public class AdminService {
 		return map;
 	}
 
-	public HashMap<String, Object> productBlindMinus() {
+	public HashMap<String, Object> adminProductBlindMinus() {
 		HashMap<String, Object> map=null;
 		String productBlindId = req.getParameter("productBlindId");
 		System.out.println("블라인드 해제할 아이디: "+productBlindId);
-		map = dao.productBlindMinus(productBlindId);
+		map = dao.adminProductBlindMinus(productBlindId);
 		dao.resClose();
 		return map;
+	}
+
+	public ArrayList<AdminDTO> adminCommentSearch() {
+		String adminCommentSearchSelect = req.getParameter("adminCommentSearchSelect");
+		String adminCommentSearch = req.getParameter("adminCommentSearch");
+		System.out.println("검색할 댓글 "+adminCommentSearchSelect+"/"+adminCommentSearch);
+		
+		list = dao.adminCommentSearch(adminCommentSearchSelect,adminCommentSearch);
+		dao.resClose();
+		return list;
+	}
+
+	public AdminDTO adminCommentDetail() {
+		String commentNo = req.getParameter("commentNo");
+		System.out.println("상세보기할 댓글 번호: "+commentNo);
+		dto = dao.adminCommentDetail(commentNo);
+		dao.resClose();
+		return dto;
+	}
+
+	public ArrayList<AdminDTO> adminReportCommentSearch() {
+		String adminReportCommentSearchSelect = req.getParameter("adminReportCommentSearchSelect");
+		String adminReportCommentSearch = req.getParameter("adminReportCommentSearch");
+		System.out.println("검색할 신고 댓글: "+adminReportCommentSearchSelect+"/"+adminReportCommentSearch);
+		list = dao.adminReportCommentSearch(adminReportCommentSearchSelect,adminReportCommentSearch);
+		dao.resClose();
+		return list;
+	}
+
+	public AdminDTO adminReportCommentDetail() {
+		String reportCmNo = req.getParameter("reportCmNo");
+		System.out.println("상세보기할 신고댓글: "+reportCmNo);
+		dto = dao.adminReportCommentDetail(reportCmNo);
+		dao.resClose();
+		return dto;
+	}
+
+	public AdminDTO adminReportCommentform() {
+		String reportCmNo = req.getParameter("reportCmNo");
+		System.out.println("신고 처리할 form"+ reportCmNo);
+		dto = dao.adminReportCommentform(reportCmNo);
+		dao.resClose();
+		return dto;
+	}
+
+	public HashMap<String, Object> adminReportCmProcess() {
+		HashMap<String, Object> map=null;
+		String reportCmNo = req.getParameter("reportCmNo"); 
+		String adminReportCmReason = req.getParameter("adminReportCmReason");
+		String sessionId = req.getParameter("sessionId");
+		System.out.println("신고처리할 댓글: "+reportCmNo+" / "+adminReportCmReason+"/"+sessionId);
+		map = dao.adminReportCmProcess(reportCmNo, adminReportCmReason,sessionId);
+		dao.resClose();
+		return map;
+		
 	}
 
 }

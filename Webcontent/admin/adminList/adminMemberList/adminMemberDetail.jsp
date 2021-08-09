@@ -51,40 +51,40 @@
 					<table class="table table-bordered mt-4">
 						<tr>
 							<th class="center" width="30%">아이디</th>
-							<td class="align-middle" width="70%">${adminMemberDetail.memberkey}</td>
+							<td class="align-middle" width="70%">${adminMemberDetail.dto.memberkey}</td>
 						</tr>
 						<tr>
 							<th class="center">이름</th>
-							<td class="align-middle">${adminMemberDetail.name}</td>
+							<td class="align-middle">${adminMemberDetail.dto.name}</td>
 						</tr>
 						<tr>
 							<th class="center">이메일</th>
-							<td class="align-middle">${adminMemberDetail.email}</td>
+							<td class="align-middle">${adminMemberDetail.dto.email}</td>
 						</tr>
 						<tr>
 							<th class="center">주소</th>
-							<td class="align-middle">${adminMemberDetail.location}</td>
+							<td class="align-middle">${adminMemberDetail.dto.location}</td>
 						</tr>
 						<tr>
 							<th class="center">성별</th>
-							<td class="align-middle">${adminMemberDetail.gender}</td>
+							<td class="align-middle">${adminMemberDetail.dto.gender}</td>
 						</tr>
 						<tr>
 							<th class="center">이메일 수신여부</th>
-							<td class="align-middle">${adminMemberDetail.emailCheck}</td>
+							<td class="align-middle">${adminMemberDetail.dto.emailCheck}</td>
 						</tr>
 						<tr>
 							<th class="center">혼잡도 알림 수신 여부</th>
-							<td class="align-middle">${adminMemberDetail.congestionCheck}</td>
+							<td class="align-middle">${adminMemberDetail.dto.congestionCheck}</td>
 						</tr>
 						<tr>
 						<th class="center">블랙리스트 여부</th>
 						<c:choose>
-								<c:when test="${adminMemberDetail.blackStatus eq null || adminMemberDetail.blackStatus eq ''}">
+								<c:when test="${adminMemberDetail.dto.blackStatus eq null || adminMemberDetail.dto.blackStatus eq ''}">
 									<td class="align-middle">N</td>
 								</c:when>
-								<c:when test="${adminSearch.blackStatus ne null || adminMemberDetail.blackStatus ne ''}">
-									<td class="align-middle">${adminMemberDetail.blackStatus}</td>
+								<c:when test="${adminSearch.dto.blackStatus ne null || adminMemberDetail.dto.blackStatus ne ''}">
+									<td class="align-middle">${adminMemberDetail.dto.blackStatus}</td>
 								</c:when>
 						</c:choose>
 
@@ -92,11 +92,11 @@
 						<tr>
 							<th class="center">블랙리스트 사유</th>
 							<c:choose>
-								<c:when test="${adminMemberDetail.blackReport eq null || adminMemberDetail.blackReport eq ''}">
+								<c:when test="${adminMemberDetail.dto.blackReport eq null || adminMemberDetail.dto.blackReport eq ''}">
 									<td class="align-middle">N</td>
 								</c:when>
-								<c:when test="${adminMemberDetail.blackReport ne null || adminMemberDetail.blackReport ne ''}">
-									<td class="align-middle">${adminMemberDetail.blackReport}</td>
+								<c:when test="${adminMemberDetail.dto.blackReport ne null || adminMemberDetail.dto.blackReport ne ''}">
+									<td class="align-middle">${adminMemberDetail.dto.blackReport}</td>
 								</c:when>
 							</c:choose>
 
@@ -104,11 +104,11 @@
 						<tr>
 							<th class="center">블랙리스트 추가자</th>
 							<c:choose>
-								<c:when test="${empty adminMemberDetail.blackReporter}">
+								<c:when test="${empty adminMemberDetail.dto.blackReporter}">
 									<td class="align-middle">N</td>
 								</c:when>
-								<c:when test="${!empty adminMemberDetail.blackReporter}">
-									<td class="align-middle">${adminMemberDetail.blackReporter}</td>
+								<c:when test="${!empty adminMemberDetail.dto.blackReporter}">
+									<td class="align-middle">${adminMemberDetail.dto.blackReporter}</td>
 								</c:when>
 							</c:choose>
 						</tr>
@@ -116,13 +116,41 @@
 					</table>
 					<form id="adminMemberblackform" action="/Project/adminMemberBlackAddPage" method="post">
 					<div class="form-group">
-						<input class = form-control type="hidden" id="blackId" name="blackId" value="${adminMemberDetail.memberkey}">
-						<input class = form-control type="hidden" id="blackName" name="blackName" value="${adminMemberDetail.name}">
+						<input class = form-control type="hidden" id="blackId" name="blackId" value="${adminMemberDetail.dto.memberkey}">
+						<input class = form-control type="hidden" id="blackName" name="blackName" value="${adminMemberDetail.dto.name}">
 						
 						<button id="blackadd" class="btn btn-dark" type="submit" onclick="location.href='/Project/adminMemberBlackAddPage'">블랙리스트 추가</button>
-						<button id="blackminussubmit" class="btn btn-dark" type="button" onclick="location.href='/Project/adminMemberBlackMinus?memberkey=${adminMemberDetail.memberkey}'">블랙리스트 해제</button>
+						<button id="blackminussubmit" class="btn btn-dark" type="button" onclick="location.href='/Project/adminMemberBlackMinus?memberkey=${adminMemberDetail.dto.memberkey}'">블랙리스트 해제</button>
 						<button id="adminmemberlist" class="btn btn-dark" type="button" onclick="location.href='admin/adminList/adminMemberList/adminMemberList.jsp'">리스트로</button>
 					</div>
+					<c:if test="${adminMemberDetail.addSuccess eq 1}">
+							<script type="text/javascript">
+							Swal.fire(
+								{
+								title: '블랙리스트 추가 완료',
+								icon: 'success',
+								confirmButtonColor: '#000',
+								confirmButtonText: '확인',
+								}
+							)
+								
+					
+							</script>
+						</c:if>
+						<c:if test="${adminMemberDetail.minusSuccess eq 1}">
+							<script type="text/javascript">
+							Swal.fire(
+								{
+								title: '블랙리스트 해제완료',
+								icon: 'success',
+								confirmButtonColor: '#000',
+								confirmButtonText: '확인',
+								}
+							)
+								
+					
+						</script>
+						</c:if>
 					</form>
 					</div>
 					</div>

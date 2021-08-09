@@ -28,11 +28,89 @@
 		</c:if>
 		<!-- 사이드바 배치 -->
 		<div class="d-flex" style="height: auto; min-height: 100vh;">
-		<!-- 사이드바 불러오기 -->
+			<!-- 사이드바 불러오기 -->
 			<jsp:include page="/admin/adminSideBar.jsp"></jsp:include>
 			<div class="cont container-fluid mx-5 py-5">
-			<!-- 여기부터 내용 넣으세요 -->
-				관리자페이지
+				<!-- 여기부터 내용 넣으세요 -->
+				<div class="cont container-fluid mx-5 py-5">
+					<!-- 회원정보 탭(여닫기) -->
+					<div class="d-flex align-items-center">
+						<button type="button" id="sidebarCollapse"
+							class="me-2 btn btn-secondary">
+							<i class="bi bi-text-left"></i>
+						</button>
+						<h2 class="fw-bold my-3">댓글 상세</h2>
+					</div>
+					<hr>
+					<!-- 회원정보 상세 테이블 -->
+					<div class="cont container">
+
+						<div class="col-md-9 mb-3">
+							<!-- md 미디엄 -->
+							<table class="table table-bordered mt-4">
+								<tr>
+									<th class="center" width="30%">아이디</th>
+									<td class="align-middle" width="70%">${adminCommentDetail.memberkey}</td>
+								</tr>
+								<tr>
+									<th class="center">이름</th>
+									<td class="align-middle">${adminCommentDetail.name}</td>
+								</tr>
+								<tr>
+									<th class="center">이메일</th>
+									<td class="align-middle">${adminCommentDetail.email}</td>
+								</tr>
+								<tr>
+									<th class="center">주소</th>
+									<td class="align-middle">${adminCommentDetail.location}</td>
+								</tr>
+								<tr>
+									<th class="center">성별</th>
+									<td class="align-middle">${adminCommentDetail.gender}</td>
+								</tr>
+								<tr>
+									<th class="center">댓글</th>
+									<td class="align-middle">${adminCommentDetail.cm_content}</td>
+								</tr>
+
+							</table>
+
+							<button id="adminCommentlist" class="btn btn-dark" type="button"
+								onclick="location.href='admin/adminComment/adminNormalComment/adminCommentList.jsp'">리스트로</button>
+						</div>
+						<c:if test="${adminCommentDetail.blindAddSuccess eq 1}">
+							<script type="text/javascript">
+							Swal.fire(
+								{
+								title: '블라인드 완료',
+								icon: 'success',
+								confirmButtonColor: '#000',
+								confirmButtonText: '확인',
+								}
+							)
+								
+					
+						</script>
+						</c:if>
+						<c:if test="${adminCommentDetail.blindMinusSuccess eq 1}">
+							<script type="text/javascript">
+							Swal.fire(
+								{
+								title: '블라인드 해제 완료',
+								icon: 'success',
+								confirmButtonColor: '#000',
+								confirmButtonText: '확인',
+								}
+							)
+						
+					
+						</script>
+						</c:if>
+
+					</div>
+
+
+				</div>
 			</div>
 		</div>
 	</div>

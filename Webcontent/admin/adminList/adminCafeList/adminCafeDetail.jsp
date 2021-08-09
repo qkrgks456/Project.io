@@ -49,43 +49,72 @@
 					<table class="table table-bordered mt-4">
 						<tr>
 								<th class="center" width="30%">카페이름</th>
-								<td class="align-middle" width="70%">${adminCafeDetail.cafeName}</td>
+								<td class="align-middle" width="70%">${adminCafeDetail.dto.cafeName}</td>
 							</tr>
 							<tr>
 								<th class="center">판매자</th>
-								<td class="align-middle">${adminCafeDetail.name}</td>
+								<td class="align-middle">${adminCafeDetail.dto.name}</td>
 							</tr>
 							<tr>
 								<th class="center">이메일</th>
-								<td class="align-middle">${adminCafeDetail.email}</td>
+								<td class="align-middle">${adminCafeDetail.dto.email}</td>
 							</tr>
 							<tr>
 								<th class="center">사업자 번호</th>
-								<td class="align-middle">${adminCafeDetail.ownerNo}</td>
+								<td class="align-middle">${adminCafeDetail.dto.ownerNo}</td>
 							</tr>
 							<tr>
 								<th class="center">주소</th>
-								<td class="align-middle">${adminCafeDetail.cafeLocation}</td>
+								<td class="align-middle">${adminCafeDetail.dto.cafeLocation}</td>
 							</tr>
 							<tr>
 								<th class="center">매장좌석</th>
-								<td class="align-middle">${adminCafeDetail.cafeTotalTable}</td>
+								<td class="align-middle">${adminCafeDetail.dto.cafeTotalTable}</td>
 							</tr>
 							<tr>
 								<th class="center">블라인드 여부</th>
-								<td class="align-middle">${adminCafeDetail.cafeDel}</td>
+								<td class="align-middle">${adminCafeDetail.dto.cafeDel}</td>
 							</tr>
 							<tr>
 								<th class="center">블라인드 사유</th>
-								<c:if test="${empty adminCafeDetail.blindReason}"><td class="align-middle">N</td></c:if>
-								<c:if test="${!empty adminCafeDetail.blindReason}"><td class="align-middle">${adminCafeDetail.blindReason}</td></c:if>
+								<c:if test="${empty adminCafeDetail.dto.blindReason}"><td class="align-middle">N</td></c:if>
+								<c:if test="${!empty adminCafeDetail.dto.blindReason}"><td class="align-middle">${adminCafeDetail.dto.blindReason}</td></c:if>
 							</tr>
 					</table>
 					<div>
-						<Button class="btn btn-dark" onclick="location.href='cafeBlind?ownerNo=${adminCafeDetail.ownerNo}'">블라인드 추가</Button>
-						<Button class="btn btn-dark" onclick="location.href='cafeBlindMinus?ownerNo=${adminCafeDetail.ownerNo}'">블라인드 해제</Button>
+						<Button class="btn btn-dark" onclick="location.href='cafeBlind?ownerNo=${adminCafeDetail.dto.ownerNo}'">블라인드 추가</Button>
+						<Button class="btn btn-dark" onclick="location.href='cafeBlindMinus?ownerNo=${adminCafeDetail.dto.ownerNo}'">블라인드 해제</Button>
 						<Button class="btn btn-dark" onclick="location.href='admin/adminList/adminCafeList/adminCafeList.jsp'">리스트로</Button>
 					</div>
+						<c:if test="${adminCafeDetail.addSuccess eq 1}">
+							<script type="text/javascript">
+							Swal.fire(
+								{
+								title: '블라인드 완료',
+								icon: 'success',
+								confirmButtonColor: '#000',
+								confirmButtonText: '확인',
+								}
+							)
+								
+					
+							</script>
+						</c:if>
+						<c:if test="${adminCafeDetail.minusSuccess eq 1}">
+							<script type="text/javascript">
+							Swal.fire(
+								{
+								title: '블라인드 해제완료',
+								icon: 'success',
+								confirmButtonColor: '#000',
+								confirmButtonText: '확인',
+								}
+							)
+								
+					
+						</script>
+						</c:if>
+						
 				</div>
 			</div>
 		</div>

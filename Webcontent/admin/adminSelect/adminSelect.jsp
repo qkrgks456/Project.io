@@ -108,6 +108,21 @@
 								</c:if>
 							</table>
 						</div>
+						
+						<c:if test="${success eq 1}">
+							<script type="text/javascript">
+							Swal.fire(
+								{
+								title: '부관리자 임명완료',
+								icon: 'success',
+								confirmButtonColor: '#000',
+								confirmButtonText: '확인',
+								}
+							)
+								
+					
+						</script>
+						</c:if>
 					</div>
 				</div>
 			</div>

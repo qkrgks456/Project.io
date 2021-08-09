@@ -9,7 +9,6 @@ public class AdminDTO {
 	private String ownerNo;
 	private String deleteCheck;
 	private String email;
-	
 	private String emailCheck;
 	private String blackReporter;
 	private String location;
@@ -31,13 +30,70 @@ public class AdminDTO {
 	private int productPrice;
 	private String explanation;
 	private String pBlindReason;
+	private String commentNo;
+	private String cm_content;
+	private String processStatus;
+	private String cmReporter;
+	private String cmProcessStatus;
+	private String reportCmNo;
+	private String reportReason;
+	private String managers;
+
+	public String getManagers() {
+		return managers;
+	}
+	public void setManagers(String managers) {
+		this.managers = managers;
+	}
+	public String getReportReason() {
+		return reportReason;
+	}
+	public void setReportReason(String reportReason) {
+		this.reportReason = reportReason;
+	}
+	public String getCmReporter() {
+		return cmReporter;
+	}
+	public void setCmReporter(String cmReporter) {
+		this.cmReporter = cmReporter;
+	}
+	public String getCmProcessStatus() {
+		return cmProcessStatus;
+	}
+	public void setCmProcessStatus(String cmProcessStatus) {
+		this.cmProcessStatus = cmProcessStatus;
+	}
+	public String getReportCmNo() {
+		return reportCmNo;
+	}
+	public void setReportCmNo(String reportCmNo) {
+		this.reportCmNo = reportCmNo;
+	}
+	public String getProcessStatus() {
+		return processStatus;
+	}
+	public void setProcessStatus(String processStatus) {
+		this.processStatus = processStatus;
+	}
+	public String getCommentNo() {
+		return commentNo;
+	}
+	public void setCommentNo(String commentNo) {
+		this.commentNo = commentNo;
+	}
 	
 	
+	public String getCm_content() {
+		return cm_content;
+	}
+	public void setCm_content(String cm_content) {
+		this.cm_content = cm_content;
+	}
 	public String getpBlindReason() {
 		return pBlindReason;
 	}
 	public void setpBlindReason(String pBlindReason) {
-		pBlindReason = pBlindReason;
+		this.pBlindReason = pBlindReason;
 	}
 
 	public String getExplanation() {

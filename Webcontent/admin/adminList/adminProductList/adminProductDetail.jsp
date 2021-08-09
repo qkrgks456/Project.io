@@ -46,47 +46,75 @@
 						<table class="table table-bordered mt-4">
 							<tr>
 								<th class="center">카페명</th>
-								<td class="align-middle">${adminProductDetail.cafeName}</td>
+								<td class="align-middle">${adminProductDetail.dto.cafeName}</td>
 							</tr>
 							<tr>
 								<th class="center">상품이름</th>
-								<td class="align-middle">${adminProductDetail.productName}</td>
+								<td class="align-middle">${adminProductDetail.dto.productName}</td>
 							</tr>
 							<tr>
 								<th class="center">이름</th>
-								<td class="align-middle">${adminProductDetail.name}</td>
+								<td class="align-middle">${adminProductDetail.dto.name}</td>
 							</tr>
 							<tr>
 								<th class="center">가격</th>
-								<td class="align-middle">${adminProductDetail.productPrice}</td>
+								<td class="align-middle">${adminProductDetail.dto.productPrice}</td>
 							</tr>
 							<tr>
 								<th class="center">상품설명</th>
-								<td class="align-middle">${adminProductDetail.explanation}</td>
+								<td class="align-middle">${adminProductDetail.dto.explanation}</td>
 							</tr>
 							<tr>
 								<th class="center">블라인드 여부</th>
-								<td class="align-middle">${adminProductDetail.productDel}</td>
+								<td class="align-middle">${adminProductDetail.dto.productDel}</td>
 							</tr>
 							<tr>
 								<th class="center">블라인드 사유</th>
 
-								<c:if test="${empty adminProductDetail.pBlindReason}">
+								<c:if test="${empty adminProductDetail.dto.pBlindReason}">
 									<td class="align-middle">N</td>
 								</c:if>
 								<!-- 아래 조건이 적용안됨 -->
-								<c:if test="${!empty adminProductDetail.pBlindReason}">
-									<td class="align-middle">${adminProductDetail.pBlindReason}</td>
+								<c:if test="${!empty adminProductDetail.dto.pBlindReason}">
+									<td class="align-middle">${adminProductDetail.dto.pBlindReason}</td>
 								</c:if>
 							</tr>
 							
 							<!-- 검색 리스트 출력 -->
 						</table>
 						<div>
-							<button class="btn btn-dark" onclick="location.href='adminProductBlind?productId=${adminProductDetail.productId}&cafeName=${adminProductDetail.cafeName}&productName=${adminProductDetail.productName}'">블라인드</button>
-							<button class="btn btn-dark" onclick="location.href='productBlindMinus?productId=${adminProductDetail.productId}'">블라인드 해제</button>
+							<button class="btn btn-dark" onclick="location.href='adminProductBlind?productId=${adminProductDetail.dto.productId}&cafeName=${adminProductDetail.dto.cafeName}&productName=${adminProductDetail.dto.productName}'">블라인드</button>
+							<button class="btn btn-dark" onclick="location.href='adminProductBlindMinus?productBlindId=${adminProductDetail.dto.productId}'">블라인드 해제</button>
 							<button class="btn btn-dark" onclick="location.href='admin/adminList/adminProductList/adminProductList.jsp'">리스트로</button>
 						</div>
+						<c:if test="${adminProductDetail.blindAddSuccess eq 1}">
+							<script type="text/javascript">
+							Swal.fire(
+							{
+								title: '블라인드 완료',
+								icon: 'success',
+								confirmButtonColor: '#000',
+								confirmButtonText: '확인',
+							}
+						)
+						
+					
+						</script>
+						</c:if>
+						<c:if test="${adminProductDetail.blindMinusSuccess eq 1}">
+							<script type="text/javascript">
+						Swal.fire(
+							{
+								title: '블라인드 해제 완료',
+								icon: 'success',
+								confirmButtonColor: '#000',
+								confirmButtonText: '확인',
+							}
+						)
+						
+					
+						</script>
+						</c:if>
 					</div>
 					
 
