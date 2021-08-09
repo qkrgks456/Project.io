@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 @WebServlet({ "/cafewrite", "/cafeInfoMyPage", "/ownerCheck", "/cafeUpdate", "/cafeInputCheck", "/businessCheck",
 		"/businessChange", "/cafeDel", "/cafeExist", "/cafeList", "/cafeDetail", "/confusionInfo",
 		"/confusionTableChange", "/standardChange", "/cafeAlarmList", "/cafeAlarmDel", "/realTimeAlarm",
-		"/inputCafeInfo","/cafeInputDelCheck","/inputcafeDetail","/inputCafeOpen" })
+		"/inputCafeInfo", "/cafeInputDelCheck", "/inputcafeDetail", "/inputCafeOpen" })
 public class CafeController extends HttpServlet {
 	// 안녕
 	private static final long serialVersionUID = 1L;
@@ -44,6 +44,10 @@ public class CafeController extends HttpServlet {
 					req.setAttribute("check", check);
 					dis = req.getRequestDispatcher("myPage/cafeMenu/cafeDrop.jsp");
 					dis.forward(req, resp);
+				} else if (req.getParameter("menu").equals("search")) {
+					req.setAttribute("check", check);
+					dis = req.getRequestDispatcher("search.jsp");
+					dis.forward(req, resp);
 				} else {
 					req.setAttribute("check", check);
 					dis = req.getRequestDispatcher("/confusionInfo");
@@ -65,14 +69,14 @@ public class CafeController extends HttpServlet {
 				resp.sendRedirect("/Project/");
 			}
 			break;
-			
+
 		case "/cafeInputDelCheck":
 			if (sessionId != null) {
-			check = service.cafeInputDelCheck();
-			req.setAttribute("check", check);
-			dis = req.getRequestDispatcher("myPage/cafeMenu/cafeInput/cafeInput.jsp");
-			dis.forward(req, resp);
-			}else {
+				check = service.cafeInputDelCheck();
+				req.setAttribute("check", check);
+				dis = req.getRequestDispatcher("myPage/cafeMenu/cafeInput/cafeInput.jsp");
+				dis.forward(req, resp);
+			} else {
 				resp.sendRedirect("/Project/");
 			}
 			break;
@@ -266,13 +270,13 @@ public class CafeController extends HttpServlet {
 				resp.sendRedirect("/Project/");
 			}
 			break;
-			// 등록 카페 정보
+		// 등록 카페 정보
 		case "/inputCafeInfo":
 			if (sessionId != null) {
-				ArrayList <CafeDTO> inputCafeList = service.inputCafeInfo();
+				ArrayList<CafeDTO> inputCafeList = service.inputCafeInfo();
 				req.setAttribute("inputCafeList", inputCafeList);
 				dis = req.getRequestDispatcher("admin/adminList/adminInputCafeList/adminInputCafeList.jsp");
-				dis.forward(req, resp);			
+				dis.forward(req, resp);
 			} else {
 				resp.sendRedirect("/Project/");
 			}
@@ -283,26 +287,24 @@ public class CafeController extends HttpServlet {
 				map = service.inputcafeDetail();
 				req.setAttribute("map", map);
 				dis = req.getRequestDispatcher("admin/adminList/adminInputCafeList/adminInputCafeDetail.jsp");
-				dis.forward(req, resp);					
-			}else {
+				dis.forward(req, resp);
+			} else {
 				resp.sendRedirect("/Project/");
 			}
-			
+
 			break;
 		case "/inputCafeOpen":
 			if (sessionId != null) {
 				suc = service.inputCafeOpen();
-				if(suc>0) {
+				if (suc > 0) {
 					req.setAttribute("suc", suc);
 					dis = req.getRequestDispatcher("/inputCafeInfo");
-					dis.forward(req, resp);	
+					dis.forward(req, resp);
 				}
-			}else {
+			} else {
 				resp.sendRedirect("/Project/");
 			}
-			
-			
-			
+
 			break;
 		}
 	}

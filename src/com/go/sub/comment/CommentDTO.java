@@ -7,6 +7,41 @@ public class CommentDTO {
 	private String memberKey;
 	private String cm_content;
 	private ArrayList<CommentDTO> list;
+	private String reportReason;
+	private String managers;
+	private String processStatus;
+	private String cafeName;
+	private String productName;
+	public String getReportReason() {
+		return reportReason;
+	}
+	public void setReportReason(String reportReason) {
+		this.reportReason = reportReason;
+	}
+	public String getManagers() {
+		return managers;
+	}
+	public void setManagers(String managers) {
+		this.managers = managers;
+	}
+	public String getProcessStatus() {
+		return processStatus;
+	}
+	public void setProcessStatus(String processStatus) {
+		this.processStatus = processStatus;
+	}
+	public String getCafeName() {
+		return cafeName;
+	}
+	public void setCafeName(String cafeName) {
+		this.cafeName = cafeName;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
 	public String getMemberKey() {
 		return memberKey;
 	}

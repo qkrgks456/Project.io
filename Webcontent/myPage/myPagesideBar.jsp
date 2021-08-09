@@ -18,10 +18,7 @@
 				href="/Project/cafeAlarmList" style="cursor: pointer;">알림리스트</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
 				href="/Project/cafeGoodList"
-				style="cursor: pointer;">좋아요카페</a> <a
-				class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myPage/myPageMenu/goodProduct.jsp"
-				style="cursor: pointer;">좋아요상품</a>
+				style="cursor: pointer;">좋아요카페</a>
 		</div>
 		<hr />
 		<div class="list-group list-group-flush mt-3">
@@ -33,7 +30,7 @@
 				href="/Project/productCommentList"
 				style="cursor: pointer;">상품댓글</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/commentReport"
+				href="/Project/reportCommentList"
 				style="cursor: pointer;">신고한댓글</a>
 		</div>
 

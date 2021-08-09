@@ -114,8 +114,9 @@ public class CommentService {
 			page = "1";
 		}
 		dao = new CommentDAO();
-		
-		return dao.productcommentlist(productn, Integer.parseInt(page));
+		HashMap<String, Object> map = dao.productcommentlist(productn, Integer.parseInt(page));
+		dao.resClose();
+		return map;
 	}
 
 	public HashMap<String, Object> productcommentdel() {
@@ -148,5 +149,13 @@ public class CommentService {
 		dao.resClose();
 		return resultMap;
 	}
+
+	public HashMap<String, Object> reportCommentList() {
+		HttpSession session = req.getSession();
+		String sessionId = (String) session.getAttribute("loginId");
+		dao = new CommentDAO();
+		return dao.reportCommentList(sessionId);
+	}
+
 
 }

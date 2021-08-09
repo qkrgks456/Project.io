@@ -13,8 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-@WebServlet({ "/cafeCommentInput", "/cafeCommentDel", "/cafeCommentUpdate", "/cafeCommentList", "/cafeCommentReport","/productiptcomment","/productcommentlist"
-	,"/productcommentdel","/productcommentupdate"})
+@WebServlet({ "/cafeCommentInput", "/cafeCommentDel", "/cafeCommentUpdate", "/cafeCommentList", "/cafeCommentReport",
+		"/productiptcomment", "/productcommentlist", "/productcommentdel", "/productcommentupdate" ,"/reportCommentList"})
 
 public class CommentController extends HttpServlet {
 
@@ -86,7 +86,7 @@ public class CommentController extends HttpServlet {
 			}
 			break;
 		case "/cafeCommentReport":
-			System.out.println("댓글 신고");
+			System.out.println("카페 댓글 신고");
 			if (sessionId != null) {
 				suc = service.cafeCommentReport();
 				if (suc > 0) {
@@ -100,6 +100,7 @@ public class CommentController extends HttpServlet {
 				resp.sendRedirect("/Project/");
 			}
 			break;
+
 
 		case "/productiptcomment":
 			System.out.println("상품 댓글 작성 요청");
@@ -123,44 +124,56 @@ public class CommentController extends HttpServlet {
 
 		case "/productcommentlist":
 			System.out.println("상품댓글리스트");
-				map = service.productcommentlist();				
+			map = service.productcommentlist();
+			if (map != null) {
+				map.put("sessionId", sessionId);
+				System.out.println(map);
+				resp.setContentType("text/html; charset=UTF-8");
+				resp.getWriter().print(new Gson().toJson(map));
+			}
+			break;
+
+		case "/productcommentdel":
+			System.out.println("카페댓글 삭제");
+			if (sessionId != null) {
+				map = service.productcommentdel();
 				if (map != null) {
 					map.put("sessionId", sessionId);
-					System.out.println(map);
 					resp.setContentType("text/html; charset=UTF-8");
 					resp.getWriter().print(new Gson().toJson(map));
 				}
+			} else {
+				resp.sendRedirect("/Project/");
+			}
 			break;
-			
-			case "/productcommentdel":
-				System.out.println("카페댓글 삭제");
-				if (sessionId != null) {
-					map = service.productcommentdel();
-					if (map != null) {
-						map.put("sessionId", sessionId);
-						resp.setContentType("text/html; charset=UTF-8");
-						resp.getWriter().print(new Gson().toJson(map));
-					}
-				} else {
-					resp.sendRedirect("/Project/");
+
+		case "/productcommentupdate":
+			System.out.println("카페 댓글 수정");
+			if (sessionId != null) {
+				map = service.productcommentupdate();
+				if (map != null) {
+					map.put("sessionId", sessionId);
+					resp.setContentType("text/html; charset=UTF-8");
+					resp.getWriter().print(new Gson().toJson(map));
 				}
-				break;
-			
-			case "/productcommentupdate" :
-				System.out.println("카페 댓글 수정");
-				if (sessionId != null) {
-					map = service.productcommentupdate();
-					if (map != null) {
-						map.put("sessionId", sessionId);
-						resp.setContentType("text/html; charset=UTF-8");
-						resp.getWriter().print(new Gson().toJson(map));
-					}
-				} else {
-					resp.sendRedirect("/Project/");
-				}			
-				
-				break;
-		
+			} else {
+				resp.sendRedirect("/Project/");
+			}
+
+			break;
+		case "/reportCommentList":
+			System.out.println("신고댓글 리스트");
+			if (sessionId != null) {
+				map = service.reportCommentList();
+				System.out.println(map);
+				req.setAttribute("map", map);
+				dis = req.getRequestDispatcher("myPage/commentMenu/reportComment.jsp");
+				dis.forward(req, resp);
+			}else {
+				resp.sendRedirect("/Project/");
+			}
+			break;
+
 		}
 
 	}

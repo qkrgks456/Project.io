@@ -144,7 +144,8 @@ $(document).ready(function() {
 			content += "<p class='lh-sm'>";
 			content += item.cm_content;
 			if (!check) {
-				content += "<a href='/Project/report/report.jsp' class='float-end btn btn-secondary btn-sm'>신고</a>";
+				content += "<a href='/Project/report/report.jsp?commentNo="+item.commentNo+"&memberKey="+item.memberKey+"&commentContent="+item.cm_content+"&cafeKey="+data.cafeKey+"'"
+				content += " class='float-end btn btn-secondary btn-sm'>신고</a>";
 			} else {
 				content += "<a class='commentDelBtn mx-2 float-end btn btn-secondary btn-sm' title='" + item.commentNo + "'>삭제</a>";
 				content += "<a class='commentUpdateBtn float-end btn btn-secondary btn-sm'>수정</a>";

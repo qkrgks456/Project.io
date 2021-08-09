@@ -14,7 +14,7 @@
 		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav me-auto mb-2 mb-lg-0" id="menubar">
 				<li class="nav-item"><a class="nav-link"
-					href="/Project/search.jsp">통합검색</a></li>
+					href="/Project/cafeExist?menu=search">통합검색</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="/Project/cafeList">카페정보</a></li>
 				<li class="nav-item"><a class="nav-link"

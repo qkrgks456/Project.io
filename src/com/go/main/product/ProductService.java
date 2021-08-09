@@ -72,7 +72,7 @@ public class ProductService {
 		if (productId != null) {			
 			resultMap = dao.productdetail(productId,Integer.parseInt(page), sessionId);		
 		} 
-		
+		resultMap.put("productId", productId);
 		dao.resClose();
 		
 		return resultMap;

@@ -380,7 +380,10 @@
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=15"></script>
 	<!-- cafe.js 추가 -->
-	<script src="/Project/assets/js/cafe.js?var=85"></script>
+	<script src="/Project/assets/js/cafe.js?var=12"></script>
+	<script type="text/javascript">
+	
+	</script>
 	<!-- 카카오맵 api 추가 -->
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=96f67dd6c088728e30743d7db32a6789&libraries=services"></script>

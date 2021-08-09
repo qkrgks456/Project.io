@@ -145,7 +145,7 @@
 								${commentLists.cm_content}
 								<c:if test="${loginId ne commentLists.memberKey}">
 									<a class="float-end btn btn-secondary btn-sm"
-										href="/Project/report/report.jsp?commentNo=${commentLists.commentNo}&memberKey=${commentLists.memberKey}&commentContent=${commentLists.cm_content}&cafeKey=${map.cafeKey}">신고</a>
+										href="/Project/report/report.jsp?commentNo=${commentLists.commentNo}&memberKey=${commentLists.memberKey}&commentContent=${commentLists.cm_content}&cafeKey=${map.productId}">신고</a>
 								</c:if>
 								<c:if test="${loginId eq commentLists.memberKey}">
 									<a id="commentDelBtn"
@@ -216,7 +216,7 @@
 	<script type="text/javascript">
 	$(document).on('click', '#proCommentBtn', function() {
 		var commentContent = $('#commentContent').val();
-		var productn = $('#productn').val();
+		var productn = $(this).attr('title');
 			console.log(commentContent);
 			if (commentContent.trim() != "") {
 				$('#commentContent').removeClass('is-invalid');			
@@ -254,7 +254,8 @@
 			content += "<p class='lh-sm'>";
 			content += item.cm_content;
 			if (!check) {
-				content += "<a href='/Project/report/report.jsp' class='float-end btn btn-secondary btn-sm'>신고</a>";
+				content += "<a href='/Project/report/report.jsp?commentNo="+item.commentNo+"&memberKey="+item.memberKey+"&commentContent="+item.cm_content+"&cafeKey="+data.cafeKey+"'"
+				content += " class='float-end btn btn-secondary btn-sm'>신고</a>";
 			} else {
 				content += "<a class='commentDelBtn mx-2 float-end btn btn-secondary btn-sm' title='" + item.commentNo + "'>삭제</a>";
 				content += "<a class='commentUpdateBtn float-end btn btn-secondary btn-sm'>수정</a>";
