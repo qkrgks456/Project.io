@@ -295,12 +295,12 @@ public class CommentDAO {
 			ps.setString(2, productn);
 			ps.setString(3, commentContent);
 			ps.executeUpdate();
-		rs = ps.getGeneratedKeys();
+			rs = ps.getGeneratedKeys();
 		
 			if (rs.next()) {
 				commentNo = rs.getInt(1);
 			}
-			while (true) {
+			while (true) {		
 				// 노출할 데이터 갯수
 				int pagePerCnt = 8;
 				// 데이터의 시작과 끝
@@ -308,13 +308,14 @@ public class CommentDAO {
 				int start = (end - pagePerCnt) + 1;
 				sql = "SELECT commentNo,cm_content,memberKey FROM "
 						+ "(SELECT ROW_NUMBER() OVER(ORDER BY commentNo) AS rnum,commentNo,cm_content,memberKey FROM cm WHERE division=? AND commentDel='N')"
-						+ "WHERE (rnum BETWEEN ? AND ?) AND commentNo=?";
+						+ "WHERE(rnum BETWEEN ? AND ?) AND commentNo=?";
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, productn);
 				ps.setInt(2, start);
 				ps.setInt(3, end);
 				ps.setInt(4, commentNo);
 				rs = ps.executeQuery();
+				System.out.println("start : " + start +" end :  "+ end);
 				if (rs.next()) {
 					break;
 				} else {
@@ -357,7 +358,7 @@ public class CommentDAO {
 			ps.setInt(2, start);
 			ps.setInt(3, end);
 			rs = ps.executeQuery();
-			while (rs.next()) {
+			while (rs.next()) {		
 				dto = new CommentDTO();
 				dto.setCommentNo(rs.getString("commentNo"));
 				dto.setMemberKey(rs.getString("memberKey"));
@@ -397,5 +398,101 @@ public class CommentDAO {
 			resClose();
 		}
 		return map;
+	}
+
+	public int productcommentdel(String commentNo, String productn) {
+		int page = 1;
+		try {
+			while (true) {
+				// 노출할 데이터 갯수
+				int pagePerCnt = 8;
+				// 데이터의 시작과 끝
+				int end = page * pagePerCnt;
+				int start = (end - pagePerCnt) + 1;
+				sql = "SELECT commentNo,cm_content,memberKey FROM "
+						+ "(SELECT ROW_NUMBER() OVER(ORDER BY commentNo) AS rnum,commentNo,cm_content,memberKey FROM cm WHERE division=? AND commentDel='N')"
+						+ "WHERE (rnum BETWEEN ? AND ?) AND commentNo=?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, productn);
+				ps.setInt(2, start);
+				ps.setInt(3, end);
+				ps.setInt(4, Integer.parseInt(commentNo));
+				rs = ps.executeQuery();
+				if (rs.next()) {
+					break;
+				} else {
+					page++;
+				}
+			}
+			sql = "UPDATE cm SET commentDel='Y' WHERE commentNo = ?";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, Integer.parseInt(commentNo));
+			suc = ps.executeUpdate();
+
+			if (suc > 0 && page != 1) {
+				while (true) { // 노출할 데이터 갯수 
+					// 데이터의 시작과 끝
+					int pagePerCnt = 8; 
+					int end = page * pagePerCnt;
+					int start = (end - pagePerCnt) + 1;
+					sql = "SELECT commentNo,cm_content,memberKey FROM "
+							+ "(SELECT ROW_NUMBER() OVER(ORDER BY commentNo) AS rnum,commentNo,cm_content,memberKey FROM cm WHERE division=? AND commentDel='N')"
+							+ "WHERE (rnum BETWEEN ? AND ?)";
+					ps = conn.prepareStatement(sql);
+					ps.setString(1, productn);
+					ps.setInt(2, start);
+					ps.setInt(3, end);
+					rs = ps.executeQuery();
+					if (rs.next()) {
+						break;
+					} else {
+						page--;
+					}
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return page;
+	}
+
+	public int productcommentupdate(String productn, String commentNo, String commentUpdateContent) {
+		int page = 1;
+		try {
+			sql = "UPDATE cm SET cm_content=? WHERE commentNo=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, commentUpdateContent);
+			ps.setString(2, commentNo);
+			suc = ps.executeUpdate();
+			if(suc>0) {
+				while (true) {
+					// 노출할 데이터 갯수
+					int pagePerCnt = 8;
+					// 데이터의 시작과 끝
+					int end = page * pagePerCnt;
+					int start = (end - pagePerCnt) + 1;
+					sql = "SELECT commentNo,cm_content,memberKey FROM "
+							+ "(SELECT ROW_NUMBER() OVER(ORDER BY commentNo) AS rnum,commentNo,cm_content,memberKey FROM cm WHERE division=? AND commentDel='N')"
+							+ "WHERE (rnum BETWEEN ? AND ?) AND commentNo=?";
+					ps = conn.prepareStatement(sql);
+					ps.setString(1, productn);
+					ps.setInt(2, start);
+					ps.setInt(3, end);
+					ps.setInt(4, Integer.parseInt(commentNo));
+					rs = ps.executeQuery();
+					if (rs.next()) {
+						break;
+					} else {
+						page++;
+					}
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return page;
 	}
 }

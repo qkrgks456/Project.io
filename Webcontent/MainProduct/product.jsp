@@ -62,16 +62,13 @@
 									<option value="4">4</option>
 									<option value="5">5</option>
 								</select>&nbsp;개 <br> <br>
-								<input type="hidden" name="productn" id="productn" value="${map.productid }">
-								<!-- 가격  -->
-								<br>
-								<h5 class="text-muted mt-2 fw-bold" style="text-align: left;">가격</h5>
-								<h3>${map.price}원</h3>
+
 								<input type="hidden" name="productn" value="${param.productId}">
 								<!-- 가격  -->
 								<br>
 								<h5 class="text-muted mt-2 fw-bold" style="text-align: left;">가격</h5>
 								<h3>${map.price}</h3>
+
 								<h3>
 								</h3>
 								<br>
@@ -90,16 +87,15 @@
 							<div class="position-absolute bottom-0 start-0">
 								&nbsp;
 								<div id="good" class="d-inline-flex align-items-left">
-									<i id="goodicon" class="bi bi-hand-thumbs-up-fill"
+									<i id="" class=""
 										style="font-size: 2.0rem;"></i> &nbsp;
-									<p class=" ms-2 mt-3 fw-bold">좋아요</p>
+									<p class=" ms-2 mt-3 fw-bold"></p>
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<div id="commenticon" class="d-inline-flex align-items-center">
-										<i id="commenticons" class="bi bi-chat-square-text-fill mt-1"
-											style="font-size: 2.0rem;"></i>
-										<p class="ms-2 mt-3 fw-bold">댓글</p>
+									<div id="" class="">
+										
+									
 									</div>
 								</div>
 							</div>
@@ -137,7 +133,7 @@
 							<div class="invalid-feedback">1자 이상 입력해주세요.</div>
 							<label for="commentContent">${loginId}님, 이곳에 댓글을 작성하세요</label>
 						</div>
-						<input type="button" id="proCommentBtn" class="btn btn-secondary btn-sm" value="등록">
+						<a type="button" id="proCommentBtn" class="btn btn-secondary btn-sm" title="${map.productid}">등록</a>
 					</div>
 				</c:if>
 				
@@ -183,14 +179,14 @@
 				<ul id="paginations" class="pagination justify-content-center">
 					<c:if test="${map.startPage ne 1}">
 						<li class="page-item"><a class="page-link pageNum"
-							title="${map.startPage-1} ${map.cafeKey}" role="button"
+							title="${map.startPage-1} ${map.productid}" role="button"
 							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 						</a></li>
 					</c:if>
 					<c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
 						<c:if test="${i ne map.currPage}">
 							<li class="page-item"><a role="button"
-								class="page-link pageNum" title="${i} ${map.cafeKey}">${i}</a></li>
+								class="page-link pageNum" title="${i} ${map.productid}">${i}</a></li>
 						</c:if>
 						<c:if test="${i eq map.currPage}">
 							<li class="page-item active"><a class="page-link">${i}</a></li>
@@ -198,7 +194,7 @@
 					</c:forEach>
 					<c:if test="${map.totalPage ne map.endPage}">
 						<li class="page-item"><a class="page-link pageNum"
-							role="button" title="${map.endPage+1} ${map.cafeKey}"
+							role="button" title="${map.endPage+1} ${map.productid}"
 							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 						</a></li>
 					</c:if>
@@ -234,6 +230,7 @@
 					dataType: 'JSON',
 					success: function(data) { //성공시
 						commentList(data);
+						$('#commentContent').val("");
 					},
 					error: function(e) { //실패시
 						console.log(e);
@@ -283,9 +280,9 @@
 		$('#commentLists').empty();
 		$('#commentLists').append(content);
 
-		content = "";
-		content += "<i id='commenticons' class='bi bi-chat-square-text-fill mt-1' style='font-size: 2.0rem;'></i>"
-		content += "<p  class='ms-2 mt-3 fw-bold'>댓글(" + data.commentCount + ")</p>"
+	//	content = "";
+	//	content += "<i id='commenticons' class='bi bi-chat-square-text-fill mt-1' style='font-size: 2.0rem;'></i>"
+	//	content += "<p  class='ms-2 mt-3 fw-bold'>댓글(" + data.commentCount + ")</p>"
 		$('#commenticon').empty();
 		$('#commenticon').append(content);
 		
@@ -293,7 +290,7 @@
 		content += '<ul id="paginations1" class="pagination justify-content-center">'
 		if (data.startPage != 1) {
 			content += '<li class="page-item"><a class="page-link pageNum"'
-			content += 'title="' + (data.startPage - 1) +" "+data.productn+'" role="button"'
+			content += 'title="' + (data.startPage - 1) +" "+data.cafeKey+'" role="button"'
 			content += 'aria-label="Previous"> <span aria-hidden="true">&laquo;</span>'
 			content += '</a></li>'
 		}
@@ -301,14 +298,14 @@
 			console.log(data.currPage)
 			if (data.currPage != i) {
 				content += '<li class="page-item"><a role="button" class="page-link pageNum"'
-				content += ' title="' + i + " " + data.productn + '">' + i + '</a></li>'
+				content += ' title="' + i + " " + data.cafeKey + '">' + i + '</a></li>'
 			} else {
 				content += '<li class="page-item active"><a class="page-link">' + i + '</a></li>'
 			}
 		}
 		if (data.totalPage != data.endPage) {
 			content += '<li class="page-item"><a class="page-link pageNum" role="button"'
-			content += 'title="' + (data.endPage + 1)+" "+data.productn+'" aria-label="Next">'
+			content += 'title="' + (data.endPage + 1)+" "+data.cafeKey+'" aria-label="Next">'
 			content += '<span aria-hidden="true">&raquo;</span>'
 			content += '</a></li>'
 		}
@@ -316,18 +313,20 @@
 		$('#paginations').empty();
 		$('#paginations').prepend(content);
 		
+		
 	}
-	$('#paginations').on('click', '.pageNum', function() {
+	
+	$(document).on('click', '.pageNum', function() {
 		var pageAndCafeKey = $(this).attr('title');
 		var pageArr = pageAndCafeKey.split(' ');
 		var page = pageArr[0];
-		var productn = pageArr[1];
+		var cafeKey = pageArr[1];
 		$.ajax({
 			type: "POST",//방식
 			url: "/Project/productcommentlist",//주소
 			data: {
 				page: page,
-				productn: productn,
+				productn: cafeKey,
 			},
 			dataType: 'JSON',
 			success: function(data) { //성공시
@@ -337,6 +336,63 @@
 				console.log(e);
 			}
 		});
+	})
+	
+	$('#commentLists').on('click', '.commentDelBtn', function() {
+		var commentNo = $(this).attr('title');
+		var cafeKey = $('#proCommentBtn').attr("title");
+		$.ajax({
+			type: "POST",//방식
+			url: "/Project/productcommentdel",//주소
+			data: {
+				commentNo: commentNo,
+				productn: cafeKey,
+			},
+			dataType: 'JSON',
+			success: function(data) { //성공시
+			commentList(data);			
+			
+			},
+			error: function(e) { //실패시
+				console.log(e);
+			}
+		});
+	})
+	
+	$('#commentLists').on('click', '.commentUpdateBtn', function() {
+		$(this).parents('.updateCheck').addClass("visually-hidden");
+		$(this).parents('.updateCheck').next('.updateForm').removeClass("visually-hidden");
+	})
+	$('#commentLists').on('click', '.cmUpdateCancel', function() {
+		$(this).parents('.updateForm').addClass("visually-hidden");
+		$(this).parents('.updateForm').prev('.updateCheck').removeClass("visually-hidden");
+	})
+	
+	$(document).on('click', '.commentUpdateContentBtn', function() {
+		var commentNo = $(this).attr('title');
+		var cafeKey = $('#proCommentBtn').attr("title");
+		var commentUpdateContent = $(this).parent().prev().children('.commentUpdateContent').val();
+		console.log(commentUpdateContent);
+		if (commentUpdateContent.trim() != "") {
+			$.ajax({
+				type: "POST",//방식
+				url: "/Project/productcommentupdate",//주소
+				data: {
+					commentUpdateContent: commentUpdateContent,
+					commentNo: commentNo,
+					productn: cafeKey,
+				},
+				dataType: 'JSON',
+				success: function(data) { //성공시
+					commentList(data);
+				},
+				error: function(e) { //실패시
+					console.log(e);
+				}
+			});
+		} else {
+			$(this).parent().prev().children('.commentUpdateContent').addClass('is-invalid');
+		}
 	})
 
 	</script>

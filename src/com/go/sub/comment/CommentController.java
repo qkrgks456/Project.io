@@ -1,7 +1,6 @@
 package com.go.sub.comment;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
@@ -14,8 +13,9 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-@WebServlet({ "/cafeCommentInput", "/cafeCommentDel", "/cafeCommentUpdate", "/cafeCommentList", "/cafeCommentReport",
-		"/productiptcomment", "/productcommentlist" })
+@WebServlet({ "/cafeCommentInput", "/cafeCommentDel", "/cafeCommentUpdate", "/cafeCommentList", "/cafeCommentReport","/productiptcomment","/productcommentlist"
+	,"/productcommentdel","/productcommentupdate"})
+
 public class CommentController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -123,18 +123,44 @@ public class CommentController extends HttpServlet {
 
 		case "/productcommentlist":
 			System.out.println("상품댓글리스트");
-			if (sessionId != null) {
-				map = service.productcommentlist();
-				System.out.println(map);
+				map = service.productcommentlist();				
 				if (map != null) {
 					map.put("sessionId", sessionId);
+					System.out.println(map);
 					resp.setContentType("text/html; charset=UTF-8");
 					resp.getWriter().print(new Gson().toJson(map));
 				}
-			} else {
-				resp.sendRedirect("/Project/");
-			}
 			break;
+			
+			case "/productcommentdel":
+				System.out.println("카페댓글 삭제");
+				if (sessionId != null) {
+					map = service.productcommentdel();
+					if (map != null) {
+						map.put("sessionId", sessionId);
+						resp.setContentType("text/html; charset=UTF-8");
+						resp.getWriter().print(new Gson().toJson(map));
+					}
+				} else {
+					resp.sendRedirect("/Project/");
+				}
+				break;
+			
+			case "/productcommentupdate" :
+				System.out.println("카페 댓글 수정");
+				if (sessionId != null) {
+					map = service.productcommentupdate();
+					if (map != null) {
+						map.put("sessionId", sessionId);
+						resp.setContentType("text/html; charset=UTF-8");
+						resp.getWriter().print(new Gson().toJson(map));
+					}
+				} else {
+					resp.sendRedirect("/Project/");
+				}			
+				
+				break;
+		
 		}
 
 	}

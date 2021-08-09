@@ -12,6 +12,7 @@ public class CommentService {
 	HttpServletRequest req = null;
 	HashMap<String, Object> map = null;
 	HashMap<String, Object> resultMap = null;
+
 	public CommentService(HttpServletRequest req) {
 		try {
 			req.setCharacterEncoding("UTF-8");
@@ -29,8 +30,8 @@ public class CommentService {
 		HttpSession session = req.getSession();
 		String sessionId = (String) session.getAttribute("loginId");
 		page = dao.cafeCommentInput(sessionId, commentContent, cafeKey);
-		if (page!=0) {
-			resultMap = dao.cafeCommentList(cafeKey,page);
+		if (page != 0) {
+			resultMap = dao.cafeCommentList(cafeKey, page);
 		}
 		dao.resClose();
 		return resultMap;
@@ -41,11 +42,11 @@ public class CommentService {
 		String cafeKey = req.getParameter("cafeKey");
 		int page = 1;
 		dao = new CommentDAO();
-		page = dao.cafeCommentDel(commentNo,cafeKey);
-		if(page!=0) {
-			resultMap = dao.cafeCommentList(cafeKey,page);
+		page = dao.cafeCommentDel(commentNo, cafeKey);
+		if (page != 0) {
+			resultMap = dao.cafeCommentList(cafeKey, page);
 		}
-		
+
 		dao.resClose();
 		return resultMap;
 	}
@@ -67,14 +68,14 @@ public class CommentService {
 		String commentNo = req.getParameter("commentNo");
 		String cafeKey = req.getParameter("cafeKey");
 		String commentUpdateContent = req.getParameter("commentUpdateContent");
-		System.out.println(commentNo+" "+cafeKey+" " +commentUpdateContent);
+		System.out.println(commentNo + " " + cafeKey + " " + commentUpdateContent);
 		int page = 1;
 		dao = new CommentDAO();
-		page = dao.cafeCommentUpdate(cafeKey,commentNo,commentUpdateContent);
-		if(page!=0) {
-			resultMap = dao.cafeCommentList(cafeKey,page);
+		page = dao.cafeCommentUpdate(cafeKey, commentNo, commentUpdateContent);
+		if (page != 0) {
+			resultMap = dao.cafeCommentList(cafeKey, page);
 		}
-		
+
 		dao.resClose();
 		return resultMap;
 	}
@@ -87,32 +88,65 @@ public class CommentService {
 		String cafeKey = req.getParameter("cafeKey");
 		System.out.println(commentNo);
 		dao = new CommentDAO();
-		return dao.cafeCommentReport(reportReason,commentNo,sessionId,cafeKey);
+		return dao.cafeCommentReport(reportReason, commentNo, sessionId, cafeKey);
 	}
 
-	public HashMap<String,Object> productcmtinput(String commentContent, String sessionId, String productn) {
+	public HashMap<String, Object> productcmtinput(String commentContent, String sessionId, String productn) {
 		dao = new CommentDAO();
-		
-		System.out.println("pid 찍힘? : " +productn);
-		
-		int page = 1;	
-			page = dao.productcminput(productn,commentContent,sessionId);	
-			if (page!=0) {
-				resultMap = dao.productcommentlist(productn,page);
-			}
-			dao.resClose();
-			
-			return resultMap;
+
+		System.out.println("pid 찍힘? : " + productn);
+
+		int page = 1;
+		page = dao.productcminput(productn, commentContent, sessionId);
+		if (page != 0) {
+			resultMap = dao.productcommentlist(productn, page);
+		}
+		dao.resClose();
+
+		return resultMap;
 	}
 
 	public HashMap<String, Object> productcommentlist() {
 		String productn = req.getParameter("productn");
 		String page = req.getParameter("page");
-		if(page == null) {
-			page= "1";
+		System.out.println("야 잘나오고 있냐 프로덕트 11 :  " + productn);
+		if (page == null) {
+			page = "1";
 		}
-		dao = new CommentDAO();	
-		return dao.productcommentlist(productn,Integer.parseInt(page));
+		dao = new CommentDAO();
+		
+		return dao.productcommentlist(productn, Integer.parseInt(page));
+	}
+
+	public HashMap<String, Object> productcommentdel() {
+		String commentNo = req.getParameter("commentNo");
+		String productn = req.getParameter("productn");
+		System.out.println("커맨트 넘버 : " + commentNo + "/ 프로덕트 넘버 : " + productn);
+		int page = 1;
+		dao = new CommentDAO();
+		page = dao.productcommentdel(commentNo, productn);
+		if (page != 0) {
+			resultMap = dao.productcommentlist(productn, page);
+		}
+
+		dao.resClose();
+		return resultMap;		
+	}
+
+	public HashMap<String, Object> productcommentupdate() {
+		String commentNo = req.getParameter("commentNo");
+		String productn = req.getParameter("productn");
+		String commentUpdateContent = req.getParameter("commentUpdateContent");
+		System.out.println("수정 잘 되냐?" + commentNo + " " + productn + " " + commentUpdateContent);
+		int page = 1;
+		dao = new CommentDAO();
+		page = dao.productcommentupdate(productn, commentNo, commentUpdateContent);
+		if (page != 0) {
+			resultMap = dao.productcommentlist(productn, page);
+		}
+
+		dao.resClose();
+		return resultMap;
 	}
 
 }
