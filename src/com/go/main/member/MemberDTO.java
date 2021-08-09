@@ -18,6 +18,7 @@ public class MemberDTO {
 	private String processStatus;
 	private String managers;
 	private String Productname;
+	private String Cmreporter;
 	
 	public String getDivision() {
 		return division;
@@ -129,6 +130,14 @@ public class MemberDTO {
 	public void setSetProductname(String setProductname) {
 		this.Productname = setProductname;
 	}
+	public String getCmreporter() {
+		return Cmreporter;
+	}
+	public void setCmreporter(String cmreporter) {
+		Cmreporter = cmreporter;
+	}
+	
+
 	
 	
 	
