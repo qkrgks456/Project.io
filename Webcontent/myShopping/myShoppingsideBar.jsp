@@ -18,7 +18,7 @@
 				class="ps-4 fw-bold list-group-item list-group-item-action"
 				href="/Project/myShopping/sell/productInput/productInput.jsp" style="cursor: pointer;">상품등록</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myShopping/sell/productList/productList.jsp" style="cursor: pointer;">상품정보</a>
+				href="/Project/myProductList" style="cursor: pointer;">상품정보</a>
 		</div>
 		<hr />
 	</nav>

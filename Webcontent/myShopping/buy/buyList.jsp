@@ -53,7 +53,11 @@
 					<table class="table table-hover mt-2">
 						<thead class="table-light">
 							<tr>
-								<th scope="col">#</th>
+								<th scope="col"><div class="form-check">
+										<input class="form-check-input" type="checkbox" value=""
+											id="flexCheckDefault">
+
+									</div></th>
 								<th scope="col">이미지</th>
 								<th scope="col">상품명</th>
 								<th scope="col">수량</th>
@@ -62,56 +66,44 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="">
-								<th class="align-middle" scope="row">1</th>
-								<td><img src="/Project/assets/img/p3.jpg"
-									class="img-thumbnail"
-									style="width: 80px; height: 80px; object-fit: cover;" /></td>
-								<td class="align-middle">콜롬비아 수프리모</td>
-								<td class="align-middle"><div class="qu">3</div></td>
-								<td class="price align-middle">24000</td>
-						
-								<td>
-									<div class="d-grid gap-2 col-6 mx-auto mt-1">
-										<a class="btn btn-secondary btn-sm">상세보기</a> <a
-											class="btn btn-secondary btn-sm"
-											onclick="location.href='/Project/myShopping/sell/productList/productDelResult.jsp'">삭제하기</a>
-									</div>
-								</td>
-							</tr>
-							<tr class="">
-								<th class="align-middle" scope="row">2</th>
-								<td><img src="/Project/assets/img/p11.jpg"
-									class="img-thumbnail"
-									style="width: 80px; height: 80px; object-fit: cover;" /></td>
-								<td class="align-middle">브라질 버본 산토스 No.2</td>
-								<td class="align-middle"><div class="qu"> 2</div></td>
-								<td class="price align-middle">19000</td>
-								<td>
-									<div class="d-grid gap-2 col-6 mx-auto mt-1">
-										<a class="btn btn-secondary btn-sm">상세보기</a> <a
-											class="btn btn-secondary btn-sm"
-											onclick="location.href='/Project/myShopping/sell/productList/productDelResult.jsp'">삭제하기</a>
-									</div>
-								</td>
-							</tr>
+							<c:forEach items="${buylist}" var="buylists">
+								<tr class="">
+									<th class="align-middle" scope="row"><div
+											class="form-check">
+											<input class="form-check-input" type="checkbox" value=""
+												id="flexCheckDefault">
 
+										</div></th>
+									<td><img src="/photo/${buylists.newFileName}"
+										class="img-thumbnail"
+										style="width: 80px; height: 80px; object-fit: cover;" /></td>
+									<td class="align-middle">${buylists.productName}</td>
+									<td class="align-middle"><div class="qu">${buylists.productQuantity}</div></td>
+									<td class="price align-middle">${buylists.price}</td>
 
+									<td>
 
-
-
-
+										<div class="d-grid gap-2 col-6 mx-auto mt-4">
+											<a class="btn btn-secondary btn-sm">상세보기</a>
+										</div>
+									</td>
+								</tr>
 						</tbody>
+						</c:forEach>
 						<tfoot>
 							<tr>
 								<th>합계</th>
-								<th id = 'sumAmount'>수량 : 3</th>
+								<th id='sumAmount'>수량 : 3</th>
 								<th id='sumSumPrice'>가격 : 65000</th>
 								<th colspan="3"></th>
 							</tr>
 						</tfoot>
 					</table>
-					
+					<input type="hidden" class="form-control" id="blackpruductId"
+						name="blackproductId" value="">
+					<button id="blackaddsubmit" class="btn btn-dark" type="submit">선택
+						상품 삭제</button>
+
 				</div>
 			</div>
 		</div>
@@ -122,87 +114,88 @@
 	<jsp:include page="/fixMenu/footer.jsp"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<script type="text/javascript">
-	/* 페이지 시작시 총 수량  */
-	var sum = 0;
-	$('.qu').each(function(i, item) {
-		sum += Number($(this).text());
-	})
-	$('#sumAmount').empty();
-	$('#sumAmount').append('수량 : ' + sum+'개');
-	/* 페이지 시작시 총 가격  */
-	var sumPrice = 0;
-	$('.price').each(function(i, item) {
-		sumPrice += Number($(this).text());
-	})
-	$('#sumSumPrice').empty();
-	$('#sumSumPrice').append('총 가격 : ' +sumPrice.toLocaleString()+'원');
-	/* 수량증가  */
-	var sumSum = 0;
-	
-	$('.up').click(function() {
-		var sumPrice = 0;
-		var qu = Number($(this).prev('.qu').text());
-		qu = qu + 1;
-		$(this).prev('.qu').empty();
-		$(this).prev('.qu').append(qu);
-		var sumSum = 0;
-		sumSum = qu * Number($(this).parents('td').next().text());		
+		/* 페이지 시작시 총 수량  */
 		var sum = 0;
 		$('.qu').each(function(i, item) {
 			sum += Number($(this).text());
 		})
 		$('#sumAmount').empty();
-		$('#sumAmount').append('수량 : ' + sum+'개');
-		$(this).parents('td').nextAll('.sumPrice').empty();
-		$(this).parents('td').nextAll('.sumPrice').append(sumSum);
-		$('.sumPrice').each(function(i, item) {		
+		$('#sumAmount').append('수량 : ' + sum + '개');
+		/* 페이지 시작시 총 가격  */
+		var sumPrice = 0;
+		$('.price').each(function(i, item) {
 			sumPrice += Number($(this).text());
-			console.log(sumPrice);			
 		})
 		$('#sumSumPrice').empty();
-		$('#sumSumPrice').append('총 가격 : ' +sumPrice.toLocaleString()+'원');
-	})
-	
-	/* 수량 감소 */
-	$('.down').click(function() {
-		var sumPrice = 0;
-		var qu = Number($(this).prevAll('.qu').text());
-		if (qu > 1) {
-			qu = qu - 1;
-			$(this).prevAll('.qu').empty();
-			$(this).prevAll('.qu').append(qu);
-			var sumSum = 0;
-			sumSum = qu * Number($(this).parents('td').next().text());
-			console.log(sumSum);
-			var sum = 0;
-			$('.qu').each(function(i, item) {
-				sum += Number($(this).text());
+		$('#sumSumPrice').append('총 가격 : ' + sumPrice.toLocaleString() + '원');
+		/* 수량증가  */
+		var sumSum = 0;
+
+		$('.up').click(
+				function() {
+					var sumPrice = 0;
+					var qu = Number($(this).prev('.qu').text());
+					qu = qu + 1;
+					$(this).prev('.qu').empty();
+					$(this).prev('.qu').append(qu);
+					var sumSum = 0;
+					sumSum = qu * Number($(this).parents('td').next().text());
+					var sum = 0;
+					$('.qu').each(function(i, item) {
+						sum += Number($(this).text());
+					})
+					$('#sumAmount').empty();
+					$('#sumAmount').append('수량 : ' + sum + '개');
+					$(this).parents('td').nextAll('.sumPrice').empty();
+					$(this).parents('td').nextAll('.sumPrice').append(sumSum);
+					$('.sumPrice').each(function(i, item) {
+						sumPrice += Number($(this).text());
+						console.log(sumPrice);
+					})
+					$('#sumSumPrice').empty();
+					$('#sumSumPrice').append(
+							'총 가격 : ' + sumPrice.toLocaleString() + '원');
+				})
+
+		/* 수량 감소 */
+		$('.down').click(
+				function() {
+					var sumPrice = 0;
+					var qu = Number($(this).prevAll('.qu').text());
+					if (qu > 1) {
+						qu = qu - 1;
+						$(this).prevAll('.qu').empty();
+						$(this).prevAll('.qu').append(qu);
+						var sumSum = 0;
+						sumSum = qu
+								* Number($(this).parents('td').next().text());
+						console.log(sumSum);
+						var sum = 0;
+						$('.qu').each(function(i, item) {
+							sum += Number($(this).text());
+						})
+						$('#sumAmount').empty();
+						$('#sumAmount').append('수량 : ' + sum + '개');
+						$(this).parents('td').nextAll('.sumPrice').empty();
+						$(this).parents('td').nextAll('.sumPrice').append(
+								sumSum);
+						$('.sumPrice').each(function(i, item) {
+							sumPrice += Number($(this).text());
+							console.log(sumPrice);
+						})
+						$('#sumSumPrice').empty();
+						$('#sumSumPrice').append(
+								'총 가격 : ' + sumPrice.toLocaleString() + '원');
+					}
+				})
+		$('#delProductBtn').click(function() {
+			var delCheckArr = [];
+			$('input[name="delCheck"]:checked').each(function() {
+				delCheckArr.push($(this).val());
 			})
-			$('#sumAmount').empty();
-			$('#sumAmount').append('수량 : ' + sum+'개');
-			$(this).parents('td').nextAll('.sumPrice').empty();
-			$(this).parents('td').nextAll('.sumPrice').append(sumSum);
-			$('.sumPrice').each(function(i, item) {		
-				sumPrice += Number($(this).text());
-				console.log(sumPrice);			
-			})
-			$('#sumSumPrice').empty();
-			$('#sumSumPrice').append('총 가격 : ' +sumPrice.toLocaleString()+'원');
-		}
-	})
-	$('#delProductBtn').click(function(){
-		var delCheckArr = [];
-		$('input[name="delCheck"]:checked').each(function(){
-			delCheckArr.push($(this).val());
+			console.log(delCheckArr);
+
 		})
-		console.log(delCheckArr);
-		
-	})
-	
-	
-	
-	
-	
 	</script>
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->

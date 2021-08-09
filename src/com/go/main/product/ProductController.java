@@ -12,7 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet({ "/productList", "/productinsert", "/productdetail", "/searchproduct", "/cartinsert", "/cartList" })
+import com.google.gson.Gson;
+
+@WebServlet({ "/productList", "/productinsert", "/productdetail", "/searchproduct", "/cartinsert", "/cartList","/myProductList","/productListDel", "/purchaseInsert" })
 public class ProductController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -54,7 +56,7 @@ public class ProductController extends HttpServlet {
 
 			System.out.println("상품등록 성공 여부 : " + suc);
 			req.setAttribute("success", suc);
-			dis = req.getRequestDispatcher("myShopping/sell/productList/productList.jsp");
+			dis = req.getRequestDispatcher("myProductList");
 			dis.forward(req, resp);
 			break;
 			
@@ -62,6 +64,7 @@ public class ProductController extends HttpServlet {
 			System.out.println("상세보기 요청!");
 			HashMap<String, Object> map = service.productdetail();
 			req.setAttribute("map", map);
+			System.out.println(map);
 			dis = req.getRequestDispatcher("MainProduct/product.jsp");
 			dis.forward(req, resp);
 		break;
@@ -90,10 +93,41 @@ public class ProductController extends HttpServlet {
 			req.setAttribute("cartlist", cartlist);
 			dis = req.getRequestDispatcher("myShopping/buy/cart.jsp");
 			dis.forward(req, resp);
-
 			break;
+			
+		case "/sellListDel":
+			System.out.println("판매리스트 삭제");
+			
+			break;
+		case "/myProductList":
+			System.out.println("내 등록 상품정보");
+			map = service.myProductList(sessionId);
+			req.setAttribute("map", map);
+			System.out.println(map);
+			dis = req.getRequestDispatcher("myShopping/sell/productList/productList.jsp");
+			dis.forward(req, resp);
+			break;
+			
+		case "/productListDel":
+			System.out.println("상품정보 선택 삭제");
+			map = service.productListDel(sessionId);
+			resp.setContentType("text/html; charset=UTF-8");
+			resp.getWriter().print(new Gson().toJson(map));
+			break;
+		
+			
+		case "/purchaseInsert":
+			System.out.println("구매내역에 넣기 성공");
+			ArrayList<ProductDTO> purchaseInsert = service.purchaseInsert(sessionId);
+			req.setAttribute("purchaseInsert", purchaseInsert);
+			dis = req.getRequestDispatcher("myShopping/buy/cart.jsp");
+			dis.forward(req, resp);
+			break;
+			
 
 		}
 
+		
+		
 	}
 }

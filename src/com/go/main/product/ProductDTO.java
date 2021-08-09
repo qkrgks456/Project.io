@@ -6,7 +6,7 @@ public class ProductDTO {
 	private int categoryNumber;
 	private int cafeId;
 	private String productName;
-	private int Price;
+	private int price;
 	private String explanation;
 	private int regDate;
 	private int views;
@@ -47,12 +47,6 @@ public class ProductDTO {
 	}
 	public void setProductName(String productName) {
 		this.productName = productName;
-	}
-	public int getPrice() {
-		return Price;
-	}
-	public void setPrice(int price) {
-		Price = price;
 	}
 	public String getExplanation() {
 		return explanation;
@@ -153,6 +147,12 @@ public class ProductDTO {
 	}
 	public void setmemberkey(String memberkey) {
 		this.memberkey = memberkey;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
 	}
 }
 

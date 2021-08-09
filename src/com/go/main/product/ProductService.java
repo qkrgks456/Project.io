@@ -61,26 +61,17 @@ public class ProductService {
 		HashMap<String, Object> resultMap = null;
 		ProductDTO dto = new ProductDTO();
 		ProductDAO dao = new ProductDAO(req, resp);
-		String wdId = req.getParameter("wdId");
-		String mdId = req.getParameter("mdId");
-		System.out.println("wdid값 찍히나 확인 : " + wdId);
-		System.out.println("mdid값 찍히나 확인 : " + mdId);
+		String productId = req.getParameter("productId");
+		System.out.println(productId);
+		System.out.println("wdid값 찍히나 확인 : " + productId);
 		String page = req.getParameter("page");
 		System.out.println("page : " + page);		
 		if (page == null) {
 			page = "1";
 		}
-		if (wdId != null) {
-			
-			resultMap = dao.productdetail(wdId,Integer.parseInt(page), sessionId);
-		
-			
-		} else if (mdId != null) {
-			
-			
-			resultMap = dao.productdetailT(mdId,Integer.parseInt(page), sessionId);
-			
-		}
+		if (productId != null) {			
+			resultMap = dao.productdetail(productId,Integer.parseInt(page), sessionId);		
+		} 
 		
 		dao.resClose();
 		
@@ -112,6 +103,31 @@ public class ProductService {
 		ArrayList<ProductDTO> cartlist = dao.cartlist(sessionId);
 		System.out.println("장바구니 불러오기 :" + cartlist.size());
 		return cartlist;
+	}
+
+	public HashMap<String, Object> myProductList(String sessionId) {
+		ProductDAO dao = new ProductDAO(req, resp);
+		return 	dao.myProductList(sessionId);
+	}
+
+	public HashMap<String, Object> productListDel(String sessionId) {
+		String[] delproductId = req.getParameterValues("delproductId[]");
+		HashMap<String, Object> map = null;
+		ProductDAO dao = new ProductDAO(req, resp);
+		int suc = dao.productListDel(delproductId);
+		if(suc>0) {
+			map = dao.myProductList(sessionId);
+		}
+		dao.resClose();
+		return map;
+	}
+
+	public ArrayList<ProductDTO> purchaseInsert(String sessionId) {
+		ProductDAO dao = new ProductDAO(req, resp);
+		ArrayList<ProductDTO> purchaseInsert = dao.purchaseInsert(sessionId);
+		System.out.println("구매내역 불러오기 :" + purchaseInsert.size());
+		return purchaseInsert;
+		
 	}
 
 	

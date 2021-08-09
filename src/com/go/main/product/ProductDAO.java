@@ -85,7 +85,7 @@ public class ProductDAO {
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			resClose();
 		}
 		return suc;
@@ -143,12 +143,12 @@ public class ProductDAO {
 
 		return productlistMD;
 	}
-	
+
 	public HashMap<String, Object> productdetail(String wdId, int page, String sessionId) {
 		ArrayList<ProductDTO> commentList = new ArrayList<ProductDTO>();
 		ProductDTO dto = null;
 		HashMap<String, Object> map = new HashMap<String, Object>();
-			
+
 		String sql = "SELECT p.productname,p.explanation,p.productid,p.categoryname,i.newfilename,p.price from product p left outer join image i on i.division=p.productid WHERE p.productid=?";
 		try {
 			ps = conn.prepareStatement(sql);
@@ -156,15 +156,14 @@ public class ProductDAO {
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				/*
-				 * dto = new ProductDTO(); 
-				 * dto.setProductName(rs.getString("productName"));
+				 * dto = new ProductDTO(); dto.setProductName(rs.getString("productName"));
 				 * dto.setExplanation(rs.getString("explanation"));
 				 * dto.setProductId(rs.getInt("productid"));
 				 * dto.setCategoryName(rs.getString("categoryname"));
 				 * dto.setPrice(rs.getInt("Price"));
 				 * dto.setNewFileName(rs.getString("newFileName"));
 				 */
-				
+
 				map.put("productName", rs.getString("productName"));
 				map.put("explanation", rs.getString("explanation"));
 				map.put("productid", rs.getString("productid"));
@@ -193,7 +192,7 @@ public class ProductDAO {
 			ps.setInt(2, start);
 			ps.setInt(3, end);
 			rs = ps.executeQuery();
-			while (rs.next()) {				
+			while (rs.next()) {
 				dto = new ProductDTO();
 				dto.setCommentNo(rs.getString("commentNo"));
 				dto.setCm_content(rs.getString("cm_content"));
@@ -250,7 +249,6 @@ public class ProductDAO {
 		ProductDTO dto = null;
 		HashMap<String, Object> map = new HashMap<String, Object>();
 
-		
 		String sql = "SELECT p.productname,p.explanation,p.productid,p.categoryname,i.newfilename,p.price from product p left outer join image i on i.division=p.productid WHERE p.productid=?";
 		try {
 			ps = conn.prepareStatement(sql);
@@ -258,15 +256,14 @@ public class ProductDAO {
 			rs = ps.executeQuery();
 			if (rs.next()) {
 				/*
-				 * dto = new ProductDTO(); 
-				 * dto.setProductName(rs.getString("productName"));
+				 * dto = new ProductDTO(); dto.setProductName(rs.getString("productName"));
 				 * dto.setExplanation(rs.getString("explanation"));
 				 * dto.setProductId(rs.getInt("productid"));
 				 * dto.setCategoryName(rs.getString("categoryname"));
 				 * dto.setPrice(rs.getInt("Price"));
 				 * dto.setNewFileName(rs.getString("newFileName"));
 				 */
-				
+
 				map.put("productName", rs.getString("productName"));
 				map.put("explanation", rs.getString("explanation"));
 				map.put("productid", rs.getString("productid"));
@@ -296,7 +293,7 @@ public class ProductDAO {
 			ps.setInt(2, start);
 			ps.setInt(3, end);
 			rs = ps.executeQuery();
-			while (rs.next()) {				
+			while (rs.next()) {
 				dto = new ProductDTO();
 				dto.setCommentNo(rs.getString("commentNo"));
 				dto.setCm_content(rs.getString("cm_content"));
@@ -306,23 +303,23 @@ public class ProductDAO {
 			map.put("commentList", commentList);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
-		
+		}
+
 		return map;
 	}
-	
+
 	// 댓글 총개수
-		private int totalComment(String mdId) throws SQLException {
-			String sql = "SELECT COUNT(commentNo) FROM cm WHERE division = ? AND commentDel='N'";
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, mdId);
-			rs = ps.executeQuery();
-			int total = 0;
-			if (rs.next()) {
-				total = rs.getInt(1);
-			}
-			return total;
+	private int totalComment(String mdId) throws SQLException {
+		String sql = "SELECT COUNT(commentNo) FROM cm WHERE division = ? AND commentDel='N'";
+		ps = conn.prepareStatement(sql);
+		ps.setString(1, mdId);
+		rs = ps.executeQuery();
+		int total = 0;
+		if (rs.next()) {
+			total = rs.getInt(1);
 		}
+		return total;
+	}
 
 	public ArrayList<ProductDTO> prosearch(String prosearchresult) {
 		String sql = "select p.productname,p.explanation,p.productid,i.newfilename from product p left outer join image i on i.division=p.productid WHERE productname LIKE ?";
@@ -371,7 +368,7 @@ public class ProductDAO {
 	}
 
 //장바구니 리스트에 뿌리기
-	
+
 	public ArrayList<ProductDTO> cartlist(String sessionId) {
 		String sql = "SELECT p.productId, p.productname, p.price, p.productquantity, i.newfilename from "
 				+ "(SELECT p.productId, p.productname, p.price, p.productquantity "
@@ -386,7 +383,6 @@ public class ProductDAO {
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				dto = new ProductDTO();
-				dto.setAmount(rs.getString("productquantity"));
 				dto.setProductName(rs.getString("productname"));
 				dto.setProductQuantity(rs.getInt("productquantity"));
 				dto.setPrice(rs.getInt("price"));
@@ -400,5 +396,71 @@ public class ProductDAO {
 			resClose();
 		}
 		return cartlist;
+	}
+
+	public HashMap<String, Object> myProductList(String sessionId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<ProductDTO> myProductList = new ArrayList<ProductDTO>();
+		ProductDTO dto = null;
+		try {
+			String sql = "SELECT productId,productName,price,productQuantity FROM product WHERE cafeKey=? AND delCheck='N' AND selCheck='Y'";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				dto = new ProductDTO();
+				dto.setProductId(rs.getInt("productId"));
+				dto.setProductName(rs.getString("productName"));
+				dto.setPrice(rs.getInt("price"));
+				dto.setProductQuantity(rs.getInt("productQuantity"));
+				myProductList.add(dto);
+			}
+			map.put("myProductList", myProductList);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		return map;
+	}
+
+	public int productListDel(String[] delproductId) {
+		int suc = 0;
+		try {
+			for (String productId : delproductId) {
+				String sql = "UPDATE product SET delCheck = 'Y' WHERE productId = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, productId);
+				suc = ps.executeUpdate();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return suc;
+	}
+
+	//구매내역 배열 가져오기
+	public ArrayList<ProductDTO>  purchaseInsert(String sessionId) {
+	
+			String qty = req.getParameter("quantity");
+			String pid = req.getParameter("productn");
+			System.out.println(pid);
+			int suc = 0;
+
+			String sql = "insert into cart(memberkey,productid,amount,cartId) values(?, ?, ?,cart_seq.NEXTVAL)";
+			try {
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, sessionId);
+				ps.setString(2, pid);
+				ps.setString(3, qty);
+				suc = ps.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		
+
+		return null;
 	}
 }

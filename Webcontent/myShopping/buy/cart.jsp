@@ -63,26 +63,26 @@
 											<input class="form-check-input" type="checkbox" value="s"
 												id="flexCheckDefault" name="delCheck">
 										</div></th>
-									<td><img src="/Project/assets/img/m6.jpg"
+									<td><img src="/photo/${cartlists.newFileName}"
 										class="img-thumbnail"
 										style="width: 80px; height: 80px; object-fit: cover;" /></td>
 									<td class="align-middle">${cartlists.productName}</td>
 									<td class="align-middle">
 										<div class='d-flex'>
-											<div class="qu me-2">${cartlists.productQuantity}</div>
+											<div class="qu me-2">1</div>
 											<i id="up" class="up bi bi-arrow-up-square-fill"
 												style="font-size: 1.2rem;"> </i><i id="down"
 												class="down bi bi-arrow-down-square"
 												style="font-size: 1.2rem;"></i>
 										</div>
 									</td>
-									<td class="price align-middle">${cartlists.Price}</td>
+									<td class="price align-middle">${cartlists.price}</td>
 									<td>
 										<div class="d-grid gap-2 col-6 mx-auto mt-4">
 											<a class="btn btn-secondary btn-sm">상세보기</a>
 										</div>
 									</td>
-									<td class="visually-hidden sumPrice align-middle">${cartlists.Price}</td>
+									<td class="visually-hidden sumPrice align-middle">${cartlists.price}</td>
 								</tr>
 							</c:forEach>
 
@@ -189,14 +189,28 @@
 								'총 가격 : ' + sumPrice.toLocaleString() + '원');
 					}
 				})
+				
 		$('#delProductBtn').click(function() {
 			var delCheckArr = [];
 			$('input[name="delCheck"]:checked').each(function() {
-				delCheckArr.push($(this).val());
+				delCheckArr.push($(this).val()); //체크된 박스만 뽑아서 배열로 push
+				console.log(delCheckArr);		
 			})
-			console.log(delCheckArr);
-
-		})
+			
+	 $.ajax({
+			      type  : "POST",
+			      url    : "/Project/sellListDel",
+			      data: {
+			    	  delCheckArr : delCheckArr       
+			      },
+			      success: function(result){
+			      	console.log(result);
+			      },
+			      error: function(xhr, status, error) {
+			      	alert(error);
+			      }  
+			   });
+			})
 	</script>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=5"></script>

@@ -89,7 +89,7 @@
 							<h5 class="fw-bold">${MD.productName }</h5>
 							<p class="text-muted mt-2">${MD.explanation }</p>
 							<div class="d-grid gap-2 col-6 mx-auto">
-								<button type="submit" class="btn btn-outline-secondary"	>자세히보기</button>
+								<button type="submit" class="btn btn-outline-secondary">자세히보기</button>
 							</div>
 						</div>
 					</div>
