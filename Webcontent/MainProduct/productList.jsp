@@ -79,11 +79,11 @@
 			<hr />
 			<div class="row row-cols-1 row-cols-md-4 g-4" id="titlet">
 			<c:forEach items="${productlistMD }" var="MD">
-					<input type="hidden" value="${MD.productId}" name="mdId" id="mdId">
 			<form action="/Project/productdetail?productId=${MD.productId}" method="post">
+					<input type="hidden" value="${MD.productId}" name="mdId" id="mdId">
 				<div class="col">
 					<div class="card h-100">
-					<a href="/Project/productdetail?productId=${productID.productId }"><img src="/photo/${MD.newFileName }" class="card-img-top"> </a>
+					<a href="/Project/productdetail?productId=${WD.productId}"><img src="/photo/${MD.newFileName }" class="card-img-top"> </a>
 						<div class="card-body">
 						
 							<h5 class="fw-bold">${MD.productName }</h5>

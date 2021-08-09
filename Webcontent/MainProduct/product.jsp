@@ -316,13 +316,13 @@
 		var pageAndCafeKey = $(this).attr('title');
 		var pageArr = pageAndCafeKey.split(' ');
 		var page = pageArr[0];
-		var cafeKey = pageArr[1];
+		var productn = pageArr[1];
 		$.ajax({
 			type: "POST",//방식
 			url: "/Project/productcommentlist",//주소
 			data: {
 				page: page,
-				cafeKey: cafeKey,
+				productn: productn,
 			},
 			dataType: 'JSON',
 			success: function(data) { //성공시

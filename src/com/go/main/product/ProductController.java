@@ -69,15 +69,7 @@ public class ProductController extends HttpServlet {
 			dis.forward(req, resp);
 		break;
 		
-		case "/searchproduct":
-			System.out.println("검색 요청");
-			String prosearchresult = req.getParameter("prosearch");
-			req.setAttribute("search", service.prosearch(prosearchresult));
-			dis = req.getRequestDispatcher("MainProduct/productList.jsp");
-			dis.forward(req, resp);
 			
-		break;
-		
 		case "/cartinsert":
 			System.out.println("카트 넣기 성공");
 			ArrayList<ProductDTO> cartlist = service.cartinsert(sessionId);	

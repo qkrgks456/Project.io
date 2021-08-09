@@ -148,8 +148,7 @@ public class ProductDAO {
 		ArrayList<ProductDTO> commentList = new ArrayList<ProductDTO>();
 		ProductDTO dto = null;
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		
+			
 		String sql = "SELECT p.productname,p.explanation,p.productid,p.categoryname,i.newfilename,p.price from product p left outer join image i on i.division=p.productid WHERE p.productid=?";
 		try {
 			ps = conn.prepareStatement(sql);
@@ -194,47 +193,136 @@ public class ProductDAO {
 			ps.setInt(2, start);
 			ps.setInt(3, end);
 			rs = ps.executeQuery();
-			while (rs.next()) {
-				
+			while (rs.next()) {				
 				dto = new ProductDTO();
 				dto.setCommentNo(rs.getString("commentNo"));
 				dto.setCm_content(rs.getString("cm_content"));
 				dto.setMemberKey(rs.getString("memberKey"));
 				commentList.add(dto);
-
 			}
-			
-		} catch (SQLException e) {
+			int total = totalComment(wdId); // 총 댓글 수 가져옵시다
+			// 총 게시글 수에 나올 페이지수 나눠서 짝수면 나눠주고 홀수면 +1
+			int totalPages = total % pagePerCnt == 0 ? total / pagePerCnt : (total / pagePerCnt) + 1;
+			if (totalPages == 0) {
+				totalPages = 1;
+			}
+			// 끝지점을 맨 마지막 페이지로 지정
+			if (endPage > totalPages) {
+				endPage = totalPages;
+			}
+			// 디테일에서 리스트로 돌아갈시 페이지 반환
+			int cafePages = 1;
+			// 노출할 데이터 갯수
+			int cafePagesPerCnts = 8;
+			while (true) {
+				// 데이터의 시작과 끝
+				int cafeEnds = cafePages * cafePagesPerCnts;
+				int cafeStarts = (cafeEnds - cafePagesPerCnts);
+				sql = "SELECT productid FROM"
+						+ "(SELECT productid FROM product ORDER BY productid DESC OFFSET ? ROWS FETCH FIRST ? ROWS ONLY)"
+						+ "WHERE productid=?";
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, cafeStarts);
+				ps.setInt(2, cafeEnds);
+				ps.setString(3, wdId);
+				rs = ps.executeQuery();
+				if (rs.next()) {
+					break;
+				} else {
+					cafePages++;
+				}
+			}
+			map.put("cafePages", cafePages);
+			map.put("commentList", commentList);
+			map.put("totalPage", totalPages);
+			map.put("currPage", page);
+			map.put("pageLength", pageLength);
+			map.put("startPage", startPage);
+			map.put("endPage", endPage);
+		} catch (Exception e) {
 			e.printStackTrace();
-		} 
-		
+		}
 		return map;
 	}
 
-	public ProductDTO productdetailT(String mdId) {
+	public HashMap<String, Object> productdetailT(String mdId, int page, String sessionId) {
+		ArrayList<ProductDTO> commentList = new ArrayList<ProductDTO>();
 		ProductDTO dto = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		
 		String sql = "SELECT p.productname,p.explanation,p.productid,p.categoryname,i.newfilename,p.price from product p left outer join image i on i.division=p.productid WHERE p.productid=?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, mdId);
 			rs = ps.executeQuery();
 			if (rs.next()) {
-				dto = new ProductDTO();
-				dto.setProductName(rs.getString("productName"));
-				dto.setExplanation(rs.getString("explanation"));
-				dto.setProductId(rs.getInt("productid"));
-				dto.setCategoryName(rs.getString("categoryname"));
-				dto.setPrice(rs.getInt("Price"));
-				dto.setNewFileName(rs.getString("newFileName"));
+				/*
+				 * dto = new ProductDTO(); 
+				 * dto.setProductName(rs.getString("productName"));
+				 * dto.setExplanation(rs.getString("explanation"));
+				 * dto.setProductId(rs.getInt("productid"));
+				 * dto.setCategoryName(rs.getString("categoryname"));
+				 * dto.setPrice(rs.getInt("Price"));
+				 * dto.setNewFileName(rs.getString("newFileName"));
+				 */
+				
+				map.put("productName", rs.getString("productName"));
+				map.put("explanation", rs.getString("explanation"));
+				map.put("productid", rs.getString("productid"));
+				map.put("categoryname", rs.getString("categoryname"));
+				map.put("price", rs.getString("Price"));
+				map.put("newFileName", rs.getString("newFileName"));
 			}
 
+			int pageLength = 5;
+			// 블럭 인덱스
+			int currentBlock = page % pageLength == 0 ? page / pageLength : (page / pageLength) + 1;
+			// 시작페이지
+			int startPage = (currentBlock - 1) * pageLength + 1;
+			// 끝페이지
+			int endPage = startPage + pageLength - 1;
+			System.out.println("시작 페이지 : " + startPage + " / 끝 페이지 : " + endPage);
+			// 노출할 데이터 갯수
+			int pagePerCnt = 8;
+			int end = page * pagePerCnt;
+			int start = (end - pagePerCnt) + 1;
+			// 댓글 가져오기
+			sql = "SELECT commentNo,cm_content,memberKey FROM "
+					+ "(SELECT ROW_NUMBER() OVER(ORDER BY commentNo) AS rnum,commentNo,cm_content,memberKey FROM cm WHERE division=? AND commentDel='N')"
+					+ "WHERE rnum BETWEEN ? AND ?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, mdId);
+			ps.setInt(2, start);
+			ps.setInt(3, end);
+			rs = ps.executeQuery();
+			while (rs.next()) {				
+				dto = new ProductDTO();
+				dto.setCommentNo(rs.getString("commentNo"));
+				dto.setCm_content(rs.getString("cm_content"));
+				dto.setMemberKey(rs.getString("memberKey"));
+				commentList.add(dto);
+			}
+			map.put("commentList", commentList);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			resClose();
-		}
-		return dto;
+		} 
+		
+		return map;
 	}
+	
+	// 댓글 총개수
+		private int totalComment(String mdId) throws SQLException {
+			String sql = "SELECT COUNT(commentNo) FROM cm WHERE division = ? AND commentDel='N'";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, mdId);
+			rs = ps.executeQuery();
+			int total = 0;
+			if (rs.next()) {
+				total = rs.getInt(1);
+			}
+			return total;
+		}
 
 	public ArrayList<ProductDTO> prosearch(String prosearchresult) {
 		String sql = "select p.productname,p.explanation,p.productid,i.newfilename from product p left outer join image i on i.division=p.productid WHERE productname LIKE ?";

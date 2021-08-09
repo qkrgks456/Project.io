@@ -78,7 +78,7 @@ public class ProductService {
 		} else if (mdId != null) {
 			
 			
-			//resultMap = dao.productdetailT(mdId,Integer.parseInt(page), sessionId);
+			resultMap = dao.productdetailT(mdId,Integer.parseInt(page), sessionId);
 			
 		}
 		
