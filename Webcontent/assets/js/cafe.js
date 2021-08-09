@@ -17,6 +17,7 @@ $(document).ready(function() {
 				dataType: 'JSON',
 				success: function(data) { //성공시
 					commentList(data);
+					$('#commentContent').val("");
 				},
 				error: function(e) { //실패시
 					console.log(e);

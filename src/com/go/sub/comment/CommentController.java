@@ -14,7 +14,8 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-@WebServlet({ "/cafeCommentInput", "/cafeCommentDel", "/cafeCommentUpdate", "/cafeCommentList", "/cafeCommentReport","/productiptcomment","/productcommentlist"})
+@WebServlet({ "/cafeCommentInput", "/cafeCommentDel", "/cafeCommentUpdate", "/cafeCommentList", "/cafeCommentReport",
+		"/productiptcomment", "/productcommentlist" })
 public class CommentController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -61,16 +62,13 @@ public class CommentController extends HttpServlet {
 			break;
 		case "/cafeCommentList":
 			System.out.println("카페댓글리스트");
-			if (sessionId != null) {
-				map = service.cafeCommentList();
+			map = service.cafeCommentList();
+			System.out.println(map);
+			if (map != null) {
+				map.put("sessionId", sessionId);
 				System.out.println(map);
-				if (map != null) {
-					map.put("sessionId", sessionId);
-					resp.setContentType("text/html; charset=UTF-8");
-					resp.getWriter().print(new Gson().toJson(map));
-				}
-			} else {
-				resp.sendRedirect("/Project/");
+				resp.setContentType("text/html; charset=UTF-8");
+				resp.getWriter().print(new Gson().toJson(map));
 			}
 			break;
 
@@ -102,16 +100,16 @@ public class CommentController extends HttpServlet {
 				resp.sendRedirect("/Project/");
 			}
 			break;
-			
+
 		case "/productiptcomment":
 			System.out.println("상품 댓글 작성 요청");
 			String commentContent = req.getParameter("commentContent");
 			String productn = req.getParameter("productn");
 			System.out.println(commentContent);
 			System.out.println(productn);
-		
+
 			if (sessionId != null) {
-				map = service.productcmtinput(commentContent,sessionId,productn);
+				map = service.productcmtinput(commentContent, sessionId, productn);
 				if (map != null) {
 					map.put("sessionId", sessionId);
 					resp.setContentType("text/html; charset=UTF-8");
@@ -120,9 +118,9 @@ public class CommentController extends HttpServlet {
 			} else {
 				resp.sendRedirect("/Project/");
 			}
-			
+
 			break;
-			
+
 		case "/productcommentlist":
 			System.out.println("상품댓글리스트");
 			if (sessionId != null) {
@@ -138,10 +136,8 @@ public class CommentController extends HttpServlet {
 			}
 			break;
 		}
-		
-		
+
 	}
-	
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

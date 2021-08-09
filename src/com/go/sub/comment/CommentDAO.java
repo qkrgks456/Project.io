@@ -155,8 +155,6 @@ public class CommentDAO {
 			map.put("cafeKey", cafeKey);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			resClose();
 		}
 		return map;
 	}

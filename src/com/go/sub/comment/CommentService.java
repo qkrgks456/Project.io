@@ -53,11 +53,14 @@ public class CommentService {
 	public HashMap<String, Object> cafeCommentList() {
 		String cafeKey = req.getParameter("cafeKey");
 		String page = req.getParameter("page");
+		System.out.println(cafeKey+" "+page);
 		if(page == null) {
 			page= "1";
 		}
 		dao = new CommentDAO();	
-		return dao.cafeCommentList(cafeKey,Integer.parseInt(page));
+		HashMap<String, Object> map = dao.cafeCommentList(cafeKey,Integer.parseInt(page));
+		dao.resClose();
+		return map;
 	}
 
 	public HashMap<String, Object> cafeCommentUpdate() {
