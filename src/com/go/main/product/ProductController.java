@@ -46,7 +46,7 @@ public class ProductController extends HttpServlet {
 			System.out.println("상품 리스트 불러오기 요청");
 			req.setAttribute("productlistWD", service.productlistWD());
 			req.setAttribute("productlistMD", service.productlistMD());
-			
+
 			dis = req.getRequestDispatcher("MainProduct/productList.jsp");
 			dis.forward(req, resp);
 			break;
@@ -60,16 +60,15 @@ public class ProductController extends HttpServlet {
 			dis = req.getRequestDispatcher("myProductList");
 			dis.forward(req, resp);
 			break;
-			
-		case"/productdetail":
+
+		case "/productdetail":
 			System.out.println("상세보기 요청!");
 			HashMap<String, Object> map = service.productdetail();
 			req.setAttribute("map", map);
 			System.out.println(map);
 			dis = req.getRequestDispatcher("MainProduct/product.jsp");
 			dis.forward(req, resp);
-		break;
-		
+			break;
 
 		case "/searchproduct":
 			System.out.println("검색 요청");
@@ -95,11 +94,11 @@ public class ProductController extends HttpServlet {
 			dis = req.getRequestDispatcher("myShopping/buy/cart.jsp");
 			dis.forward(req, resp);
 			break;
-			
+
 		case "/sellListDel":
 			System.out.println("판매리스트 삭제");
 			break;
-			
+
 		case "/myProductList":
 			System.out.println("내 등록 상품정보");
 			map = service.myProductList(sessionId);
@@ -108,18 +107,17 @@ public class ProductController extends HttpServlet {
 			dis = req.getRequestDispatcher("myShopping/sell/productList/productList.jsp");
 			dis.forward(req, resp);
 			break;
-			
+
 		case "/productListDel":
 			System.out.println("상품정보 선택 삭제");
 			map = service.productListDel(sessionId);
 			resp.setContentType("text/html; charset=UTF-8");
 			resp.getWriter().print(new Gson().toJson(map));
 			break;
-		
-			
+
 		case "/purchaseInsert":
 			System.out.println("구매내역에 넣기 ");
-		
+
 			if (sessionId != null) {
 				map = service.purchaseInsert(sessionId);
 				if (map != null) {
@@ -131,18 +129,16 @@ public class ProductController extends HttpServlet {
 				resp.sendRedirect("/Project/");
 			}
 			break;
-			
-		
-		case"/purchaseList":
+
+		case "/purchaseList":
 			System.out.println("구매내역 뿌리기");
-			HashMap<String, Object> map = service.purchaseList();
+			map = service.purchaseList(sessionId);
 			req.setAttribute("map", map);
 			System.out.println(map);
 			dis = req.getRequestDispatcher("MainProduct/product.jsp");
 			dis.forward(req, resp);
-		break;
-		
+			break;
 
-		
+		}
 	}
 }
