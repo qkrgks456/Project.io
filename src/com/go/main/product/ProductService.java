@@ -164,6 +164,20 @@ public class ProductService {
 		System.out.println("구매내역 불러오기 :" + purchaseList.size());
 		return purchaseList;
 	}
+
+	public int cartBuy(String sessionId) {
+		ProductDAO dao = new ProductDAO(req, resp);
+		String[] delproductId = req.getParameterValues("delproductId[]");
+		String[] qus = req.getParameterValues("qus[]");
+		String[] prices = req.getParameterValues("prices[]");
+		return dao.cartBuy(sessionId,delproductId,qus,prices);
+	}
+
+	public ArrayList<ProductDTO> sellList(String sessionId) {
+		ProductDAO dao = new ProductDAO(req, resp);
+		
+		return dao.sellList(sessionId);
+	}
 	
 	
 	

@@ -31,7 +31,7 @@
 			<div class="d-none d-lg-block">
 				<div class="d-flex">
 					<div class="d-flex" id="cartalert"
-						onclick="location.href='/Project/myShopping/buy/cart.jsp'">
+						onclick="location.href='/Project/cartList'">
 						<i id="cart" class="bi bi-cart-fill"
 							style="font-size: 1.8rem; color: white"></i> <span
 							id="cartalertnum"

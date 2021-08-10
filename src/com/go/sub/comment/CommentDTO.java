@@ -12,6 +12,7 @@ public class CommentDTO {
 	private String processStatus;
 	private String cafeName;
 	private String productName;
+	private String cmreportdispose;
 	public String getReportReason() {
 		return reportReason;
 	}
@@ -65,5 +66,11 @@ public class CommentDTO {
 	}
 	public void setCommentNo(String commentNo) {
 		this.commentNo = commentNo;
+	}
+	public String getCmreportdispose() {
+		return cmreportdispose;
+	}
+	public void setCmreportdispose(String cmreportdispose) {
+		this.cmreportdispose = cmreportdispose;
 	}
 }

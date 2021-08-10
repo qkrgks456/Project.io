@@ -498,12 +498,12 @@ public class CommentDAO {
 		ArrayList<CommentDTO> reportCommentList = new ArrayList<CommentDTO>();
 		HashMap<String, Object> map = new HashMap<String, Object>();	
 		try {
-			String sql = "SELECT reportReason,managers,processStatus,cm_content,division,cafeName,productName "
-					+ "FROM(SELECT cm.reportcmNo,cm.reportReason,cm.managers,cm.processStatus,cm.cm_content,division,c.cafeName "
-					+ "FROM(SELECT reportReason,managers,processStatus,cm_content,cm.division,cm.reportcmNo "
-					+ "FROM cmReport cm LEFT OUTER JOIN cm c  ON c.commentNo= cm.commentNo WHERE cm.cmreporter=? ORDER BY cm.reportcmNo)cm "
-					+ "LEFT OUTER JOIN cafeInfo c ON cm.division = c.cafeKey)c LEFT OUTER JOIN product p "
-					+ "ON c.division = p.productId";
+			String sql = "SELECT reportReason,managers,processStatus,cm_content,division,cafeName,productName,cmreportdispose "
+					+ "FROM(SELECT cm.cmreportdispose,cm.reportcmNo,cm.reportReason,cm.managers,cm.processStatus,cm.cm_content,division,c.cafeName "
+					+ "FROM(SELECT reportReason,managers,processStatus,cm_content,cm.division,cm.reportcmNo,cm.cmreportdispose "
+					+ "FROM cmReport cm LEFT OUTER JOIN cm c  ON c.commentNo= cm.commentNo WHERE cm.cmreporter=? "
+					+ "ORDER BY cm.reportcmNo)cm LEFT OUTER JOIN cafeInfo c ON cm.division = c.cafeKey)c "
+					+ "LEFT OUTER JOIN product p ON c.division = p.productId";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, sessionId);
 			rs = ps.executeQuery();
@@ -515,11 +515,14 @@ public class CommentDAO {
 				dto.setCm_content(rs.getString("cm_content"));
 				dto.setCafeName(rs.getString("cafeName"));
 				dto.setProductName(rs.getString("productName"));
+				dto.setCmreportdispose(rs.getString("cmreportdispose"));
 				reportCommentList.add(dto);
 			}
 			map.put("reportCommentList", reportCommentList);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			resClose();
 		}
 		
 		return map;

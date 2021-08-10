@@ -45,8 +45,8 @@
 				<div class="container">
 					<table class="table table-hover mt-2">
 						<thead class="table-light">
-						
-						
+
+
 							<tr>
 								<th scope="col"><input id="allCheck" type="checkbox"
 									class="form-check-input" " /></th>
@@ -55,21 +55,19 @@
 								<th scope="col">수량</th>
 								<th scope="col">가격</th>
 								<th class="text-center" scope="col">상세보기</th>
-								<div class scope="col"></div>
 							</tr>
 						</thead>
 						<tbody>
 							<c:forEach items="${cartlist}" var="cartlists">
-								<tr class>
+								<tr>
 									<td class="text_ct align-middle"><input ﻿ name="RowCheck"
 										class="productDel form-check-input" type="checkbox"
 										value="${cartlists.productId}" /></td>
-									</th>
 									<td><img src="/photo/${cartlists.newFileName}"
 										class="img-thumbnail"
 										style="width: 80px; height: 80px; object-fit: cover;" /></td>
 									<td class="align-middle">${cartlists.productName}</td>
-									<td class="align-middle">
+									<td class="abc align-middle">
 										<div class='d-flex'>
 											<div class="qu me-2">1</div>
 											<i id="up" class="up bi bi-arrow-up-square-fill"
@@ -81,7 +79,9 @@
 									<td class="price align-middle">${cartlists.price}</td>
 									<td>
 										<div class="d-grid gap-2 col-6 mx-auto mt-4">
-											<a href="/Project/productdetail?productId=${cartlists.productId}" class="btn btn-secondary btn-sm">상세보기</a>
+											<a
+												href="/Project/productdetail?productId=${cartlists.productId}"
+												class="btn btn-secondary btn-sm">상세보기</a>
 										</div>
 									</td>
 									<td class="visually-hidden sumPrice align-middle">${cartlists.price}</td>
@@ -102,12 +102,10 @@
 					<input type="hidden" class="form-control" id="blackpruductId"
 						name="blackproductId" value="">
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-						<button button id="blackaddsubmit" class="btn btn-dark"
-							type="button">선택상품 삭제</button>
-						<button type="button"
-							onclick="location.href='/Project/cartBuy"
-							class="btn btn-dark btn-sm" style="float: right;">선택상품
-							주문하기</button>
+						<button id="blackaddsubmit" class="btn btn-dark" type="button">선택상품
+							삭제</button>
+						<button type="button" id="blackBuy" class="btn btn-dark btn-sm"
+							style="float: right;">선택상품 주문하기</button>
 					</div>
 				</div>
 			</div>
@@ -195,8 +193,9 @@
 				})
 
 		//삭제
-
+		var qus = [];
 		var delproductId = [];
+		var prices = [];
 		$('#blackaddsubmit')
 				.click(
 						function() {
@@ -221,7 +220,7 @@
 															function(i, item) {
 																content += '<tr>'
 																content += '<td class="text_ct align-middle"><input ﻿ name="RowCheck" class="productDel form-check-input"'
-							content +=			' type="checkbox" value="'+item.productId+'" /></td>'
+																content +=			' type="checkbox" value="'+item.productId+'" /></td>'
 																content += '</th>'
 																content += '<td class="align-middle">'
 																		+ item.productName
@@ -258,6 +257,32 @@
 									})
 
 						})
+		$('#blackBuy').click(function() {		
+			$('input[name="RowCheck"]:checked').each(function() {
+				delproductId.push($(this).val());
+				qus.push($(this).parent().nextAll('.abc').find('div.qu').text());
+				prices.push($(this).parent().nextAll('.price').text());
+			})
+			$.ajax({
+				type : "POST",//방식
+				url : "/Project/cartBuy",//주소
+				data : {
+					delproductId:delproductId,
+					qus:qus,
+					prices:prices,
+				},
+				dataType : 'JSON',
+				success : function(data) { //성공시
+					if(data.suc>0){
+						location.href = '/Project/MainProduct/productResult.jsp';
+					}
+				},
+				error : function(e) { //실패시
+					console.log(e);
+				}
+			})
+
+		})
 	</script>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=5"></script>

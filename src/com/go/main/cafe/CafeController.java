@@ -37,7 +37,6 @@ public class CafeController extends HttpServlet {
 		String sessionId = (String) session.getAttribute("loginId");
 		switch (addr) {
 		case "/cafeExist":
-			if (sessionId != null) {
 				check = service.cafeExist();
 				System.out.println(check);
 				if (req.getParameter("menu").equals("a")) {
@@ -53,10 +52,6 @@ public class CafeController extends HttpServlet {
 					dis = req.getRequestDispatcher("/confusionInfo");
 					dis.forward(req, resp);
 				}
-			} else {
-				resp.sendRedirect("/Project/");
-			}
-
 			break;
 
 		case "/cafeInputCheck":

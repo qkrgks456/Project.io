@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.naming.Context;
@@ -425,7 +426,7 @@ public class ProductDAO {
 		}
 		return map;
 	}
-	
+
 //상품정보 지우기
 	public int productListDel(String[] delproductId) {
 		int suc = 0;
@@ -442,11 +443,10 @@ public class ProductDAO {
 		}
 		return suc;
 	}
-	
 
-	//구매내역 배열 가져오기
+	// 구매내역 배열 가져오기
 	public HashMap<String, Object> purchaseInsert(String sessionId, String pid, String qty, String prc) {
-		HashMap<String, Object> map =new HashMap<String, Object>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		int suc1 = 0;
 		String sql = "INSERT INTO purchase(orderNo,memberkey,productid,buyamount,buyprice) values(pur_seq.NEXTVAL,?, ?, ?, ?)";
 		try {
@@ -460,9 +460,8 @@ public class ProductDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return map;
-	
 
 	}
 
@@ -484,8 +483,8 @@ public class ProductDAO {
 	 * purchaseList; }
 	 */
 
-	//장바구니 삭제
-	
+	// 장바구니 삭제
+
 	public int cartDel(String[] delproductId) {
 		int suc = 0;
 		try {
@@ -509,38 +508,91 @@ public class ProductDAO {
 
 	public ArrayList<ProductDTO> purchaseList(String sessionId) {
 		String sql = "SELECT p.productId, p.buyamount,p.buyprice,p.productName,i.newfilename FROM (select b.productId,b.buyamount,b.buyprice,p.productName "
-				+ "FROM (select productId,buyamount,buyprice from purchase where memberKey=? ORDER BY orderNo) b "
+				+ "FROM (select productId,buyamount,buyprice from purchase where memberKey=? AND deleteCheck='N' ORDER BY orderNo) b "
 				+ "LEFT OUTER JOIN product p ON b.productId=p.productId)p "
 				+ "LEFT OUTER JOIN image i ON p.productId=i.division";
-			ArrayList<ProductDTO> cartlist = null;
-			ProductDTO dto = null;
-			try {
-				cartlist = new ArrayList<ProductDTO>();
-				ps = conn.prepareStatement(sql);
-				ps.setString(1, sessionId);
-				rs = ps.executeQuery();
-				while (rs.next()) {
-					dto = new ProductDTO();
-					dto.setProductName(rs.getString("productname"));
-					dto.setProductQuantity(rs.getInt("buyamount"));
-					dto.setPrice(rs.getInt("buyprice"));
-					dto.setNewFileName(rs.getString("newfilename"));
-					dto.setProductId(rs.getInt("productId"));
-					cartlist.add(dto);
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				resClose();
+		ArrayList<ProductDTO> cartlist = null;
+		ProductDTO dto = null;
+		try {
+			cartlist = new ArrayList<ProductDTO>();
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				dto = new ProductDTO();
+				dto.setProductName(rs.getString("productname"));
+				dto.setProductQuantity(rs.getInt("buyamount"));
+				dto.setPrice(rs.getInt("buyprice"));
+				dto.setNewFileName(rs.getString("newfilename"));
+				dto.setProductId(rs.getInt("productId"));
+				cartlist.add(dto);
 			}
-			return cartlist;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
 		}
-	
+		return cartlist;
 	}
 
+	public int cartBuy(String sessionId, String[] delproductId, String[] qus, String[] prices) {
+		int suc = 0;
+		try {
+			for (int i = 0; i < qus.length; i++) {
+				String sql = "INSERT INTO purchase(orderNo,memberkey,productid,buyamount,buyprice) values(pur_seq.NEXTVAL,?, ?, ?, ?)";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, sessionId);
+				ps.setString(2, delproductId[i]);
+				ps.setString(3, qus[i]);
+				ps.setString(4, prices[i]);
+				suc = ps.executeUpdate();
+			}
 
-	
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			resClose();
+		}
+		return suc;
+	}
 
-	
+	public ArrayList<ProductDTO> sellList(String sessionId) {
+		ArrayList<Integer> productIdList = new ArrayList<Integer>();
+		ArrayList<ProductDTO> sellList = new ArrayList<ProductDTO>();
+		ProductDTO dto = null;
+		try {
+			String sql = "select productId from product WHERE cafeKey=? AND selCheck ='Y'";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, sessionId);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				productIdList.add(rs.getInt("productId"));
+			}
+			for (Integer productId : productIdList) {
+				sql = "SELECT b.memberKey,b.productId,b.buyAmount,b.buyPrice,p.productName "
+						+ "FROM(select memberKey,productId,buyAmount,buyPrice from purchase WHERE productId = ?) b "
+						+ "LEFT OUTER JOIN product p ON b.productId=p.productId";
+				ps = conn.prepareStatement(sql);
+				ps.setInt(1, productId);
+				rs = ps.executeQuery();
+				while(rs.next()) {
+					System.out.println(productId);
+					dto = new ProductDTO();
+					dto.setmemberkey(rs.getString("memberKey"));
+					dto.setProductId(rs.getInt("productId"));
+					dto.setBuyAmount(rs.getString("buyAmount"));
+					dto.setPrice(rs.getInt("buyPrice"));
+					dto.setProductName(rs.getString("productName"));
+					sellList.add(dto);
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			resClose();
+		}
+		return sellList;
+	}
 
-
+}

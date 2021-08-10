@@ -44,7 +44,7 @@ public class MemberDAO {
 	}
 
 	public boolean login(MemberDTO dto) {
-		sql = "SELECT memberkey FROM users WHERE memberkey=? AND pw=?";
+		sql = "SELECT memberkey FROM users WHERE memberkey=? AND pw=? AND deleteCheck='N'";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, dto.getMemberKey());
@@ -366,8 +366,6 @@ public class MemberDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
-			resClose();
 		}
 			
 		

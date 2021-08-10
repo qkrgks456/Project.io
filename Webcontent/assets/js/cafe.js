@@ -139,14 +139,16 @@ $(document).ready(function() {
 
 		$.each(data.list, function(i, item) {
 			var check = sessionId == item.memberKey;
+			var check2 = sessionId == null;
+			console.log(check2);
 			content += "<div class='updateCheck'>"
 			content += "<p class='fw-bold'>" + item.memberKey + "</p>";
 			content += "<p class='lh-sm'>";
 			content += item.cm_content;
-			if (!check) {
+			if (!check&&!check2) {
 				content += "<a href='/Project/report/report.jsp?commentNo="+item.commentNo+"&memberKey="+item.memberKey+"&commentContent="+item.cm_content+"&cafeKey="+data.cafeKey+"'"
 				content += " class='float-end btn btn-secondary btn-sm'>신고</a>";
-			} else {
+			} else if(check){
 				content += "<a class='commentDelBtn mx-2 float-end btn btn-secondary btn-sm' title='" + item.commentNo + "'>삭제</a>";
 				content += "<a class='commentUpdateBtn float-end btn btn-secondary btn-sm'>수정</a>";
 			}

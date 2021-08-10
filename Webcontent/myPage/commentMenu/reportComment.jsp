@@ -38,37 +38,45 @@
 					</button>
 					<h2 class="fw-bold my-3">신고댓글</h2>
 				</div>
+				<hr/>
 				<!-- 내용시작 -->
 				<div class="cont container">
-					<table class="table table-hover mt-2">
-						<thead class="table-light">
+					<c:if test="${map.reportCommentList[0] ne null}">
+						<table class="table table-hover mt-2">
+							<thead class="table-light">
 
-							<tr>
-								<th scope="col">경로</th>
-								<th scope="col">댓글내용</th>
-								<th scope="col">신고사유</th>
-								<th scope="col">처리유무</th>
-								<th scope="col">처리한관리자</th>
-							</tr>
-
-						</thead>
-						<tbody>
-							<c:forEach items="${map.reportCommentList}" var="list">
 								<tr>
-								 <c:if test="${list.cafeName ne null}">
-										<td class="align-middle">${list.cafeName}</td>
-									</c:if>
-								<c:if test="${list.productName ne null}">
-										<td class="align-middle">${list.productName}</td>
-									</c:if>
-									<td class="align-middle">${list.cm_content}</td>
-									<td class="align-middle">${list.reportReason}</td>
-									<td class="align-middle">${list.processStatus}</td>
-									<td class="align-middle">${list.managers}</td>
+									<th scope="col">경로</th>
+									<th scope="col">댓글내용</th>
+									<th scope="col">신고사유</th>
+									<th scope="col">처리유무</th>
+									<th scope="col">처리한관리자</th>
+									<th scope="col">처리내용</th>
 								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+
+							</thead>
+							<tbody>
+								<c:forEach items="${map.reportCommentList}" var="list">
+									<tr>
+										<c:if test="${list.cafeName ne null}">
+											<td class="align-middle">${list.cafeName}</td>
+										</c:if>
+										<c:if test="${list.productName ne null}">
+											<td class="align-middle">${list.productName}</td>
+										</c:if>
+										<td class="align-middle">${list.cm_content}</td>
+										<td class="align-middle">${list.reportReason}</td>
+										<td class="align-middle">${list.processStatus}</td>
+										<td class="align-middle">${list.managers}</td>
+										<td class="align-middle">${list.cmreportdispose}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</c:if>
+					<c:if test="${map.reportCommentList[0] eq null}">
+						<div class="text-center text-muted">신고한 댓글이 없습니다</div>
+					</c:if>
 				</div>
 			</div>
 		</div>

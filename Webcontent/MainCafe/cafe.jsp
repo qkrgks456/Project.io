@@ -47,6 +47,14 @@
 								<button class="btn btn-outline-dark btn-sm"
 									onclick="location.href='/Project/cafeGoodList'">이전으로</button>
 							</c:if>
+							<c:if test="${param.pageCheck eq 'cafeComment'}">
+								<button class="btn btn-outline-dark btn-sm"
+									onclick="location.href='/Project/cafeMypageCommetList'">이전으로</button>
+							</c:if>
+							<c:if test="${param.pageCheck eq 'search'}">
+								<button class="btn btn-outline-dark btn-sm"
+									onclick="location.href='/Project/cafeExist?menu=search'">이전으로</button>
+							</c:if>
 						</div>
 					</div>
 				</div>
@@ -311,7 +319,7 @@
 							<p class="fw-bold">${commentLists.memberKey}</p>
 							<p class="lh-sm">
 								${commentLists.cm_content}
-								<c:if test="${loginId ne commentLists.memberKey}">
+								<c:if test="${loginId ne commentLists.memberKey && sessionScope.loginId ne null}">
 									<a class="float-end btn btn-secondary btn-sm"
 										href="/Project/report/report.jsp?commentNo=${commentLists.commentNo}&memberKey=${commentLists.memberKey}&commentContent=${commentLists.cm_content}&cafeKey=${map.cafeKey}">신고</a>
 								</c:if>
@@ -380,7 +388,7 @@
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=15"></script>
 	<!-- cafe.js 추가 -->
-	<script src="/Project/assets/js/cafe.js?var=12"></script>
+	<script src="/Project/assets/js/cafe.js?var=15"></script>
 	<script type="text/javascript">
 	
 	</script>

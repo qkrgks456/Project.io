@@ -14,7 +14,7 @@
 		<div class="list-group list-group-flush mt-3">
 			<h4 class="fst-italic ms-3 fw-bold text-decoration-none">판매</h4>
 			<a class="ps-4 fw-bold list-group-item list-group-item-action"
-				href="/Project/myShopping/sell/sellList.jsp" style="cursor: pointer;">판매내역</a> <a
+				href="/Project/sellList" style="cursor: pointer;">판매내역</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"
 				href="/Project/myShopping/sell/productInput/productInput.jsp" style="cursor: pointer;">상품등록</a> <a
 				class="ps-4 fw-bold list-group-item list-group-item-action"

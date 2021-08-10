@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 
 @WebServlet({ "/productList", "/productinsert", "/productdetail", "/searchproduct", "/cartinsert", "/cartList",
-		"/myProductList", "/productListDel", "/purchaseInsert", "/purchaseList", "/cartDel","/cartBuy" })
+		"/myProductList", "/productListDel", "/purchaseInsert", "/purchaseList", "/cartDel", "/cartBuy","/sellList" })
 public class ProductController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -147,21 +147,30 @@ public class ProductController extends HttpServlet {
 
 		case "/purchaseList":
 			System.out.println("구매내역 뿌리기");
-			ArrayList<ProductDTO>purchaseList = service.purchaseList(sessionId);
+			ArrayList<ProductDTO> purchaseList = service.purchaseList(sessionId);
 			req.setAttribute("purchaseList", purchaseList);
 			System.out.println(purchaseList);
 			dis = req.getRequestDispatcher("myShopping/buy/buyList.jsp");
 			dis.forward(req, resp);
 			break;
 
-			
 		case "/cartBuy":
-			
-			
+			System.out.println("카트 선택 구매");
+			suc = service.cartBuy(sessionId);
+			map = new HashMap<String, Object>();
+			map.put("suc", suc);
+			if(suc>0) {
+				resp.setContentType("text/html; charset=UTF-8");
+				resp.getWriter().print(new Gson().toJson(map));
+			}
 			break;
-			
-			
-			
+		case "/sellList":
+			System.out.println("판매 내역");
+			ArrayList<ProductDTO> sellList = service.sellList(sessionId);
+			req.setAttribute("sellList", sellList);
+			dis = req.getRequestDispatcher("myShopping/sell/sellList.jsp");
+			dis.forward(req, resp);
+			break;
 		}
 
 	}

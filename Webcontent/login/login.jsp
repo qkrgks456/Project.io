@@ -71,7 +71,6 @@
 					<div class="float-end">
 					
 						<input type="button" class="btn btn-dark" form="loginform" id="login" value="로그인">
-						<a href="/Project/index.jsp"class="btn btn-secondary">메인</a>
 					</div>
 				</div>
 				</div>

@@ -40,48 +40,38 @@
 					</button>
 					<h2 class="fw-bold my-3">카페댓글</h2>
 				</div>
+				<hr />
 				<!-- 내용시작 -->
 
 				<div class="cont container">
-					<table class="table table-hover mt-2">
-						<thead class="table-light">
-							<tr>
-								<th scope="col">카페명</th>
-								<th scope="col">댓글내용</th>
-								<th class="text-center" scope="col">상세보기</th>
-							</tr>
-						</thead>
-						<tbody>
-
-							<%-- 	<c:if test="${empty cafeMypageCommetList}">
+					<c:if test="${cafeMypageCommetList[0] ne null}">
+						<table class="table table-hover mt-2">
+							<thead class="table-light">
 								<tr>
-									<td colspan="6">조회된 데이터가 없습니다.</td>
+									<th scope="col">카페명</th>
+									<th scope="col">댓글내용</th>
+									<th class="text-center" scope="col">상세보기</th>
 								</tr>
-							</c:if> --%>
-
-							<c:forEach items="${cafeMypageCommetList}" var="list">
-
-
-								<tr>
-									<td class="align-middle">${list.cafeName}</td>
-									<td class="align-middle">${list.cm_content}</td>
-
-									<td><button id="adminDetail" class="btn btn-dark"
-											type="button" onclick="location.href='/Project/cafeDetail?cafeKey=${list.division}'">상세보기</button></td>
-								</tr>
-
-							</c:forEach>
-
-						</tbody>
-
-
-
-					</table>
+							</thead>
+							<tbody>
+								<c:forEach items="${cafeMypageCommetList}" var="list">
+									<tr>
+										<td class="align-middle">${list.cafeName}</td>
+										<td class="align-middle">${list.cm_content}</td>
+										<td><button id="adminDetail" class="btn btn-dark"
+												type="button"
+												onclick="location.href='/Project/cafeDetail?cafeKey=${list.division}&pageCheck=cafeComment'">상세보기</button></td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</c:if>
+					<c:if test="${cafeMypageCommetList[0] eq null}">
+						<div class="text-center text-muted">작성한 댓글이 없습니다</div>
+					</c:if>
 				</div>
-
 			</div>
 		</div>
-
 	</div>
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.jsp"></jsp:include>

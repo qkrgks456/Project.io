@@ -50,85 +50,46 @@
 					<table class="table table-hover mt-2">
 						<thead class="table-light">
 							<tr>
-								<th scope="col"><input id="allCheck" type="checkbox"
-									class="form-check-input"" /></th>
 								<th scope="col">상품명</th>
 								<th scope="col">상품코드</th>
 								<th scope="col">가격</th>
-
-								<th class="text-center" scope="col">관리</th>
 							</tr>
-							</thead>
-							<tbody>
-							<c:forEach items="${sellList}" var="sellList">
+						</thead>
+						<tbody>
+							<c:forEach items="${sellList}" var="sellLists">
 								<tr class="">
-									<th class="align-middle" scope="row"><div
-											class="form-check">
-											<input class="form-check-input" type="checkbox" value="s"
-												id="flexCheckDefault" name="delCheck">
-										</div></th>
-									<td class="align-middle">${sellList.productName}</td>
-									<td class="align-middle">${sellList.productId}</td>
-									<td class="align-middle">${sellList.price}</td>
-									<td>
-										<div class="d-grid gap-2 col-6 mx-auto mt-1">
-											<a class="btn btn-secondary btn-sm"
-												onclick="location.href='/Project/myShopping/sell/productList/productDelResult.jsp'">삭제하기</a>
-										</div>
-									</td>
+									<td class="align-middle">${sellLists.productName}</td>
+									<td class="align-middle">${sellLists.productId}</td>
+									<td class="align-middle">${sellLists.price}</td>
 								</tr>
-								</c:forEach>
-							</tbody>
-
-
-							<tfoot>
-								<tr>
-									<th>합계</th>
-									<th id='sumAmount'>수량 : 3</th>
-									<th id='sumSumPrice'>총 매출 : 65000</th>
-									<th colspan="3"></th>
-								</tr>
-							</tfoot>
-						</table>
-						</table>
-						<div class="d-grid gap-2 d-md-block"></div>
-
-
-						<button class="btn btn-dark" type="button" name="delProductBtn">선택내역
-							삭제</button>
-							
-					
+							</c:forEach>
+						</tbody>
+						<tfoot>
+							<tr>
+								<th>합계</th>
+								<th id='sumAmount'>수량 : 3</th>
+								<th id='sumSumPrice'>총 매출 : 65000</th>
+								<th colspan="3"></th>
+							</tr>
+						</tfoot>
+					</table>
+					<div class="d-grid gap-2 d-md-block"></div>
 				</div>
 			</div>
 
 		</div>
 	</div>
-	</div>
-	</div>
-	</div>
-	</div>
-	</div>
-	</div>
-	<!-- 하단 고정 퀵메뉴 -->
-	<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
-
-	</c:if>
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.jsp"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<script type="text/javascript">
-	
-
 		/* 페이지 시작시 총 가격  */
 		var sumPrice = 0;
 		$('.price').each(function(i, item) {
 			sumPrice += Number($(this).text());
 		})
 		$('#sumSumPrice').empty();
-		$('#sumSumPrice').append('총 매출 : ' + sumPrice.toLocaleString() + '원');
-
-	
-		
+		$('#sumSumPrice').append('총 매출 : ' + sumPrice.toLocaleString() + '원');		
 	</script>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=6"></script>

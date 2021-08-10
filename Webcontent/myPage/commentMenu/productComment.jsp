@@ -38,28 +38,34 @@
 					</button>
 					<h2 class="fw-bold my-3">상품댓글</h2>
 				</div>
+				<hr />
 				<!-- 내용시작 -->
 				<div class="cont container">
-					<table class="table table-hover mt-2">
-						<thead class="table-light">
-							<tr>
-								<th scope="col">상품명</th>
-								<th scope="col">댓글내용</th>
-								<th class="text-center" scope="col">상세보기</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${productCommentList}" var="list">
+					<c:if test="${productCommentList[0] ne null}">
+						<table class="table table-hover mt-2">
+							<thead class="table-light">
 								<tr>
-									<td class="align-middle">${list.cmProductname}</td>
-									<td class="align-middle">${list.cm_content}</td>
-									<td class="align-middle"><button class="btn btn-dark"
-											onclick="location.href='/Project/productdetail?productId=${list.productId}'">상세보기</button></td>
+									<th scope="col">상품명</th>
+									<th scope="col">댓글내용</th>
+									<th class="text-center" scope="col">상세보기</th>
 								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${productCommentList}" var="list">
+									<tr>
+										<td class="align-middle">${list.cmProductname}</td>
+										<td class="align-middle">${list.cm_content}</td>
+										<td class="align-middle"><button class="btn btn-dark"
+												onclick="location.href='/Project/productdetail?productId=${list.productId}'">상세보기</button></td>
+									</tr>
 
-							</c:forEach>
-						</tbody>
-					</table>
+								</c:forEach>
+							</tbody>
+						</table>
+					</c:if>
+					<c:if test="${productCommentList[0] eq null}">
+						<div class="text-center text-muted">작성한 댓글이 없습니다</div>
+					</c:if>
 				</div>
 			</div>
 		</div>
