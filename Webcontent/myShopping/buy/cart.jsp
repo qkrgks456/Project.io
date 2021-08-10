@@ -45,8 +45,11 @@
 				<div class="container">
 					<table class="table table-hover mt-2">
 						<thead class="table-light">
+						
+						
 							<tr>
-								<th scope="col">#</th>
+								<th scope="col"><input id="allCheck" type="checkbox"
+									class="form-check-input" " /></th>
 								<th scope="col">이미지</th>
 								<th scope="col">상품명</th>
 								<th scope="col">수량</th>
@@ -57,12 +60,11 @@
 						</thead>
 						<tbody>
 							<c:forEach items="${cartlist}" var="cartlists">
-								<tr class="">
-									<th class="align-middle" scope="row"><div
-											class="form-check">
-											<input class="form-check-input" type="checkbox" value="s"
-												id="flexCheckDefault" name="delCheck">
-										</div></th>
+								<tr class>
+									<td class="text_ct align-middle"><input ﻿ name="RowCheck"
+										class="productDel form-check-input" type="checkbox"
+										value="${cartlists.productId}" /></td>
+									</th>
 									<td><img src="/photo/${cartlists.newFileName}"
 										class="img-thumbnail"
 										style="width: 80px; height: 80px; object-fit: cover;" /></td>
@@ -79,7 +81,7 @@
 									<td class="price align-middle">${cartlists.price}</td>
 									<td>
 										<div class="d-grid gap-2 col-6 mx-auto mt-4">
-											<a class="btn btn-secondary btn-sm">상세보기</a>
+											<a href="/Project/productdetail?productId=${cartlists.productId}" class="btn btn-secondary btn-sm">상세보기</a>
 										</div>
 									</td>
 									<td class="visually-hidden sumPrice align-middle">${cartlists.price}</td>
@@ -97,9 +99,11 @@
 							</tr>
 						</tfoot>
 					</table>
+					<input type="hidden" class="form-control" id="blackpruductId"
+						name="blackproductId" value="">
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-						<button class="btn btn-dark sm-sm-2" type="button"
-							id="delProductBtn">선택상품 삭제</button>
+						<button button id="blackaddsubmit" class="btn btn-dark"
+							type="button">선택상품 삭제</button>
 						<button type="button"
 							onclick="location.href='/Project/MainProduct/productResult.jsp'"
 							class="btn btn-dark btn-sm" style="float: right;">선택상품
@@ -189,28 +193,71 @@
 								'총 가격 : ' + sumPrice.toLocaleString() + '원');
 					}
 				})
-				
-		$('#delProductBtn').click(function() {
-			var delCheckArr = [];
-			$('input[name="delCheck"]:checked').each(function() {
-				delCheckArr.push($(this).val()); //체크된 박스만 뽑아서 배열로 push
-				console.log(delCheckArr);		
-			})
-			
-	 $.ajax({
-			      type  : "POST",
-			      url    : "/Project/sellListDel",
-			      data: {
-			    	  delCheckArr : delCheckArr       
-			      },
-			      success: function(result){
-			      	console.log(result);
-			      },
-			      error: function(xhr, status, error) {
-			      	alert(error);
-			      }  
-			   });
-			})
+
+		//삭제
+
+		var delproductId = [];
+		$('#blackaddsubmit')
+				.click(
+						function() {
+							$('input[name="RowCheck"]:checked').each(
+									function() {
+										delproductId.push($(this).val());
+									})
+							$
+									.ajax({
+										type : "POST",//방식
+										url : "/Project/productListDel",//주소
+										data : {
+											delproductId : delproductId,
+										},
+										dataType : 'JSON',
+										success : function(data) { //성공시
+											console.log(data);
+											content = "";
+											$
+													.each(
+															data.myProductList,
+															function(i, item) {
+																content += '<tr>'
+																content += '<td class="text_ct align-middle"><input ﻿ name="RowCheck" class="productDel form-check-input"'
+							content +=			' type="checkbox" value="'+item.productId+'" /></td>'
+																content += '</th>'
+																content += '<td class="align-middle">'
+																		+ item.productName
+																		+ '</td>'
+																content += '<td class="align-middle">'
+																		+ item.newFileName
+																		+ '</td>'
+																content += '<td class="align-middle">'
+																		+ item.productId
+																		+ '</td>'
+																content += '<td class="align-middle">'
+																		+ item.price
+																		+ '</td>'
+																content += '<td class="align-middle">'
+																		+ item.productQuantity
+																		+ '</td>'
+																content += '<td>'
+																content += '<div class="d-grid gap-2 col-6 mx-auto mt-1">'
+																content += '<a class="btn btn-secondary btn-sm" type="button" href="/Project/productdetail?productId='
+																		+ item.productId
+																		+ '"'
+																content += '>상세보기</a>'
+																content += '</div>'
+																content += '</td>'
+																content += '</tr>'
+															})
+											$('tbody').empty();
+											$('tbody').append(content);
+										},
+										error : function(e) { //실패시
+											console.log(e);
+										}
+
+									})
+
+						})
 	</script>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=5"></script>

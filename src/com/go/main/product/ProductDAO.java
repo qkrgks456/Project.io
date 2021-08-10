@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -424,7 +425,8 @@ public class ProductDAO {
 		}
 		return map;
 	}
-
+	
+//상품정보 지우기
 	public int productListDel(String[] delproductId) {
 		int suc = 0;
 		try {
@@ -466,30 +468,48 @@ public class ProductDAO {
 
 	// 구매내역 리스트에 뿌리기
 
-	public ArrayList<ProductDTO> purchaseList(String sessionId) {
-		String sql = "SELECT p.productname,p.productId,p.productquantity,p.price, i.newfilename from product p left outer join image i on i.division=p.productid";
-		ArrayList<ProductDTO> purchaseList = null;
-		ProductDTO dto = null;
+	/*
+	 * public HashMap<String, Object> purchaseList(String sessionId) { String sql =
+	 * "SELECT p.productname,p.productId,p.productquantity,p.price, i.newfilename from product p left outer join image i on i.division=p.productid"
+	 * ; HashMap<String, Object> purchaseList = null; ProductDTO dto = null; try {
+	 * purchaseList = new HashMap<String, Object>(); ps =
+	 * conn.prepareStatement(sql); ps.setString(1, sessionId); rs =
+	 * ps.executeQuery(); while (rs.next()) { HashMap<String, Object> dto = new
+	 * ProductDTO(); dto.setNewFileName(rs.getString("newfilename"));
+	 * dto.setProductName(rs.getString("productname"));
+	 * dto.setProductQuantity(rs.getInt("productquantity"));
+	 * dto.setPrice(rs.getInt("price")); //
+	 * dto.setProductId(rs.getInt("productId")); purchaseList.add(dto); } } catch
+	 * (SQLException e) { e.printStackTrace(); } finally { resClose(); } return
+	 * purchaseList; }
+	 */
+
+	//장바구니 삭제
+	
+	public int cartDel(String[] delproductId) {
+		int suc = 0;
 		try {
-			purchaseList = new ArrayList<ProductDTO>();
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, sessionId);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				dto = new ProductDTO();
-				dto.setNewFileName(rs.getString("newfilename"));
-				dto.setProductName(rs.getString("productname"));
-				dto.setProductQuantity(rs.getInt("productquantity"));
-				dto.setPrice(rs.getInt("price"));
-				// dto.setProductId(rs.getInt("productId"));
-				purchaseList.add(dto);
+			for (String productId : delproductId) {
+				String sql = "UPDATE product SET delCheck = 'Y' WHERE productId = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, productId);
+				suc = ps.executeUpdate();
 			}
-		} catch (SQLException e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			resClose();
 		}
-		return purchaseList;
+		return suc;
 	}
+
+	public int cafebasket(String basketCheckBtn, String cafeKey, String attribute) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+	
+
+	
 
 }

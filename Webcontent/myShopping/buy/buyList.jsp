@@ -53,9 +53,8 @@
 					<table class="table table-hover mt-2">
 						<thead class="table-light">
 							<tr>
-								<th scope="col"><div class="form-check">
-										<input class="form-check-input" type="checkbox" value=""
-											id="flexCheckDefault">
+						<th scope="col"><input id="allCheck" type="checkbox"
+									class="form-check-input" " /></th>
 
 									</div></th>
 								<th scope="col">이미지</th>
@@ -68,12 +67,9 @@
 						<tbody>
 							<c:forEach items="${buylist}" var="buylists">
 								<tr class="">
-									<th class="align-middle" scope="row"><div
-											class="form-check">
-											<input class="form-check-input" type="checkbox" value=""
-												id="flexCheckDefault">
-
-										</div></th>
+										<td class="text_ct align-middle"><input ﻿ name="RowCheck"
+										class="productDel form-check-input" type="checkbox"
+										value="${buylists.productName}" /></td></th>
 									<td><img src="/photo/${buylists.newFileName}"
 										class="img-thumbnail"
 										style="width: 80px; height: 80px; object-fit: cover;" /></td>
@@ -84,7 +80,7 @@
 									<td>
 
 										<div class="d-grid gap-2 col-6 mx-auto mt-4">
-											<a class="btn btn-secondary btn-sm">상세보기</a>
+											<a href="/Project/productdetail?productName=${buylists.productName}" class="btn btn-secondary btn-sm">상세보기</a>
 										</div>
 									</td>
 								</tr>
