@@ -91,7 +91,7 @@
 							<script type="text/javascript">
 							Swal.fire(
 							{
-								title: '블라인드 완료',
+								title: '블라인드 추가완료',
 								icon: 'success',
 								confirmButtonColor: '#000',
 								confirmButtonText: '확인',
@@ -105,7 +105,7 @@
 							<script type="text/javascript">
 						Swal.fire(
 							{
-								title: '블라인드 해제 완료',
+								title: '블라인드 해제완료',
 								icon: 'success',
 								confirmButtonColor: '#000',
 								confirmButtonText: '확인',

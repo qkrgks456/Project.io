@@ -119,8 +119,18 @@
 								confirmButtonText: '확인',
 								}
 							)
-								
-					
+						</script>
+						</c:if>
+						<c:if test="${success eq 2}">
+							<script type="text/javascript">
+							Swal.fire(
+								{
+								title: '최고 관리자 계정이 아닙니다.',
+								icon: 'error',
+								confirmButtonColor: '#000',
+								confirmButtonText: '확인',
+								}
+							)
 						</script>
 						</c:if>
 					</div>

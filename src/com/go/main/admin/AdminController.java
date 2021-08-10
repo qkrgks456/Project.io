@@ -10,7 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+
 
 @WebServlet({ "/adminMemberList", "/adminMemberListDetail", "/adminMemberBlackAddPage", "/adminMemberBlackMinus",
 		"/adminMemberBlackAdd", "/adminSearch", "/adminDetail", "/authorityDelete", "/adminSelect", "/memberAppoint",
@@ -45,7 +45,6 @@ public class AdminController extends HttpServlet {
 		String memberkey = "";
 		HashMap<String, Object> map = new HashMap<String, Object>();
 
-		String msg = "";
 		AdminService service = new AdminService(req);
 		RequestDispatcher dis = null;
 
@@ -118,9 +117,12 @@ public class AdminController extends HttpServlet {
 
 		case "/adminDetail":
 			System.out.println("어드민에서 관리자 상세보기");
-			String delcheck = req.getParameter("delcheck");
+			success = 0;
+			if(req.getParameter("success") !=null ) {
+			success = Integer.parseInt(req.getParameter("success"));
+			}
 			map = service.adminDetail();
-			map.put("delcheck", delcheck);
+			map.put("success", success);
 			req.setAttribute("adminDetail", map);
 			dis = req.getRequestDispatcher("admin/adminSelect/adminDetail.jsp");
 			dis.forward(req, resp);
@@ -130,10 +132,7 @@ public class AdminController extends HttpServlet {
 			System.out.println("어드민에서 권한 삭제");
 			map = service.authorityDelete();
 			System.out.println(map.get("memberkey"));
-			req.setAttribute("authorityDelete", map);
-			dis = req.getRequestDispatcher("/adminDetail?delcheck=" + true);
-			dis.forward(req, resp);
-			// resp.sendRedirect("/Project/adminDetail?memberkey="+map.get("memberkey")+"&?suc="+map.get("suc"));
+			resp.sendRedirect("/Project/adminDetail?memberkey="+map.get("memberkey")+"&success="+map.get("success"));
 
 			break;
 		case "/adminSelect":

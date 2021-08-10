@@ -83,7 +83,7 @@ public class AdminService {
 		return map;
 		
 	}
-
+	//권한 삭제
 	public HashMap<String, Object> authorityDelete() {
 		HashMap<String, Object> map=null;
 		String memberkey = req.getParameter("memberkey");

@@ -92,7 +92,7 @@
 						</tr>
 						<!-- reportCmNo -->
 					</table>
-						<button id="adminReportCommentDetaillist" class="btn btn-dark" type="button" onclick="location.href='admin/adminComment/adminReportComment/adminReportCommentList.jsp'">리스트로</button>
+						<button id="adminReportCommentlist" class="btn btn-dark" type="button" onclick="location.href='admin/adminComment/adminReportComment/adminReportCommentList.jsp'">리스트로</button>
 						<button id="adminReportCommentDetaillist" class="btn btn-dark" type="button" onclick="location.href='\adminReportCommentform?reportCmNo=${adminReportCommentDetail.dto.reportCmNo}'">신고처리</button>
 					</div>
 					
@@ -101,7 +101,7 @@
 					<script type="text/javascript">
 						Swal.fire(
 							{
-								title: '블라인드 처리완료',
+								title: '신고댓글 처리완료',
 								icon: 'success',
 								confirmButtonColor: '#000',
 								confirmButtonText: '확인',

@@ -28,11 +28,11 @@
 		</c:if>
 		<!-- 사이드바 배치 -->
 		<div class="d-flex" style="height: auto; min-height: 100vh;">
-		<!-- 사이드바 불러오기 -->
+			<!-- 사이드바 불러오기 -->
 			<jsp:include page="/admin/adminSideBar.jsp"></jsp:include>
 			<div class="cont container-fluid mx-5 py-5">
-			<!-- 여기부터 내용 넣으세요 -->
-			<!-- adminReportCommentform -->
+				<!-- 여기부터 내용 넣으세요 -->
+				<!-- adminReportCommentform -->
 				<div class="cont container-fluid mx-5 py-5">
 					<!-- 회원정보 탭(여닫기) -->
 					<div class="d-flex align-items-center">
@@ -43,8 +43,8 @@
 						<h2 class="fw-bold my-3">신고처리</h2>
 					</div>
 					<hr />
-					<div class = "col-md-9 mb-3">
-					<table class="table table-bordered mt-4">
+					<div class="col-md-9 mb-3">
+						<table class="table table-bordered mt-4">
 							<tr>
 								<th class="center">신고자 아이디</th>
 								<td class="align-middle">${adminReportCommentform.cmReporter}</td>
@@ -57,21 +57,29 @@
 								<th class="center">신고사유</th>
 								<td class="align-middle">${adminReportCommentform.reportReason}</td>
 							</tr>
-					</table>
-					
-					<div class="mb-3">
-					<form id="adminReportCmform" action = "adminReportCmProcess" method="post" class="needs-validation py-3" novalidate>
-						<label for="blackreason" class="form-label">신고처리 내용 작성</label>
-	  					<textarea class="form-control" id="adminReportCmReason" name="adminReportCmReason" rows="2"></textarea>
-	  					<input type="hidden" name="reportCmNo" id="reportCmNo" class = "form-control" value=${adminReportCommentform.reportCmNo}>
-	  					<input type="hidden" name="sessionId" id="sessionId" class = "form-control" value=${sessionScope.loginId}>
-	  					<button class = "btn btn-dark" onclick="location.href='admin/adminComment/adminReportComment/adminReportCommentList.jsp'">리스트로</button>
-	  					<button class = "btn btn-dark" type="submit">처리</button>
-					</form>
-	  					
+						</table>
+
+						<div class="mb-3">
+							<form id="adminReportCmform" action="adminReportCmProcess"
+								method="post" class="needs-validation py-3" novalidate>
+								<label for="blackreason" class="form-label">신고처리 내용 작성</label>
+								<textarea class="form-control" id="adminReportCmReason"
+									name="adminReportCmReason" rows="2"></textarea>
+								<input type="hidden" name="reportCmNo" id="reportCmNo"
+									class="form-control" value="${adminReportCommentform.reportCmNo}">
+								<input type="hidden" name="sessionId" id="sessionId"
+									class="form-control" value="${sessionScope.loginId}">
+								<button id="reportCmSubmit" class="btn btn-dark" type="submit">처리</button>
+								<button id="reportCmList" class="btn btn-dark" type="button"
+									onclick="location.href='admin/adminComment/adminReportComment/adminReportCommentList.jsp'">리스트로</button>
+							</form>
+
+
+						</div>
+
+
 					</div>
-					</div>
-				</div>	
+				</div>
 			</div>
 		</div>
 	</div>

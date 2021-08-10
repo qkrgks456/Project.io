@@ -64,7 +64,7 @@
 					</div>
 					<!-- form 버튼  -->
 					<div class="form-group md-3">
-						<input type="hidden"  class = "form-control" id="blackId" name="blackId" value=${adminMemberBlack.memberkey}>
+						<input type="hidden"  class = "form-control" id="blackId" name="blackId" value="${adminMemberBlack.memberkey}">
 						<button id="blackaddsubmit" class="btn btn-dark" type="submit">추가</button>
 						<button id="adminmemberDetail" class="btn btn-dark" type="button" onclick="location.href='adminMemberListDetail?memberkey=${adminMemberBlack.memberkey}'">회원정보로</button>
 						<button id="adminmemberlist" class="btn btn-dark" type="button" onclick="location.href='admin/adminList/adminMemberList/adminMemberList.jsp'">리스트로</button>
@@ -86,21 +86,5 @@
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=6"></script>
 	
-	<!-- blackaddsubmit 버튼이 눌릴시 팝업 -->
-	 <script type="text/javascript">
-	$(document).ready(function() {
-		$('#blackaddsubmit').click(function() {
-			if()
-			Swal.fire({
-					title: '블랙 리스트 추가완료',
-					 icon: 'success',
-					 confirmButtonColor: '#000',
-					 confirmButtonText: '확인',
-			})
-		})
-		
-	})	
-	
-	-->
 </body>
 </html>

@@ -82,7 +82,7 @@
 					
 					</table>
 					<div>
-					<c:if test="${adminDetail.suc eq 1}">
+					<c:if test="${adminDetail.success eq 2}">
 						<a id="authority">"권한이 없습니다."</a>
 					</c:if>
 
@@ -95,7 +95,7 @@
 						<button id="deleteauthority" class="btn btn-dark" type="button" onclick ="location.href='/Project/adminSearch'">리스트로</button>
 					</div>
 					</form>
-					<c:if test="${delcheck eq 1}">
+					<c:if test="${adminDetail.success eq 1}">
 					<script type="text/javascript">
 					Swal.fire(
 							{
@@ -132,7 +132,7 @@
 			console.log("관리자 권한이 있습니다.");
 		},
 		error: function(e){
-			console.log("관리자 권한이 없습니다.);
+			console.log("관리자 권한이 없습니다.");
 		}
 		
 		

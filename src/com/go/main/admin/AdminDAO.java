@@ -180,13 +180,12 @@ public class AdminDAO {
 
 	public ArrayList<AdminDTO> adminSearch() {
 		System.out.println("관리자 조회 DAO");
-		sql = "SELECT memberKey, name, email, gender, authority FROM users WHERE authority = ? OR authority=? ";
+		sql = "SELECT memberKey, name, email, gender, authority FROM users WHERE authority=? ";
 		ArrayList<AdminDTO> list = new ArrayList<AdminDTO>();
 		try {
 			ps = conn.prepareStatement(sql);
 			/* ps.setString(1, "판매자"); */
-			ps.setString(1, "일반");
-			ps.setString(2, "부관리자");
+			ps.setString(1, "부관리자");
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				dto = new AdminDTO();
@@ -224,17 +223,14 @@ public class AdminDAO {
 				System.out.println("관리자  상세 조회: " + dto.getMemberkey()+"/"+dto.getName()+"/"+dto.getEmail()+"/"+dto.getAddress()+"/"+dto.getAuthority());
 			}
 			sql = "SELECT * FROM users WHERE authority = '최고관리자' AND memberkey = ? ";
-			success = 1;
+		
 			try {
 				ps = conn.prepareStatement(sql);
 				ps.setString(1, sessionId);
 				rs = ps.executeQuery();
-				if(!rs.next()) {
-					System.out.println("관리자 권한이 없습니다.");
-				}
-				else {
+				if(rs.next()) {
 					System.out.println("관리자 권한 확인완료");
-					success = 0;
+				
 				}
 			} catch (SQLException e) {
 				
@@ -244,7 +240,7 @@ public class AdminDAO {
 			
 			e.printStackTrace();
 		}
-		map.put("suc", success);
+
 		map.put("dto", dto);
 		map.put("session", sessionId);
 		return map;
@@ -255,8 +251,7 @@ public class AdminDAO {
 		System.out.println("어드민 관리자 삭제값 조회할 id: " + memberkey+"/로그인한 관리자: " + sessionId );
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		//String sessionId2 = "sunwoolee1";
-		int delauthority =0;
-		int delcheck = 0;
+
 		sql = "SELECT * FROM users WHERE authority = '최고관리자' AND memberkey = ? ";
 		success = 0;
 		try {
@@ -265,10 +260,11 @@ public class AdminDAO {
 			rs = ps.executeQuery();
 			if(!rs.next()) {
 				System.out.println("관리자 권한이 없습니다.");
+				success=2;
 			}
 			else {
 				System.out.println("관리자 권한 확인완료");
-				success = 0;
+				
 				
 					sql = "SELECT authority from users where memberkey= ?";
 		
@@ -278,15 +274,14 @@ public class AdminDAO {
 						if(rs.next()) {
 							String authority = rs.getString("authority");
 							if(authority.equals("일반")) {
-								delauthority = 0;
+	
 							}
-							else if(authority.equals("부관리자")) {
-								delauthority = 1;
+							else if(authority.equals("부관리자")) {					
 								sql="UPDATE users set authority = '일반' where memberkey=?";
 								ps = conn.prepareStatement(sql);
 								ps.setString(1, memberkey);
-								delcheck = ps.executeUpdate();
-								if(delcheck==1) {System.out.println(memberkey+ "가 부관리자->일반회원으로 수정");
+								success = ps.executeUpdate();
+								if(success==1) {System.out.println(memberkey+ "가 부관리자->일반회원으로 수정");
 							}
 				
 							}
@@ -304,10 +299,8 @@ public class AdminDAO {
 			
 	
 		
-		map.put("suc", success);
+		map.put("success", success);
 		map.put("memberkey", memberkey);
-		map.put("delauthority", delauthority);
-		map.put("delcheck", delcheck);
 		return map;
 		
 	}
@@ -363,11 +356,9 @@ public class AdminDAO {
  		success=0;
 		sql = "SELECT * FROM users WHERE authority='최고관리자' AND memberkey = ? "; 
 		//관리자 구분값
-		//임의의 최고관리자
-		String session2 = "sunwoolee1";
 		try {
 			ps = conn.prepareStatement(sql); 
-			ps.setString(1, session2); 
+			ps.setString(1, sessionId); 
 			rs = ps.executeQuery(); 
 			
 			//최고 관리자일때 
@@ -382,6 +373,10 @@ public class AdminDAO {
 				System.out.println(memberKey + "일반 회원 -> 부관리자");
 				}
 				success=1;
+			}
+			else {
+				System.out.println("최고 관리자 회원이 아닙니다.");
+				success = 2;
 			}
 			
 			
@@ -410,7 +405,7 @@ public class AdminDAO {
 			sql = "SELECT u.memberkey, u.name, c.cafeName, c.cafeDel, c.cafekey FROM users u Inner JOIN ownerUser ou ON u.memberkey = ou.memberkey LEFT OUTER JOIN  cafeInfo c ON ou.ownerNo=c.ownerNo WHERE c.cafeName LIKE ? AND ou.ownerNo is not null";
 			break;
 		case "cafeNo":
-			sql = "SELECT u.memberkey, u.name, c.cafeName, c.cafeDel, c.cafekey FROM users u Inner JOIN ownerUser ou ON u.memberkey = ou.memberkey LEFT OUTER JOIN  cafeInfo c ON ou.ownerNo=c.ownerNo WHERE c.cafeNo LIKE ? AND ou.ownerNo is not null";
+			sql = "SELECT u.memberkey, u.name, c.cafeName, c.cafeDel, c.cafekey FROM users u Inner JOIN ownerUser ou ON u.memberkey = ou.memberkey LEFT OUTER JOIN  cafeInfo c ON ou.ownerNo=c.ownerNo WHERE c.cafeKey LIKE ? AND ou.ownerNo is not null";
 			break;
 		}
 		try {
@@ -764,7 +759,7 @@ public class AdminDAO {
 
 	public AdminDTO adminReportCommentDetail(String reportCmNo) {
 		System.out.println("신고댓글 상세조회 dao연결 확인: "+reportCmNo);
-		HashMap<String, Object> map = new HashMap<String, Object>();
+
 		sql = "select c.memberkey ,u.name, u.email, u.location,u.gender, cr.processStatus,c.cm_content,cr.reportReason, cr.reportCmNo,cr.managers from cmReport cr right outer join cm c ON cr.commentNo = c.commentNo \r\n" + 
 				"					    left outer join users u ON c.memberKey = u.memberKey  WHERE cr.reportCmNo = ?";
 		try {
