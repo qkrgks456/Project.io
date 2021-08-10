@@ -287,7 +287,7 @@
 											<td class="align-middle">${sellProductLists.price}</td>
 											<td class="align-middle">
 												<div class="d-grid gap-2 col-6 mx-auto mt-1">
-													<a href="${sellProductLists.productId}"
+													<a href="/Project/productdetail?productId=${sellProductLists.productId}"
 														class="btn btn-secondary btn-sm">상세보기</a>
 												</div>
 											</td>

@@ -139,7 +139,7 @@
 							<p class="fw-bold">${commentLists.memberKey}</p>
 							<p class="lh-sm">
 								${commentLists.cm_content}
-								<c:if test="${loginId ne commentLists.memberKey}">
+								<c:if test="${loginId ne commentLists.memberKey && sessionScope.loginId ne null}">
 									<a class="float-end btn btn-secondary btn-sm"
 										href="/Project/report/report.jsp?commentNo=${commentLists.commentNo}&memberKey=${commentLists.memberKey}&commentContent=${commentLists.cm_content}&cafeKey=${map.productId}">신고</a>
 								</c:if>
@@ -198,7 +198,7 @@
 	</div>
 </div>
 	<!-- 하단 고정 퀵메뉴 -->
-	<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
+	<c:if test="${sessionScope.loginId ne null}">
 		<jsp:include page="/fixMenu/quickMenu.jsp"></jsp:include>
 	</c:if>
 	<!-- 하단 정보 -->
@@ -245,17 +245,19 @@
 
 		$.each(data.list, function(i, item) {
 			var check = sessionId == item.memberKey;
+			var checkT = sessionId
 			content += "<div class='updateCheck'>"
 			content += "<p class='fw-bold'>" + item.memberKey + "</p>";
 			content += "<p class='lh-sm'>";
 			content += item.cm_content;
-			if (!check) {
+			if (!check && checkT) {
 				content += "<a href='/Project/report/report.jsp?commentNo="+item.commentNo+"&memberKey="+item.memberKey+"&commentContent="+item.cm_content+"&cafeKey="+data.cafeKey+"'"
 				content += " class='float-end btn btn-secondary btn-sm'>신고</a>";
-			} else {
+			}else if(check){
 				content += "<a class='commentDelBtn mx-2 float-end btn btn-secondary btn-sm' title='" + item.commentNo + "'>삭제</a>";
 				content += "<a class='commentUpdateBtn float-end btn btn-secondary btn-sm'>수정</a>";
 			}
+			
 			content += "</p>";
 			content += "<hr/>";
 			content += "</div>";
