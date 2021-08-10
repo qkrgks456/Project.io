@@ -507,9 +507,40 @@ public class ProductDAO {
 		return 0;
 	}
 
+	public ArrayList<ProductDTO> purchaseList(String sessionId) {
+		String sql = "SELECT p.productId, p.buyamount,p.buyprice,p.productName,i.newfilename FROM (select b.productId,b.buyamount,b.buyprice,p.productName "
+				+ "FROM (select productId,buyamount,buyprice from purchase where memberKey=? ORDER BY orderNo) b "
+				+ "LEFT OUTER JOIN product p ON b.productId=p.productId)p "
+				+ "LEFT OUTER JOIN image i ON p.productId=i.division";
+			ArrayList<ProductDTO> cartlist = null;
+			ProductDTO dto = null;
+			try {
+				cartlist = new ArrayList<ProductDTO>();
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, sessionId);
+				rs = ps.executeQuery();
+				while (rs.next()) {
+					dto = new ProductDTO();
+					dto.setProductName(rs.getString("productname"));
+					dto.setProductQuantity(rs.getInt("buyamount"));
+					dto.setPrice(rs.getInt("buyprice"));
+					dto.setNewFileName(rs.getString("newfilename"));
+					dto.setProductId(rs.getInt("productId"));
+					cartlist.add(dto);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				resClose();
+			}
+			return cartlist;
+		}
+	
+	}
+
 
 	
 
 	
 
-}
+

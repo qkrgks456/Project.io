@@ -105,7 +105,7 @@
 						<button button id="blackaddsubmit" class="btn btn-dark"
 							type="button">선택상품 삭제</button>
 						<button type="button"
-							onclick="location.href='/Project/MainProduct/productResult.jsp'"
+							onclick="location.href='/Project/cartBuy"
 							class="btn btn-dark btn-sm" style="float: right;">선택상품
 							주문하기</button>
 					</div>

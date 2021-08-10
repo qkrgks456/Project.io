@@ -158,9 +158,11 @@ public class ProductService {
 		
 	}
 
-	public HashMap<String, Object> purchaseList(String sessionId) {
-		
-		return null;
+	public ArrayList<ProductDTO> purchaseList(String sessionId) {
+		ProductDAO dao = new ProductDAO(req, resp);
+		ArrayList<ProductDTO> purchaseList = dao.purchaseList(sessionId);
+		System.out.println("구매내역 불러오기 :" + purchaseList.size());
+		return purchaseList;
 	}
 	
 	

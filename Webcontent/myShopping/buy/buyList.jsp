@@ -54,9 +54,7 @@
 						<thead class="table-light">
 							<tr>
 						<th scope="col"><input id="allCheck" type="checkbox"
-									class="form-check-input" " /></th>
-
-									</div></th>
+									class="form-check-input" " /></th></th>
 								<th scope="col">이미지</th>
 								<th scope="col">상품명</th>
 								<th scope="col">수량</th>
@@ -65,7 +63,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach items="${buylist}" var="buylists">
+							<c:forEach items="${purchaseList}" var="buylists">
 								<tr class="">
 										<td class="text_ct align-middle"><input ﻿ name="RowCheck"
 										class="productDel form-check-input" type="checkbox"
@@ -97,8 +95,9 @@
 					</table>
 					<input type="hidden" class="form-control" id="blackpruductId"
 						name="blackproductId" value="">
-					<button id="blackaddsubmit" class="btn btn-dark" type="submit">선택
-						상품 삭제</button>
+					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+						<button button id="blackaddsubmit" class="btn btn-dark"
+							type="button">선택상품 삭제</button>
 
 				</div>
 			</div>

@@ -78,19 +78,15 @@ public class ProductController extends HttpServlet {
 			dis.forward(req, resp);
 
 			break;
-						
-		case "/cafebasket":
-			System.out.println("장바구니 누를수있어요?");
-			if (sessionId != null) {
-				int cafeGoodCount = service.cafebasket();
-				map = new HashMap<String, Object>();
-				resp.setContentType("text/html; charset=UTF-8");
-				resp.getWriter().print(new Gson().toJson(map));
-			} else {
-				resp.sendRedirect("/Project/");
-			}
-						
-			
+
+		/*
+		 * case "/cafebasket": System.out.println("장바구니 누를수있어요?"); if (sessionId !=
+		 * null) { int cafebasket = service.cafebasket(); map = new HashMap<String,
+		 * Object>(); resp.setContentType("text/html; charset=UTF-8");
+		 * resp.getWriter().print(new Gson().toJson(map)); } else {
+		 * resp.sendRedirect("/Project/"); }
+		 */
+
 		case "/cartinsert":
 			System.out.println("카트 넣기 성공");
 			ArrayList<ProductDTO> cartlist = service.cartinsert(sessionId);
@@ -142,16 +138,6 @@ public class ProductController extends HttpServlet {
 			}
 			break;
 
-
-		case "/purchaseList":
-			System.out.println("구매내역 뿌리기");
-			map = service.purchaseList(sessionId);
-			req.setAttribute("map", map);
-			System.out.println(map);
-			dis = req.getRequestDispatcher("MainProduct/product.jsp");
-			dis.forward(req, resp);
-			break;
-
 		case "/cartDel":
 			System.out.println("상품정보 선택 삭제");
 			map = service.cartDel(sessionId);
@@ -159,24 +145,17 @@ public class ProductController extends HttpServlet {
 			resp.getWriter().print(new Gson().toJson(map));
 			break;
 
-		}
-
-			
-		
-		/*case"/purchaseList":
-			System.out.println("판매내역보기");
-			HashMap<String, Object> map1 = service.purchaseList();
-			req.setAttribute("map", map1);
-			System.out.println(map1);
+		case "/purchaseList":
+			System.out.println("구매내역 뿌리기");
+			ArrayList<ProductDTO>purchaseList = service.purchaseList(sessionId);
+			req.setAttribute("purchaseList", purchaseList);
+			System.out.println(purchaseList);
 			dis = req.getRequestDispatcher("myShopping/buy/buyList.jsp");
 			dis.forward(req, resp);
-		break;
-		*/
-			
+			break;
 
-		
+		}
+
 	}
-		
-		
-		
+
 }
