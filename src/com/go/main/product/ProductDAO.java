@@ -595,4 +595,22 @@ public class ProductDAO {
 		return sellList;
 	}
 
-}
+	//구매내역 삭제
+	public int purchaseDel(String[] delproductId) {
+		int suc = 0;
+		try {
+			for (String productId : delproductId) {
+				String sql = "UPDATE product SET delCheck = 'Y' WHERE productId = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, productId);
+				suc = ps.executeUpdate();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return suc;
+	}
+	}
+	
+

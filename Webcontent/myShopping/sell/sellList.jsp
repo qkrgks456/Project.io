@@ -53,6 +53,7 @@
 								<th scope="col">상품명</th>
 								<th scope="col">상품코드</th>
 								<th scope="col">가격</th>
+								<th class="visually-hidden" scope="col">수량</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -60,15 +61,19 @@
 								<tr class="">
 									<td class="align-middle">${sellLists.productName}</td>
 									<td class="align-middle">${sellLists.productId}</td>
-									<td class="align-middle">${sellLists.price}</td>
+									<td class="align-middle price">${sellLists.price}</td>
+									<td class="visually-hidden align-middle">
+										<div class="visually-hidden qu">1</div>
+									</td>
 								</tr>
 							</c:forEach>
 						</tbody>
 						<tfoot>
 							<tr>
-								<th>합계</th>
-								<th id='sumAmount'>수량 : 3</th>
-								<th id='sumSumPrice'>총 매출 : 65000</th>
+								<th>총 주문</th>
+								<th id='sumAmount'>수량 : 1</th>
+								<th id='sumSumPrice'>총합계 : 65000</th>
+
 								<th colspan="3"></th>
 							</tr>
 						</tfoot>
@@ -83,13 +88,21 @@
 	<jsp:include page="/fixMenu/footer.jsp"></jsp:include>
 	<!-- 스크립트 추가라인  -->
 	<script type="text/javascript">
+		/* 페이지 시작시 총 수량  */
+		var sum = 0;
+		$('.qu').each(function(i, item) {
+			sum += Number($(this).text());
+		})
+		$('#sumAmount').empty();
+		$('#sumAmount').append('수량 : ' + sum + '개');
 		/* 페이지 시작시 총 가격  */
 		var sumPrice = 0;
 		$('.price').each(function(i, item) {
 			sumPrice += Number($(this).text());
 		})
 		$('#sumSumPrice').empty();
-		$('#sumSumPrice').append('총 매출 : ' + sumPrice.toLocaleString() + '원');		
+		$('#sumSumPrice').append('총 매출 : ' + sumPrice.toLocaleString() + '원');
+
 	</script>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=6"></script>

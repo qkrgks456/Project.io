@@ -53,8 +53,8 @@
 					<table class="table table-hover mt-2">
 						<thead class="table-light">
 							<tr>
-						<th scope="col"><input id="allCheck" type="checkbox"
-									class="form-check-input" " /></th></th>
+							<th scope="col"><input id="allCheck" type="checkbox"
+									class="form-check-input" " /></th>
 								<th scope="col">이미지</th>
 								<th scope="col">상품명</th>
 								<th scope="col">수량</th>
@@ -64,10 +64,10 @@
 						</thead>
 						<tbody>
 							<c:forEach items="${purchaseList}" var="buylists">
-								<tr class="">
+							<tr>
 										<td class="text_ct align-middle"><input ﻿ name="RowCheck"
 										class="productDel form-check-input" type="checkbox"
-										value="${buylists.productName}" /></td></th>
+										value="${buylists.productId}" /></td>
 									<td><img src="/photo/${buylists.newFileName}"
 										class="img-thumbnail"
 										style="width: 80px; height: 80px; object-fit: cover;" /></td>
@@ -78,12 +78,12 @@
 									<td>
 
 										<div class="d-grid gap-2 col-6 mx-auto mt-4">
-											<a href="/Project/productdetail?productName=${buylists.productName}" class="btn btn-secondary btn-sm">상세보기</a>
+											<a href="/Project/productdetail?productId=${buylists.productId}" class="btn btn-secondary btn-sm">상세보기</a>
 										</div>
 									</td>
 								</tr>
-						</tbody>
-						</c:forEach>
+				</c:forEach>
+								</tbody>
 						<tfoot>
 							<tr>
 								<th>합계</th>
@@ -96,8 +96,8 @@
 					<input type="hidden" class="form-control" id="blackpruductId"
 						name="blackproductId" value="">
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-						<button button id="blackaddsubmit" class="btn btn-dark"
-							type="button">선택상품 삭제</button>
+						<button id="blackaddsubmit" class="btn btn-dark" type="button">선택상품
+							삭제</button>
 
 				</div>
 			</div>
@@ -183,12 +183,95 @@
 								'총 가격 : ' + sumPrice.toLocaleString() + '원');
 					}
 				})
-		$('#delProductBtn').click(function() {
-			var delCheckArr = [];
-			$('input[name="delCheck"]:checked').each(function() {
-				delCheckArr.push($(this).val());
+		//삭제
+		var qus = [];
+		var delproductId = [];
+		var prices = [];
+		$('#blackaddsubmit')
+				.click(
+						function() {
+							$('input[name="RowCheck"]:checked').each(
+									function() {
+										delproductId.push($(this).val());
+									})
+							$
+									.ajax({
+										type : "POST",//방식
+										url : "/Project/productListDel",//주소
+										data : {
+											delproductId : delproductId,
+										},
+										dataType : 'JSON',
+										success : function(data) { //성공시
+											console.log(data);
+											content = "";
+											$
+													.each(
+															data.myProductList,
+															function(i, item) {
+																content += '<tr>'
+																content += '<td class="text_ct align-middle"><input ﻿ name="RowCheck" class="productDel form-check-input"'
+																content +=			' type="checkbox" value="'+item.productId+'" /></td>'
+																content += '</th>'
+																content += '<td class="align-middle">'
+																		+ item.productName
+																		+ '</td>'
+																content += '<td class="align-middle">'
+																		+ item.newFileName
+																		+ '</td>'
+																content += '<td class="align-middle">'
+																		+ item.productId
+																		+ '</td>'
+																content += '<td class="align-middle">'
+																		+ item.price
+																		+ '</td>'
+																content += '<td class="align-middle">'
+																		+ item.productQuantity
+																		+ '</td>'
+																content += '<td>'
+																content += '<div class="d-grid gap-2 col-6 mx-auto mt-1">'
+																content += '<a class="btn btn-secondary btn-sm" type="button" href="/Project/productdetail?productId='
+																		+ item.productId
+																		+ '"'
+																content += '>상세보기</a>'
+																content += '</div>'
+																content += '</td>'
+																content += '</tr>'
+															})
+											$('tbody').empty();
+											$('tbody').append(content);
+										},
+										error : function(e) { //실패시
+											console.log(e);
+										}
+
+									})
+
+						})
+		$('#blackBuy').click(function() {		
+			$('input[name="RowCheck"]:checked').each(function() {
+				delproductId.push($(this).val());
+				qus.push($(this).parent().nextAll('.abc').find('div.qu').text());
+				prices.push($(this).parent().nextAll('.price').text());
 			})
-			console.log(delCheckArr);
+			$.ajax({
+				type : "POST",//방식
+				url : "/Project/cartBuy",//주소
+				data : {
+					delproductId:delproductId,
+					qus:qus,
+					prices:prices,
+				},
+				dataType : 'JSON',
+				success : function(data) { //성공시
+					if(data.suc>0){
+						location.href = '/Project/myshopping/buy/buyList.jsp';
+					}
+				},
+				error : function(e) { //실패시
+					console.log(e);
+				}
+			})
 
 		})
 	</script>

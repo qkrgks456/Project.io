@@ -120,7 +120,7 @@ public class ProductService {
 		return map;
 	}
 
-	public HashMap<String, Object> purchaseInsert (String sessionId) {
+	public HashMap<String, Object> purchaseInsert(String sessionId) {
 		ProductDAO dao = new ProductDAO(req, resp);
 
 		String pid = req.getParameter("productn");
@@ -132,12 +132,9 @@ public class ProductService {
 		HashMap<String, Object> map = dao.purchaseInsert(sessionId, pid, qty, prc);
 		dao.resClose();
 
-	return map;	
+		return map;
 	}
 
-	
-
-	
 	public HashMap<String, Object> cartDel(String sessionId) {
 		String[] delproductId = req.getParameterValues("delproductId[]");
 		HashMap<String, Object> map = null;
@@ -153,9 +150,9 @@ public class ProductService {
 	public int cafebasket() {
 		String basketCheckBtn = req.getParameter("basketCheckBtn");
 		String cafeKey = req.getParameter("memberKey");
-		ProductDAO dao = new ProductDAO(req,resp);
-		return dao.cafebasket(basketCheckBtn,cafeKey,(String)req.getSession().getAttribute("loginId"));
-		
+		ProductDAO dao = new ProductDAO(req, resp);
+		return dao.cafebasket(basketCheckBtn, cafeKey, (String) req.getSession().getAttribute("loginId"));
+
 	}
 
 	public ArrayList<ProductDTO> purchaseList(String sessionId) {
@@ -170,34 +167,27 @@ public class ProductService {
 		String[] delproductId = req.getParameterValues("delproductId[]");
 		String[] qus = req.getParameterValues("qus[]");
 		String[] prices = req.getParameterValues("prices[]");
-		return dao.cartBuy(sessionId,delproductId,qus,prices);
+		return dao.cartBuy(sessionId, delproductId, qus, prices);
 	}
 
 	public ArrayList<ProductDTO> sellList(String sessionId) {
 		ProductDAO dao = new ProductDAO(req, resp);
-		
+
 		return dao.sellList(sessionId);
 	}
-	
-	
-	
+
+	// 구매내역삭제
+	public HashMap<String, Object> purchaseDel(String sessionId) {
+		String[] delproductId = req.getParameterValues("delproductId[]");
+		HashMap<String, Object> purchaseDel = null;
+		ProductDAO dao = new ProductDAO(req, resp);
+		int suc = dao.purchaseDel(delproductId);
+		if (suc > 0) {
+			purchaseDel = dao.myProductList(sessionId);
+		}
+		dao.resClose();
+
+		return null;
+	}
+
 }
-
-
-
-
-	
-
-
-		
-		
-		
-	
-
-	
-	
-	
-	
-	
-	
-	

@@ -92,7 +92,7 @@
 						<tfoot>
 							<tr>
 								<th>주문</th>
-								<th id='sumAmount'>수량 : 3</th>
+								<th id='sumAmount'>수량 : 1</th>
 								<th id='sumSumPrice'>총합계 : 65000</th>
 
 								<th colspan="3"></th>
