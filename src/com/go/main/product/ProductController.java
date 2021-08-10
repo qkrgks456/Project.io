@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 
 @WebServlet({ "/productList", "/productinsert", "/productdetail", "/searchproduct", "/cartinsert", "/cartList",
-		"/myProductList", "/productListDel", "/purchaseInsert", "/purchaseList", "/cartDel" })
+		"/myProductList", "/productListDel", "/purchaseInsert", "/purchaseList", "/cartDel","/cartBuy" })
 public class ProductController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -154,6 +154,14 @@ public class ProductController extends HttpServlet {
 			dis.forward(req, resp);
 			break;
 
+			
+		case "/cartBuy":
+			
+			
+			break;
+			
+			
+			
 		}
 
 	}
