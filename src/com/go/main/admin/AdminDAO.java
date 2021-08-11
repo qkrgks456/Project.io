@@ -659,7 +659,7 @@ public class AdminDAO {
 			sql = "SELECT u.memberKey, u.name, u.email, c.cm_content, c.commentNo FROM users u "
 					+ "LEFT OUTER JOIN cm c ON u.memberKey =c.memberKey WHERE u.memberKey LIKE ? AND cm_content is not null";
 			break;
-		case "eamil":
+		case "email":
 			sql = "SELECT u.memberKey, u.name, u.email, c.cm_content, c.commentNo FROM users u "
 					+ "LEFT OUTER JOIN cm c ON u.memberKey =c.memberKey WHERE u.email LIKE ? AND cm_content is not null";
 			break;
