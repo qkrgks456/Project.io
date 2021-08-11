@@ -405,7 +405,7 @@ public class ProductDAO {
 		ArrayList<ProductDTO> myProductList = new ArrayList<ProductDTO>();
 		ProductDTO dto = null;
 		try {
-			String sql = "SELECT productId,productName,price,productQuantity FROM product WHERE cafeKey=? AND delCheck='N' AND selCheck='Y'";
+			String sql = "SELECT selCheck,productId,productName,price,productQuantity FROM product WHERE cafeKey=? AND delCheck='N'";
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, sessionId);
 			rs = ps.executeQuery();
@@ -415,6 +415,7 @@ public class ProductDAO {
 				dto.setProductName(rs.getString("productName"));
 				dto.setPrice(rs.getInt("price"));
 				dto.setProductQuantity(rs.getInt("productQuantity"));
+				dto.setSelCheck(rs.getString("selCheck"));
 				myProductList.add(dto);
 			}
 			map.put("myProductList", myProductList);

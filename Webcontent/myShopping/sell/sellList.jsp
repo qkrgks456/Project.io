@@ -55,6 +55,7 @@
 								<th scope="col">상품명</th>
 								<th scope="col">상품코드</th>
 								<th scope="col">가격</th>
+								<th scope="col">구매수량</th>
 								<th class="visually-hidden" scope="col">수량</th>
 							</tr>
 						</thead>
@@ -64,6 +65,7 @@
 									<td class="align-middle">${sellLists.productName}</td>
 									<td class="align-middle">${sellLists.productId}</td>
 									<td class="align-middle price">${sellLists.price}</td>
+									<td class="align-middle price">${sellLists.buyAmount}</td>
 									<td class="visually-hidden align-middle">
 										<div class="visually-hidden qu">1</div>
 									</td>

@@ -37,48 +37,55 @@
 					</button>
 					<h2 class="fw-bold my-3">상품정보</h2>
 				</div>
+				<hr />
 				<div class="container">
-					<table class="table table-hover mt-2">
-						<thead class="table-light">
-							<tr>
-								<th scope="col"><input id="allCheck" type="checkbox"
-									class="form-check-input" " /></th>
-								<th scope="col">상품명</th>
-								<th scope="col">상품코드</th>
-								<th scope="col">가격</th>
-								<th scope="col">수량</th>
-								<th class="text-center" scope="col">관리</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="result" items="${map.myProductList}">
+					<c:if test="${map.myProductList[0] ne null}">
+						<table class="table table-hover mt-2">
+							<thead class="table-light">
 								<tr>
-									<td class="text_ct align-middle"><input ﻿ name="RowCheck"
-										class="productDel form-check-input" type="checkbox"
-										value="${result.productId}" /></td>
-									</th>
-									<td class="align-middle">${result.productName}</td>
-									<td class="align-middle">${result.productId}</td>
-									<td class="align-middle">${result.price}</td>
-									<td class="align-middle">${result.productQuantity}</td>
-									<td>
-										<div class="d-grid gap-2 col-6 mx-auto mt-1">
-											<a
-												href="/Project/productdetail?productId=${result.productId}"
-												class="btn btn-secondary btn-sm" type="button">상세보기</a>
-										</div>
-									</td>
+									<th scope="col"><input id="allCheck" type="checkbox"
+										class="form-check-input" /></th>
+									<th scope="col">상품명</th>
+									<th scope="col">상품코드</th>
+									<th scope="col">가격</th>
+									<th scope="col">수량</th>
+									<th scope="col">판매여부</th>
+									<th class="text-center" scope="col">관리</th>
 								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-
-					<!-- 상품삭제(상품블라인드처리 부분) -->
-					<input type="hidden" class="form-control" id="blackpruductId"
-						name="blackproductId" value="">
-					<button id="blackaddsubmit" class="btn btn-dark" type="button">선택
-						상품 삭제</button>
-
+							</thead>
+							<tbody>
+								<c:forEach var="result" items="${map.myProductList}">
+									<tr>
+										<td class="text_ct align-middle"><input name="RowCheck"
+											class="productDel form-check-input" type="checkbox"
+											value="${result.productId}" /></td>
+										<td class="align-middle">${result.productName}</td>
+										<td class="align-middle">${result.productId}</td>
+										<td class="align-middle">${result.price}</td>
+										<td class="align-middle">${result.productQuantity}</td>
+										<td class="align-middle">${result.selCheck}</td>
+										<td>
+											<div class="d-grid gap-2 col-6 mx-auto mt-1">
+												<a
+													href="/Project/productdetail?productId=${result.productId}"
+													class="btn btn-secondary btn-sm" type="button">상세보기</a>
+											</div>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+						<!-- 상품삭제(상품블라인드처리 부분) -->
+						<input type="hidden" class="form-control" id="blackpruductId"
+							name="blackproductId" value="">
+						<button id="blackaddsubmit" class="btn btn-dark" type="button">선택
+							상품 삭제</button>
+					</c:if>
+					<c:if test="${map.myProductList[0] eq null}">
+						<div class="text-center">
+							<p class="text-muted">등록된 상품이 없습니다</p>
+						</div>
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -129,12 +136,14 @@
 																content += '<td class="align-middle">'
 																		+ item.productQuantity
 																		+ '</td>'
+																content += '<td class="align-middle">'
+																		+ item.selCheck
+																		+ '</td>'
 																content += '<td>'
 																content += '<div class="d-grid gap-2 col-6 mx-auto mt-1">'
 																content += '<a class="btn btn-secondary btn-sm" type="button" href="/Project/productdetail?productId='
 																		+ item.productId
-																		+ '"'
-																content += '>상세보기</a>'
+																		+ '">상세보기</a>'
 																content += '</div>'
 																content += '</td>'
 																content += '</tr>'

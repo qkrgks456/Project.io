@@ -198,7 +198,7 @@
 	</div>
 </div>
 	<!-- 하단 고정 퀵메뉴 -->
-	<c:if test="${sessionScope.loginId ne null}">
+	<c:if test="${sessionScope.cafeInputCheck eq true}">
 		<jsp:include page="/fixMenu/quickMenu.jsp"></jsp:include>
 	</c:if>
 	<!-- 하단 정보 -->
@@ -412,7 +412,7 @@
 					},
 					dataType: 'JSON',
 					success: function(data) { //성공시
-						console.log("성공");
+						location.href='/Project/MainProduct/productResult.jsp';
 					},
 					error: function(e) { //실패시
 						console.log(e);

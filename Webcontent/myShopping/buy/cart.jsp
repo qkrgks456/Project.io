@@ -47,8 +47,6 @@
 					<c:if test="${cartlist[0] ne null}">
 						<table class="table table-hover mt-2">
 							<thead class="table-light">
-
-
 								<tr>
 									<th scope="col"><input id="allCheck" type="checkbox"
 										class="form-check-input" /></th>

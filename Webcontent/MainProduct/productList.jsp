@@ -102,7 +102,7 @@
 	</div>
 </div>
 	<!-- 하단 고정 퀵메뉴 -->
-	<c:if test="${sessionScope.loginId eq 'qkrgks456'}">
+	<c:if test="${sessionScope.cafeInputCheck eq true}">
 		<jsp:include page="/fixMenu/quickMenu.jsp"></jsp:include>
 	</c:if>
 	<!-- 하단 정보 -->

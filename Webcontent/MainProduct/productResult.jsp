@@ -37,14 +37,16 @@
 		<hr/>
 	
 		<img src="/Project/assets/img/p4.png" style="margin-left:auto; margin-right:auto; display:block;"/>
-		<h2 style="text-align:center">결제가 완료 되었습니다.<br><br>
-		<a class="btn btn-secondary btn-lg" href="/Project/index.jsp" role="button">메인으로</a></h2>
+		<h2 style="text-align:center">결제가 완료 되었습니다.</h2>
+		<div class="text-center">
+		<a class="btn btn-secondary btn-lg" href="/Project/index.jsp" role="button">메인으로</a>
+		<a class="btn btn-secondary btn-lg" href="/Project/purchaseList" role="button">구매내역</a>
+		</div>
 		</div>
 		<br><br><br><br>
 		
 	</section>
 		</div>
-	</div>
 		
 	
 	<!-- 하단 고정 퀵메뉴 -->
