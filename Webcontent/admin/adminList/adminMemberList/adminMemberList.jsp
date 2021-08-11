@@ -84,9 +84,10 @@
 							<!-- div로 감싸서 위 내용 오른쪽 -->
 							<div class="">
 								<select class="form-select">
-									<option value="블랙 리스트" selected>블랙 리스트</option>
-									<option value="탈퇴">탈퇴</option>
-									<option value="사업자">사업자</option>
+									<option value="allSelect" selected>전체</option>
+									<option value="blackSelect" selected>블랙 리스트</option>
+									<option value="dropSelect">탈퇴</option>
+									<option value="ownerSelect">사업자</option>
 								</select>
 							</div>
 						</div>

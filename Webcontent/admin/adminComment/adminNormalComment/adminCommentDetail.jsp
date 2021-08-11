@@ -78,34 +78,8 @@
 							<button id="adminCommentlist" class="btn btn-dark" type="button"
 								onclick="location.href='admin/adminComment/adminNormalComment/adminCommentList.jsp'">리스트로</button>
 						</div>
-						<c:if test="${adminCommentDetail.blindAddSuccess eq 1}">
-							<script type="text/javascript">
-							Swal.fire(
-								{
-								title: '블라인드 완료',
-								icon: 'success',
-								confirmButtonColor: '#000',
-								confirmButtonText: '확인',
-								}
-							)
-								
-					
-						</script>
-						</c:if>
-						<c:if test="${adminCommentDetail.blindMinusSuccess eq 1}">
-							<script type="text/javascript">
-							Swal.fire(
-								{
-								title: '블라인드 해제 완료',
-								icon: 'success',
-								confirmButtonColor: '#000',
-								confirmButtonText: '확인',
-								}
-							)
 						
 					
-						</script>
-						</c:if>
 
 					</div>
 
