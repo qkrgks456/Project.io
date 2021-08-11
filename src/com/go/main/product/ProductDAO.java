@@ -94,7 +94,7 @@ public class ProductDAO {
 	}
 
 	public ArrayList<ProductDTO> productlistWD() {
-		String sql = "SELECT p.productname,p.explanation,p.productid,p.categoryname,i.newfilename from product p left outer join image i on i.division=p.productid WHERE categoryname='원두'";
+		String sql = "SELECT p.productname,p.explanation,p.productid,p.categoryname,i.newfilename from product p left outer join image i on i.division=p.productid";
 		ArrayList<ProductDTO> productlistWD = null;
 		ProductDTO dto = null;
 

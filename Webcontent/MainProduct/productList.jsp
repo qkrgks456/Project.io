@@ -50,7 +50,7 @@
 					
 			<!-- 판매창 -->
 			<div id="searchtbody">
-			<p class="fw-bold mt-2 h1" >원두</p>
+			<p class="fw-bold mt-2 h1" >상품</p>
 			<hr/> 
 			<div class="row row-cols-1 row-cols-md-4 g-4" id="titleo">
 			<c:forEach items="${productlistWD }" var="WD">
@@ -74,7 +74,7 @@
 			</c:forEach>			
 			</div>
 		<br/>
-			<!-- MD 상품 코너 -->
+	<%-- 		<!-- MD 상품 코너 -->
 			<h1 class="fw-bold mt-2" >MD</h1>
 			<hr />
 			<div class="row row-cols-1 row-cols-md-4 g-4" id="titlet">
@@ -96,7 +96,7 @@
 				</div>
 				</form>
 		</c:forEach>
-			</div>
+			</div> --%>
 		
 		</div>
 	</div>

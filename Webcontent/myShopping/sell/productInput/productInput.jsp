@@ -98,8 +98,8 @@
 								aria-describedby="inputGroupPrepend" required>
 							<div class="invalid-feedback">필수 정보입니다</div>
 						</div>
-
-						<!-- 카테고리 -->
+<!-- 
+						카테고리
 						<h6 class="text-muted mt-1 fw-bold" style="text-align: left;">카테고리</h6>
 						<div class="col-md-9 mb-3">
 							<select class="form-select" id="categoryName" name="categoryName">
@@ -109,7 +109,7 @@
 							</select>
 							<div class="invalid-feedback">카테고리를 설정해주세요</div>
 						</div>
-					
+					 -->
 						<!-- 수량 -->
 						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">수량</h6>
 						<div class="col-md-9 mb-3">
@@ -220,14 +220,6 @@
 						 confirmButtonText: '확인',
 				})
 					$proname.focus();
-				}else if($catename.val()==null){
-					Swal.fire({
-						title: '카테고리를 선택해주세요',
-						 icon: 'error',
-						 confirmButtonColor: '#000',
-						 confirmButtonText: '확인',
-				})
-					$catename.focus();					
 				}else if($proqty.val().trim()=="" ||isNaN($proqty.val())) {
 					Swal.fire({
 						title: '수량(숫자)를 입력해주세요.',
