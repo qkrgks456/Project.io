@@ -191,7 +191,7 @@
 	})	
 	</script>
 	<!-- main js 추가 -->
-	<script src="/Project/assets/js/main.js?var=55"></script>
+	<script src="/Project/assets/js/main.js?var=56"></script>
 </body>
 
 </html>

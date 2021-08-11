@@ -187,7 +187,13 @@ $(document).ready(function() {
 			$(this).attr("class", "form-control is-valid");
 		}else{		
 			$(this).attr("class", "form-control is-invalid");
+			$(this).nextAll('div.invalid-feedback').text('필수 정보 입니다');
 		}
+		if($(this).val().length >= 100){
+		$(this).attr("class", "form-control is-invalid");
+		$(this).nextAll('div.invalid-feedback').text('100자 미만으로 입력해주세요');
+		}
+		
 	});
 
 	/* 회원가입시 유효성 검사 */
