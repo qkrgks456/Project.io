@@ -58,7 +58,8 @@
 <!-- 스크립트 추가라인  -->
 <jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 <script>
-/* realTimeAlarm();
+/* 
+realTimeAlarm();
 timerId = setInterval(function(){
 	realTimeAlarm();
 	console.log('안녕');
@@ -89,8 +90,8 @@ function realTimeAlarm(){
 			console.log(e);
 		}				
 	})
-} */
-
+}
+ */
 $.ajax({
 	type: "POST",//방식
 	url: "/Project/cartCount",//주소

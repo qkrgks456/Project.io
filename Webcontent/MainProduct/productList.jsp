@@ -53,11 +53,19 @@
 			<p class="fw-bold mt-2 h1" >상품</p>
 			<hr/> 
 			<div class="row row-cols-1 row-cols-md-4 g-4" id="titleo">
-			<c:forEach items="${productlistWD }" var="WD">
+			<c:forEach items="${map.productlistWD }" var="WD">
 			<form action="/Project/productdetail?productId=${WD.productId}" method="post">
-				<div class="col">
+				<div class="col">					
 					<div class="card h-100">
+					
+					<c:if test="${WD.newFileName ne null }">
 					<a href="/Project/productdetail?productId=${WD.productId}"><img src="/photo/${WD.newFileName }" class="card-img-top"> </a>
+					</c:if>
+					
+					<c:if test="${WD.newFileName eq null }">
+					<a href="/Project/productdetail?productId=${WD.productId}"><img src="/Project/assets/img/whiteground.jpg" class="card-img-top"> </a>
+					</c:if>
+					
 						<div class="card-body">
 						
 						<input type="hidden" value="${WD.productId }" name="wdId" id="wdId">
@@ -73,7 +81,33 @@
 			</form>			
 			</c:forEach>			
 			</div>
-		<br/>
+			<br/>
+				<!-- 페이지네이션 -->
+				<ul class="pagination justify-content-center">
+					<c:if test="${map.startPage ne 1}">
+						<li class="page-item"><a class="page-link"
+							href="/Project/productList?page=${map.startPage-1}"
+							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+						</a></li>
+					</c:if>
+					<c:forEach var="i" begin="${map.startPage}" end="${map.endPage}">
+						<c:if test="${i ne map.currPage}">
+							<li class="page-item"><a class="page-link"
+								href="/Project/productList?page=${i}">${i}</a></li>
+						</c:if>
+						<c:if test="${i eq map.currPage}">
+							<li class="page-item active" style="cursor:default"><a class="page-link pageNum"
+							 title="${i}">${i}</a></li>
+						</c:if>
+					</c:forEach>
+					<c:if test="${map.totalPage ne map.endPage}">
+						<li class="page-item"><a class="page-link"
+							href="/Project/productList?page=${map.endPage+1}" aria-label="Next">
+								<span aria-hidden="true">&raquo;</span>
+						</a></li>
+					</c:if>
+				</ul>
+		
 	<%-- 		<!-- MD 상품 코너 -->
 			<h1 class="fw-bold mt-2" >MD</h1>
 			<hr />

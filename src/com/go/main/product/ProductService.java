@@ -38,18 +38,15 @@ public class ProductService {
 		return suc;
 	}
 
-	public ArrayList<ProductDTO> productlistWD() {
+	public HashMap<String, Object> productlistWD() {
 		ProductDAO dao = new ProductDAO(req, resp);
-		ArrayList<ProductDTO> productlistWD = dao.productlistWD();
-		System.out.println("원두 불러오기 :" + productlistWD.size());
-		return productlistWD;
-	}
-
-	public Object productlistMD() {
-		ProductDAO dao = new ProductDAO(req, resp);
-		ArrayList<ProductDTO> productlistMD = dao.productlistMD();
-		System.out.println("MD 불러오기 :" + productlistMD.size());
-		return productlistMD;
+		String page = req.getParameter("page");
+		if (page == null) {
+			page = "1";
+		}
+		HashMap<String, Object> map = dao.productlistWD(Integer.parseInt(page));
+		
+		return map;
 	}
 
 	public HashMap<String, Object> productdetail() {

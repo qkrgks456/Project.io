@@ -66,7 +66,7 @@ public class ProductDAO {
 			ps = conn.prepareStatement(sql, new String[] { "productId" });
 			ps.setString(1, sessionId);
 			ps.setString(2, dto.getProductName());
-			ps.setInt(3, dto.getPrice());
+			ps.setDouble(3, dto.getPrice());
 			ps.setString(4, dto.getExplanation());
 			ps.setInt(5, dto.getProductQuantity());
 			ps.setString(6, dto.getSelCheck());
@@ -93,14 +93,30 @@ public class ProductDAO {
 		return suc;
 	}
 
-	public ArrayList<ProductDTO> productlistWD() {
-		String sql = "SELECT p.productname,p.explanation,p.productid,p.categoryname,i.newfilename from product p left outer join image i on i.division=p.productid";
+	public HashMap<String, Object> productlistWD(int page) {
+		String sql = "SELECT p.productname,p.explanation,p.productid,i.newfilename FROM (SELECT ROW_NUMBER() OVER(ORDER BY productid) AS rnum,productname,explanation,productid FROM product) p left outer join image i on i.division=p.productid WHERE rnum BETWEEN ? AND ?";
 		ArrayList<ProductDTO> productlistWD = null;
 		ProductDTO dto = null;
-
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int pageLength = 5;
+		// 블럭 인덱스
+		int currentBlock = page % pageLength == 0 ? page / pageLength : (page / pageLength) + 1;
+		// 시작페이지
+		int startPage = (currentBlock - 1) * pageLength + 1;
+		// 끝페이지
+		int endPage = startPage + pageLength - 1;
+		System.out.println("시작 페이지 : " + startPage + " / 끝 페이지 : " + endPage);
+		// 노출할 데이터 갯수
+		int pagePerCnt = 8;
+		int end = page * pagePerCnt;
+		int start = (end - pagePerCnt) + 1;
+	
 		try {
 			ps = conn.prepareStatement(sql);
-			rs = ps.executeQuery();
+			ps.setInt(1, start);
+			ps.setInt(2, end);
+			rs = ps.executeQuery();			
 			productlistWD = new ArrayList<ProductDTO>();
 			while (rs.next()) {
 				dto = new ProductDTO();
@@ -108,44 +124,33 @@ public class ProductDAO {
 				dto.setExplanation(rs.getString("explanation"));
 				dto.setProductId(rs.getInt("productId"));
 				dto.setNewFileName(rs.getString("newFileName"));
-				dto.setCategoryName(rs.getString("categoryName"));
+				
 				productlistWD.add(dto);
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			resClose();
-		}
-		return productlistWD;
-	}
-
-	public ArrayList<ProductDTO> productlistMD() {
-		String sql = "SELECT p.productname,p.explanation,p.productid,p.categoryname,i.newfilename from product p left outer join image i on i.division=p.productid WHERE categoryname='엠디'";
-		ArrayList<ProductDTO> productlistMD = null;
-		ProductDTO dto = null;
-
-		try {
-			ps = conn.prepareStatement(sql);
-			rs = ps.executeQuery();
-			productlistMD = new ArrayList<ProductDTO>();
-			while (rs.next()) {
-				dto = new ProductDTO();
-				dto.setProductName(rs.getString("productName"));
-				dto.setExplanation(rs.getString("explanation"));
-				dto.setProductId(rs.getInt("productId"));
-				dto.setNewFileName(rs.getString("newFileName"));
-				dto.setCategoryName(rs.getString("categoryName"));
-				productlistMD.add(dto);
+			int total = totalCount(); // 총 댓글 수 가져옵시다
+			// 총 게시글 수에 나올 페이지수 나눠서 짝수면 나눠주고 홀수면 +1
+			int totalPages = total % pagePerCnt == 0 ? total / pagePerCnt : (total / pagePerCnt) + 1;
+			if (totalPages == 0) {
+				totalPages = 1;
 			}
+			// 끝지점을 맨 마지막 페이지로 지정
+			if (endPage > totalPages) {
+				endPage = totalPages;
+			}
+			map.put("productlistWD", productlistWD);
+			map.put("totalPage", totalPages);
+			map.put("currPage", page);
+			map.put("pageLength", pageLength);
+			map.put("startPage", startPage);
+			map.put("endPage", endPage);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			resClose();
 		}
-
-		return productlistMD;
+		return map;
 	}
-
+	
 	public HashMap<String, Object> productdetail(String wdId, int page, String sessionId) {
 		ArrayList<ProductDTO> commentList = new ArrayList<ProductDTO>();
 		ProductDTO dto = null;
@@ -611,6 +616,17 @@ public class ProductDAO {
 			e.printStackTrace();
 		}
 		return suc;
+	}
+	
+	public int totalCount() throws SQLException {
+		String sql = "SELECT COUNT(productid) FROM product";
+		ps = conn.prepareStatement(sql);
+		rs = ps.executeQuery();
+		int total = 0;
+		if (rs.next()) {
+			total = rs.getInt(1);
+		}
+		return total;
 	}
 	}
 	

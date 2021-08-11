@@ -215,6 +215,7 @@
 			var $proprice = $("input[name='Price']");
 			var $proex = $("input[name='explanation']");
 			var $proselc = $("input[name='selCheck']");
+			
 
 			console.log("값 확인용 : " + $catename.val());
 
@@ -226,17 +227,17 @@
 					confirmButtonText : '확인',
 				})
 				$proname.focus();
-			} else if ($proqty.val().trim() == "" || isNaN($proqty.val())) {
+			} else if ($proqty.val().trim() == "" || isNaN($proqty.val()) || $proqty.val().length>9) {
 				Swal.fire({
-					title : '수량(숫자)를 입력해주세요.',
+					title : '8자리 이내의 수량(숫자)를 입력해주세요.',
 					icon : 'error',
 					confirmButtonColor : '#000',
 					confirmButtonText : '확인',
 				})
 				$proqty.focus();
-			} else if ($proprice.val().trim() == "" || isNaN($proprice.val())) {
+			} 	else if ($proprice.val().trim() == "" || isNaN($proprice.val())|| $proqty.val().length>9) {
 				Swal.fire({
-					title : '가격(숫자)를 입력해주세요.',
+					title : '8자리 이내의 가격(숫자)를 입력해주세요.',
 					icon : 'error',
 					confirmButtonColor : '#000',
 					confirmButtonText : '확인',
@@ -250,11 +251,25 @@
 					confirmButtonText : '확인',
 				})
 				$proex.focus();
-			} else {
+			} else if ($('#formFileMultiple')[0].files.length == 0) {
+				Swal.fire({
+					title : '이미지를 한장이상 넣어주세요.',
+					icon : 'error',
+					confirmButtonColor : '#000',
+					confirmButtonText : '확인',
+				})			
+			}else {
 				console.log("성공")
 				$("#chkbtn").attr("type", "submit");
 			}
 		}
+		$('#formFileMultiple').change(function() {
+			if ($(this)[0].files.length == 0) {
+				$(this).attr("class", "form-control is-invalid");
+			} else {
+				$(this).attr("class", "form-control is-valid");
+			}
+		})
 	</script>
 
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>

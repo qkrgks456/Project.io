@@ -44,9 +44,7 @@ public class ProductController extends HttpServlet {
 		switch (addr) {
 		case "/productList":
 			System.out.println("상품 리스트 불러오기 요청");
-			req.setAttribute("productlistWD", service.productlistWD());
-			//req.setAttribute("productlistMD", service.productlistMD());
-
+			req.setAttribute("map", service.productlistWD());
 			dis = req.getRequestDispatcher("MainProduct/productList.jsp");
 			dis.forward(req, resp);
 			break;

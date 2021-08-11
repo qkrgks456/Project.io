@@ -180,12 +180,12 @@ public class AdminDAO {
 
 	public ArrayList<AdminDTO> adminSearch() {
 		System.out.println("관리자 조회 DAO");
-		sql = "SELECT memberKey, name, email, gender, authority FROM users WHERE authority=? ";
+		sql = "SELECT memberKey, name, email, gender, authority FROM users WHERE authority='부관리자'";
 		ArrayList<AdminDTO> list = new ArrayList<AdminDTO>();
 		try {
 			ps = conn.prepareStatement(sql);
 			/* ps.setString(1, "판매자"); */
-			ps.setString(1, "부관리자");
+			
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				dto = new AdminDTO();
