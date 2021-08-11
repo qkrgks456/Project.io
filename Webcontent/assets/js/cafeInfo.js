@@ -124,7 +124,7 @@ $(document).ready(function() {
 										confirmButtonText: '확인',
 									}
 								).then((result) => {
-									location.href='/Project/cafeDetail?cafeKey='+data.cafeKey
+									location.href='/Project/cafeDetail?cafeKey='+data.cafeKey+'&pageCheck=cafeInfo'
 								})
 							}
 						},

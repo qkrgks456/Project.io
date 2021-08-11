@@ -360,7 +360,7 @@ public class CafeDAO {
 					+ "b.cafeDetail,b.confusion,b.bHit,c.cafeTotalTable,c.cafeCurrentTable FROM"
 					+ "(SELECT cafeKey,newfilename,cafeName,cafeNum,cafeLocation,cafeDetail,confusion,bHit FROM"
 					+ "(SELECT i.newfilename,c.cafeName,c.cafeNum,c.cafeKey,c.cafeLocation,c.cafeDetail,c.confusion,c.bHit FROM"
-					+ "(SELECT division,newFileName FROM image WHERE ROWID IN (SELECT MIN(ROWID) FROM image GROUP BY division)) i "
+					+ "(SELECT division,newFileName FROM image WHERE fileIdx IN (SELECT MIN(fileIdx) FROM image GROUP BY division)) i "
 					+ "LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey WHERE c.cafeDel='N' AND c.openCheck='Y')"
 					+ "ORDER BY cafeNum DESC OFFSET (?) ROWS FETCH FIRST (?) ROWS ONLY) b "
 					+ "LEFT OUTER JOIN congestion c ON b.cafeKey = c.cafeKey";

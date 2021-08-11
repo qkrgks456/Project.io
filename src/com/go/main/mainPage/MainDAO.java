@@ -60,7 +60,7 @@ public class MainDAO {
 			// 상위 좋아요 4개 데이터
 			String sql = "SELECT s.cafeKey,s.newfilename,s.cafeName,s.cafeNum,s.cafeLocation,s.cafeDetail,s.confusion,s.bHit,g.co "
 					+ "FROM (SELECT i.newfilename,c.cafeName,c.cafeNum,c.cafeKey,c.cafeLocation,c.cafeDetail,c.confusion,c.bHit "
-					+ "FROM (SELECT division,newFileName FROM image WHERE ROWID IN (SELECT MIN(ROWID) FROM image GROUP BY division)) i "
+					+ "FROM (SELECT division,newFileName FROM image WHERE fileIdx IN (SELECT MIN(fileIdx) FROM image GROUP BY division)) i "
 					+ "LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey WHERE c.cafeDel='N' AND c.openCheck='Y') s "
 					+ "LEFT OUTER JOIN (SELECT division,COUNT(likeNo)co FROM good GROUP BY(division)) g ON g.division = s.cafeKey "
 					+ "ORDER BY g.co DESC OFFSET 0 ROWS FETCH FIRST 4 ROWS ONLY";
@@ -82,8 +82,8 @@ public class MainDAO {
 				sql = "SELECT cafeKey,newfilename,cafeName,cafeNum,cafeLocation,cafeDetail,confusion,bHit "
 						+ "FROM (SELECT i.newfilename,c.cafeName,c.cafeNum,c.cafeKey,c.cafeLocation"
 						+ ",c.cafeDetail,c.confusion,c.bHit FROM "
-						+ "(SELECT division,newFileName FROM image WHERE ROWID IN "
-						+ "(SELECT MIN(ROWID) FROM image GROUP BY division)) i "
+						+ "(SELECT division,newFileName FROM image WHERE fileIdx IN "
+						+ "(SELECT MIN(fileIdx) FROM image GROUP BY division)) i "
 						+ "LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey "
 						+ "WHERE c.cafeDel='N' AND c.openCheck='Y') "
 						+ "ORDER BY bHit DESC OFFSET 0 ROWS FETCH FIRST 4 ROWS ONLY";	
@@ -112,8 +112,8 @@ public class MainDAO {
 				sql = "SELECT cafeKey,newfilename,cafeName,cafeNum,cafeLocation,cafeDetail,confusion,bHit "
 						+ "FROM (SELECT i.newfilename,c.cafeName,c.cafeNum,c.cafeKey,c.cafeLocation"
 						+ ",c.cafeDetail,c.confusion,c.bHit FROM "
-						+ "(SELECT division,newFileName FROM image WHERE ROWID IN "
-						+ "(SELECT MIN(ROWID) FROM image GROUP BY division)) i "
+						+ "(SELECT division,newFileName FROM image WHERE fileIdx IN "
+						+ "(SELECT MIN(fileIdx) FROM image GROUP BY division)) i "
 						+ "LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey "
 						+ "WHERE c.cafeDel='N' AND c.openCheck='Y' AND c.cafeLocation=?) "
 						+ "ORDER BY bHit DESC OFFSET 0 ROWS FETCH FIRST 4 ROWS ONLY";	
@@ -137,8 +137,8 @@ public class MainDAO {
 					sql = "SELECT cafeKey,newfilename,cafeName,cafeNum,cafeLocation,cafeDetail,confusion,bHit "
 							+ "FROM (SELECT i.newfilename,c.cafeName,c.cafeNum,c.cafeKey,c.cafeLocation"
 							+ ",c.cafeDetail,c.confusion,c.bHit FROM "
-							+ "(SELECT division,newFileName FROM image WHERE ROWID IN "
-							+ "(SELECT MIN(ROWID) FROM image GROUP BY division)) i "
+							+ "(SELECT division,newFileName FROM image WHERE fileIdx IN "
+							+ "(SELECT MIN(fileIdx) FROM image GROUP BY division)) i "
 							+ "LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey "
 							+ "WHERE c.cafeDel='N' AND c.openCheck='Y') "
 							+ "ORDER BY bHit DESC OFFSET 0 ROWS FETCH FIRST 4 ROWS ONLY";	
