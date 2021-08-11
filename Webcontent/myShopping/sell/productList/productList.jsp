@@ -98,64 +98,65 @@
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<script type="text/javascript">
 		var delproductId = [];
-		$('#blackaddsubmit')
-				.click(
-						function() {
-							$('input[name="RowCheck"]:checked').each(
-									function() {
-										delproductId.push($(this).val());
-									})
-							$
-									.ajax({
-										type : "POST",//방식
-										url : "/Project/productListDel",//주소
-										data : {
-											delproductId : delproductId,
-										},
-										dataType : 'JSON',
-										success : function(data) { //성공시
-											console.log(data);
-											content = "";
-											$
-													.each(
-															data.myProductList,
-															function(i, item) {
-																content += '<tr>'
-																content += '<td class="text_ct align-middle"><input ﻿ name="RowCheck" class="productDel form-check-input"'
-							content +=			' type="checkbox" value="'+item.productId+'" /></td>'
-																content += '</th>'
-																content += '<td class="align-middle">'
-																		+ item.productName
-																		+ '</td>'
-																content += '<td class="align-middle">'
-																		+ item.productId
-																		+ '</td>'
-																content += '<td class="align-middle">'
-																		+ item.price
-																		+ '</td>'
-																content += '<td class="align-middle">'
-																		+ item.productQuantity
-																		+ '</td>'
-																content += '<td class="align-middle">'
-																		+ item.selCheck
-																		+ '</td>'
-																content += '<td>'
-																content += '<div class="d-grid gap-2 col-6 mx-auto mt-1">'
-																content += '<a class="btn btn-secondary btn-sm" type="button" href="/Project/productdetail?productId='
-																		+ item.productId
-																		+ '">상세보기</a>'
-																content += '</div>'
-																content += '</td>'
-																content += '</tr>'
-															})
-											$('tbody').empty();
-											$('tbody').append(content);
-										},
-										error : function(e) { //실패시
-											console.log(e);
-										}
+		$('#blackaddsubmit').click(function() {
+			$('input[name="RowCheck"]:checked').each(
+					function() {
+						delproductId.push($(this).val());
+					})
+			if(delproductId.length!=0){
+				$.ajax({
+					type : "POST",//방식
+					url : "/Project/productListDel",//주소
+					data : {
+						delproductId : delproductId,
+					},
+					dataType : 'JSON',
+					success : function(data) { //성공시
+						console.log(data);
+						content = "";
+						$
+								.each(
+										data.myProductList,
+										function(i, item) {
+											content += '<tr>'
+											content += '<td class="text_ct align-middle"><input ﻿ name="RowCheck" class="productDel form-check-input"'
+		content +=			' type="checkbox" value="'+item.productId+'" /></td>'
+											content += '</th>'
+											content += '<td class="align-middle">'
+													+ item.productName
+													+ '</td>'
+											content += '<td class="align-middle">'
+													+ item.productId
+													+ '</td>'
+											content += '<td class="align-middle">'
+													+ item.price
+													+ '</td>'
+											content += '<td class="align-middle">'
+													+ item.productQuantity
+													+ '</td>'
+											content += '<td class="align-middle">'
+													+ item.selCheck
+													+ '</td>'
+											content += '<td>'
+											content += '<div class="d-grid gap-2 col-6 mx-auto mt-1">'
+											content += '<a class="btn btn-secondary btn-sm" type="button" href="/Project/productdetail?productId='
+													+ item.productId
+													+ '">상세보기</a>'
+											content += '</div>'
+											content += '</td>'
+											content += '</tr>'
+										})
+						$('tbody').empty();
+						$('tbody').append(content);
+					},
+					error : function(e) { //실패시
+						console.log(e);
+					}
 
-									})
+				})
+			}
+						
+							
 
 						})
 	</script>

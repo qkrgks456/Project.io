@@ -40,7 +40,7 @@
 							id="UserId" placeholder="아이디" value="" required> <label
 							for="validationTooltip01" class="fw-bold">아이디</label>
 							<div id="check1" class="invalid-feedback">중복확인을 다시 해주세요</div>
-							<div id="check2" class="invalid-feedback visually-hidden">필수 정보입니다</div>
+							<div id="check2" class="invalid-feedback visually-hidden">필수 정보입니다(100자 이하만 가능)</div>
 						<input type="button" class="btn btn-dark btn-sm mt-2" id="ckBtn"
 							value="중복확인">
 						<!-- 중복확인 끝 -->
@@ -154,7 +154,7 @@
 	$('#ckBtn').click(function(){
 	var userId=$('#UserId').val().trim();
 		console.log(userId);
-		if(userId != ""){
+		if(userId != ""&&userId.length<=100){
 			$('#check2').addClass('visually-hidden');
 			$('#check1').removeClass('visually-hidden');
 			$.ajax({
