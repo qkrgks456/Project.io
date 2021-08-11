@@ -55,6 +55,11 @@
 								<button class="btn btn-outline-dark btn-sm"
 									onclick="location.href='/Project/cafeExist?menu=search'">이전으로</button>
 							</c:if>
+							
+							<c:if test="${param.pageCheck eq 'cafeInfo'}">
+								<button class="btn btn-outline-dark btn-sm"
+									onclick="location.href='/Project/cafeInfoMyPage'">이전으로</button>
+							</c:if>
 						</div>
 					</div>
 				</div>
@@ -163,7 +168,7 @@
 									</tr>
 									<tr class="row">
 										<th class="col-sm-3">주소</th>
-										<td class="col">${map.cafeAddress}</td>
+										<td class="col" id="add">${map.cafeAddress}</td>
 									</tr>
 									<tr class="row">
 										<th class="col-sm-3">영업시간</th>
@@ -395,6 +400,6 @@
 	<!-- 카카오맵 api 추가 -->
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=96f67dd6c088728e30743d7db32a6789&libraries=services"></script>
-	<script src="/Project/assets/js/map.js?var=10"></script>
+	<script src="/Project/assets/js/map.js?var=45"></script>
 </body>
 </html>

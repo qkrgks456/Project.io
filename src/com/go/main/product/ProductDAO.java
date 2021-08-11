@@ -93,7 +93,7 @@ public class ProductDAO {
 	}
 
 	public HashMap<String, Object> productlistWD(int page) {
-		String sql = "SELECT p.productname,p.explanation,p.productid,i.newfilename FROM (SELECT ROW_NUMBER() OVER(ORDER BY productid) AS rnum,productname,explanation,productid FROM product) p left outer join image i on i.division=p.productid WHERE rnum BETWEEN ? AND ?";
+		
 		ArrayList<ProductDTO> productlistWD = null;
 		ProductDTO dto = null;
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -112,6 +112,10 @@ public class ProductDAO {
 		int start = (end - pagePerCnt) + 1;
 
 		try {
+			String sql = "SELECT p.productname,p.explanation,p.productid,i.newfilename FROM "
+					+ "(SELECT ROW_NUMBER() OVER(ORDER BY productid) "
+					+ "AS rnum,productname,explanation,productid FROM product WHERE selCheck='Y' AND delCheck='N') p "
+					+ "left outer join image i on i.division=p.productid WHERE rnum BETWEEN ? AND ?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, start);
 			ps.setInt(2, end);
@@ -123,7 +127,6 @@ public class ProductDAO {
 				dto.setExplanation(rs.getString("explanation"));
 				dto.setProductId(rs.getInt("productId"));
 				dto.setNewFileName(rs.getString("newFileName"));
-
 				productlistWD.add(dto);
 			}
 			int total = totalCount(); // 총 댓글 수 가져옵시다
@@ -155,7 +158,7 @@ public class ProductDAO {
 		ProductDTO dto = null;
 		HashMap<String, Object> map = new HashMap<String, Object>();
 
-		String sql = "SELECT p.productname,p.explanation,p.productid,p.categoryname,i.newfilename,p.price from product p left outer join image i on i.division=p.productid WHERE p.productid=?";
+		String sql = "SELECT p.productname,p.explanation,p.productid,i.newfilename,p.price from product p left outer join image i on i.division=p.productid WHERE p.productid=?";
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, wdId);
@@ -173,7 +176,6 @@ public class ProductDAO {
 				map.put("productName", rs.getString("productName"));
 				map.put("explanation", rs.getString("explanation"));
 				map.put("productid", rs.getString("productid"));
-				map.put("categoryname", rs.getString("categoryname"));
 				map.put("price", rs.getString("Price"));
 				map.put("newFileName", rs.getString("newFileName"));
 			}
@@ -627,7 +629,7 @@ public class ProductDAO {
 	}
 
 	public int totalCount() throws SQLException {
-		String sql = "SELECT COUNT(productid) FROM product";
+		String sql = "SELECT COUNT(productid) FROM product WHERE delCheck='N' and selCheck='Y'";
 		ps = conn.prepareStatement(sql);
 		rs = ps.executeQuery();
 		int total = 0;

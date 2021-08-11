@@ -16,9 +16,7 @@ $(document).ready(function() {
 	var add = $('#add').text();
 	var cafename = $('#cafename').text();
 	// 주소로 좌표를 검색합니다
-	geocoder.addressSearch(
-		add,
-		function(result, status) {
+	geocoder.addressSearch(add,function(result, status) {
 
 			// 정상적으로 검색이 완료됐으면 
 			if (status === kakao.maps.services.Status.OK) {
