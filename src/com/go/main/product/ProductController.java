@@ -68,16 +68,14 @@ public class ProductController extends HttpServlet {
 			break;
 
 		case "/productdetail":
-			if (sessionId != null) {
+			
 			System.out.println("상세보기 요청!");
 			map = service.productdetail();
 			req.setAttribute("map", map);
 			System.out.println(map);
 			dis = req.getRequestDispatcher("MainProduct/product.jsp");
 			dis.forward(req, resp);
-			} else {
-				resp.sendRedirect("/Project/");
-			}
+			
 			break;
 
 		case "/searchproduct":
