@@ -48,7 +48,7 @@ public class SearchDAO {
 		}		
 	}
 	public ArrayList<SearchDTO> namelist(String Sresult) throws IOException {
-		String sql= "SELECT newFileName,cafename,cafeLocation,confusion,cafekey	FROM (SELECT i.newfilename,c.cafeName,c.cafeNum,c.cafeKey,c.cafeLocation,c.cafeDetail,c.confusion,c.bHit FROM (SELECT division,newFileName FROM image WHERE ROWID IN (SELECT MIN(ROWID) FROM image GROUP BY division)) i LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey WHERE c.cafeDel='N' AND c.openCheck='Y') WHERE cafename LIKE ?";
+		String sql= "SELECT newFileName,cafename,cafeLocation,confusion,cafekey	FROM (SELECT i.newfilename,c.cafeName,c.cafeNum,c.cafeKey,c.cafeLocation,c.cafeDetail,c.confusion,c.bHit FROM (SELECT division,newFileName FROM image WHERE ROWID IN (SELECT MIN(ROWID) FROM image GROUP BY division)) i LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey WHERE c.cafeDel='N' AND c.openCheck='Y') WHERE upper(cafename) LIKE upper(?)";
 		//나중에 디비전값 = 사업자 등록번호 맞춰줘야 함
 		ArrayList<SearchDTO> namelist = null;
 		SearchDTO dto = null;
@@ -76,7 +76,7 @@ public class SearchDAO {
 	}	
 	public ArrayList<SearchDTO> productlist(String sresult) {
 		//String sql = "SELECT p.productname, p.price, c.cafeName, c.cafeLocation FROM cafeinfo c LEFT OUTER JOIN product p ON c.cafekey=p.cafekey WHERE p.productname LIKE ?";
-		String sql = "SELECT p.productname, p.price, c.cafeName, c.cafeLocation,i.newfilename FROM cafeinfo c LEFT OUTER JOIN product p ON c.cafekey=p.cafekey LEFT OUTER JOIN image i ON p.productid=i.division WHERE p.productname LIKE ?";
+		String sql = "SELECT p.productname, p.price, c.cafeName, c.cafeLocation,i.newfilename FROM cafeinfo c LEFT OUTER JOIN product p ON c.cafekey=p.cafekey LEFT OUTER JOIN image i ON p.productid=i.division WHERE upper(p.productname) LIKE upper(?)";
 		ArrayList<SearchDTO> productlist = null;
 		SearchDTO dto = null;
 		
