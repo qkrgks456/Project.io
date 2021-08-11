@@ -42,71 +42,79 @@
 					</button>
 					<h2 class="fw-bold my-3">장바구니</h2>
 				</div>
+				<hr />
 				<div class="container">
-					<table class="table table-hover mt-2">
-						<thead class="table-light">
+					<c:if test="${cartlist[0] ne null}">
+						<table class="table table-hover mt-2">
+							<thead class="table-light">
 
 
-							<tr>
-								<th scope="col"><input id="allCheck" type="checkbox"
-									class="form-check-input" " /></th>
-								<th scope="col">이미지</th>
-								<th scope="col">상품명</th>
-								<th scope="col">수량</th>
-								<th scope="col">가격</th>
-								<th class="text-center" scope="col">상세보기</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${cartlist}" var="cartlists">
 								<tr>
-									<td class="text_ct align-middle"><input ﻿ name="RowCheck"
-										class="productDel form-check-input" type="checkbox"
-										value="${cartlists.productId}" /></td>
-									<td><img src="/photo/${cartlists.newFileName}"
-										class="img-thumbnail"
-										style="width: 80px; height: 80px; object-fit: cover;" /></td>
-									<td class="align-middle">${cartlists.productName}</td>
-									<td class="abc align-middle">
-										<div class='d-flex'>
-											<div class="qu me-2">1</div>
-											<i id="up" class="up bi bi-arrow-up-square-fill"
-												style="font-size: 1.2rem;"> </i><i id="down"
-												class="down bi bi-arrow-down-square"
-												style="font-size: 1.2rem;"></i>
-										</div>
-									</td>
-									<td class="price align-middle">${cartlists.price}</td>
-									<td>
-										<div class="d-grid gap-2 col-6 mx-auto mt-4">
-											<a
-												href="/Project/productdetail?productId=${cartlists.productId}"
-												class="btn btn-secondary btn-sm">상세보기</a>
-										</div>
-									</td>
-									<td class="visually-hidden sumPrice align-middle">${cartlists.price}</td>
+									<th scope="col"><input id="allCheck" type="checkbox"
+										class="form-check-input" /></th>
+									<th scope="col">이미지</th>
+									<th scope="col">상품명</th>
+									<th scope="col">수량</th>
+									<th scope="col">가격</th>
+									<th class="text-center" scope="col">상세보기</th>
 								</tr>
-							</c:forEach>
+							</thead>
+							<tbody>
+								<c:forEach items="${cartlist}" var="cartlists">
+									<tr>
+										<td class="text_ct align-middle"><input name="RowCheck"
+											class="productDel form-check-input" type="checkbox"
+											value="${cartlists.productId}" /></td>
+										<td><img src="/photo/${cartlists.newFileName}"
+											class="img-thumbnail"
+											style="width: 80px; height: 80px; object-fit: cover;" /></td>
+										<td class="align-middle">${cartlists.productName}</td>
+										<td class="abc align-middle">
+											<div class='d-flex'>
+												<div class="qu me-2">1</div>
+												<i id="up" class="up bi bi-arrow-up-square-fill"
+													style="font-size: 1.2rem;"> </i><i id="down"
+													class="down bi bi-arrow-down-square"
+													style="font-size: 1.2rem;"></i>
+											</div>
+										</td>
+										<td class="price align-middle">${cartlists.price}</td>
+										<td>
+											<div class="d-grid gap-2 col-6 mx-auto mt-4">
+												<a
+													href="/Project/productdetail?productId=${cartlists.productId}"
+													class="btn btn-secondary btn-sm">상세보기</a>
+											</div>
+										</td>
+										<td class="visually-hidden sumPrice align-middle">${cartlists.price}</td>
+									</tr>
+								</c:forEach>
 
-						</tbody>
-						<tfoot>
-							<tr>
-								<th>주문</th>
-								<th id='sumAmount'>수량 : 1</th>
-								<th id='sumSumPrice'>총합계 : 65000</th>
+							</tbody>
+							<tfoot>
+								<tr>
+									<th>주문</th>
+									<th id='sumAmount'>수량 : 1</th>
+									<th id='sumSumPrice'>총합계 : 65000</th>
 
-								<th colspan="3"></th>
-							</tr>
-						</tfoot>
-					</table>
-					<input type="hidden" class="form-control" id="blackpruductId"
-						name="blackproductId" value="">
-					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-						<button id="blackaddsubmit" class="btn btn-dark" type="button">선택상품
-							삭제</button>
-						<button type="button" id="blackBuy" class="btn btn-dark btn-sm"
-							style="float: right;">선택상품 주문하기</button>
-					</div>
+									<th colspan="3"></th>
+								</tr>
+							</tfoot>
+						</table>
+						<input type="hidden" class="form-control" id="blackpruductId"
+							name="blackproductId" value="">
+						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+							<button id="blackaddsubmit" class="btn btn-dark" type="button">선택상품
+								삭제</button>
+							<button type="button" id="blackBuy" class="btn btn-dark btn-sm"
+								style="float: right;">선택상품 주문하기</button>
+						</div>
+					</c:if>
+					<c:if test="${cartlist[0] eq null}">
+						<div class="text-center">
+							<p class="text-muted">장바구니에 담긴 상품이 없습니다</p>
+						</div>
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -257,32 +265,38 @@
 									})
 
 						})
-		$('#blackBuy').click(function() {		
-			$('input[name="RowCheck"]:checked').each(function() {
-				delproductId.push($(this).val());
-				qus.push($(this).parent().nextAll('.abc').find('div.qu').text());
-				prices.push($(this).parent().nextAll('.price').text());
-			})
-			$.ajax({
-				type : "POST",//방식
-				url : "/Project/cartBuy",//주소
-				data : {
-					delproductId:delproductId,
-					qus:qus,
-					prices:prices,
-				},
-				dataType : 'JSON',
-				success : function(data) { //성공시
-					if(data.suc>0){
-						location.href = '/Project/MainProduct/productResult.jsp';
-					}
-				},
-				error : function(e) { //실패시
-					console.log(e);
-				}
-			})
+		$('#blackBuy')
+				.click(
+						function() {
+							$('input[name="RowCheck"]:checked').each(
+									function() {
+										delproductId.push($(this).val());
+										qus.push($(this).parent().nextAll(
+												'.abc').find('div.qu').text());
+										prices.push($(this).parent().nextAll(
+												'.price').text());
+									})
+							$
+									.ajax({
+										type : "POST",//방식
+										url : "/Project/cartBuy",//주소
+										data : {
+											delproductId : delproductId,
+											qus : qus,
+											prices : prices,
+										},
+										dataType : 'JSON',
+										success : function(data) { //성공시
+											if (data.suc > 0) {
+												location.href = '/Project/MainProduct/productResult.jsp';
+											}
+										},
+										error : function(e) { //실패시
+											console.log(e);
+										}
+									})
 
-		})
+						})
 	</script>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=5"></script>

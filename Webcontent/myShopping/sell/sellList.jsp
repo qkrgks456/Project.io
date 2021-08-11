@@ -46,7 +46,9 @@
 					</button>
 					<h2 class="fw-bold my-3">판매내역</h2>
 				</div>
+				<hr/>
 				<div class="container">
+				<c:if test="${sellList[0] ne null}">
 					<table class="table table-hover mt-2">
 						<thead class="table-light">
 							<tr>
@@ -78,7 +80,12 @@
 							</tr>
 						</tfoot>
 					</table>
-					<div class="d-grid gap-2 d-md-block"></div>
+					</c:if>
+					<c:if test="${sellList[0] eq null}">
+						<div class="text-center">
+							<p class="text-muted">판매내역이 없습니다</p>
+						</div>
+					</c:if>
 				</div>
 			</div>
 

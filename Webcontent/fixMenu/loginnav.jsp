@@ -45,7 +45,7 @@
 				</div>
 			</div>
 			<div class="d-flex" id="loginmenu">
-				<a href="/Project/myShopping/buy/buyList.jsp" role="button"
+				<a href="/Project/purchaseList" role="button"
 					id="mypage" class="btn btn-outline-light btn-sm mx-1">쇼핑</a> <a
 					href="/Project/myInfo" role="button" id="mypage"
 					class="btn btn-outline-light btn-sm mx-1">마이페이지</a> <a

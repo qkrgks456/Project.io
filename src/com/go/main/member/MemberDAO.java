@@ -55,8 +55,6 @@ public class MemberDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			resClose();
 		}
 		return result;
 	}
@@ -385,10 +383,23 @@ public class MemberDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			resClose();
 		}
 		return authority;
+	}
+
+	public boolean cafeInputCheck(String memberKey) {
+		boolean check = false;
+		try {
+			String sql = "SELECT cafeKey FROM cafeInfo WHERE cafeDel='N' AND cafeKey=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, memberKey);
+			rs = ps.executeQuery();
+			check = rs.next();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(check);
+		return check;
 	}
 
 }

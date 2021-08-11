@@ -56,7 +56,7 @@ public class MemberController extends HttpServlet {
 		RequestDispatcher dis;
 		HttpSession session = req.getSession();
 		MemberDTO dto = new MemberDTO();
-		MemberService service = new MemberService();
+		MemberService service = new MemberService(req,resp);
 		Cookie cookie = null;
 		String sessionId = (String) session.getAttribute("loginId");
 		
@@ -74,7 +74,6 @@ public class MemberController extends HttpServlet {
 		
 		// 로그인 로직(테스트)
 		case "/login":
-
 			// 파라미터 체크
 			req.setCharacterEncoding("UTF-8");         //값을 UTF-8로 받아준다
 			memberKey = req.getParameter("InputId");   //멤버키를 login.jsp 에 있는 name=InputId값을 받아온다.
@@ -87,25 +86,23 @@ public class MemberController extends HttpServlet {
 			dto.setPw(pw);					//dto에  패스워드 값을 적용 
 			// 서비스 일 전달
 			// result = service.login(dto); ?
-			boolean suc2 = service.login(dto);   // boolean형 suc2는 서비스에 있는 logindto에 보냄			
+			boolean suc2 = service.login(dto,memberKey);   // boolean형 suc2는 서비스에 있는 logindto에 보냄			
 			if (suc2) {												//만약 suc2
 				if (idCheck != null) {								//만약 아이디체크가 널이아니라면
 					cookie = new Cookie("memberKey", memberKey);	//새로운쿠키에 멤버키에 멤버키를 받아온다.
 					cookie.setPath("/");							//쿠키의 경로
 					cookie.setMaxAge(60 * 60 * 24 * 30);			//쿠키의 시간
-					resp.addCookie(cookie);							//resp.에 쿠키를 추가 
+					resp.addCookie(cookie);							//resp.에 쿠키를 추가
+					
 				} else {											//만약 쿠키가 널이 맞다면
 					cookie = new Cookie("memberKey", "");			//새로운 쿠키에 멤버키에 널값을 받아온다.
 					cookie.setPath("/");							//쿠키의 경로
 					cookie.setMaxAge(0);							//쿠키의시간
 					resp.addCookie(cookie);							//resp에 쿠키를 추가 
-				}	
-				String authority = service.getAuthority(memberKey);
-				System.out.println(authority);
-				session.setAttribute("authority", authority);
-				session.setAttribute("loginId", memberKey);			//IF가 성공하면 세션에있는 멤버키를 로그인상태로 적용
-				resp.sendRedirect("/Project/");						//응답을 메인으로 보내준다
-				System.out.println("로그인 성공했습니다");				//IDE콘솔에 출력 
+				}					
+				System.out.println("로그인 성공했습니다");				//IDE콘솔에 출력 							
+				session.setAttribute("loginId", memberKey);		
+				resp.sendRedirect("/Project/");						
 			} else {												///만약 실패하면
 				req.setAttribute("success", "fail");				
 				dis = req.getRequestDispatcher("login/login.jsp");  //로그인 상태 페이지로 보내진다.  

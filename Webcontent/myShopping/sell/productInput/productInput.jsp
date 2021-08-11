@@ -83,22 +83,21 @@
 				<hr />
 				<!-- 사이드 바 메뉴-->
 				<!-- 들어갈 내용 -->
+				<c:if test="${sessionScope.cafeInputCheck eq true}">
+					<div class="container px-4 py-4 my-4 border shadow-lg" id="cont">
+						<h4 class="mb-3 fw-bold">상품 등록</h4>
+						<hr />
+						<form action="/Project/productinsert" method="post"
+							class="needs-validation" enctype="multipart/form-data" novalidate>
 
-
-				<div class="container px-4 py-4 my-4 border shadow-lg" id="cont">
-					<h4 class="mb-3 fw-bold">상품 등록</h4>
-					<hr />
-					<form action="/Project/productinsert" method="post"
-						class="needs-validation" enctype="multipart/form-data" novalidate>
-
-						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">상품명</h6>
-						<div class="col-md-9 mb-3">
-							<input type="text" class="nullchecks nullcheck form-control"
-								id="productName" name="productName"
-								aria-describedby="inputGroupPrepend" required>
-							<div class="invalid-feedback">필수 정보입니다</div>
-						</div>
-<!-- 
+							<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">상품명</h6>
+							<div class="col-md-9 mb-3">
+								<input type="text" class="nullchecks nullcheck form-control"
+									id="productName" name="productName"
+									aria-describedby="inputGroupPrepend" required>
+								<div class="invalid-feedback">필수 정보입니다</div>
+							</div>
+							<!-- 
 						카테고리
 						<h6 class="text-muted mt-1 fw-bold" style="text-align: left;">카테고리</h6>
 						<div class="col-md-9 mb-3">
@@ -110,78 +109,85 @@
 							<div class="invalid-feedback">카테고리를 설정해주세요</div>
 						</div>
 					 -->
-						<!-- 수량 -->
-						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">수량</h6>
-						<div class="col-md-9 mb-3">
-							<input type="text" class="form-control"
-								id="productQuantity" name="productQuantity" required>
-							<div class="invalid-feedback">필수 정보입니다</div>
-						</div>
+							<!-- 수량 -->
+							<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">수량</h6>
+							<div class="col-md-9 mb-3">
+								<input type="text" class="form-control" id="productQuantity"
+									name="productQuantity" required>
+								<div class="invalid-feedback">필수 정보입니다</div>
+							</div>
 
 
-						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">가격</h6>
-						<div class="col-md-9 mb-3">
-							<input type="text" class="form-control"
-								id="Price" name="Price" required>
-							<div class="invalid-feedback">필수 정보입니다</div>
-						</div>
+							<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">가격</h6>
+							<div class="col-md-9 mb-3">
+								<input type="text" class="form-control" id="Price" name="Price"
+									required>
+								<div class="invalid-feedback">필수 정보입니다</div>
+							</div>
 
-						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">제품
-							설명</h6>
-						<div class="col-md-9 mb-3">
-							<input type="text" class="nullchecks nullcheck form-control"
-								id="explanation" name="explanation" required>
-							<div class="invalid-feedback">필수 정보입니다</div>
-						</div>
+							<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">제품
+								설명</h6>
+							<div class="col-md-9 mb-3">
+								<input type="text" class="nullchecks nullcheck form-control"
+									id="explanation" name="explanation" required>
+								<div class="invalid-feedback">필수 정보입니다</div>
+							</div>
 
-						<br>
-						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">상품
+							<br>
+							<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">상품
 								대표 이미지</h6>
-						<div class="col-md-9 mb-3">						
-							<input class="form-control" type="file" id="formFileMultiple"
-								name="photo" id="photo">
-						</div>
-
-						<br>
-						<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">판매여부</h6>
-						<div class="form-floating col-md-9 mb-3" id="sellCheck">
-							<div class="form-check">
-								<input class="form-check-input" type="radio" name="selCheck"
-									value="Y" id="flexRadioDefault1"> <label
-									class="form-check-label" for="flexRadioDefault1"> 판매</label>
+							<div class="col-md-9 mb-3">
+								<input class="form-control" type="file" id="formFileMultiple"
+									name="photo" id="photo">
 							</div>
-							<div class="form-check">
-								<input class="form-check-input" type="radio" name="selCheck"
-									value="N" id="flexRadioDefault2" checked> <label
-									class="form-check-label" for="flexRadioDefault2"> 미판매 </label>
+
+							<br>
+							<h6 class="text-muted mt-2 fw-bold" style="text-align: left;">판매여부</h6>
+							<div class="form-floating col-md-9 mb-3" id="sellCheck">
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="selCheck"
+										value="Y" id="flexRadioDefault1"> <label
+										class="form-check-label" for="flexRadioDefault1"> 판매</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="selCheck"
+										value="N" id="flexRadioDefault2" checked> <label
+										class="form-check-label" for="flexRadioDefault2"> 미판매
+									</label>
+								</div>
 							</div>
-						</div>
 
-						<div class="d-flex">
-						<div class="form-check mt-3">
-							<div class="form-check ">
-								<input class="form-check-input" type="checkbox" id="agreeupdate"
-									onClick="agreeCheck(this.form);" name="Check"
-									id="flexRadioDefault2">
+							<div class="d-flex">
+								<div class="form-check mt-3">
+									<div class="form-check ">
+										<input class="form-check-input" type="checkbox"
+											id="agreeupdate" onClick="agreeCheck(this.form);"
+											name="Check" id="flexRadioDefault2">
+									</div>
+								</div>
+								<label class="form-check-label fw-bold" for="agreeupdate">
+									관리자의 심사가 있어야 상품이 최종 승인됩니다. 정보 재확인 바랍니다. <br />이에 동의하십니까?
+								</label>
 							</div>
-						</div>
-						<label class="form-check-label fw-bold" for="agreeupdate">
-							관리자의 심사가 있어야 상품이 최종 승인됩니다. 정보 재확인 바랍니다. <br/>이에 동의하십니까?
-						</label>
-						</div>
 
-						<div class="invalid-feedback">동의해야만 등록이 가능합니다</div>
-						<div class="d-grid gap-3 d-md-flex justify-content-md-end">
-							<div class="invalid-feedback">필수 동의입니다</div>
+							<div class="invalid-feedback">동의해야만 등록이 가능합니다</div>
+							<div class="d-grid gap-3 d-md-flex justify-content-md-end">
+								<div class="invalid-feedback">필수 동의입니다</div>
 
-							<input class="btn btn-dark" type="button" name="checkButton"
-								onclick="check()" id="chkbtn" value="등록" disabled>
+								<input class="btn btn-dark" type="button" name="checkButton"
+									onclick="check()" id="chkbtn" value="등록" disabled>
 
-							<button class="btn btn-dark me-md-1" type="button"
-								onclick="location.href='/Project/myShopping/sell/productList/productList.jsp'">취소</button>
-						</div>
-				</form>
-				</div>
+								<button class="btn btn-dark me-md-1" type="button"
+									onclick="location.href='/Project/myShopping/sell/productList/productList.jsp'">취소</button>
+							</div>
+						</form>
+					</div>
+				</c:if>
+				<c:if test="${sessionScope.cafeInputCheck eq false}">
+					<div class="text-center">
+						<p class="text-muted">카페를 등록해야 이용 가능합니다</p>
+					</div>
+				</c:if>
 			</div>
 		</div>
 	</div>
@@ -200,61 +206,60 @@
 				frm.checkButton.disabled = true
 		}
 		var overChk = false;
-		
-		function check(){
+
+		function check() {
 			console.log("시작");
-			var $proname= $("input[name='productName']");
+			var $proname = $("input[name='productName']");
 			var $catename = $("select[name='categoryName']");
 			var $proqty = $("input[name='productQuantity']");
 			var $proprice = $("input[name='Price']");
 			var $proex = $("input[name='explanation']");
-			var $proselc = $("input[name='selCheck']");			
-			
-			console.log("값 확인용 : "+$catename.val());
-			
-				if ($proname.val().trim()=="") {
-					Swal.fire({
-						title: '상품 이름을 입력해주세요',
-						 icon: 'error',
-						 confirmButtonColor: '#000',
-						 confirmButtonText: '확인',
+			var $proselc = $("input[name='selCheck']");
+
+			console.log("값 확인용 : " + $catename.val());
+
+			if ($proname.val().trim() == "") {
+				Swal.fire({
+					title : '상품 이름을 입력해주세요',
+					icon : 'error',
+					confirmButtonColor : '#000',
+					confirmButtonText : '확인',
 				})
-					$proname.focus();
-				}else if($proqty.val().trim()=="" ||isNaN($proqty.val())) {
-					Swal.fire({
-						title: '수량(숫자)를 입력해주세요.',
-						 icon: 'error',
-						 confirmButtonColor: '#000',
-						 confirmButtonText: '확인',
+				$proname.focus();
+			} else if ($proqty.val().trim() == "" || isNaN($proqty.val())) {
+				Swal.fire({
+					title : '수량(숫자)를 입력해주세요.',
+					icon : 'error',
+					confirmButtonColor : '#000',
+					confirmButtonText : '확인',
 				})
-					$proqty.focus();
-				}else if($proprice.val().trim()=="" ||isNaN($proprice.val())) {
-					Swal.fire({
-						title: '가격(숫자)를 입력해주세요.',
-						 icon: 'error',
-						 confirmButtonColor: '#000',
-						 confirmButtonText: '확인',
+				$proqty.focus();
+			} else if ($proprice.val().trim() == "" || isNaN($proprice.val())) {
+				Swal.fire({
+					title : '가격(숫자)를 입력해주세요.',
+					icon : 'error',
+					confirmButtonColor : '#000',
+					confirmButtonText : '확인',
 				})
-					$proprice.focus();
-				}else if($proex.val().trim()==""){
-					Swal.fire({
-						title: '설명을 입력해주세요',
-						 icon: 'error',
-						 confirmButtonColor: '#000',
-						 confirmButtonText: '확인',
+				$proprice.focus();
+			} else if ($proex.val().trim() == "") {
+				Swal.fire({
+					title : '설명을 입력해주세요',
+					icon : 'error',
+					confirmButtonColor : '#000',
+					confirmButtonText : '확인',
 				})
-					$proex.focus();
-				}else{
-					console.log("성공")
-					$("#chkbtn").attr("type", "submit");			
+				$proex.focus();
+			} else {
+				console.log("성공")
+				$("#chkbtn").attr("type", "submit");
 			}
 		}
-	
 	</script>
 
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=4"></script>
-	
+
 </body>
 </html>

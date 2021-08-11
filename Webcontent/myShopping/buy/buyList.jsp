@@ -49,61 +49,72 @@
 					</button>
 					<h2 class="fw-bold my-3">구매내역</h2>
 				</div>
+				<hr />
 				<div class="container">
-					<table class="table table-hover mt-2">
-						<thead class="table-light">
-							<tr>
-							<th scope="col"><input id="allCheck" type="checkbox"
-									class="form-check-input" " /></th>
-								<th scope="col">이미지</th>
-								<th scope="col">상품명</th>
-								<th scope="col">수량</th>
-								<th scope="col">가격</th>
-								<th class="text-center" scope="col">상세보기</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${purchaseList}" var="buylists">
-							<tr>
-										<td class="text_ct align-middle"><input ﻿ name="RowCheck"
-										class="productDel form-check-input" type="checkbox"
-										value="${buylists.productId}" /></td>
-									<td><img src="/photo/${buylists.newFileName}"
-										class="img-thumbnail"
-										style="width: 80px; height: 80px; object-fit: cover;" /></td>
-									<td class="align-middle">${buylists.productName}</td>
-									<td class="align-middle"><div class="qu">${buylists.productQuantity}</div></td>
-									<td class="price align-middle">${buylists.price}</td>
-
-									<td>
-
-										<div class="d-grid gap-2 col-6 mx-auto mt-4">
-											<a href="/Project/productdetail?productId=${buylists.productId}" class="btn btn-secondary btn-sm">상세보기</a>
-										</div>
-									</td>
+					<c:if test="${purchaseList[0] ne null}">
+						<table class="table table-hover mt-2">
+							<thead class="table-light">
+								<tr>
+									<th scope="col"><input id="allCheck" type="checkbox"
+										class="form-check-input" /></th>
+									<th scope="col">이미지</th>
+									<th scope="col">상품명</th>
+									<th scope="col">수량</th>
+									<th scope="col">가격</th>
+									<th class="text-center" scope="col">상세보기</th>
 								</tr>
-				</c:forEach>
-								</tbody>
-						<tfoot>
-							<tr>
-								<th>합계</th>
-								<th id='sumAmount'>수량 : 3</th>
-								<th id='sumSumPrice'>가격 : 65000</th>
-								<th colspan="3"></th>
-							</tr>
-						</tfoot>
-					</table>
-					<input type="hidden" class="form-control" id="blackpruductId"
-						name="blackproductId" value="">
-					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-						<button id="blackaddsubmit" class="btn btn-dark" type="button">선택상품
-							삭제</button>
+							</thead>
+							<tbody>
+								<c:forEach items="${purchaseList}" var="buylists">
+									<tr>
+										<td class="text_ct align-middle"><input name="RowCheck"
+											class="productDel form-check-input" type="checkbox"
+											value="${buylists.productId}" /></td>
+										<td><img src="/photo/${buylists.newFileName}"
+											class="img-thumbnail"
+											style="width: 80px; height: 80px; object-fit: cover;" /></td>
+										<td class="align-middle">${buylists.productName}</td>
+										<td class="align-middle"><div class="qu">${buylists.productQuantity}</div></td>
+										<td class="price align-middle">${buylists.price}</td>
 
+										<td>
+
+											<div class="d-grid gap-2 col-6 mx-auto mt-4">
+												<a
+													href="/Project/productdetail?productId=${buylists.productId}"
+													class="btn btn-secondary btn-sm">상세보기</a>
+											</div>
+										</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+							<tfoot>
+								<tr>
+									<th>합계</th>
+									<th id='sumAmount'>수량 : 3</th>
+									<th id='sumSumPrice'>가격 : 65000</th>
+									<th colspan="3"></th>
+								</tr>
+							</tfoot>
+						</table>
+
+						<input type="hidden" class="form-control" id="blackpruductId"
+							name="blackproductId" value="">
+						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+							<button id="blackaddsubmit" class="btn btn-dark" type="button">선택상품
+								삭제</button>
+
+						</div>
+					</c:if>
+					<c:if test="${purchaseList[0] eq null}">
+					<div class="text-center">
+						<p class="text-muted">구매한 상품이 없습니다</p>
+					</div>
+					</c:if>
 				</div>
 			</div>
 		</div>
 	</div>
-
 
 	<!-- 하단 정보 -->
 	<jsp:include page="/fixMenu/footer.jsp"></jsp:include>
@@ -248,32 +259,38 @@
 									})
 
 						})
-		$('#blackBuy').click(function() {		
-			$('input[name="RowCheck"]:checked').each(function() {
-				delproductId.push($(this).val());
-				qus.push($(this).parent().nextAll('.abc').find('div.qu').text());
-				prices.push($(this).parent().nextAll('.price').text());
-			})
-			$.ajax({
-				type : "POST",//방식
-				url : "/Project/cartBuy",//주소
-				data : {
-					delproductId:delproductId,
-					qus:qus,
-					prices:prices,
-				},
-				dataType : 'JSON',
-				success : function(data) { //성공시
-					if(data.suc>0){
-						location.href = '/Project/myshopping/buy/buyList.jsp';
-					}
-				},
-				error : function(e) { //실패시
-					console.log(e);
-				}
-			})
+		$('#blackBuy')
+				.click(
+						function() {
+							$('input[name="RowCheck"]:checked').each(
+									function() {
+										delproductId.push($(this).val());
+										qus.push($(this).parent().nextAll(
+												'.abc').find('div.qu').text());
+										prices.push($(this).parent().nextAll(
+												'.price').text());
+									})
+							$
+									.ajax({
+										type : "POST",//방식
+										url : "/Project/cartBuy",//주소
+										data : {
+											delproductId : delproductId,
+											qus : qus,
+											prices : prices,
+										},
+										dataType : 'JSON',
+										success : function(data) { //성공시
+											if (data.suc > 0) {
+												location.href = '/Project/myshopping/buy/buyList.jsp';
+											}
+										},
+										error : function(e) { //실패시
+											console.log(e);
+										}
+									})
 
-		})
+						})
 	</script>
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- main js 추가 -->

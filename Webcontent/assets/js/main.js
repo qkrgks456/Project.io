@@ -117,15 +117,15 @@ $(document).ready(function() {
 	/* 로그인창 로그인 버튼 클릭시 유효성 검사*/
 	var path = $(location).attr('href').split('/').pop();
 	$('#login').click(function() {
-		if ($('#InputId').val() == "" && $('#InputPassword').val() == "") {
+		if ($('#InputId').val().trim() == "" && $('#InputPassword').val().trim() == "") {
 			$('#InputId').addClass('form-control is-invalid');
 			$('#InputPassword').addClass('form-control is-invalid');
 		}
-		else if ($('#InputPassword').val() == "") {
+		else if ($('#InputPassword').val().trim() == "") {
 			$('#InputPassword').addClass('form-control is-invalid');
 
 		}
-		else if ($('#InputId').val() == "") {
+		else if ($('#InputId').val().trim() == "") {
 			$('#InputId').addClass('form-control is-invalid');
 		} else { 
 			$('#login').attr("type","submit");

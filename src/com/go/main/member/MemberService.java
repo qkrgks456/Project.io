@@ -3,6 +3,10 @@ package com.go.main.member;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 
 
 public class MemberService {
@@ -11,12 +15,24 @@ public class MemberService {
 	boolean result;
 	ArrayList<MemberDTO> list=null;
 	MemberDTO dto = new MemberDTO();
+	HttpServletRequest req = null;
+
+	public MemberService(HttpServletRequest req, HttpServletResponse resp) {
+		this.req = req;
+	}
 
 	// 로그인 서비스
-	public boolean login(MemberDTO dto) {
-
-		// dao.resClose();
-		return dao.login(dto);
+	public boolean login(MemberDTO dto,String memberKey) {		
+		boolean suc = dao.login(dto);
+		if(suc) {
+			HttpSession session = req.getSession();
+			String authority = dao.getAuthority(memberKey);
+			boolean cafeInputCheck = dao.cafeInputCheck(memberKey);
+			session.setAttribute("authority", authority);
+			session.setAttribute("cafeInputCheck", cafeInputCheck);
+		}
+		dao.resClose();
+		return suc;
 
 	}
 
@@ -100,6 +116,11 @@ public class MemberService {
 	public String getAuthority(String memberKey) {
 
 		return dao.getAuthority(memberKey);
+	}
+
+	public boolean cafeInputCheck(String memberKey) {
+		dao = new MemberDAO();		
+		return dao.cafeInputCheck(memberKey);
 	}
 	
 }
