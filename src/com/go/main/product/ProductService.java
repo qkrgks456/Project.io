@@ -187,4 +187,27 @@ public class ProductService {
 		return null;
 	}
 
+	public HashMap<String, Object> buyListDel(String sessionId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String[] delproductId = req.getParameterValues("delproductId[]");
+		ProductDAO dao = new ProductDAO(req, resp);
+		int suc =dao.buyListDel(sessionId,delproductId);
+		if(suc>0) {
+			map.put("purchaseList", purchaseList(sessionId));
+		}
+		return map;
+	}
+
+	public HashMap<String, Object> cartListDel(String sessionId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String[] blackaddsubmit = req.getParameterValues("blackaddsubmit[]");
+		ProductDAO dao = new ProductDAO(req, resp);
+		int suc = dao.cartListDel(sessionId,blackaddsubmit);
+		System.out.println("service suc 불러와짐? : " + suc);
+		if(suc>0) {
+			map.put("cartlist", cartlist(sessionId));
+		}
+		return map;
+	}
+
 }

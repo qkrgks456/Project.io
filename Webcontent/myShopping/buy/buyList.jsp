@@ -69,7 +69,7 @@
 									<tr>
 										<td class="text_ct align-middle"><input name="RowCheck"
 											class="productDel form-check-input" type="checkbox"
-											value="${buylists.productId}" /></td>
+											value="${buylists.orderNo}" /></td>
 										<td><img src="/photo/${buylists.newFileName}"
 											class="img-thumbnail"
 											style="width: 80px; height: 80px; object-fit: cover;" /></td>
@@ -107,9 +107,9 @@
 						</div>
 					</c:if>
 					<c:if test="${purchaseList[0] eq null}">
-					<div class="text-center">
-						<p class="text-muted">구매한 상품이 없습니다</p>
-					</div>
+						<div class="text-center">
+							<p class="text-muted">구매한 상품이 없습니다</p>
+						</div>
 					</c:if>
 				</div>
 			</div>
@@ -198,65 +198,62 @@
 		var qus = [];
 		var delproductId = [];
 		var prices = [];
-		$('#blackaddsubmit')
-				.click(
-						function() {
-							$('input[name="RowCheck"]:checked').each(
-									function() {
-										delproductId.push($(this).val());
-									})
-							$
-									.ajax({
-										type : "POST",//방식
-										url : "/Project/productListDel",//주소
-										data : {
-											delproductId : delproductId,
-										},
-										dataType : 'JSON',
-										success : function(data) { //성공시
-											console.log(data);
-											content = "";
-											$
-													.each(
-															data.myProductList,
-															function(i, item) {
-																content += '<tr>'
-																content += '<td class="text_ct align-middle"><input ﻿ name="RowCheck" class="productDel form-check-input"'
-																content +=			' type="checkbox" value="'+item.productId+'" /></td>'
-																content += '</th>'
-																content += '<td class="align-middle">'
-																		+ item.productName
-																		+ '</td>'
-																content += '<td class="align-middle">'
-																		+ item.newFileName
-																		+ '</td>'
-																content += '<td class="align-middle">'
-																		+ item.productId
-																		+ '</td>'
-																content += '<td class="align-middle">'
-																		+ item.price
-																		+ '</td>'
-																content += '<td class="align-middle">'
-																		+ item.productQuantity
-																		+ '</td>'
-																content += '<td>'
-																content += '<div class="d-grid gap-2 col-6 mx-auto mt-1">'
-																content += '<a class="btn btn-secondary btn-sm" type="button" href="/Project/productdetail?productId='
-																		+ item.productId
-																		+ '"'
-																content += '>상세보기</a>'
-																content += '</div>'
-																content += '</td>'
-																content += '</tr>'
-															})
-											$('tbody').empty();
-											$('tbody').append(content);
-										},
-										error : function(e) { //실패시
-											console.log(e);
-										}
+		$('#blackaddsubmit').click(function() {
+			$('input[name="RowCheck"]:checked').each(
+					function() {
+						delproductId.push($(this).val());
+					})
+							if (delproductId.length != 0) {
+										$.ajax({
+											type : "POST",//방식
+											url : "/Project/buyListDel",//주소
+											data : {
+												delproductId : delproductId,
+											},
+											dataType : 'JSON',
+											success : function(data) { //성공시
+												console.log(data);
+												content = "";
+												$
+														.each(
+																data.purchaseList,
+																function(i,
+																		item) {
+																	content += '<tr>'
+																	content += '<td class="text_ct align-middle"><input name="RowCheck"'
+									content +=			' class="productDel form-check-input" type="checkbox"'
+										content +=			' value="'+item.orderNo+'" /></td>'
+																	content += '<td><img src="/photo/'+item.newFileName+'"'
+											content +=			'class="img-thumbnail"'
+												content +=			' style="width: 80px; height: 80px; object-fit: cover;" /></td>'
+																	content += '<td class="align-middle">'
+																			+ item.productName
+																			+ '</td>'
+																	content += '<td class="align-middle"><div class="qu">'
+																			+ item.productQuantity
+																			+ '</div></td>'
+																	content += '<td class="price align-middle">'
+																			+ item.price
+																			+ '</td>'
+																	content += '<td>'
+																	content += '<div class="d-grid gap-2 col-6 mx-auto mt-4">'
+																	content += '<a href="/Project/productdetail?productId='
+																			+ item.productId
+																			+ '"'
+																	content += 'class="btn btn-secondary btn-sm">상세보기</a>'
+																	content += '</div>'
+																	content += '</td>'
+																	content += '</tr>'
+																})
+												$('tbody').empty();
+												$('tbody').append(content);
+											},
+											error : function(e) { //실패시
+												console.log(e);
+											}
 
-									})
+										})
+							}
 
 						})
 		$('#blackBuy')

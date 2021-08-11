@@ -26,6 +26,7 @@ public class ProductDTO {
 	private String buyPrice;
 	private String buyAmount;
 	private String orderNo;
+	private String cartId;
 	
 	public int getProductId() {
 		return productId;
@@ -174,6 +175,12 @@ public class ProductDTO {
 	}
 	public void setOrderNo(String orderNo) {
 		this.orderNo = orderNo;
+	}
+	public String getCartId() {
+		return cartId;
+	}
+	public void setCartId(String cartId) {
+		this.cartId = cartId;
 	}
 }
 
