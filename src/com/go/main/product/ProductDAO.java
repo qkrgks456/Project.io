@@ -60,7 +60,7 @@ public class ProductDAO {
 
 	public int productjoin(ProductDTO dto, String sessionId) {
 		int suc = 0;
-		String sql = "INSERT INTO product(productid,cafekey,productName,Price,explanation,productQuantity,selCheck,categoryName) VALUES(product_seq.nextval,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO product(productid,cafekey,productName,Price,explanation,productQuantity,selCheck) VALUES(product_seq.nextval,?,?,?,?,?,?)";
 
 		try {
 			ps = conn.prepareStatement(sql, new String[] { "productId" });
@@ -70,7 +70,6 @@ public class ProductDAO {
 			ps.setString(4, dto.getExplanation());
 			ps.setInt(5, dto.getProductQuantity());
 			ps.setString(6, dto.getSelCheck());
-			ps.setString(7, dto.getCategoryName());
 			ps.executeUpdate();
 			rs = ps.getGeneratedKeys();
 			if (rs.next()) {
