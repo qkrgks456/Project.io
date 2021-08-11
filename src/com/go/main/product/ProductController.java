@@ -46,14 +46,12 @@ public class ProductController extends HttpServlet {
 		int suc = 0;
 		switch (addr) {
 		case "/productList":
-			if (sessionId != null) {
+			
 			System.out.println("상품 리스트 불러오기 요청");
 			req.setAttribute("map", service.productlistWD());
 			dis = req.getRequestDispatcher("MainProduct/productList.jsp");
 			dis.forward(req, resp);
-			} else {
-				resp.sendRedirect("/Project/");
-			}
+		
 			break;
 
 		case "/productinsert":
