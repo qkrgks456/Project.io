@@ -164,7 +164,8 @@ public class ProductService {
 		String[] delproductId = req.getParameterValues("delproductId[]");
 		String[] qus = req.getParameterValues("qus[]");
 		String[] prices = req.getParameterValues("prices[]");
-		return dao.cartBuy(sessionId, delproductId, qus, prices);
+		String[] blackaddsubmit = req.getParameterValues("blackaddsubmit[]");
+		return dao.cartBuy(sessionId, delproductId, qus, prices,blackaddsubmit);
 	}
 
 	public ArrayList<ProductDTO> sellList(String sessionId) {

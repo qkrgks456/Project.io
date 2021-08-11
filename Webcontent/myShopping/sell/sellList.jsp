@@ -46,42 +46,40 @@
 					</button>
 					<h2 class="fw-bold my-3">판매내역</h2>
 				</div>
-				<hr/>
+				<hr />
 				<div class="container">
-				<c:if test="${sellList[0] ne null}">
-					<table class="table table-hover mt-2">
-						<thead class="table-light">
-							<tr>
-								<th scope="col">상품명</th>
-								<th scope="col">상품코드</th>
-								<th scope="col">가격</th>
-								<th scope="col">구매수량</th>
-								<th class="visually-hidden" scope="col">수량</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${sellList}" var="sellLists">
-								<tr class="">
-									<td class="align-middle">${sellLists.productName}</td>
-									<td class="align-middle">${sellLists.productId}</td>
-									<td class="align-middle price">${sellLists.price}</td>
-									<td class="align-middle price">${sellLists.buyAmount}</td>
-									<td class="visually-hidden align-middle">
-										<div class="visually-hidden qu">1</div>
-									</td>
+					<c:if test="${sellList[0] ne null}">
+						<table class="table table-hover mt-2">
+							<thead class="table-light">
+								<tr>
+									<th scope="col">상품명</th>
+									<th scope="col">상품코드</th>
+									<th scope="col">가격</th>
+									<th scope="col">구매수량</th>
+									<th class="visually-hidden" scope="col">수량</th>
 								</tr>
-							</c:forEach>
-						</tbody>
-						<tfoot>
-							<tr>
-								<th>총 주문</th>
-								<th id='sumAmount'>수량 : 1</th>
-								<th id='sumSumPrice'>총합계 : 65000</th>
+							</thead>
+							<tbody>
+								<c:forEach items="${sellList}" var="sellLists">
+									<tr class="">
+										<td class="align-middle">${sellLists.productName}</td>
+										<td class="align-middle">${sellLists.productId}</td>
+										<td class="align-middle price">${sellLists.buyPrice}</td>
+										<td class="qu align-middle">${sellLists.buyAmount}</td>
+										<td class="visually-hidden sumPrice align-middle">${sellLists.buyPrice * sellLists.buyAmount}</td>
+									</tr>
+								</c:forEach>
+							</tbody>
+							<tfoot>
+								<tr>
+									<th>총 주문</th>
+									<th id='sumAmount'>수량 : 1</th>
+									<th id='sumSumPrice'>총합계 : 65000</th>
 
-								<th colspan="3"></th>
-							</tr>
-						</tfoot>
-					</table>
+									<th colspan="3"></th>
+								</tr>
+							</tfoot>
+						</table>
 					</c:if>
 					<c:if test="${sellList[0] eq null}">
 						<div class="text-center">
@@ -106,12 +104,12 @@
 		$('#sumAmount').append('수량 : ' + sum + '개');
 		/* 페이지 시작시 총 가격  */
 		var sumPrice = 0;
-		$('.price').each(function(i, item) {
+		$('.sumPrice').each(function(i, item) {
 			sumPrice += Number($(this).text());
 		})
+		console.log(sumPrice);
 		$('#sumSumPrice').empty();
-		$('#sumSumPrice').append('총 매출 : ' + sumPrice.toLocaleString() + '원');
-
+		$('#sumSumPrice').append('총 가격 : ' + sumPrice.toLocaleString() + '원');
 	</script>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=6"></script>

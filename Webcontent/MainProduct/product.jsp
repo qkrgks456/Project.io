@@ -66,7 +66,7 @@
 								<!-- 가격  -->
 								<br>
 								<h5 class="text-muted mt-2 fw-bold" style="text-align: left;">가격</h5>
-								<input type="text" name="prc" id="prc" value="${map.price}">
+								<input type="text" name="prc" id="prc" value="${map.price}" readonly>
 
 								<h3>
 								</h3>

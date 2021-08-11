@@ -62,7 +62,7 @@
 									<tr>
 										<td class="text_ct align-middle"><input name="RowCheck"
 											class="productDel form-check-input" type="checkbox"
-											value="${cartlists.cartId}"  /></td>
+											value="${cartlists.cartId}" title="${cartlists.productId}" /></td>
 										<td><img src="/photo/${cartlists.newFileName}"
 											class="img-thumbnail"
 											style="width: 80px; height: 80px; object-fit: cover;" /></td>
@@ -201,6 +201,7 @@
 		//삭제
 		var qus = [];
 		var blackaddsubmit = [];
+		var delproductId = [];
 		var prices = [];
 		$('#blackaddsubmit').click(	function() {
 			$('input[name="RowCheck"]:checked').each(function() {
@@ -249,25 +250,24 @@
 				})
 			}		
 						})
-		$('#blackBuy')
-				.click(
-						function() {
+		$('#blackBuy').click(function() {
 							$('input[name="RowCheck"]:checked').each(
 									function() {
-										delproductId.push($(this).val());
+										blackaddsubmit.push($(this).val());
+										delproductId.push($(this).attr('title'));
 										qus.push($(this).parent().nextAll(
 												'.abc').find('div.qu').text());
 										prices.push($(this).parent().nextAll(
 												'.price').text());
 									})
-							$
-									.ajax({
+							$.ajax({
 										type : "POST",//방식
 										url : "/Project/cartBuy",//주소
 										data : {
 											delproductId : delproductId,
 											qus : qus,
 											prices : prices,
+											blackaddsubmit:blackaddsubmit,
 										},
 										dataType : 'JSON',
 										success : function(data) { //성공시

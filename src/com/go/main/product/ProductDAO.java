@@ -543,7 +543,7 @@ public class ProductDAO {
 		return cartlist;
 	}
 
-	public int cartBuy(String sessionId, String[] delproductId, String[] qus, String[] prices) {
+	public int cartBuy(String sessionId, String[] delproductId, String[] qus, String[] prices, String[] blackaddsubmit) {
 		int suc = 0;
 		try {
 			for (int i = 0; i < qus.length; i++) {
@@ -555,6 +555,13 @@ public class ProductDAO {
 				ps.setString(4, prices[i]);
 				suc = ps.executeUpdate();
 			}
+			for (String cartId : blackaddsubmit) {
+				String sql = "DELETE FROM cart WHERE cartId = ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, cartId);
+				suc = ps.executeUpdate();
+			}
+		
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -589,7 +596,7 @@ public class ProductDAO {
 					dto.setmemberkey(rs.getString("memberKey"));
 					dto.setProductId(rs.getInt("productId"));
 					dto.setBuyAmount(rs.getString("buyAmount"));
-					dto.setPrice(rs.getInt("buyPrice"));
+					dto.setBuyPrice(rs.getString("buyPrice"));
 					dto.setProductName(rs.getString("productName"));
 					sellList.add(dto);
 				}
