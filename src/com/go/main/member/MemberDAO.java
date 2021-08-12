@@ -53,6 +53,13 @@ public class MemberDAO {
 			if (rs.next()) {
 				result = true;
 			}
+			sql = "SELECT * FROM blackList WHERE memberKey=?";
+			ps= conn.prepareStatement(sql);
+			ps.setString(1, dto.getMemberKey());
+			rs = ps.executeQuery();
+			if(rs.next()) {
+				result = false;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -53,6 +53,9 @@ public class MainController extends HttpServlet {
 			resp.setContentType("text/html; charset=UTF-8");
 			resp.getWriter().print(new Gson().toJson(map));
 			break;
+		default:
+		resp.sendRedirect("/Project/");
+			break;
 		}
 	}
 

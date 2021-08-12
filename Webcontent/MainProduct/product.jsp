@@ -72,12 +72,14 @@
 								</h3>
 								<br>
 								<!-- 구매/장바구니 버튼 -->
+								<c:if test="${sessionScope.loginId ne null}">
 								<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 									<button type="submit"
 										class="btn btn-success btn-lg " value="장바구니에 담기">장바구니</button>
 									&nbsp;&nbsp;&nbsp;
 									<input type="button" id="purchasebtn"  class="btn btn-secondary btn-lg" style="float: right;" value="구매하기">
 								</div>
+								</c:if>
 							</form>
 							<!-- 좋아요 댓글 -->
 							<div class="position-absolute bottom-0 start-0">

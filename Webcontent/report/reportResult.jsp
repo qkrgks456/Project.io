@@ -46,7 +46,7 @@
 					단, 신고가 되었다고 해서 모두 조치되는 것은 아니며,<br> 이용약관 및 운영원칙에 따라 조치되지 않는
 					게시물이 있을 수 있습니다. <br>
 					<br> <a class="btn btn-secondary btn-lg"
-						href="/Project/index.jsp" role="button">메인으로</a>
+						href="/Project/" role="button">메인으로</a>
 				</h3>
 		</div>
 

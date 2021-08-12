@@ -238,7 +238,7 @@
 					<h3 class="fw-bold">메뉴</h3>
 					<hr />
 
-					<div class="container px-5 my-2">
+					<div class="container my-2">
 						<c:if test="${map.productList[0].productName ne null}">
 							<table class="table table-hover mt-2">
 								<thead class="">
@@ -268,7 +268,7 @@
 				<div>
 					<h3 class="fw-bold">판매상품</h3>
 					<hr />
-					<div class="container px-5 my-2">
+					<div class="container my-2">
 						<c:if test="${map.sellProductList[0].productName ne null}">
 							<table class="table table-hover mt-2">
 								<thead class="">
@@ -291,7 +291,7 @@
 											<td class="align-middle">${sellProductLists.explanation}</td>
 											<td class="align-middle">${sellProductLists.price}</td>
 											<td class="align-middle">
-												<div class="d-grid gap-2 col-6 mx-auto mt-1">
+												<div class="d-grid gap-2 col-12 mx-auto mt-1">
 													<a href="/Project/productdetail?productId=${sellProductLists.productId}"
 														class="btn btn-secondary btn-sm">상세보기</a>
 												</div>

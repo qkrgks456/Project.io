@@ -76,7 +76,7 @@ public class SearchDAO {
 	}	
 	public ArrayList<SearchDTO> productlist(String sresult) {
 		//String sql = "SELECT p.productname, p.price, c.cafeName, c.cafeLocation FROM cafeinfo c LEFT OUTER JOIN product p ON c.cafekey=p.cafekey WHERE p.productname LIKE ?";
-		String sql = "SELECT p.productname, p.price, c.cafeName, c.cafeLocation,i.newfilename FROM cafeinfo c LEFT OUTER JOIN product p ON c.cafekey=p.cafekey LEFT OUTER JOIN image i ON p.productid=i.division WHERE upper(p.productname) LIKE upper(?)";
+		String sql = "SELECT p.productname, p.price, c.cafeName, c.cafeLocation,i.newfilename FROM cafeinfo c LEFT OUTER JOIN product p ON c.cafekey=p.cafekey LEFT OUTER JOIN image i ON p.productid=i.division WHERE p.delcheck='N' AND p.selcheck='Y' AND upper(p.productname) like upper(?)";
 		ArrayList<SearchDTO> productlist = null;
 		SearchDTO dto = null;
 		

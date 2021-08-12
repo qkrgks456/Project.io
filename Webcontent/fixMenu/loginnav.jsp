@@ -5,8 +5,7 @@
 <!-- 상단 메뉴바 -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient">
 	<div class="container-fluid">
-		<a class="navbar-brand fw-bold" href="/Project">You Are
-			Here</a>
+		<a class="navbar-brand fw-bold" href="/Project">자리 있어?</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 			data-bs-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -58,7 +57,7 @@
 <!-- 스크립트 추가라인  -->
 <jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 <script>
-/* 
+
 realTimeAlarm();
 timerId = setInterval(function(){
 	realTimeAlarm();
@@ -91,7 +90,7 @@ function realTimeAlarm(){
 		}				
 	})
 }
- */
+ 
 $.ajax({
 	type: "POST",//방식
 	url: "/Project/cartCount",//주소

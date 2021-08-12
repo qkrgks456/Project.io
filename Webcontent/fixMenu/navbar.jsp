@@ -3,8 +3,7 @@
 <!-- 상단 메뉴바 -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark bg-gradient">
 	<div class="container-fluid">
-		<a class="navbar-brand fw-bold" href="/Project">You Are
-			Here</a>
+		<a class="navbar-brand fw-bold" href="/Project">자리 있어?</a>
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
 			data-bs-target="#navbarSupportedContent"
 			aria-controls="navbarSupportedContent" aria-expanded="false"

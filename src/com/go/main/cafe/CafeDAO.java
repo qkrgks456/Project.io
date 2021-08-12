@@ -340,6 +340,8 @@ public class CafeDAO {
 	public HashMap<String, Object> cafeList(int page) {
 		ArrayList<CafeDTO> list = new ArrayList<CafeDTO>();
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		int end = 0;
+		int start = 0;
 		// 한블럭당 페이지 갯수
 		int pageLength = 5;
 		// 블럭 인덱스
@@ -351,8 +353,15 @@ public class CafeDAO {
 		System.out.println("시작 페이지 : " + startPage + " / 끝 페이지 : " + endPage);
 		// 노출할 데이터 갯수
 		int pagePerCnt = 8;
-		int end = page * pagePerCnt;
-		int start = (end - pagePerCnt);
+		if(page == 1) {
+			end = pagePerCnt;
+			start = 0;
+		}else {
+			end = pagePerCnt;
+			start = (page-1) * 8;
+		}
+		System.out.println("안녕");
+		
 		System.out.println(start);
 		System.out.println(end);
 		try {
@@ -579,7 +588,7 @@ public class CafeDAO {
 
 	// 카페정보 총 갯수
 	public int totalCount() throws SQLException {
-		String sql = "SELECT COUNT(cafeKey) FROM cafeInfo";
+		String sql = "SELECT COUNT(cafeKey) FROM cafeInfo WHERE cafedel='N'";
 		ps = conn.prepareStatement(sql);
 		rs = ps.executeQuery();
 		int total = 0;
