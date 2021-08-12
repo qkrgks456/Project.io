@@ -26,6 +26,7 @@
 		<!-- 섹션에 아이디가 없다면 -->
 		<c:if test="${sessionScope.loginId eq null}">
 			<jsp:include page="/fixMenu/navbar.jsp"></jsp:include>
+			<c:redirect url="/Project/"/>
 		</c:if>
 		<!-- 사이드바 배치 -->
 		<div class="d-flex" style="height: auto; min-height: 100vh;">
