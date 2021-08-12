@@ -79,20 +79,6 @@
 							</div>
 						</div>
 						</form>
-						
-						<!-- 셀렉트 공간 오른쪽으로  -->
-						<div class="mt-4 d-flex justify-content-end">
-							<!-- div로 감싸서 위 내용 오른쪽 -->
-							<div class="">
-								<select class="form-select">
-									<option value="allSelect" selected>전체</option>
-									<option value="blackSelect" selected>블랙 리스트</option>
-									<option value="dropSelect">탈퇴</option>
-									<option value="ownerSelect">사업자</option>
-								</select>
-							</div>
-						</div>
-
 						<table class="table table-bordered mt-4">
 							<tr>
 								<th class="center">아이디</th>

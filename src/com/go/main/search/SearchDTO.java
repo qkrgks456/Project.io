@@ -15,6 +15,8 @@ public class SearchDTO {
 	private String oriFileName;
 	private String newFileName;
 	private String division;
+	private String delcheck;
+	private String selcheck;
 	
 	
 	public String getCafeKey() {
@@ -94,6 +96,18 @@ public class SearchDTO {
 	}
 	public void setDivision(String division) {
 		this.division = division;
+	}
+	public String getDelcheck() {
+		return delcheck;
+	}
+	public void setDelcheck(String delcheck) {
+		this.delcheck = delcheck;
+	}
+	public String getSelcheck() {
+		return selcheck;
+	}
+	public void setSelcheck(String selcheck) {
+		this.selcheck = selcheck;
 	}
 	
 	

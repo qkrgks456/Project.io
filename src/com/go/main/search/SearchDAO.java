@@ -76,7 +76,7 @@ public class SearchDAO {
 	}	
 	public ArrayList<SearchDTO> productlist(String sresult) {
 		//String sql = "SELECT p.productname, p.price, c.cafeName, c.cafeLocation FROM cafeinfo c LEFT OUTER JOIN product p ON c.cafekey=p.cafekey WHERE p.productname LIKE ?";
-		String sql = "SELECT p.productname, p.price, c.cafeName, c.cafeLocation,i.newfilename FROM cafeinfo c LEFT OUTER JOIN product p ON c.cafekey=p.cafekey LEFT OUTER JOIN image i ON p.productid=i.division WHERE p.delcheck='N' AND p.selcheck='Y' AND upper(p.productname) like upper(?)";
+		String sql = "SELECT p.productname, p.price, c.cafeName, c.cafeLocation,i.newfilename,p.delcheck,p.selcheck FROM cafeinfo c LEFT OUTER JOIN product p ON c.cafekey=p.cafekey LEFT OUTER JOIN image i ON p.productid=i.division WHERE p.delcheck='N' AND p.selcheck='Y' AND upper(p.productname) like upper(?)";
 		ArrayList<SearchDTO> productlist = null;
 		SearchDTO dto = null;
 		
@@ -92,6 +92,8 @@ public class SearchDAO {
 				dto.setCafeName(rs.getString("cafeName"));		
 				dto.setCafeLocation(rs.getString("cafeLocation"));
 				dto.setNewFileName(rs.getString("newFileName"));
+				dto.setDelcheck(rs.getString("delcheck"));
+				dto.setSelcheck(rs.getString("selcheck"));
 				productlist.add(dto);
 			}			
 		} catch (SQLException e) {
@@ -132,7 +134,7 @@ public class SearchDAO {
 
 	public ArrayList<SearchDTO> AlistT() {
 		//String sql = "SELECT newFileName,productName,price,cafeName,cafeLocation FROM (SELECT i.newfilename,c.cafeName,c.cafeNum,c.cafeKey,c.cafeLocation,c.cafeDetail,c.confusion,c.bHit,p.productname,p.price FROM (SELECT division,newFileName FROM image WHERE ROWID IN (SELECT MIN(ROWID) FROM image GROUP BY division)) i LEFT OUTER JOIN cafeInfo c ON i.division= c.cafeKey LEFT OUTER JOIN product p ON c.cafeKey = p.cafekey WHERE c.cafeDel='N' AND c.openCheck='Y' AND PRICE IS NOT NULL AND PRODUCTNAME IS NOT NULL)";
-		String sql = "select productname, price,c.cafename,c.cafelocation,i.newfilename,c.cafekey from product p left outer join cafeinfo c on c.cafekey=p.cafekey left outer join image i on p.productid = i.division WHERE price is not null and productname is not null and cafename is not null";
+		String sql = "select productname, price,c.cafename,c.cafelocation,i.newfilename,c.cafekey from product p left outer join cafeinfo c on c.cafekey=p.cafekey left outer join image i on p.productid = i.division WHERE p.delcheck='N' AND p.selcheck='Y' AND price is not null and productname is not null and cafename is not null";
 		ArrayList<SearchDTO> AlistT = null;
 		SearchDTO dto = null;
 		

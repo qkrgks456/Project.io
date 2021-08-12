@@ -46,7 +46,7 @@
 							<p class="text-muted mt-2">
 								${map.explanation}
 							</p>
-							<p class="text-muted bold">(200g 기준 판매)</p>
+							<p class="text-muted bold"></p>
 
 
 							<!-- 수량선택 셀렉트바  -->
@@ -66,7 +66,7 @@
 								<!-- 가격  -->
 								<br>
 								<h5 class="text-muted mt-2 fw-bold" style="text-align: left;">가격</h5>
-								<input type="text" name="prc" id="prc" value="${map.price}" readonly>
+								<input type="text" class="mt-4" name="prc" id="prc" value="${map.price}" readonly>원
 
 								<h3>
 								</h3>
