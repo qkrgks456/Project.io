@@ -38,6 +38,7 @@ $(document).ready(function() {
 						confirmButtonColor: '#000',
 						confirmButtonText: '확인',
 					}).then((result) => {
+					
 						if (result.isConfirmed) {
 							var content = "";
 							content += '<label for="cafeTotalTable" class="fw-bold">총좌석</label> <input'
@@ -54,11 +55,19 @@ $(document).ready(function() {
 							$('#curTable').empty();
 							$('#curTable').append(content);
 						}
+						$('.numCheck').on("propertychange change keyup paste input",function(){
+		if(isNaN($(this).val())||$(this).val().trim()==""){
+			$(this).addClass("is-invalid");
+		}else{
+			$(this).removeClass("is-invalid");
+		}
+	})
+						
 					})
 				},
 				error: function(e) { //실패시
 					console.log(e);
-				}
+				},
 			})
 		}
 	})
@@ -128,6 +137,13 @@ $(document).ready(function() {
 						$('#explanationBox').empty();
 						$('#explanationBox').append(content);
 					}
+					$('.numCheck').on("propertychange change keyup paste input",function(){
+		if(isNaN($(this).val())||$(this).val().trim()==""){
+			$(this).addClass("is-invalid");
+		}else{
+			$(this).removeClass("is-invalid");
+		}
+	})
 				})
 			},
 			error: function(e) { //실패시

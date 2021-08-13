@@ -120,7 +120,7 @@
 	<!-- 스크립트 추가라인  -->
 	<jsp:include page="/assets/js/jscdn.jsp"></jsp:include>
 	<!-- confusion.js 추가 -->
-	<script src="/Project/assets/js/confusion.js?var=95"></script>
+	<script src="/Project/assets/js/confusion.js?var=45"></script>
 	<!-- main js 추가 -->
 	<script src="/Project/assets/js/main.js?var=8"></script>
 </body>

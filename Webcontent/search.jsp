@@ -395,7 +395,7 @@ table {
 											content += '</td>'
 											content += '<td class="align-middle">'+ item.productName +'</td>'
 											content += '<td class="align-middle">'+ item.price+'</td>'
-											content += '<td class="align-middle"><a href="cafeDetail?cafeKey="'+ item.cafeName+'>상세보기</a></td>'
+											content += '<td class="align-middle"><a href="cafeDetail?cafeKey='+ item.cafeKey+'">상세보기</a></td>'
 											content += '<td class="align-middle">'+ item.cafeLocation+'</td>'
 											content += '</tr>'
 										})

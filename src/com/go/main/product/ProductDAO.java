@@ -401,9 +401,7 @@ public class ProductDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			resClose();
-		}
+		} 
 		return cartlist;
 	}
 
@@ -429,9 +427,7 @@ public class ProductDAO {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			resClose();
-		}
+		} 
 		return map;
 	}
 
@@ -473,23 +469,7 @@ public class ProductDAO {
 
 	}
 
-	// 구매내역 리스트에 뿌리기
 
-	/*
-	 * public HashMap<String, Object> purchaseList(String sessionId) { String sql =
-	 * "SELECT p.productname,p.productId,p.productquantity,p.price, i.newfilename from product p left outer join image i on i.division=p.productid"
-	 * ; HashMap<String, Object> purchaseList = null; ProductDTO dto = null; try {
-	 * purchaseList = new HashMap<String, Object>(); ps =
-	 * conn.prepareStatement(sql); ps.setString(1, sessionId); rs =
-	 * ps.executeQuery(); while (rs.next()) { HashMap<String, Object> dto = new
-	 * ProductDTO(); dto.setNewFileName(rs.getString("newfilename"));
-	 * dto.setProductName(rs.getString("productname"));
-	 * dto.setProductQuantity(rs.getInt("productquantity"));
-	 * dto.setPrice(rs.getInt("price")); //
-	 * dto.setProductId(rs.getInt("productId")); purchaseList.add(dto); } } catch
-	 * (SQLException e) { e.printStackTrace(); } finally { resClose(); } return
-	 * purchaseList; }
-	 */
 
 	// 장바구니 삭제
 
@@ -538,9 +518,7 @@ public class ProductDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			resClose();
-		}
+		} 
 		return cartlist;
 	}
 
@@ -650,8 +628,6 @@ public class ProductDAO {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			resClose();
 		}
 		return suc;
 	}
@@ -667,8 +643,6 @@ public class ProductDAO {
 			}			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			resClose();
 		}
 		return suc;
 	}

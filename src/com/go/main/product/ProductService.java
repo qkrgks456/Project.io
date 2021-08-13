@@ -96,13 +96,16 @@ public class ProductService {
 	public ArrayList<ProductDTO> cartlist(String sessionId) {
 		ProductDAO dao = new ProductDAO(req, resp);
 		ArrayList<ProductDTO> cartlist = dao.cartlist(sessionId);
+		dao.resClose();
 		System.out.println("장바구니 불러오기 :" + cartlist.size());
 		return cartlist;
 	}
 
 	public HashMap<String, Object> myProductList(String sessionId) {
 		ProductDAO dao = new ProductDAO(req, resp);
-		return dao.myProductList(sessionId);
+		HashMap<String, Object> map = dao.myProductList(sessionId);
+		dao.resClose();
+		return map;
 	}
 
 	public HashMap<String, Object> productListDel(String sessionId) {
@@ -156,6 +159,7 @@ public class ProductService {
 		ProductDAO dao = new ProductDAO(req, resp);
 		ArrayList<ProductDTO> purchaseList = dao.purchaseList(sessionId);
 		System.out.println("구매내역 불러오기 :" + purchaseList.size());
+		dao.resClose();
 		return purchaseList;
 	}
 
@@ -196,6 +200,7 @@ public class ProductService {
 		if(suc>0) {
 			map.put("purchaseList", purchaseList(sessionId));
 		}
+		dao.resClose();
 		return map;
 	}
 
@@ -208,6 +213,7 @@ public class ProductService {
 		if(suc>0) {
 			map.put("cartlist", cartlist(sessionId));
 		}
+		dao.resClose();
 		return map;
 	}
 
